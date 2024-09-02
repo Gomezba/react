@@ -1,0 +1,13 @@
+.container {
+	width: 85%;
+	max-width: 1440px;
+	margin-inline: auto;
+
+	@media (width > 1900px) {
+		width: 100%;
+	}
+}
+
+.has-mb {
+	margin-bottom: 1rem;
+}

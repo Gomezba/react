@@ -1,0 +1,10 @@
+mixin submenu(links)
+    nav(id="submenu" class="container-submenu")
+        img(id="arrow" class="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back")
+        each link in links
+            -const [id,title] = link
+                ul(class="submenu")
+                    li(class="submenu__item"): a(class="submenu__link" href=`#${id}`)= title
+
+
+

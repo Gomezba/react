@@ -1,0 +1,33 @@
+- const menuRutas = [['Tema central 1',[['subtema-1-del-tema-central-1','Subtema 1 del tema central 1']]]]
+
+//- *Estructura real del array
+//- ?Explicación
+//-  El primer elemento es el tema principal y corresponde al nombre de la carpeta dentro de dev/views/pages, unido con guiones y sin espacios.
+
+//- El primer elemento de la matriz es el nombre de la ruta del subtema del tema principal y debe ubicarse en dev/views/pages/tema-central-1/
+//- El segundo elemento de la matriz es el nombre del subtema del tema principal que se mostrará en el menú principal.
+
+//- ! Cambia el nombre de los archivos de la ruta dev/views/pages al contexto del uso que le darás a la plantilla
+
+//- * Puedes poner tu estructura de esta manera para que sea mas facil y despues decirle a la IA que lo pase a una sola línea.
+
+//- const menuRutas = 
+//-     [
+//-         [
+//-             'Tema central 1',
+//-                 [
+//-                     ['subtema-1-del-tema-central-1','Subtema 1 del tema central 1'],
+//-                     ['subtema-2-del-tema-central-1','Subtema 2 del tema central 1']
+//-                 ]
+//-         ],
+//-         [
+//-             'Tema central 2',
+//-                 [
+//-                     ['subtema-1-del-tema-central-2','Subtema 1 del tema central 2'],
+//-                     ['subtema-2-del-tema-central-2','Subtema 2 del tema central 2']
+//-                 ]
+//-         ]
+//-     ]
+
+
+- let submenuLinks = []

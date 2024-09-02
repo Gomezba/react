@@ -1,0 +1,39 @@
+.layout {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-areas: 'content';
+
+	/* tablet */
+	@media (width > 500px) {
+		grid-template-columns: 1fr 2fr;
+		grid-template-areas: 'menu content';
+	}
+
+	/* desktop */
+	@media (width > 1000px) {
+		grid-template-columns: 400px 2fr;
+	}
+
+	@media (width > 1900px) {
+		padding-inline: 7em;
+	}
+}
+
+.page-header {
+	/* tablet */
+	@media (width > 500px) {
+		grid-area: menu;
+	}
+}
+
+.main {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: max-content max-content;
+	grid-area: content;
+	min-height: 100dvh;
+
+	@media (width > 1900px) {
+		padding-left: 10rem;
+	}
+}

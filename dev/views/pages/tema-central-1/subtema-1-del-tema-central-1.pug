@@ -1,0 +1,27 @@
+extends ../../templates/template 
+
+//-? El título del h1 debe coincidir con el que se define en el array menuRutas, ubicado en dev/views/config/config.pug.
+append h1 
+    h1 Subtema 1 del tema central 1
+
+//-  El contenido debe colocarse en etiquetas article, asegurando que el id del subtema principal esté declarado si se requiere un submenú. No olvides incluir la clase content en cada article
+append content 
+    article(id="1" class="content")
+        h2 Subtitulo 1
+        p Texto de información del subtititulo 1
+        h3 Sub-subtitulo del Subtitulo 1
+        p Texto de información del sub-subtitulo de información del subtitulo 1
+        p Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate inventore minima adipisci odit dolorum facere sint a iste aperiam commodi dolores necessitatibus, molestias quo debitis aliquid eveniet, perspiciatis dignissimos aspernatur!
+        h4 Sub-subtitulo-subtitulo  
+        p Texto de información del Sub-subtitulo-subtitulo del Subtitulo 1
+
+    article(id="2" class="content")
+        h2 Subtitulo 2    
+        p Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil voluptate corporis provident repellendus culpa. Sequi dignissimos natus suscipit commodi. Similique harum consequatur temporibus aliquid eius ratione nihil fuga tempore sapiente!
+
+        p Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error ullam quaerat ad? Molestias adipisci odio inventore sint, nostrum laudantium, ex consequuntur architecto ipsam quidem voluptates asperiores nulla, nam illo iure.Odio corporis magnam blanditiis. Eos, alias possimus. Natus quibusdam repudiandae possimus debitis rem! Rem, ullam quisquam! Optio, voluptas laboriosam, ducimus harum ipsa distinctio, itaque nam inventore sed mollitia adipisci temporibus!Praesentium dolorum perferendis repudiandae quod optio facilis quaerat soluta officia, esse autem harum, velit culpa doloribus mollitia magnam adipisci eum omnis. 
+
+//- El submenú es opcional y facilita la navegación rápida dentro de la página. Asegúrate de agregar el id del artículo y el nombre del subtítulo. Este submenú solo está disponible en páginas distintas al índice principal y funciona únicamente con subtemas principales, no con sub-subtemas.
+append submenu 
+    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    +submenu(submenuLinks)
