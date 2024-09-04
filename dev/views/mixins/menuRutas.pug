@@ -1,7 +1,7 @@
 mixin menuRutas(rutas)
     each tema in rutas
         -const page = tema[0].toLowerCase().trim().split(' ').join('-')
-        -const pageNormalized = page.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[¿?,!¡]/g, '')
+        -const pageNormalized = page.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[¿?,!¡,:]/g, '')
         details(class="container-cross-menu")
             summary(class="title-menu")= tema[0]
             ul(class="cross-menu")

@@ -1,6 +1,6 @@
 .logo {
 	width: var(--width-logo);
-	aspect-ratio: 4/2;
+	aspect-ratio: 3/2;
 	margin-inline: auto;
 	color: white;
 }
