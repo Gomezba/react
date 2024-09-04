@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/prism-dracrula.css">
+    <link rel="stylesheet" href="../../../dev/css/main.css">
+    <title>React</title>
+    <script src="../../js/app.js" type="module" defer> </script>
+  </head>
+  <body class="layout">
+    <div class="container-hamburger"><img class="hamburger" id="hamburger" src="../../assets/icons/hamburger.svg" alt="arrow right"></div>
+    <header class="page-header" id="pageHeader">
+      <nav class="main-nav"><img class="close" id="close" src="../../assets/icons/close.svg" alt="close"><a href="../../../"><img class="logo" src="../../assets/icons/logo.png" alt="logo"></a>
+        <section class="container-menu">
+          <details class="container-cross-menu">
+            <summary class="title-menu">¿Qué es React?</summary>
+            <ul class="cross-menu">
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-1-por-que-react.html">¿Por qué React?</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-2-los-primeros-componentes.html">Los primeros componentes</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-3-el-origen-de-react-jsx.html">El origen de React y JSX</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-4-imperativo-vs-declarativo.html">Imperativo vs Declarativo</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-5-cascade-updates.html">Cascade updates</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-6-el-dom-js.html">El DOM de JavaScript</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El virtual DOM</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-8-que-es-react.html">¿Qué es React?</a></li>
+            </ul>
+          </details>
+          <details class="container-cross-menu">
+            <summary class="title-menu">Creando el primer proyecto</summary>
+            <ul class="cross-menu">
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-1-el-problema-js.html">El problema de JavaScript</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-2-la-alternativa-de-react.html">La alternativa de React</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-3-transpilacion-y-babel.html">Transpilación y babel</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-4-modularizacion-y-es-modules.html">Modularización y ES Módules</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-5-empaquetado-bundles-y-webpack.html">Empaquetado, bundles y Webpack</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-6-no-react-app.html">¿Por qué no usamos create-react-app?</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-7-creando-una-app-vite.html">Creando una app con Vite</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-8-entendiendo-vite.html">Entendiendo como funciona Vite</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-9-como-funciona-dev-server.html">Cómo funciona el dev server</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-10-configurando-eslint.html">Cónfigurando ESLint</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-11-configurando-prettier.html">Cónfigurando Prettier</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-12-conflictos-prettier-eslint.html">Conflictos de Prettier y ESLint</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/creando-el-primer-proyecto/2-13-subiendo-proyecto-a-git.html">Subiendo el proyecto a git</a></li>
+            </ul>
+          </details>
+          <details class="container-cross-menu">
+            <summary class="title-menu">La sintaxis de JSX</summary>
+            <ul class="cross-menu">
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/la-sintaxis-de-jsx/3-1-que-es-una-etiqueta-jsx.html">¿Qué es una etiqueta JSX?</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/la-sintaxis-de-jsx/3-2-la-propiedad-children.html">La propiedad children</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/la-sintaxis-de-jsx/3-3-react-fragment.html">React fragment</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/la-sintaxis-de-jsx/3-4-las-props-de-jsx.html">Las props de JSX</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/la-sintaxis-de-jsx/3-5-la-propiedad-style.html">La propiedad style</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/la-sintaxis-de-jsx/3-6-classname-y-htmlfor.html">className y htmlFor</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/la-sintaxis-de-jsx/3-7-defaultvalue-y-defaultchecked.html">defaultValue y defaultChecked</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/la-sintaxis-de-jsx/3-8-dangerouslysetinnerhtml.html">dangerouslySetInnerHTML</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/la-sintaxis-de-jsx/3-9-custom-attributes.html">Custom attributes</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/la-sintaxis-de-jsx/3-10-spread-de-props-y-keys.html">Spread de props y keys</a></li>
+            </ul>
+          </details>
+          <details class="container-cross-menu">
+            <summary class="title-menu">Componentes</summary>
+            <ul class="cross-menu">
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-1-funciones-que-devuelven-jsx.html">Funciones que devuelven JSX</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-2-componentes-y-props.html">Componentes y props</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-3-destructuring-de-props.html">Destructuring de props</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-4-composicion-de-componentes.html">Composición de componentes</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-5-modularizacion-y-nomenclatura.html">Modularización y nomenclatura</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-6-el-componente-app.html">El componente App</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-7-css-modules.html">CSS modules</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-8-css-global.html">CSS Global</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-9-renderizado-condicional.html">Renderizado condicional</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-10-aislar-logica-en-componentes.html">Aislar lógica en componentes</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/componentes/4-11-funciones-vs-clases.html">Funciones vs clases</a></li>
+            </ul>
+          </details>
+          <details class="container-cross-menu">
+            <summary class="title-menu">Estado y useState</summary>
+            <ul class="cross-menu">
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-1-el-renderizado-inicial.html">El renderizado inicial</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-2-que-es-un-estado.html">¿Qué es un estado?</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-3-usestate.html">useState</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-4-fases-del-cambio-de-estado.html">Fases del cambio de estado</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-5-variables-durante-el-render.html">Variables durante el render</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-6-reglas-del-estado-y-los-hooks.html">Reglas del estado y los hooks</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-7-el-valor-inicial.html">El valor inicial</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-8-profundizando-en-setstate.html">Profundizando en SetState</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-9-valor-del-estado-durante-el-render.html">Valor del estado durante el render</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-10-too-many-rerenders.html">Too many rerenders</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-11-donde-colocar-el-estado.html">Dónde colocar el estado</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/estado-y-usestate/5-12-introduccion-a-multiples-estados.html">Introducción a múltiples estados</a></li>
+            </ul>
+          </details>
+          <details class="container-cross-menu">
+            <summary class="title-menu">Eventos y formularios</summary>
+            <ul class="cross-menu">
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/eventos-y-formularios/6-1-anadiendo-event-listeners.html">Añadiendo event listeners</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/eventos-y-formularios/6-2-eliminando-event-listeners.html">Eliminando event listeners</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/eventos-y-formularios/6-3-syntheticevent.html">SyntheticEvent</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/eventos-y-formularios/6-4-preventdefault.html">PreventDefault</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/eventos-y-formularios/6-5-target-vs-currenttarget.html">Target vs CurrentTarget</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/eventos-y-formularios/6-6-event-bubbling-capturing-y-stoppropagation.html">Event bubbling, capturing y stopPropagation</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/eventos-y-formularios/6-7-formularios-no-controlados.html">Formularios no controlados</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/eventos-y-formularios/6-8-formularios-controlados.html">Formularios controlados</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/eventos-y-formularios/6-9-ejemplo-con-un-buscador.html">Ejemplo con un buscador</a></li>
+            </ul>
+          </details>
+          <details class="container-cross-menu">
+            <summary class="title-menu">Lógica, estructura y custom hooks</summary>
+            <ul class="cross-menu">
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/logica-estructura-y-custom-hooks/7-1-modularizando-la-logica.html">Modularizando la lógica</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/logica-estructura-y-custom-hooks/7-2-responsabilidad-unica.html">Responsabilidad única</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/logica-estructura-y-custom-hooks/7-3-anadiendo-nuevos-filtros.html">Añadiendo nuevos filtros</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/logica-estructura-y-custom-hooks/7-4-anadiendo-logica-de-filtrado.html">Añadiendo lógica de filtrado</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/logica-estructura-y-custom-hooks/7-5-primitivos-referencias-stack-y-memoria.html">Primitivos, referencias, stack y memoria</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/logica-estructura-y-custom-hooks/7-6-la-importancia-de-las-funciones-puras.html">La importancia de las funciones puras</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/logica-estructura-y-custom-hooks/7-7-componentizar.html">Componentizar</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/logica-estructura-y-custom-hooks/7-8-agrupando-estados.html">Agrupando estados</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/logica-estructura-y-custom-hooks/7-9-custom-hooks.html">Custom hooks</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/logica-estructura-y-custom-hooks/7-10-mas-custom-hooks.html">Más custom hooks</a></li>
+            </ul>
+          </details>
+          <details class="container-cross-menu">
+            <summary class="title-menu">Contexto y useContext</summary>
+            <ul class="cross-menu">
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/contexto-y-usecontext/8-1-la-tecnica-de-prop-drilling.html">La técnica de prop drilling</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/contexto-y-usecontext/8-2-la-alternativa-de-context.html">La alternativa de context</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/contexto-y-usecontext/8-3-context-provider-y-usecontext.html">Context provider y useContext</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/contexto-y-usecontext/8-4-valor-por-defecto-del-context.html">Valor por defecto del context</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/contexto-y-usecontext/8-5-multiples-context-providers.html">Múltiples context providers</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/contexto-y-usecontext/8-6-las-implicaciones-de-usecontext.html">Las implicaciones de useContext</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/contexto-y-usecontext/8-7-manejo-de-multiples-contextos.html">Manejo de múltiples contextos</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/contexto-y-usecontext/8-8-context-vs-prop-drilling.html">Context vs prop drilling</a></li>
+            </ul>
+          </details>
+          <details class="container-cross-menu">
+            <summary class="title-menu">Side effects y useEffect</summary>
+            <ul class="cross-menu">
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-1-la-experiencia-de-usuario.html">La experiencia de usuario</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-2-prioridad-y-side-effects.html">Prioridad y side effects</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-3-useeffect.html">useEffect</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-4-las-dependencias-de-useeffect.html">Las dependencias de useEffect</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-5-las-reglas-de-los-hooks.html">Las reglas de los hooks</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-6-eslint-plugin-react-hooks.html">ESlint Plugin React Hooks</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-7-no-mientas-con-tus-dependencias.html">No mientas con tus dependencias</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-8-limpieza-de-side-effects.html">Limpieza de side effects</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-9-el-asincronismo.html">El asincronismo</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-10-no-todo-son-side-effects.html">No todo son side effects</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/side-effects-y-useeffect/9-11-desmontado-y-memory-leaks.html">Desmontado y memory leaks</a></li>
+            </ul>
+          </details>
+          <details class="container-cross-menu">
+            <summary class="title-menu">Práctica 1: Listado de usuarios</summary>
+            <ul class="cross-menu">
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-1-objetivos-y-metodologia.html">Objetivos y metodología</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-2-analizando-los-requisitos.html">Analizando los requisitos</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-3-los-flujos-del-diseno.html">Los flujos del diseño</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-4-el-ui-kit.html">El UI Kit</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-5-definiendo-variables-css.html">Definiendo variables CSS</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-6-adaptando-el-codigo-anterior.html">Adaptando el código anterior</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-7-userrole-y-el-uso-de-variables.html">UserRole y el uso de variables</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-8-userstatus-y-los-svg.html">UserStatus y los SVG</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-9-creando-el-userdisplay.html">Creando el UserDisplay</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-10-rematando-estilos-de-userrow.html">Rematando estilos de UserRow</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-11-revisando-la-logica-de-filtrado.html">Revisando la lógica de filtrado</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-12-el-comportamiento-en-conjunto.html">El comportamiento en conjunto</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-13-creando-input-search.html">Creando input search</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-14-rematando-el-input-search.html">Rematando el input search</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-15-creando-input-checkbox.html">Creando input checkbox</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-16-creando-el-select.html">Creando el select</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-17-ajustando-los-estilos.html">Ajustando los estilos</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-18-evitando-valores-magicos.html">Evitando valores mágicos</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-19-modularizando-la-logica.html">Modularizando la lógica</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-20-planteando-la-paginacion.html">Planteando la paginación</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-21-creando-userslistpagination.html">Creando UsersListPagination</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-22-creando-el-iconbutton.html">Creando el IconButton</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-23-creando-el-pageselector.html">Creando el PageSelector</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-24-organizando-los-estados.html">Organizando los estados</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-25-json-server.html">JSON Server</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-26-cargando-usuarios-con-fetch.html">Cargando usuarios con fetch</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-27-evitando-memory-leaks.html">Evitando memory leaks</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-28-modularizando-nuestro-hook.html">Modularizando nuestro hook</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-29-data-loading-error-y-el-ux.html">Data, loading, error y el UX</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-30-creando-el-button.html">Creando el button</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-31-creando-el-input-text.html">Creando el input text</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-32-creando-el-input-text-con-icono.html">Creando el input text con icono</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-33-cambiando-entre-formularios.html">Cambiando entre formularios</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-34-maquetando-el-formulario-de-creacion.html">Maquetando el formulario de creación</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-35-controlados-o-no-controlados.html">Controlados o no controlados</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-36-validando-los-campos.html">Validando los campos</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-37-completando-las-validaciones.html">Completando las validaciones</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-38-validaciones-asincronas.html">Validaciones asíncronas</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-39-modularizacion-y-memory-leaks.html">Modularización y memory leaks</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-40-debounce.html">Debounce</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-41-gestionando-el-submit.html">Gestionando el submit</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-42-submitting.html">Submitting</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-43-separacion-de-responsabilidades.html">Separación de responsabilidades</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-44-separando-los-fetch.html">Separando los fetch</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-45-el-orden-de-presentacion.html">El orden de presentación</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-46-custom-hooks-y-responsabilidades.html">Custom hooks y responsabilidades</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-47-complica-dentro-simplifica-fuera.html">Complica dentro, simplifica fuera</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-48-recargando-los-usuarios.html">Recargando los usuarios</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-49-form-layout.html">Form layout</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-50-edicion-borrado-y-prop-drilling.html">Edición, borrado y prop drilling</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-51-formulario-de-edicion.html">Formulario de edición</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-52-adaptando-las-validaciones.html">Adaptando las validaciones</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-53-adaptando-el-onsubmit.html">Adaptando el onSubmit</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-54-cambiando-las-props.html">Cambiando las props</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-55-formulario-de-borrado.html">Formulario de borrado</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-56-modularizando.html">Modularizando</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-57-creando-un-contexto.html">Creando un contexto</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-58-aprovechando-el-return-null.html">Aprovechando el return null</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-59-creando-un-custom-provider.html">Creando un custom provider</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-60-organizar-los-archivos.html">Organizar los archivos</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-61-selector-de-vista.html">Selector de vista</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-62-creando-las-cards.html">Creando las cards</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-63-filtrado-y-paginacion-en-json-server.html">Filtrado y paginación en JSON server</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-64-paginacion-desde-servidor.html">Paginación desde servidor</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-65-refetch-y-las-dependencias.html">Refetch y las dependencias</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-66-filtrando-desde-el-servidor.html">Filtrando desde el servidor</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-67-un-pequeno-fix.html">Un pequeño fix</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-68-un-ultimo-refactor.html">Un último refactor</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-69-la-accesibilidad.html">La accesibilidad</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-70-actualizando-a-react-18.html">Actualizando a React 18</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/practica-1-listado-de-usuarios/10-71-conclusiones.html">Conclusiones</a></li>
+            </ul>
+          </details>
+        </section>
+      </nav>
+    </header>
+    <main class="container main" id="main">
+      <h1>La accesibilidad</h1>
+      <section class="main-info">
+        <section class="info">
+          <article class="content" id="1">
+            <h2>Subtitulo 1</h2>
+          </article>
+          <article class="content" id="2">
+            <h2>Subtitulo 2</h2>
+          </article>
+        </section>
+      </section>
+    </main>
+    <script src="../../js/prism-whitespace.js"></script>
+  </body>
+</html>
