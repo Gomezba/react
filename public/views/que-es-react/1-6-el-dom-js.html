@@ -26,7 +26,7 @@
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-4-imperativo-vs-declarativo.html">Imperativo vs Declarativo</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-5-cascade-updates.html">Cascade updates</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-6-el-dom-js.html">El DOM de JavaScript</a></li>
-              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El virtual DOM</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El Virtual DOM</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-8-que-es-react.html">¿Qué es React?</a></li>
             </ul>
           </details>
@@ -343,19 +343,84 @@
       <h1>El DOM de JavaScript</h1>
       <section class="main-info">
         <section class="info">
+          <p>Para entender bien qué es el <strong>Virtual DOM</strong> en React, primero necesitamos comprender qué es el <strong>DOM tradicional</strong>, ya que el <strong>Virtual DOM</strong> surge precisamente para mejorar la forma en que interactuamos con esta estructura.</p>
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>El DOM de JavaScript <div>"HTML en forma de árbol n-ario"</div>
+            </h2>
+            <p>El <strong>DOM (Document Object Model)</strong> es una estructura de datos que los navegadores crean a partir del documento HTML que se encuentra renderizado en la web. Dado que HTML está organizado jerárquicamente, la estructura de datos que mejor lo representa es un <strong>árbol n-ario</strong>. Es decir, un árbol en el que cada nodo puede tener un número arbitrario de hijos.</p>
+            <h3>¿En qué consiste exactamente un árbol n-ario?</h3>
+            <p>Un árbol n-ario es una estructura de datos en la que cada nodo puede tener desde cero hasta un número ilimitado de hijos. Se empieza siempre con un nodo llamado nodo raíz <strong>(root)</strong>, y a partir de este, se crean nodos hijos, que a su vez pueden tener más nodos hijos. Cada nodo del árbol tiene un solo padre, excepto el nodo raíz, que no tiene padre. Los nodos que comparten el mismo padre se consideran hermanos entre sí.</p><img src="../../assets/img/1-6-el-dom-js/1.png" alt="árbol n-ario">
+            <p>Los nodos que no tienen hijos se consideran nodos finales y se pueden llamar tambien hojas del árbol.</p><img src="../../assets/img/1-6-el-dom-js/2.png" alt="árbol">
+            <h3>Visualización del HTML</h3>
+            <p>En el DOM (Document Object Model), el nodo raíz corresponde a la etiqueta &lt;html&gt;, actualmente conocido como el objeto Document. Los hijos directos de este nodo raíz son las etiquetas &lt;head&gt; y &lt;body&gt;, que se consideran hermanos entre sí. A partir de estos dos elementos, se llena el árbol del DOM con todos los nodos que representan el contenido del documento HTML.</p><img src="../../assets/img/1-6-el-dom-js/3.png" alt="dom">
+            <p>Para manipular el DOM y sus nodos, los navegadores nos ofrecen una API a través del objeto Document. Algunas funciones comunes que nos permiten interactuar con el DOM son: </p>
+            <ul>
+              <li>
+                <p><strong>getElementsByTagName:</strong> Selecciona elementos por el nombre de su etiqueta.</p>
+              </li>
+              <li>
+                <p> <strong>getElementById:</strong> Selecciona un elemento por su ID.</p>
+              </li>
+              <li>
+                <p> <strong>querySelector:</strong> Selecciona el primer elemento que coincide con un selector CSS.</p>
+              </li>
+              <li>
+                <p> <strong>createElement:</strong> Crea nuevos nodos HTML.</p>
+              </li>
+            </ul>
+            <p>Con estas funciones, podemos modificar atributos, propiedades, o incluso eliminar elementos del DOM. </p><img src="../../assets/img/1-6-el-dom-js/4.png" alt="dom">
+            <p>Es importante comprender que cada cambio que realizamos en el DOM se refleja inmediatamente en el documento renderizado en la web. No hay un mecanismo de "control" o "validación previa" que nos permita decidir cuándo aplicar el cambio; una vez que se modifica el DOM, el navegador inmediatamente actualiza la vista que el usuario ve. Esto puede hacer que el proceso sea poco eficiente si se realizan múltiples actualizaciones de manera continua, afectando el rendimiento del sitio.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Los nodos del DOM </h2>
+            <p>Cada nodo del DOM es un objeto complejo, compuesto por una gran cantidad de atributos, propiedades y funciones que pueden interactuar con ese nodo. Estos nodos contienen información sobre su tipo, contenido, estilo, eventos asociados, entre otras cosas. Sin embargo, muchas de estas propiedades no están activas simultáneamente y suelen estar marcadas como <strong>null</strong> o vacías si no se están utilizando. Por ejemplo, un simple párrafo <strong>&lt;p&gt;</strong> en el DOM puede tener muchas propiedades relacionadas con eventos o estilos que no necesariamente están activas en ese momento.</p>
+            <figure> <img src="../../assets/img/1-6-el-dom-js/5.png" alt="dom">
+              <figcaption>Como podemos ver, es una cantidad grande de atributos, propiedades y funciones que puede tener un simple nodo, en este caso un <strong>"p"</strong></figcaption>
+            </figure>
+            <p>Si consideramos que el DOM completo está formado por una enorme cantidad de estos nodos, cada uno con potenciales propiedades y funciones, podemos imaginarnos la magnitud que puede alcanzar el DOM en una página web grande. </p>
+            <h3>Navegar entre nodos</h3>
+            <p>Uno de los aspectos más interesantes de los nodos del DOM es que están interconectados mediante referencias a otros nodos, lo que facilita la navegación a través de ellos. Esto se hace a través de propiedades clave que permiten moverse entre los nodos en la jerarquía del árbol, con <code>parentNode</code> podemos acceder a su nodo padre, en este caso si estamos desde el "p" accederiamos al body, mediante <code>children</code> tendremos una raiz con todos los hijos de este nodo, en este caso en la pocisión cero tendriamos un nodo de texto que incluye React y con <code>previousSibling</code> o <code>nextSibling</code> podemos acceder a sus hermanos por la izquierda en el caso de <strong>previousSibling</strong> y por la derecha en el caso de <strong>nextSibling.</strong></p><img src="../../assets/img/1-6-el-dom-js/6.png" alt="dom">
+            <p>Lo que hay que entender es que estas propiedades crean lo que se conoce como <strong>estructura circular</strong>.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Estructura circular </h2>
+            <p>Lo que hace aún más complejo el DOM es que estas propiedades permiten que un nodo tenga acceso indirecto o directo a todos los demás nodos de la página. Esto se denomina una estructura circular, porque desde cualquier nodo es posible moverse a otros nodos ascendiendo o descendiendo por el árbol, o incluso moviéndose lateralmente entre hermanos.</p>
+            <p>Esta interconexión entre nodos añade una capa de complejidad, ya que navegar por el DOM no es solo un proceso lineal, sino que los desarrolladores pueden moverse de un nodo a otro en múltiples direcciones.</p>
+            <p>Como podemos ver en el siguiente código, podemos acceder al nodo padre, del nodo padre puedo acceder al hijo, del hijo puedo volver acceder al padre, del padre puedo volver acceder al hijo, del hijo al padre, del padre al hijo y así sucesivamente, como podemos ver esto no tiene fin, podemos seguir así infinitamente. </p>
+            <div>
+              <pre><code class="language-javascript"> p.parentNode 
+p.parentNode.children[0] 
+p.parentNode.children[0].parentNode 
+p.parentNode.children[0].parentNode.children[0] 
+p.parentNode.children[0].parentNode.children[0].parentNode 
+p.parentNode.children[0].parentNode.children[0].parentNode.children[0] </code></pre>
+            </div>
+            <p>Los nodos del DOM contienen referencias circulares, lo que significa que cada nodo puede tener referencias a otros nodos, y esos otros nodos pueden referirse nuevamente al primero. Esto crea una estructura de datos en la que, si intentamos convertir todo el DOM en un formato como JSON, el proceso nunca termina.</p>
+            <p>El formato JSON es una estructura de datos basada en texto que necesita ser finito, es decir, debe tener un principio y un fin claros. Sin embargo, debido a las referencias circulares en los objetos DOM, intentar convertirlos en JSON causaría un bucle infinito, ya que no habría una manera de romper las conexiones de los nodos que se refieren unos a otros.</p>
+            <p>Este tipo de objetos no se puede convertir a JSON debido a las referencias circulares que contienen. Si intentamos hacerlo, el proceso fallará, ya que al tratar de serializar un objeto con referencias que se remiten a sí mismo (o a otros objetos relacionados de forma circular), la conversión se volvería infinita. Por esta razón, al intentar convertir el DOM en JSON obtendremos un error como <strong>TypeError: Converting circular structure to JSON</strong>. </p>
+            <figure> <img src="../../assets/img/1-6-el-dom-js/7.png" alt="dom">
+              <figcaption>Error al querer convertir a JSON una estructura circular.</figcaption>
+            </figure>
+          </article>
+          <article class="content" id="4">
+            <h2>El DOM de JavaScript <div>"Estructura circular cuyos nodos <div>son objetos complejos" </div>
+              </div>
+            </h2>
+            <p>El DOM de JavaScript es una <strong>"estructura circular cuyos nodos son objetos complejos"</strong>. Un algoritmo que intente realizar cálculos o manipulaciones sobre estos nodos tendría que lidiar con la complejidad de estos objetos, lo que puede ser ineficiente y complicado. Para resolver esto, se requiere una estructura de datos más simple, con nodos más livianos, que facilite la tarea de optimizar las actualizaciones y manipulaciones. Esa estructura es el <strong>Virtual DOM</strong>.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">El DOM de JavaScript &quot;HTML en forma de árbol n-ario&quot;</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Los nodos del DOM </a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Estructura circular</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">El DOM de JavaScript &quot;Estructura circular cuyos nodos son objetos complejos&quot; </a></li>
           </ul>
         </nav>
       </section>

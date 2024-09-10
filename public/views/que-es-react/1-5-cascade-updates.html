@@ -26,7 +26,7 @@
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-4-imperativo-vs-declarativo.html">Imperativo vs Declarativo</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-5-cascade-updates.html">Cascade updates</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-6-el-dom-js.html">El DOM de JavaScript</a></li>
-              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El virtual DOM</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El Virtual DOM</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-8-que-es-react.html">¿Qué es React?</a></li>
             </ul>
           </details>
@@ -344,20 +344,26 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
-          </article>
-          <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Cascade Updates</h2>
+            <p>Uno de los últimos grandes problemas que enfrentaron los ingenieros de Facebook fue lo que llamaron "actualizaciones en cascada" o cascade updates. El sistema de plantillas que utilizaban permitía aplicar cambios a las vistas de manera dinámica, pero cada cambio provocaba una cascada de recargas que se volvía inmanejable.</p>
+            <p>Cada vez que una variable dentro de una plantilla cambiaba (por ejemplo, al hacer clic en un botón), toda la plantilla se recargaba, es decir, se sobreescribía completamente con una nueva versión. Aun cuando solo cambiaba un pequeño detalle, todo el contenido de la plantilla se reemplazaba.</p><img src="../../assets/img/1-5-cascade-updates/1.png" alt="example">
+            <p>El problema se agravaba porque las plantillas estaban compuestas por múltiples plantillas internas. Cuando una plantilla externa se recargaba, todas las plantillas internas también lo hacían, una por una. Esto generaba una enorme cantidad de cambios innecesarios, lo que deterioraba gravemente el rendimiento de las vistas.</p><img src="../../assets/img/1-5-cascade-updates/2.png" alt="example">
+            <p>En algunos casos, una sola acción del usuario provocaba recargas en varias plantillas al mismo tiempo. Peor aún, muchas veces, tras todas esas recargas, el estado de las plantillas quedaba exactamente igual, lo que significaba que se había hecho un trabajo completamente inútil.</p>
+            <h3>El objetivo </h3>
+            <p>El objetivo era doble:</p>
+            <ol>
+              <li>
+                <p>Eliminar las actualizaciones en cascada, agrupando todos los cambios en una sola actualización.</p>
+              </li>
+              <li>
+                <p>Optimizar esa actualización, asegurándose de que solo se cambiaran los elementos estrictamente necesarios para reflejar el resultado deseado.</p>
+              </li>
+            </ol><img src="../../assets/img/1-5-cascade-updates/3.png" alt="example">
+            <p>Si delegaban estas tareas a los desarrolladores para que las gestionaran de forma manual e imperativa, cada componente tendría que ser optimizado a fondo. Además, cada vez que esos componentes interactuaban entre sí, habría que optimizar su comportamiento conjunto, lo que hacía el proceso increíblemente complejo y poco práctico.</p>
+            <h3>"Necesitaban un algoritmo"</h3>
+            <p>Lo que necesitaban era un algoritmo que automatizara estas tareas, y ese algoritmo se convirtió en el core (núcleo) de React. Este algoritmo está basado en una estructura de datos llamada <em><strong>Virtual DOM</strong></em>. El <em><strong>Virtual DOM</strong></em> permite que React gestione los cambios de manera eficiente, aplicando solo las actualizaciones mínimas necesarias para que la interfaz de usuario esté siempre en el estado correcto, sin tener que recargar todo el contenido como antes.</p>
           </article>
         </section>
-        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
-          <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
-          </ul>
-          <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
-          </ul>
-        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>

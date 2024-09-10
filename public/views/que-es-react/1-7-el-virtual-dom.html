@@ -26,7 +26,7 @@
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-4-imperativo-vs-declarativo.html">Imperativo vs Declarativo</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-5-cascade-updates.html">Cascade updates</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-6-el-dom-js.html">El DOM de JavaScript</a></li>
-              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El virtual DOM</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El Virtual DOM</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-8-que-es-react.html">¿Qué es React?</a></li>
             </ul>
           </details>
@@ -340,22 +340,49 @@
       </nav>
     </header>
     <main class="container main" id="main">
-      <h1>El virtual DOM</h1>
+      <h1>El Virtual DOM</h1>
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>El Virtual DOM <div>"Una versión simplificada del DOM"</div>
+            </h2>
+            <p>El Virtual DOM es una estructura de datos que React crea y utiliza para representar el DOM de manera más eficiente. Al igual que el DOM real, es un árbol jerárquico que sigue las mismas reglas de padres, hijos y hermanos, pero su diseño es mucho más simple. Esto permite que React trabaje con el DOM de forma más ágil, minimizando la cantidad de manipulaciones directas y optimizando las actualizaciones.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>DOM vs VDOM</h2>
+            <p>A diferencia del DOM, Virtual DOM no almacena todo el documento HTML sino solo una parte de el, que es la que va a utilizar, por ejemplo el Virtual DOM no almacena las etiquetas html, head o body, porque nunca las va a modificar sino que su nodo raiz, estará directamente dentro del body habitualemente en un div.</p><img src="../../assets/img/1-7-el-virtual-dom/1.png" alt="arbol vdom">
+            <p>A diferencia del DOM original, los nodos del Virtual DOM son objetos mucho más simples, ya que almacenan unicamente la informacion de las propiedades que estan actualmente en uso en lugar de almacenar todas, esto hace que los objetos sean mucho mas manipulables y sea mas sencillo y menos costoso crear un algoritmo que trabaje sobre el, pero la principal diferencia entre ambos son las referencias a otros nodos que almacenan dentro.</p><img src="../../assets/img/1-7-el-virtual-dom/2.png" alt="arbol vdom">
+            <p>En un nodo del Virtual DOM no podemos saber quien es su padre, tampoco podemos saber quienes son sus hermanos, unicamente podemos saber quienes son sus hijos, ¿Qué implica esto? que desde un nodo del Virtual DOM, solo se puede navegar hacia abajo, nunca hacia arriba (hacia su padre) ni hacia los lados (hacia sus hermanos).</p><img src="../../assets/img/1-7-el-virtual-dom/3.png" alt="arbol vdom">
+            <h3>El Virtual DOM <div>"No es una estructura circular"</div>
+            </h3>
+            <p>Por lo tanto, el Virtual DOM no es una estructura circular, sino que es lo que se conoce como una estructura en formato <strong>JSON</strong>. La pregunta ahora es, ¿para qué utiliza React esta estructura? Vamos a empezar por el principio, cuando cargamos una web con React por primera vez.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Carga de la web </h2>
+            <p>Al inicio, en el navegador nos encontraremos con que la página está vacía y el DOM únicamente tiene las etiquetas mínimas para funcionar, incluyendo un <strong class="ts-2">div</strong> <strong>que será la raíz de nuestro Virtual DOM</strong>.</p><img src="../../assets/img/1-7-el-virtual-dom/4.png" alt="arbol vdom">
+            <p>En este momento React crea el Virtual DOM con todos sus nodos.</p><img src="../../assets/img/1-7-el-virtual-dom/5.png" alt="arbol vdom">
+            <p>Una vez creado se traslada todo su contenido al DOM.</p><img src="../../assets/img/1-7-el-virtual-dom/6.png" alt="arbol vdom">
+            <p>Y al hacerlo, como ya sabemos, los elementos se crean dentro del propio documento HTML y la web estará lista para el usuario.</p><img src="../../assets/img/1-7-el-virtual-dom/7.png" alt="arbol vdom">
+            <p>A partir de aquí, el usuario puede realizar acciones que modifiquen la interfaz. Vamos a ver cómo se comporta React ante estas modificaciones.</p>
+            <h3>Cambios en nodo </h3>
+            <p>En primer lugar, tenemos por un lado el <strong>Virtual DOM</strong> y por otro el <strong>DOM real</strong>.</p><img src="../../assets/img/1-7-el-virtual-dom/8.png" alt="arbol vdom">
+            <P>Cuando se produce un cambio en un nodo, lo primero que se hace es crear la nueva versión de ese nodo en el Virtual DOM. </P><img src="../../assets/img/1-7-el-virtual-dom/9.png" alt="arbol vdom">
+            <p>Para ello este nodo puede ir sufriendo distintas modificaciones hasta llegar un estado final.</p><img src="../../assets/img/1-7-el-virtual-dom/10.png" alt="arbol vdom">
+            <p>Lo siguiente es calcular la diferencia entre esta nueva versión del nodo y la versión actual en el Virtual DOM; es decir, el estado inicial pasa al estado final.</p><img src="../../assets/img/1-7-el-virtual-dom/11.png" alt="arbol vdom">
+            <p>Una vez que tenemos esta diferencia, se aplican los cambios sobre el Virtual DOM, generando una nueva versión del mismo que ya no coincide con el DOM original.</p><img src="../../assets/img/1-7-el-virtual-dom/12.png" alt="arbol vdom">
+            <p>¿Cuál será el siguiente paso? Utilizar un algoritmo muy optimizado para calcular cuál es la forma más eficiente de trasladar estos cambios al DOM real. En este caso, el cambio sería modificar el texto de "React" a "React JS".</p><img src="../../assets/img/1-7-el-virtual-dom/13.png" alt="arbol vdom">
+            <p>De esta manera, donde antes habríamos provocado 3 cambios en el DOM —recordemos que de <strong>"React"</strong> hemos pasado por otros 2 valores intermedios hasta llegar a <strong>"React JS"</strong>— en el DOM original habríamos provocado 3 recargas y 3 renderizados del nodo. Sin embargo, al hacerlo a través del Virtual DOM, solo hemos provocado los renderizados mínimos necesarios, es decir, un único renderizado en el que se modifica el texto de "React" a "React JS". Obviamente, esto es solo una visión global; a medida que vayamos profundizando en el curso, entenderemos en profundidad cómo funciona este algoritmo, todas las variables que tiene y cómo podemos utilizarlo para conseguir que nuestras interfaces sean lo más rápidas posibles.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">El Virtual DOM &quot;Una versión simplificada del DOM&quot;</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">DOM vs VDOM</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Carga de la web</a></li>
           </ul>
         </nav>
       </section>

@@ -26,7 +26,7 @@
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-4-imperativo-vs-declarativo.html">Imperativo vs Declarativo</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-5-cascade-updates.html">Cascade updates</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-6-el-dom-js.html">El DOM de JavaScript</a></li>
-              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El virtual DOM</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El Virtual DOM</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-8-que-es-react.html">¿Qué es React?</a></li>
             </ul>
           </details>
@@ -344,18 +344,58 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>El stack de Facebook en 2011</h2>
+            <p>Antes de 2011 la aplicación de Facebook estaba escrita fundamentalmente en 4 lenguajes</p>
+            <p> <strong>Cliente </strong></p>
+            <ul>
+              <li>
+                <p><strong class="ts-1">HTML</strong></p>
+              </li>
+              <li>
+                <p><strong class="ts-2">CSS </strong></p>
+              </li>
+              <li>
+                <p><strong class="ts-3">JS </strong></p>
+              </li>
+            </ul>
+            <p>HTML y CSS para la estructura y estilos, JavaScript para la validación de formularios y operaciones simples.</p>
+            <p><strong>Servidor </strong></p>
+            <ul>
+              <li>
+                <p><strong class="ts-1">PHP</strong></p>
+              </li>
+            </ul>
+            <p>Php se utilizaba para todo el resto de la lógica en servidor.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Sistema de plantillas</h2>
+            <p>Con el tiempo, el número de páginas en Facebook fue creciendo, y pronto se dieron cuenta de que gran parte del código de unas páginas podía reutilizarse en otras. Construir una página se volvió similar a armar un rompecabezas con diferentes piezas.</p>
+            <p>Para facilitar la reutilización del código, tanto en la capa de la vista como en la lógica del controlador, implementaron un sistema de plantillas. Este sistema permitía dividir la vista en pequeños fragmentos reutilizables, que luego se podían combinar para crear nuevas vistas. Además, dentro de estas plantillas, se identificaban y reutilizaban las partes comunes que se repetían entre ellas.</p>
+            <p>En resumen, cada plantilla podía estar compuesta por otras plantillas más pequeñas, lo que favorecía la modularidad y la eficiencia en el desarrollo.</p><img src="../../assets/img/1-2-primeros-componentes/1.png" alt="sistema de plantillas">
+            <h3>Templates </h3>
+            <p>Cada plantilla se componía de un archivo en PHP que contenía una función sencilla. Esta función recibía una serie de parámetros y, a partir de ellos, generaba el fragmento HTML correspondiente. Además, cada plantilla tenía asociado su propio archivo CSS para definir sus estilos, y un archivo JavaScript para el comportamiento dinámico, aunque en ese momento dicho comportamiento era mínimo.</p><img src="../../assets/img/1-2-primeros-componentes/2.png" alt="sistema de plantillas">
+            <h3>Templates con string </h3>
+            <p>Para crear estas plantillas, inicialmente optaron por un sistema simple basado en la concatenación de cadenas de texto (strings) para generar el HTML. Sin embargo, este enfoque presentaba varios problemas. Las plantillas eran frágiles, ya que era fácil cometer errores de sintaxis, como dejar etiquetas sin cerrar, lo que las volvía poco confiables. Además, combinar estas plantillas basadas en strings con otras era casi imposible.</p>
+            <p>Es importante recordar que antes de 2011 ni siquiera existían los template strings en JavaScript, lo que hacía este enfoque aún más limitado y propenso a errores.</p><img src="../../assets/img/1-2-primeros-componentes/3.png" alt="sistema de plantillas">
+          </article>
+          <article class="content" id="3">
+            <h2>XHP (XML-PHP)</h2>
+            <p>El manejo de plantillas con cadenas de texto resultaba en un código ilegible debido a la cascada de anidamientos. Por ello, buscaron una alternativa más robusta a nivel semántico y crearon XHP (XML-PHP).</p>
+            <p>XHP es una extensión de PHP que proporciona una sintaxis similar a HTML, permitiendo a los desarrolladores escribir plantillas de forma más intuitiva. Con XHP, era posible manipular etiquetas HTML como variables y crear componentes reutilizables a partir de otros componentes, en lugar de trabajar con simples cadenas de texto. Esto ofrecía un motor de plantillas más potente, capaz de satisfacer sus necesidades de forma eficiente.</p><img class="img-md" src="../../assets/img/1-2-primeros-componentes/4.png" alt="sistema de plantillas">
+            <p>Sin embargo, aunque XHP resolvía muchos de los problemas iniciales, pronto se enfrentaron a un nuevo desafío. ¿Cuál era el problema ahora?</p>
+            <h3>PHP sólo funciona en servidor </h3>
+            <p>El problema es que este motor de plantillas era PHP y PHP solo funciona en el servidor.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">El stack de Facebook en 2011</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Sistema de plantillas</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">XHP (XML-PHP)</a></li>
           </ul>
         </nav>
       </section>
