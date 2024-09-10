@@ -4,14 +4,169 @@ append h1
     h1 Imperativo vs Declarativo
 
 append content 
-    article(id="1" class="content")
-        h2 Subtitulo 1
+    p Cuando crearon React, no solo se enfocaron en los componentes, sino que también buscaron mejorar otros aspectos del desarrollo. Uno de los grandes problemas que enfrentaban al escalar su equipo era que las nuevas incorporaciones tardaban semanas, e incluso meses, en dominar la aplicación y comenzar a hacer contribuciones significativas. Esto se debía a que gran parte de su código utilizaba un enfoque imperativo en lugar de declarativo.
 
+    p Para entender esta diferencia, veamos un ejemplo:
+
+    p Imaginemos que necesitamos implementar un algoritmo para multiplicar todos los elementos de un array por 2. Por ejemplo, si tenemos el array [1, 2, 3], deberíamos obtener el array [2, 4, 6].
+
+    article(id="1" class="content")
+        h2 Imperativo
+            div "Qué hacer y cómo hacerlo"
+        p En un enfoque imperativo, como su propio nombre indica, damos instrucciones al sistema. Le indicamos exactamente cada paso que debe seguir, proporcionándole instrucciones completas sobre cómo realizar la tarea. El enfoque se centra en cómo implementar la solución.
+
+        p Un ejemplo de este enfoque imperativo seria este bucle for of:
+
+        div: pre: code.language-javascript
+            |const array = [1,2,3]
+            |
+            |const multiplied = []
+            |
+            |for (const item of array){
+            |    multiplied.push(item * 2)
+            |}
+            |
+            |console.log(multiplied) // [2, 4, 6]
+        p.des-code En este caso, describimos cada paso que el sistema debe seguir para obtener el resultado deseado.
+
+        p Hasta aquí, todo parece correcto, pero ¿cuál es el problema? El problema radica en que todos los caminos llevan a Roma, es decir, podemos llegar al mismo resultado de muchas maneras diferentes.
+
+        p Por ejemplo, en lugar de multiplicar cada elemento por 2, podríamos sumar cada elemento consigo mismo, ya que, al final, el resultado sería el mismo:
+
+        div: pre: code.language-javascript
+            |const array = [1,2,3]
+            |
+            |const multiplied = []
+            |
+            |for (const item of array){
+            |    multiplied.push(item + item)
+            |}
+            |
+            |console.log(multiplied) // [2, 4, 6]
+        p.des-code Aunque este código produce el mismo resultado, el enfoque es diferente. Este tipo de flexibilidad en los enfoques puede hacer que el código sea menos predecible y más difícil de mantener a medida que crece.
+
+        p Otro ejemplo sería copiar primero el array y luego usar un bucle for tradicional con un iterador para modificar esta nueva copia:
+        div: pre: code.language-javascript
+            |const array = [1,2,3]
+            |
+            |const multiplied = [...array]
+            |
+            |for (let i = 0; i &lt;array.length; i++){
+            |    multiplied[i] = multiplied[i] * 2
+            |}
+            |
+            |console.log(multiplied) // [2, 4, 6]
+        p.des-code Este enfoque también produce el mismo resultado, pero utiliza una técnica diferente. Este tipo de variabilidad en la implementación es uno de los desafíos del enfoque imperativo, ya que puede dificultar la consistencia y el mantenimiento del código.
+
+        p Otra forma de lograr el mismo resultado sería usar un bucle for tradicional sin realizar una copia previa del array, simplemente "pusheando" cada uno de los elementos multiplicados directamente desde el array original:
+        div: pre: code.language-javascript
+            |const array = [1,2,3]
+            |
+            |const multiplied = []
+            |
+            |for (let i = 0; i &lt;array.length; i++){
+            |    multiplied[i] = array[i] * 2
+            |}
+            |
+            |console.log(multiplied) // [2, 4, 6]
+
+        p Si ejecutamos cada uno de estos códigos, veremos que todos producen la misma solución, pero el proceso que siguen para obtenerla es diferente.
+
+        p En un proyecto que usa un enfoque imperativo, cada desarrollador puede resolver el mismo problema de manera distinta. Cada una de estas soluciones tiene el potencial de fallar de manera diferente, lo que significa que cada una debe ser testeada individualmente.
+
+        p Por ejemplo, si probamos estos códigos con un 
+            strong String
+            |   en lugar de números, veremos que uno de ellos arroja un resultado diferente. Esto se debe a que sumar un 
+            strong String
+            |   consigo mismo concatena el valor, mientras que al intentar multiplicarlo, JavaScript lo convierte a número. Así, el 
+            strong String "2"
+            |   sumado consigo mismo resulta en 
+            strong "22"
+            | , mientras que al multiplicarlo por 2 da como resultado 
+            strong 4.
+
+        img(src="../../assets/img/1-4-imperativo-vs-declarativo/1.png" alt="Código imperativo")
+
+        p Pues aquí vemos que aunque en origen parecian muy similares parecian iguales, nos encontramos con que pequeñas particularidades que se pueden dar en cada una de las implementaciones.
+
+        p En resumen, cuando utilizamos un enfoque imperativo, terminamos creando 
+            strong.ts-2 "código menos mantenible"
+            |   o, dicho de otra manera, más código que mantener, lo cual a la larga tiene el mismo efecto.
+
+        p Cuando un nuevo desarrollador llega a este código, surgen preguntas como:
+
+        ul
+            li: p: span.ts-1 ¿Por qué se hizo de esta manera?
+            li: p: span.ts-1 ¿Por qué en otro lugar se hace de forma diferente?
+            li: p: span.ts-1 ¿Hay algo especial que no estoy entendiendo?
+            li: p: span.ts-1 ¿Realmente comprendo qué hace este código y por qué?
+
+        p Resolver estas preguntas implica tiempo perdido: investigar qué hace el código, realizar pruebas, verificar que funciona como se espera o preguntar al desarrollador original. Todos estos problemas se pueden evitar con un enfoque declarativo.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Declarativo 
+            div "Qué hacer, sin importar cómo"
+        p En la programación declarativa, nos enfocamos en el 
+            strong "qué"
+            | , no en el 
+            strong "cómo"
+            | . Mientras que en el enfoque imperativo es importante saber cómo se realiza cada paso, en 
+            strong el declarativo simplemente nos interesa el resultado final
+            | , sin preocuparnos por los detalles internos de la implementación.
 
+        p Por ejemplo, podemos convertir nuestro código en algo más declarativo utilizando la función 
+            code array.map()
+            | &nbsp;:
+
+        div: pre: code.language-javascript
+            |const array = [1,2,3]
+            |
+            |const multiplied = array.map(item => item * 2)    
+        p.des-code En este caso, estamos delegando la lógica de iteración a la función map, que es parte del estándar de JavaScript. Sabemos cuáles son sus entradas (un callback con un formato específico) y su salida (un array transformado), pero no necesitamos conocer cómo está implementada internamente. No importa si usa un bucle for, for...of, o una implementación personalizada. Lo importante es que conocemos qué hace, y eso es suficiente.
+
+        p Un nuevo desarrollador que lea este código sabrá de inmediato lo que está ocurriendo, sin necesidad de investigar o preguntar.
+
+        p Podemos llevar este ejemplo aún más lejos y hacerlo más declarativo creando una función específica:
+        div: pre: code.language-javascript 
+            | const array = [1,2,3]
+            |
+            | const multiplyArrayBy2(array) => array.map(item => item * 2)
+            |
+            | const multiplied = multiplyArrayBy2(array)
+        p.des-code Aquí hemos creado una función multiplyArrayBy2 que encapsula la operación de multiplicar un array por 2. Esta función puede extraerse a un archivo separado, y cada vez que necesitemos realizar esta operación en nuestro proyecto, simplemente llamamos a esta función.
+
+        p Ambas soluciones logran el mismo resultado, pero la versión declarativa es mucho más legible y fácil de entender a simple vista.
+        img(src="../../assets/img/1-4-imperativo-vs-declarativo/2.png" alt="Código declarativo").has-mb
+
+    article(id="3" class="content")
+        h2 "Nos abstraemos de la implementación"
+        p Lo que hacemos al adoptar un enfoque declarativo es 
+            strong abstraernos de los detalles de la implementación
+            | .
+        div.ts-1 
+            p: strong.ts-2 Abstracción
+            p La abstracción en programación es el proceso de simplificar o esconder los detalles complejos de una implementación, para que solo se enfoque en los aspectos esenciales o relevantes para el uso de un sistema o componente. En otras palabras, es proporcionar una interfaz clara y fácil de entender, mientras se ocultan los detalles internos de cómo funciona algo.
+
+            p "abstraerse de los detalles de la implementación" significa que, cuando usamos una función o componente en nuestro código, no necesitamos saber cómo funciona internamente. Solo nos importa qué hace. Por ejemplo, si usamos la función map() en JavaScript, no necesitamos saber qué tipo de bucle usa por dentro o cómo gestiona la memoria, solo necesitamos entender que toma un array y aplica una operación a cada elemento, devolviendo un nuevo array.
+
+        p ¿Qué implica esto realmente para un proyecto? En un enfoque imperativo, si nos enfrentamos a tres situaciones distintas, cada una podría resolverse de manera diferente. Es decir, para tres problemas, tendríamos tres soluciones. 
+
+        img(src="../../assets/img/1-4-imperativo-vs-declarativo/3.png" alt="Código imperativo")
+
+        p Sin embargo, con un enfoque declarativo, esas tres situaciones se pueden resolver con 
+            strong una única solución
+            |   sobre la que podemos trabajar, optimizar y testear. Esto nos permite concentrar nuestro esfuerzo en mejorar y mantener una única forma de hacer las cosas, reduciendo la complejidad.
+        img(src="../../assets/img/1-4-imperativo-vs-declarativo/4.png" alt="Código declarativo")
+
+        p Cuando adoptamos el enfoque declarativo, todos los miembros del equipo trabajan bajo las mismas reglas y utilizan el mismo "lenguaje". Este enfoque es más sencillo de entender, ya que en lugar de resolver los problemas de mil maneras distintas, siempre aplicamos el mismo enfoque coherente.
+
+        h3 "React tiene un enfoque declarativo"
+        p React sigue este enfoque declarativo. Los desarrolladores que usan React deben preocuparse por aspectos como el estado de la aplicación, los efectos secundarios (side effects) o las referencias. Sin embargo, no tienen que lidiar con lo más complejo: 
+            strong cómo se aplican esos cambios al DOM
+            | .
+
+        p ¿Y cuáles son los beneficios de esto? Los desarrolladores de Facebook explican que desde que adoptaron React, muchos de sus nuevos ingenieros pueden hacer commits en los repositorios de Facebook desde su primer día, algo que antes tomaba semanas de adaptación. Este cambio ha facilitado enormemente la productividad y la comprensión del código.  
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Imperativo - "Qué hacer y cómo hacerlo"'],[2,'Declarativo "Qué hacer, sin importar cómo"'],[3,'"Nos abstraemos de la implementación"']]
     +submenu(submenuLinks)

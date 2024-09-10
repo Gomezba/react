@@ -26,7 +26,7 @@
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-4-imperativo-vs-declarativo.html">Imperativo vs Declarativo</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-5-cascade-updates.html">Cascade updates</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-6-el-dom-js.html">El DOM de JavaScript</a></li>
-              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El virtual DOM</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El Virtual DOM</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-8-que-es-react.html">¿Qué es React?</a></li>
             </ul>
           </details>
@@ -344,18 +344,55 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <p>Hoy en día, React es una de las bibliotecas más populares en el desarrollo web, y es raro encontrar un desarrollador que no haya escuchado hablar de ella. Sin embargo, esto no siempre fue así. </p>
+            <h2>Contexto facebook 2011</h2>
+            <p>Para comprender la necesidad de su creación, primero es esencial entender los problemas que llevaron a su desarrollo en 2011.</p>
+            <p>En ese momento, los desarrolladores de Facebook se enfrentaban a desafíos significativos para mantener la consistencia y eficiencia en la gestión de la interfaz de usuario. Estos problemas surgían principalmente de la arquitectura con la que trabajaban, basada en el modelo MVC (Modelo-Vista-Controlador).</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Arquitectura MVC</h2>
+            <p>En la arquitectura MVC, el modelo representa los datos almacenados, la vista muestra esos datos al usuario, y el controlador actúa como intermediario, gestionando las interacciones del usuario con la vista. Cada vez que un usuario realizaba una acción, el controlador actualizaba el modelo, el modelo notificaba a la vista de los cambios, y la vista se actualizaba en consecuencia. Este proceso implicaba una llamada al servidor para cada interacción del usuario, lo que generaba una sobrecarga y complicaciones en la escalabilidad del sistema.</p>
+            <p>La arquitectura MVC (Modelo-Vista-Controlador) fue desarrollada en los años 70 como una solución de propósito general para la creación de software. Supuso una revolución en la forma de abordar el desarrollo de aplicaciones, y su popularidad creció rápidamente, extendiéndose a diferentes tipos de software.</p>
+            <p>A pesar de su éxito, la arquitectura MVC no se aplicó a la web hasta la década de 1990, cuando el concepto de la web comenzó a emerger. Dado que MVC era la arquitectura predominante en ese momento, no es sorprendente que se adaptara también para el desarrollo web. A lo largo de los años, mientras la web evolucionaba y sus requisitos se expandían, MVC también se adaptó para enfrentar estos cambios.</p>
+            <p>A medida que la web evolucionaba y sus requisitos se volvían más complejos, se empezaron a notar limitaciones en el patrón MVC. Originalmente, MVC ofrecía un conjunto de reglas fijas, pero con el tiempo, estas reglas se volvieron más flexibles y sujetas a interpretación. Mientras que en algunos casos seguir el patrón era sencillo, en otros, los desarrolladores interpretaban y aplicaban el patrón de diferentes maneras según el contexto específico de la aplicación. Facebook también enfrentó estos desafíos y tuvo que adaptarse a ellos.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Desarrollo iterativo </h2>
+            <p>En una startup tecnológica innovadora, es crucial moverse rápidamente. Esto significa que se deben seguir estos pasos: crear una versión básica de una nueva funcionalidad, lanzarla al mercado, escuchar lo que dicen los usuarios, hacer mejoras basadas en ese feedback y luego volver a lanzar. Este proceso se repite cada vez que se agrega una nueva funcionalidad hasta que se obtiene la versión ideal.</p>
+          </article>
+          <article class="content" id="4">
+            <h2>Facebook ads "El punto de inflexión" </h2>
+            <p>No es un secreto que el verdadero negocio de Facebook es su plataforma de anuncios. La compañía se enfoca en recopilar información sobre los intereses y comportamientos de los usuarios para ofrecer un espacio donde los anunciantes puedan colocar anuncios personalizados. En resumen, Facebook recolecta enormes cantidades de datos y cobra a los anunciantes por utilizar esta información para sus campañas.</p>
+          </article>
+          <article class="content" id="5">
+            <h2>Exceso de modelos </h2>
+            <p>La arquitectura MVC fue diseñada para manejar escenarios sencillos, donde una vista recibe datos de uno o unos pocos modelos. Sin embargo, en Facebook, las interfaces de usuario necesitaban gestionar cambios en cientos de modelos al mismo tiempo. A medida que Facebook aumentaba la cantidad y calidad de los datos que recopilaba, el número de modelos y datos asociados crecía exponencialmente. Esta creciente complejidad hacía cada vez más difícil gestionar la plataforma. </p>
+          </article>
+          <article class="content" id="6">
+            <h2>Curva de aprendizaje </h2>
+            <p>La falta de un estándar adecuado, combinada con la presión constante de cumplir plazos, hizo que el código de Facebook se volviera extremadamente complejo, incluso para los desarrolladores más experimentados. Cada vez que se incorporaba un nuevo miembro al equipo, enfrentaba una larga curva de aprendizaje, lo que reducía significativamente su productividad inicial. Al principio, añadir nuevos desarrolladores parecía más un problema que una solución.</p>
+            <p>En este contexto, las necesidades de la compañía empezaron a chocar con la capacidad del equipo de desarrollo para implementar nuevas funcionalidades. El crecimiento de Facebook se veía limitado por una metodología de trabajo que no podía mantener el ritmo necesario. Era evidente que tenían que replantear su forma de hacer las cosas. </p>
+            <p>La necesidad de una solución más eficiente y escalable llevó al equipo de Facebook a desarrollar React, abordando estos problemas y mejorando significativamente la experiencia de desarrollo y usuario. </p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Contexto facebook 2011</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Arquitectura MVC</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Desarrollo iterativo</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Facebook ads &quot;El punto de inflexión&quot;</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Exceso de modelos</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#6">Curva de aprendizaje</a></li>
           </ul>
         </nav>
       </section>

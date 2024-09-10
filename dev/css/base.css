@@ -1,6 +1,6 @@
 :root {
 	/* Colores Primarios */
-	--color-primary-text: hsla(0, 5%, 79%, 0.89);
+	--color-primary-text: hsla(0, 5%, 79%, 0.637);
 	--color-primary-blue: hsl(202, 60%, 57%);
 	--color-white: rgba(238, 234, 234, 0.884);
 
@@ -17,8 +17,8 @@
 	--color-title-even-menu: rgb(93, 107, 126);
 	--color-title-menu-hover: hsla(0, 1%, 83%, 0.856);
 	--color-menu-link: hsl(207, 4%, 46%);
-	--color-link-hover: hsla(260, 34%, 51%, 0.541);
-	--color-menu-link-active: hsl(266, 69%, 65%);
+	--color-link-hover: #69d9ed81;
+	--color-menu-link-active: #69daed;
 
 	/* menu lateral derecho */
 	--bg-submenu: hsl(240, 13%, 11%);
@@ -58,7 +58,7 @@
 	--top-sticky-2: 0px;
 	--top-sticky-3: 0px;
 
-	--color-main-title: hsl(0, 12%, 90%);
+	--color-main-title: #69daed;
 	--color-main-subtitle-1: hsl(39, 100%, 60%);
 	--color-main-subtitle-2: hsl(270, 40%, 70%);
 	--color-main-subtitle-3: hsla(160, 76%, 53%, 0.616);
@@ -135,13 +135,17 @@ img {
 	}
 }
 
+:is(h2, h3, h4) + div:has(pre code) {
+	margin-top: 1em;
+}
+
 h1 {
 	padding-left: 1.1em;
 	text-align: center;
 	font-weight: var(--fw-700);
 	color: var(--color-main-title);
 	top: 0;
-	z-index: var(--z2);
+	z-index: var(--z3);
 	min-height: 3.7rem;
 	max-height: max-content;
 	padding-block: 0.3em;
@@ -157,19 +161,21 @@ h2 {
 	top: var(--top-sticky-1);
 	color: var(--color-main-subtitle-1);
 	font-weight: var(--fw-600);
-	z-index: var(--z1);
+	z-index: var(--z2);
 }
 
 h3 {
 	top: var(--top-sticky-2);
 	color: var(--color-main-subtitle-2);
 	font-weight: var(--fw-500);
+	z-index: var(--z1);
 }
 
 h4 {
 	top: var(--top-sticky-3);
 	color: var(--color-main-subtitle-3);
 	font-weight: var(--fw-500);
+	z-index: var(--z1);
 
 	@media (width <= 380px) {
 		min-height: 4rem;
@@ -298,6 +304,7 @@ div:has(pre code) + p.des-code {
 	max-width: 31ch;
 	background-color: var(--bg-text-strong-1);
 	padding: var(--pd-highlight-text);
+	color: #788fa1;
 
 	@media (width > 900px) {
 		max-width: 70ch !important;
@@ -335,6 +342,68 @@ div:has(pre code) code {
 		font-size: 0.89rem;
 	}
 }
+
+div:has(pre code) {
+	position: relative;
+}
+
+div:has(pre code[class*='javascript'])::after,
+div:has(pre code[class*='jsx'])::after,
+div:has(pre code[class*='typescript'])::after,
+div:has(pre code[class*='tsx'])::after,
+div:has(pre code[class*='css'])::after,
+div:has(pre code[class*='scss'])::after,
+div:has(pre code[class*='html'])::after {
+	position: absolute;
+	width: max-content;
+	top: -1rem;
+	right: 0.5rem;
+	padding: var(--pd-small);
+	border-radius: var(--br-small);
+	color: black;
+	font-weight: bolder;
+	font-size: 0.8rem;
+}
+
+div:has(pre code[class*='javascript'])::after {
+	content: 'JS';
+	background-color: #efd81d;
+}
+
+div:has(pre code[class*='jsx'])::after {
+	content: 'JSX';
+	background-color: #364055;
+	color: #6cddfd;
+}
+
+div:has(pre code[class*='typescript'])::after {
+	content: 'TS';
+	background-color: #378fca;
+}
+
+div:has(pre code[class*='tsx'])::after {
+	content: 'TSX';
+	background-color: #364055;
+	color: #6cddfd;
+}
+
+div:has(pre code[class*='css'])::after {
+	content: 'CSS';
+	background-color: #31ace1;
+}
+
+div:has(pre code[class*='scss'])::after {
+	content: 'SCSS';
+	background-color: #ce6b9b;
+	color: #fff;
+}
+
+div:has(pre code[class*='html'])::after {
+	content: 'HTML';
+	background-color: #e4552d;
+	color: #fff;
+}
+
 /* -------------------------------- */
 table {
 	width: 100%;

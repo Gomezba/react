@@ -26,7 +26,7 @@
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-4-imperativo-vs-declarativo.html">Imperativo vs Declarativo</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-5-cascade-updates.html">Cascade updates</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-6-el-dom-js.html">El DOM de JavaScript</a></li>
-              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El virtual DOM</a></li>
+              <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-7-el-virtual-dom.html">El Virtual DOM</a></li>
               <li class="cross-menu__item"><a class="cross-menu__link" href="../../views/que-es-react/1-8-que-es-react.html">¿Qué es React?</a></li>
             </ul>
           </details>
@@ -344,18 +344,72 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Consecuencias de XHP </h2>
+            <p>Con XHP, Facebook parecía estar en una mejor situación: tenían un sistema estable y predecible, y sus servidores pasaban el día renderizando estas plantillas. Sin embargo, ahí surgió un nuevo problema: para cualquier pequeño cambio en la vista, cada acción del usuario generaba una llamada inmediata al servidor.</p>
+            <p>Este enfoque resultaba ineficiente, ya que incluso las interacciones más simples requerían un procesamiento en el servidor, lo que impactaba negativamente en el rendimiento y la escalabilidad de la plataforma.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Saturación </h2>
+            <p>El escenario era complicado: millones de peticiones al servidor, las conexiones de red de aquel entonces, y el rendimiento limitado de PHP, que siempre había sido un problema. Además, aunque XHP facilitaba el desarrollo, empeoraba el rendimiento en comparación con las plantillas creadas con strings. Los servidores estaban sobrecargados.</p><img class="img-md" src="../../assets/img/1-3-el-origen-de-react-jsx/1.png" alt="saturacion">
+            <p>La mayoría de estas peticiones al servidor eran simplemente para actualizar la vista, lo que generaba una carga de trabajo innecesaria para una tarea tan sencilla. ¿Cómo se podía evitar tantas llamadas innecesarias? La respuesta a esta pregunta cambió la web tal como la conocemos hoy en día: <strong>utilizando JavaScript.</strong></p>
+          </article>
+          <article class="content" id="3">
+            <h2>JavaScript</h2>
+            <p>JavaScript permitió reducir muchas de las llamadas al servidor que solo tenían como objetivo actualizar la vista. Ahora, las actualizaciones podían realizarse directamente en el navegador del usuario, utilizando su CPU y memoria RAM. Aunque algunas actualizaciones seguían requiriendo comunicación con el servidor, muchas otras podían gestionarse en el cliente, lo que alivió la carga del servidor y mejoró significativamente la escalabilidad del sistema.</p><img class="img-md" src="../../assets/img/1-3-el-origen-de-react-jsx/2.png" alt="javascript">
+            <h3>Dividir la lógica </h3>
+            <p>La idea de utilizar JavaScript parecía muy buena, pero presentó un nuevo desafío: dividir la lógica de la aplicación entre dos lenguajes, PHP y JavaScript. Originalmente, tanto el renderizado de las plantillas como la lógica del servidor estaban escritos en PHP. En este nuevo enfoque, el renderizado de las vistas tenía que ser gestionado por JavaScript, mientras que la lógica puramente de servidor podía seguir en PHP.</p>
+            <p>El problema era que ya no podían utilizar XHP para crear las plantillas, ya que no era compatible con JavaScript. Esto obligó a replantear cómo estructurar la lógica y el renderizado de las vistas en esta nueva arquitectura.</p><img src="../../assets/img/1-3-el-origen-de-react-jsx/3.png" alt="javascript">
+            <h3>Fax JS - Jordan Walke, 2011</h3>
+            <p>En 2011, Jordan Walke, ingeniero de Facebook, decidió crear Fax JS, una librería que permitía la creación de plantillas en JavaScript de manera muy similar a como se hacía con XHP. Esta fue la semilla de un proyecto que hoy conocemos con otro nombre: <span class="ts-5">React (A JavaScript library for building user interfaces)</span>.</p>
+            <p>Al desarrollar esta nueva librería, el equipo aprovechó toda su experiencia previa. Aprendieron de los errores que habían cometido y potenciaron los aciertos, creando una herramienta más eficiente y adecuada para los desafíos que enfrentaban.</p>
+          </article>
+          <article class="content" id="4">
+            <h2>JSX vs XHP</h2>
+            <p>La primera característica que buscaban en React era una sintaxis intuitiva. Basándose en XHP, idearon una sintaxis que permitiera escribir componentes de una manera aún más similar a HTML. Esta sintaxis, conocida hoy en día como JavaScript XML (JSX), refleja claramente la inspiración que tomaron de XHP.</p><img class="img-md" src="../../assets/img/1-3-el-origen-de-react-jsx/4.png" alt="javascript">
+          </article>
+          <article class="content" id="5">
+            <h2>Etiquetas JSX</h2>
+            <p>Además, buscaban una forma sencilla de combinar componentes, creando componentes más grandes a partir de otros más pequeños, y que este proceso fuera aún más fácil de entender que con XHP. En este contexto, si bien JSX ya se parecía bastante a HTML, su objetivo era hacerlo aún más parecido. En lugar de tratar los componentes como variables, los diseñaron para que se comportaran como etiquetas dentro de las plantillas. De esta manera, el código se asemejaba aún más al HTML estándar.</p>
+            <div class="has-mb">
+              <pre><code class="language-jsx"> &lt;App&gt;
+   &lt;CustomHeader/&gt;
+       &lt;main&gt;
+           &lt;h1&gt;Gomezba&lt;/h1&gt;
+       &lt;/main&gt;
+   &lt;CustomFooter/&gt;
+&lt;/App&gt;        </code></pre>
+            </div>
+          </article>
+          <article class="content" id="6">
+            <h2>Lógica y vista todo en uno </h2>
+            <p>Finalmente, decidieron agrupar la lógica y la plantilla JSX en un solo archivo, en lugar de separarlos en varios. Esto permite al desarrollador tener todo el contexto del componente en un solo lugar, sin necesidad de abrir varios archivos a la vez. Esta integración facilita el trabajo y mejora la comprensión del código.</p>
+            <div>
+              <pre><code class="language-jsx">//Button.jsx
+const Button = () =>{
+   return &lt;button onClick={onClick}&gt;Click&lt;/button&gt;
+}
+const onClick = () =&gt; alert('Gomezba')    </code></pre>
+            </div>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Consecuencias de XHP</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Saturación</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">JavaScript</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">JSX vs XHP</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Etiquetas JSX</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#6">Lógica y vista todo en uno</a></li>
           </ul>
         </nav>
       </section>

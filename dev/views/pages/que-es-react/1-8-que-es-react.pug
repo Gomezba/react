@@ -5,13 +5,79 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 ¿Qué es React?
+        p Ahora que hemos hecho una buena introducción, podremos responder a la gran pregunta que se planteó al inicio de esta sección: ¿Qué es React?
+        p React es:
+        ul 
+            li 
+                p 
+                    strong "Una biblioteca de JavaScript para crear interfaces de usuario"
+            li 
+                p 
+                    strong "Es una libreria, no un framework completo" 
 
+        p Podemos elegir la forma de utilizar React que mejor se adapte a nuestras necesidades, y podemos incorporarlo a nuestros proyectos de la manera que más nos convenga.
+
+        h3 Situación actual
+
+        p Fue desarrollada por 
+            strong Facebook
+            | , es de código abierto y su primera release fue publicada en 2015.
+
+        p Actualmente, es la librería más utilizada en el mundo, muy por delante de sus competidores directos (Angular, Vue y Svelte), lo que la convierte en una de las librerías con mejor comunidad y ecosistema dentro del mundo del frontend.
+
+        h3 "Interfaces declarativas"
+
+        p Permite crear interfaces completamente declarativas, abstraiendo al desarrollador de toda la lógica asociada a manipular el DOM.
+
+        h3 "Basada en componentes"
+        p Está basada en componentes, pequeñas piezas intercambiables en nuestra interfaz que podemos reutilizar para crear componentes más grandes o, en última instancia, páginas completas.
+
+        h3 "Learn once. Write anywhere"
+        p Su última característica es "Aprende una vez y escríbelo en cualquier lugar". ¿Qué quiere decir esto? Que React no es solo una librería para crear interfaces web, sino una librería para crear interfaces de cualquier tipo: desde aplicaciones web hasta aplicaciones móviles, de escritorio y otros muchos usos que se le han dado a lo largo de su historia.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 React y ReactDOM
+        p Una de las cosas que suele llamarnos más la atención cuando empezamos a trabajar con React es que esta librería realmente está dividida en dos partes:
+
+        ul 
+            li 
+                p 
+                    strong React 
+            li 
+                p 
+                    strong ReactDOM 
+
+        p 
+            strong React
+            |   es la libreria con la que podemos definir nuestros componentes y todo su comportamiento.                   
+        div: pre: code.language-jsx
+            |const App = () => {
+            |    return &lt;h1&gt;React&lt;/h1&gt;
+            |}    
+            |
+            |export default App
+
+        p 
+            strong ReactDOM
+            |   es la librería encargada de gestionar el Virtual DOM y todas las tareas asociadas al renderizado de estos componentes en el navegador.
+
+        p Podemos pensar que la intención de esta separación es una pura división de conceptos: por un lado, definir componentes, y por otro, utilizarlos. Sin embargo, lo cierto es que va un poco más allá.
+
+    article(id="3" class="content")
+        h2 React Native
+        p Por qué Facebook separó sus librerías? La verdadera razón por la que Facebook decidió separarlas tiene que ver fundamentalmente con la aparición de 
+            strong React Native
+            | , que es un framework que nos permite crear aplicaciones móviles utilizando componentes de React. Esta librería de React es válida tanto para React en el navegador como para React Native, puesto que realmente lo único que hacemos con ella es definir componentes, sin importar cómo los vayamos a utilizar después.
+
+        p Si bien la librería de ReactDOM es la encargada de manipular estos componentes en un contexto web, React Native se encarga de hacerlo en una aplicación móvil, tanto para Android como para iOS.
+
+        p Así que podemos reescribir esta frase de la siguiente manera:  
+            strong "Aprende React y utilízala para cualquier interfaz"
+
+        p Dicho de otra forma, todos los conceptos que aprendamos en este curso sobre cómo definir componentes son válidos tanto para aplicaciones web como para aplicaciones móviles. Un estado es un estado, ya sea en móvil o en web, y en ambos se manipula exactamente igual y sigue las mismas reglas.
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'¿Qué es React?'],[2,'React y ReactDOM'],[3,'React Native']]
     +submenu(submenuLinks)
