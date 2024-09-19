@@ -344,18 +344,209 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Bases</h2>
+            <p>Antes de mostrar la alternativa que nos da React al código que vimos en el capítulo anterior, daremos las bases.</p>
+            <h3>Usando React sin dependencias </h3>
+            <p>Para trabajar con React no es estrictamente necesario utilizar dependencias externas, aunque sí son esenciales para un rendimiento óptimo. En este ejemplo didáctico, mostraremos cómo utilizar React sin dependencias, pero es importante tener en cuenta que este enfoque no debe utilizarse en producción debido a los altos costes de rendimiento. Este ejemplo es solo con fines demostrativos.</p>
+            <p>Tenemos la siguiente estructura </p>
+            <figure> <img src="../../assets/img/2-2-la-alternativa-de-react/1.png" alt="example">
+              <figcaption>El archivo index.js es el código vimos en el capítulo anterior.</figcaption>
+            </figure>
+            <p>A continuación, incluimos los scripts necesarios para utilizar React en una página HTML sin dependencias externas. Es importante recordar que este enfoque es solo para fines demostrativos y no debe usarse en producción debido a los problemas de rendimiento asociados.</p>
+            <div>
+              <pre><code class="language-html"> &lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+	&lt;head&gt;
+		&lt;meta charset="UTF-8" /&gt;
+		&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+		&lt;title&gt;Document&lt;/title&gt;
+		&lt;link rel="stylesheet" href="css/styles.css" /&gt;
+		&lt;!-- Scripts para utilizar React 18 --&gt;
+		&lt;!-- Cargando la versión de desarrollo de React (no optimizada para producción) --&gt;
+		&lt;script src="https://unpkg.com/react@18/umd/react.development.js"&gt;&lt;/script&gt;
+		&lt;!-- Cargando la versión de desarrollo de ReactDOM (no optimizada para producción) --&gt;
+		&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"&gt;&lt;/script&gt;
+		&lt;!-- Babel es necesario para convertir el código JSX a JavaScript que los navegadores pueden entender --&gt;
+		&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;
+		&lt;!-- Enlace al archivo JavaScript donde escribiremos nuestro código React 
+      utilizando JSX y es importante especificar que el archivo será transpilado a JS con babel --&gt;
+		&lt;script src="js/index-alt.js" defer type="text/babel"&gt;&lt;/script&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+      &lt;!-- Este div será el contenedor donde React montará la aplicación (punto de entrada al DOM) --&gt;
+		&lt;div id="root"&gt;&lt;/div&gt;
+	&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            <p>Ahora veamos nuestra base en JS para empezar a utilizar React.</p>
+            <div class="has-mb">
+              <pre><code class="language-javascript">// Identificamos nuestro elemento root
+const container = document.getElementById('root')
+
+/* En React tenemos que crear un root (raíz) ya que en React
+al final crearemos un árbol de elementos, que va ir creando nuestra
+UI a nivel de componentes y cada componente tendrá dentro un
+componente, porque en React todo es un componente, así que tenemos que crear
+un tronco, una raiz.*/
+// Creamos nuestra raíz con ReactDOM.createRoot(elementoDomDondeSeráLaRaiz)
+const root = ReactDOM.createRoot(container)
+
+//Ahora renderizamos en el DOM con el método render() por ejemplo un texto
+root.render('¡Hello world!')</code></pre>
+            </div><img src="../../assets/img/2-2-la-alternativa-de-react/2.png" alt="example">
+            <h3>¿Que podemos hacer y que no al momento de renderizar?</h3>
+            <p>Veamos ahora, que podemos hacer y que no podemos hacer al momento de renderizar.</p>
+            <h4>Lo que no podemos</h4>
+            <p>Si queremos renderizar una etiqueta, veremos que el método <code>render</code> no tomará en cuenta la etiqueta de HTML, porque solo renderiza texto, componentes y elementos creados con React, pero etiquetas de html no es posible.</p>
+            <div class="has-mb">
+              <pre><code class="language-javascript">const container = document.getElementById('root')
+const root = ReactDOM.createRoot(container)
+   
+// Estamos intentando renderizar una etiquta de HTML    
+root.render('&lt;h1&gt;¡Hello world!&lt;/h1&gt;')</code></pre>
+            </div>
+            <figure> <img src="../../assets/img/2-2-la-alternativa-de-react/3.png" alt="example">
+              <figcaption>Como podemos ver en la imagen, la etiqueta la está tomando como texto plano simplemente, esto nos ayuda a evitar inyecciones de código.</figcaption>
+            </figure>
+            <p>Otra cosa que no podemos hacer es renderizar, varias cosas a la vez.</p>
+            <div>
+              <pre><code class="language-javascript">// Esto no se puede hacer ✖️
+root.render(elemento1,elemento2,elemento3)</code></pre>
+            </div>
+            <p>Para lograr eso tenemos que crear un envoltorio, que puede ser una etiqueta que contenga todos los elementos, o si no queremos una etiqueta como envoltura, React nos ofrece <strong>React.fragment</strong> que no crea ninguna etiqueta y permite guardar varios elementos dentro, pero eso lo veremos en otra sección, aquí solo estamos plantando las bases.</p>
+            <div>
+              <pre><code class="language-javascript">const container = document.getElementById('root')
+const root = ReactDOM.createRoot(container)
+
+const cta1 = React.createElement('a', { className: 'btn btn--primary', href: '#' }, 'cta 1')
+const cta2 = React.createElement('a', { className: 'btn btn--primary', href: '#' }, 'cta 2')
+const cta3 = React.createElement('a', { className: 'btn btn--primary', href: '#' }, 'cta 3')
+
+const wrapper = React.createElement('div', null, [cta1, cta2, cta3])
+
+root.render(wrapper)</code></pre>
+            </div><img src="../../assets/img/2-2-la-alternativa-de-react/5.png" alt="example">
+            <h4>Lo que si podemos </h4>
+            <p>Para poder renderizar elementos, necesitamos crear un elemento, veamos como hacerlo.</p>
+            <p><code>React.createElement()</code></p>
+            <p> Es una función en React que se utiliza para crear elementos de manera <strong>imperativa</strong>. Esta función es el núcleo de la API de React, ya que todo lo que vemos en JSX se transforma en llamadas a <strong>React.createElement()</strong> durante la fase de compilación de JSX. Básicamente, toma una descripción de un elemento de la interfaz de usuario y la convierte en un objeto que React puede renderizar en el DOM.</p>
+            <p><strong class="ts-3">Sintaxis:</strong></p>
+            <div>
+              <pre><code class="language-javascript"> React.createElement(type, [props], [...children])</code></pre>
+            </div>
+            <p><strong class="ts-2">Parámetros:</strong></p>
+            <ol>
+              <li>
+                <p> <strong class="ts-1">type </strong>&nbsp;: (Obligatorio) Define el tipo de elemento a crear. Puede ser:</p>
+                <ul>
+                  <li>
+                    <p>Una cadena que indica un elemento HTML nativo como 'div', 'span', etc.</p>
+                  </li>
+                  <li>
+                    <p>Un componente de React, que puede ser una función o una clase.</p>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <p> <strong class="ts-1">props </strong>&nbsp;: (Opcional) Un objeto que contiene las propiedades o atributos que se quieren pasar al elemento. Estos pueden incluir cosas como <strong>className</strong>, <strong>id</strong>, <strong>onClick</strong>, etc. Si no hay propiedades que pasar, se puede proporcionar <strong>null.</strong></p>
+              </li>
+              <li>
+                <p> <strong class="ts-1">children </strong>&nbsp;: (Opcional) Cualquier cantidad de nodos hijos que este elemento pueda tener. Los hijos pueden ser otros elementos creados con <strong>React.createElement()</strong>, cadenas de texto o incluso arrays de elementos. </p>
+              </li>
+            </ol>
+            <div class="has-mb">
+              <pre><code class="language-javascript">const container = document.getElementById('root')
+const root = ReactDOM.createRoot(container)
+
+const button = React.createElement('button', { className: 'btn btn--primary' }, 'Me gusta')
+
+root.render(button)</code></pre>
+            </div><img src="../../assets/img/2-2-la-alternativa-de-react/4.png" alt="example">
+            <p>Hasta este punto, nuestro código es imperativo, para hacerlo declarativo necesitamos utilizar <code>JSX</code>.</p>
+            <p><strong class="ts-2">¿Qué es JSX?</strong></p>
+            <p> <strong>JSX (JavaScript XML)</strong> es una extensión de la sintaxis de JavaScript que permite escribir HTML directamente dentro del código JavaScript en React. Aunque parece una mezcla de JavaScript y HTML, JSX en realidad se convierte en llamadas a funciones de JavaScript (específicamente, React.createElement()).</p>
+            <p><span class="ts-1">Ejemplo básico:</span></p>
+            <div>
+              <pre><code class="language-jsx"> const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;</code></pre>
+            </div>
+            <p>Este código <strong>JSX</strong> será transformado por <strong>Babel (u otro compilador)</strong> a algo como esto:</p>
+            <div>
+              <pre><code class="language-javascript">const element = React.createElement('h1', null, 'Hello, world!');</code></pre>
+            </div>
+            <p class="note"> <strong>JSX</strong> es solo una forma más conveniente y legible de escribir estructuras de interfaz de usuario que eventualmente se <strong>traducen a funciones de JavaScript</strong> que crean nodos del DOM. </p>
+            <p class="note"> <strong>JSX</strong> es <strong>declarativo</strong>. En React, el uso de JSX sigue el paradigma declarativo, lo que significa que describes qué quieres que se muestre en lugar de cómo se debe hacer.</p>
+            <p class="note"> <strong>JSX es más estricto que HTML</strong>. Tienes que cerrar etiquetas como <strong>&lt;br /&gt;</strong>. Tu componente tampoco puede devolver múltiples etiquetas de JSX. Debes envolverlas en un padre compartido, como <strong>&lt;div&gt;...&lt;/div&gt;</strong> o en un envoltorio vacío <strong>&lt;&gt;...&lt;/&gt;</strong>. </p>
+            <p class="note">Otra cosa es que es <strong>JSX es robusto y contiene validación de errores</strong> por si llegamos a cometer un error de dedo, por ejemplo, al olvidarnos poner unas <strong>"</strong>, el editor mismo nos avisará que hay un error, y si aun así guardamos, en el navegador nos aparecerá un error de sintaxis.</p>
+            <p>Sabiendo esto pasemos nuestro <strong>Button</strong> que habiamos creado anteriormente de forma imperativa a declarativa con <strong>JSX</strong>.</p>
+            <h4>Código declarativo </h4>
+            <div class="has-mb">
+              <pre><code class="language-jsx"> const container = document.getElementById('root')
+const root = ReactDOM.createRoot(container)
+
+const button = &lt;button className='btn btn--primary'&gt;Me gusta&lt;/button&gt;
+
+root.render(button)</code></pre>
+            </div><img class="has-mb" src="../../assets/img/2-2-la-alternativa-de-react/4.png" alt="example">
+            <h4>Importante saber al renderizar </h4>
+            <p class="ts-1">"Algo importante a tener en cuenta es por qué React normalmente se renderiza sobre un <strong>div</strong> (como <strong>&lt;div id="root"&gt;&lt;/div&gt;</strong>) y no directamente sobre el <strong>body</strong> del <strong>HTML</strong>. Esto se debe a que, cuando utilizamos <code>root.render(elemento)</code>, <strong>React</strong> reemplaza todo lo que exista dentro del elemento en el que estamos renderizando. Si tratáramos de renderizar directamente sobre el <strong>body</strong>, <strong>React</strong> podría sobrescribir todo el contenido existente en el body, lo cual no es deseable, ya que podría eliminar otros elementos del documento que no forman parte de la aplicación React. Utilizando un <strong>div</strong> dedicado, como el <strong>div#root</strong>, mantenemos el control de dónde React debe renderizar y evitamos afectar al resto de la página."</p>
+            <p>Este enfoque asegura que la aplicación React interactúe solo con la parte que necesita controlar, y mantiene la integridad del resto del contenido de la página.</p>
+            <p>Veamos el siguiente ejemplo </p>
+            <div>
+              <pre><code class="language-html"> &lt;body&gt;
+	&lt;div id="root"&gt;
+      &lt;!-- Este h1 será reemplazado cuando React renderice algo dentro del "div#root". 
+      Todo lo que se encuentre dentro del div desaparecerá al renderizar el componente de React --&gt;    
+		&lt;h1&gt;Gomezba&lt;/h1&gt;
+	&lt;/div&gt;
+&lt;/body&gt; </code></pre>
+            </div>
+            <p class="note">En nuestra aplicación pueden coexistir otros elementos dentro del body, aparte de React. Si renderizamos directamente sobre el body, React sobrescribiría todo su contenido, lo que podría eliminar elementos importantes que no forman parte de la aplicación React. Por eso, es preferible renderizar dentro de un div específico (como div#root), lo que permite que React controle solo esa parte de la página, dejando el resto del contenido intacto. Esto nos da más flexibilidad y evita posibles problemas. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Alternativa de React</h2>
+            <p>Con el conocimiento que tenemos hasta este momento, ahora si procedamos a la alternativa con React al ejercicio de los <strong>avatares</strong> del capítulo anterior.</p>
+            <h3>Solución imperativa - React.createElement</h3>
+            <div class="has-mb">
+              <pre><code class="language-js"> const container = document.getElementById('root')
+const root = ReactDOM.createRoot(container)
+
+const getAvatar = (params) =>
+	React.createElement(
+		'section',
+		{ className: 'avatar' },
+		React.createElement('img', { className: 'avatar__img', src: params.img }),
+		React.createElement('span', { className: 'avatar__name' }, params.name)
+	)
+
+const avatars = AVATARS.map((avatarParams) => getAvatar(avatarParams))
+
+root.render(avatars)    </code></pre>
+            </div><img class="has-mb" src="../../assets/img/2-2-la-alternativa-de-react/6.png" alt="example">
+            <h3>Solución declarativa - JSX</h3>
+            <div class="has-mb">
+              <pre><code class="language-js"> const container = document.getElementById('root')
+const root = ReactDOM.createRoot(container)
+
+const getAvatarsJsx = (params) => (
+	&lt;section className='avatar'&gt;
+		&lt;img className='avatar__img' src={params.img} /&gt;
+		&lt;span className='avatar__name'&gt;{params.name}&lt;/span&gt;
+	&lt;/section&gt;
+)
+
+const avatars = AVATARS.map((avatarParams) => getAvatarsJsx(avatarParams))
+
+root.render(avatars)</code></pre>
+            </div><img class="has-mb" src="../../assets/img/2-2-la-alternativa-de-react/6.png" alt="example">
+            <p>En el próximo capítulo, veremos cómo preparar nuestro código de React para producción, transpilándolo previamente a JavaScript. Hasta este momento, el código se transpila cada vez que el usuario accede a la página, lo que puede afectar el rendimiento. El enfoque ideal es transpilar el código solo una vez antes de desplegarlo, de modo que cuando el usuario entre en la página, ya pueda leer directamente el código en JavaScript optimizado, mejorando considerablemente la velocidad de carga.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Bases</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Alternativa de React</a></li>
           </ul>
         </nav>
       </section>

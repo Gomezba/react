@@ -5,13 +5,332 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 ¿Por qué utilizamos Vite?
+        p La alternativa que utilizaremos para crear nuestras aplicaciones de React es 
+            a(href="https://vitejs.dev/" target="_blank").link vite
+            | . 
+
+        p 
+            strong Vite
+            |   es un framework, que nos permite crear un proyecto no solamente en React, si no, en muchas otras aplicaciones de JavaScript.
+
+        img(src="../../assets/img/2-7-creando-una-app-vite/1.png" alt="example")
+
+        p 
+            strong Vite
+            | , es una alternativa muy popularizada ya que es bastantemente rápido y tiene una amplia gama de características, que hacen que sea idónea tanto para pequeños proyectos para cuando estamos aprendiendo, como para proyectos enormes que tengan que ser llevados a producción con un rendimiento clave.
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Creando proyecto con Vite
 
+        p Empezamos por abrir la terminal en la raiz donde crearemos nuestro proyecto, en nuestro caso será la carpeta 
+            strong react-vite
+            | , es decir dentro de esta carpeta se creará un proyecto que tendrá su propia carpeta.
+
+        p Ejecutamos el comando: 
+
+        p: code npm init vite@latest 
+
+        p Establecemos un nombre de proyecto, el framework y su variante.
+
+        img(src="../../assets/img/2-7-creando-una-app-vite/2.png" alt="example")
+
+        p Nos movemos a la carpeta del proyecto que nos a creado 
+            strong Vite
+            | , en nuestro caso la llamamos 
+            strong first-project
+            |  
+        p  Ejectamos el comando 
+            code npm i
+            |   para instalar las dependencias.   
+        img(src="../../assets/img/2-7-creando-una-app-vite/3.png" alt="example")
+
+        p De primer vistazo, podemos ver que, es un proyecto mucho más simple que el que habiamos creado con create-react-app.
+        img(src="../../assets/img/2-7-creando-una-app-vite/4.png" alt="example")
+
+        p A demás, el peso de la carpeta de las dependencias (node_modules) es considerablemente bajo, con solo 
+            strong 94mb
+            |    a comparación de los 149mb de las dependencias de create-react-app.
+        img(src="../../assets/img/2-7-creando-una-app-vite/5.png" alt="example")
+
+        p Hechemos un vistazo al 
+            strong package.json 
+            | , observaremos que solo tenemos 4 scripts.
+
+        img(src="../../assets/img/2-7-creando-una-app-vite/6.png" alt="example")
+
+        ol 
+            li 
+                p
+                    strong dev
+                    | : Ejecuta el comando vite para iniciar el servidor de desarrollo. Esto te permite correr tu proyecto en un entorno local con recarga en caliente (
+                    strong hot-reloading
+                    | ), lo que significa que cualquier cambio que hagas en tu código se reflejará instantáneamente en el navegador sin necesidad de recargar la página completa. Esto agiliza el desarrollo, ya que solo se actualizan las partes modificadas del proyecto, manteniendo el estado de la aplicación.
+            li 
+                p
+                    strong build
+                    | : Ejecuta vite build para generar una versión optimizada de tu proyecto lista para producción. El resultado es un conjunto de archivos estáticos que pueden ser desplegados en un servidor web.
+
+            li 
+                p
+                    strong lint
+                    | : Ejecuta eslint . para analizar el código en busca de errores o problemas de estilo según las reglas configuradas en ESLint. El punto (.) indica que se revisará todo el proyecto.      
+
+            li 
+                p
+                    strong preview
+                    | : Utiliza vite preview para lanzar una versión previa de tu aplicación construida. Esto simula cómo se verá la app en producción al correr un servidor de solo lectura para revisar el resultado final.
+
+    article(id="3" class="content")
+        h2 Vite en modo desarrollo     
+
+        p Comenzaremos por utilizar el primero de los comandos
+        p: code npm run dev
+        p y seleccionamos nuestro servidor local.
+
+        img(src="../../assets/img/2-7-creando-una-app-vite/7.png" alt="example")
+
+        p Y en menos de 1 segundo nuestra app estará ejecutandose
+        img(src="../../assets/img/2-7-creando-una-app-vite/8.png" alt="example")
+
+        h3 ¿Por qué es tan rápido?
+
+        p Porque en 
+            strong Vite
+            |   no bandelizamos en 
+            strong desarrollo
+            |   . 
+
+        p Si nos vamos a la pestaña 
+            strong Sources 
+            |   miraremos que tenemos varios 
+            strong archivos js
+            | , lo que quiere decir que solo tenemos una versión 
+            strong transpilada
+            |   sin llegar a bandelizar.
+        img(src="../../assets/img/2-7-creando-una-app-vite/9.png" alt="example")
+
+        p Como hemos mencionado, cuando estamos en modo 
+            strong desarrollo
+            |  no es necesario 
+            strong bandelizar
+            |   la aplicación.
+
+        p Miraremos esto a detalle en la documentación de 
+            strong Vite
+            |: 
+            a(href="https://vitejs.dev/guide/why.html" target="_blank").link ¿Por qué Vite?     
+
+        figure.ts-1 
+            img(src="../../assets/img/2-7-creando-una-app-vite/10.png" alt="example").has-mb
+            figcaption Mientras que un servidor de desarrollo basado en 
+                strong bundle,
+                |   tiene que bandelizar y así posteriormente el servidor estará listo para ser ejecutado. Esto es demasiado lento, ya que, una app puede llegar a tener miles de documentos JS, y el bandelizar todos estos para que el servidor pueda estar listo, será demasiado lento.
+
+        figure.ts-1 
+            img(src="../../assets/img/2-7-creando-una-app-vite/11.png" alt="example").has-mb
+            figcaption Mientras que un servidor basado en los 
+                strong módulos nativos de Ecma Script (ESM)
+                |   es decir utilizar 
+                strong import 
+                |   y 
+                strong export
+                | , tiene desde un inicio el 
+                strong servidor listo
+                |   y a medida que lo vamos necesitando, se va cargando, es decir, solo cargamos aquello que necesitamos. Por eso tan importante utilizar 
+                strong import - export
+                | .
+
+    article(id="4" class="content")
+        h2 Vite en modo producción 
+
+        p Ejecutamos el comando 
+        p: code npm run build
+        img(src="../../assets/img/2-7-creando-una-app-vite/12.png" alt="example")
+        p Esto nos genera rápidamente una carpeta llamada 
+            strong dist
+            |   con una carpeta dentro llamada 
+            strong assets
+            |   con los siguientes archivos.
+
+        img(src="../../assets/img/2-7-creando-una-app-vite/13.png" alt="example")
+        p.ts-2
+            span Esta carpeta 
+            strong "dist"
+            |   es la que subiremos a 
+            strong producción
+            | .   
+
+        p Ahora, miraremos el 
+            strong index.html
+            | .
+
+        figure 
+            img(src="../../assets/img/2-7-creando-una-app-vite/14.png" alt="example")
+            figcaption Como vemos, está añadiendo el script 
+                strong index-DfQ3Eo-l.js
+                |   y los estilos de la aplicación 
+                strong index-DiwrgTda.css
+
+        p El archivo 
+            strong index-DfQ3Eo-l.js
+            | , se encuentra bandelizado con todo el código de 
+            strong React 
+            |   y 
+            strong React-dom 
+            |   como todos los demás módulos de nuestra aplicación.
+            |   A su vez el código se encuentra 
+            strong ofuscado 
+            |   y 
+            strong minificado
+            | .          
+
+        img(src="../../assets/img/2-7-creando-una-app-vite/15.png" alt="example")
+
+        p Los estilos de nuestra aplicación se encuentran de igual manera 
+            strong bandelizados
+            |   (Todos los archivos css se unifican), y a su vez minificados.
+        img(src="../../assets/img/2-7-creando-una-app-vite/16.png" alt="example")
+
+        h3 ¿Y para qué sirve la carpeta 
+            strong public
+            |?
+
+        p Si la carpeta, 
+            strong "dist"
+            |   es la que subimos a producción, 
+            strong ¿Para qué nos sirve la carpeta public?    
+
+        p En 
+            strong Vite
+            | , la carpeta 
+            strong public
+            |    se utiliza para almacenar archivos estáticos que no pasarán por el proceso de build o transformación de Vite. 
+            strong Estos archivos se copian directamente a la carpeta de salida (dist) tal como están
+            | . Los archivos que pongas en public estarán disponibles de manera pública cuando subas tu proyecto a producción.
+
+        p Por ejemplo, si tienes un archivo 
+            strong logo.png
+            |   en 
+            strong public
+            | , este se podrá acceder en producción como https://tu-dominio.com/logo.png. Es útil para elementos que no necesitas procesar o modificar con JavaScript o CSS, como 
+            strong imágenes
+            | , 
+            strong fuentes 
+            | o 
+            strong manifestos (como favicon.ico o manifest.json)
+            | .
+
+        p.note En resumen, cualquier archivo que pongas en 
+            strong public
+            |   será copiado directamente a 
+            strong dist
+            |   sin modificaciones y 
+            strong estará disponible en la raíz del proyecto
+            | .    
+        figure 
+            img(src="../../assets/img/2-7-creando-una-app-vite/17.png" alt="example")
+            figcaption Como observamos, el 
+                strong svg
+                |   dentro de la carpeta 
+                strong public
+                | , se encuentra en la raíz de la carpeta 
+                strong dist
+                |.
+
+    article(id="5" class="content")
+        h2 Vite en modo preview
+
+        p Para asegurarnos de que nuestra aplicación funciona, y antes de subir nuestra aplicación al servidor de producción, 
+            strong Vite
+            | , nos proporciona el comando: 
+        p: code npm run preview
+
+        p para previsualizar nuestra aplicación y ver que todo este correcto y funcione.
+        p Ejecutamos el comando y nos generará un servidor para visualizar.
+        img(src="../../assets/img/2-7-creando-una-app-vite/18.png" alt="example")
+        p Abrimos el servidor y visualizaremos nuestra aplicación. 
+        img(src="../../assets/img/2-7-creando-una-app-vite/19.png" alt="example")
+
+        p Y ahora si vamos a la pestaña 
+            strong sources
+            |   miraremos todo bandelizado.
+        img(src="../../assets/img/2-7-creando-una-app-vite/20.png" alt="example")
+
+        p Entonces con 
+            strong Vite
+            |   estas serían las 2 opciones, en 
+            strong desarrollo
+            |   no bandelizamos y en 
+            strong producción 
+            |   si.
+
+    article(id="6" class="content")
+        h2 Configuración
+
+        p Solo queda hablar de la configuración de 
+            strong Vite.
+
+        p 
+            strong Vite
+            |   nos proporciona un archivo llamado 
+            strong vite.config.js
+            | , donde podremos configurar todo lo que queramos.
+
+        img(src="../../assets/img/2-7-creando-una-app-vite/21.png" alt="example")
+
+        p 
+            strong Vite
+            |   funciona a través de 
+            strong plugins
+            | , es decir si tenemos el plugin de React (
+            strong react()
+            |), que nos sirve para configurar un proyecto genérico de Vite como un proyecto de React. Dentro de los paréntesis podremos aplicar un monton de configuraciones de React que extiende la configuración por defecto. Es decir si modificamos una pequeña opción, no tenemos que tomar todo el archivo de configuración del empaquetador y montarlo por nuestra cuenta como se hace con Create React App, si no que simplemente pisamos esa opción y seguimos manteniendo todo tal y como está.
+
+        img(src="../../assets/img/2-7-creando-una-app-vite/22.png" alt="example")
+
+        p De la misma forma tenemos un monton de plugins oficiales de 
+            strong Vite
+            |   que nos permiten configurar todo el empaquetador y transpilador.
+
+        p Y en este caso ¿Cúal sería ese empaquetador? y ¿Cúal sería ese transpilador? pues bien, aquí no estamos utilizando ni Webpack ni Babel, si no que 
+            strong Vite
+            |   utiliza una combinación entre 
+            strong.ts-3 esbuild
+            |   y 
+            strong.ts-3 rollup.js
+            | . Son 2 herramientas que a priori hacen lo mismo.
+
+        p ¿Por qué utilizar 2 en lugar de solo una?, La razón es muy sencilla. 
+            strong Vite
+            |   utiliza como base 
+            strong esbuild 
+            |   y todo lo que puede hacer con 
+            strong esbuild
+            |   lo hace con el. Esbuild es transpilador y tambien es empaquetador, entonces la mayoría de tareas de este empaquetado y esta transpilación al completo, las hace con 
+            strong esbuild 
+            | .
+
+        p Pero hay ciertas funcionalidades que 
+            strong esbuild
+            |   todavía no permite, 
+            strong esbuild
+            |   es una herramienta que es relativamente nueva y todavía no tiene toda la compatibilidad necesaria, a pesar de que es excesivamente rápida hay pequeñas cosas que aún no puede hacer. Entonces todos esos pequeños fallos que tiene 
+            strong esbuild
+            |   los corrigen utilizando 
+            strong rollup.js.
+
+        p Pero evidentemente el plan de 
+            strong Vite
+            |   es que cuando 
+            strong esbuild
+            |   evolucione, dejarán de utilizar 
+            strong rollup.js
+            |   y se quedarán solo con 
+            strong esbuild
+            | .
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'¿Por qué utilizamos Vite?'],[2,'Creando proyecto con Vite'],[3,'Vite en modo desarrollo'],[4,'Vite en modo producción'],[5,'Vite en modo preview'],[6,'Configuración']]
     +submenu(submenuLinks)

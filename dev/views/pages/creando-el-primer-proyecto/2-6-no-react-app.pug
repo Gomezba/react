@@ -5,13 +5,95 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 El problema de las configuraciones
 
+        p Por si toda esta parte de configurar 
+            strong Webpack
+            |   y 
+            strong Babel
+            |   nos ha parecido poco, pues hay que saber que 
+            strong Webpack
+            |   no es el único empaquetador, ni 
+            strong Babel
+            |   el único transpilador.
+
+        p De hecho hay bastantes herramientas, que, hacen exactamente lo mismo pero de forma distinta.
+        ul 
+            li 
+                p 
+                    strong: a(href="https://parceljs.org/" target="_blank").link  PARCEL
+                    |   : Es un empaquetador bastante similar a Webpack.
+            li 
+                p 
+                    strong: a(href="https://esbuild.github.io/" target="_blank").link esbuild
+                    |   : Es un empaquetador mucho más rápido y a demás es un transpilador a la vez.
+            li 
+                p 
+                    strong: a(href="https://swc.rs/docs/usage/bundling" target="_blank").link swc
+                    |   : Es un empaquetador y transpilador a la vez, igual que esbuild, pero está hecho con Rust.
+            li 
+                p 
+                    strong: a(href="https://rollupjs.org/" target="_blank").link rollup.js
+                    |   : Es otro empaquetador y transpilador a la vez.
+            li 
+                p 
+                    strong: a(href="https://www.snowpack.dev/" target="_blank").link Snowpack
+                    |   : Es otro empaquetador y transpilador, pero ocupa cosas de Webpack y de esbuild.
+
+        p Rápidamente el equipo de Facebook y todo el ecosistema, se dio cuenta de que esta parte de configurar el empaquetador y el transpilador se estaba volviendo un verdadero problema y una gran barrera de entrada para aprender React, y es que, configurar esto, sin unos conocimientos avanzados de JS es verdaderamente bastante retador.
+
+        p Lo que hicieron para solucionar esto, fue proporcionar una serie de herramientas que nos permiten crear nuestros proyectos, utilizando un simple comando, es decir configuran por nosotros el empaquetador, el transpilador, el servidor de desarrollo y otras muchas cosas que necesitamos para que nosotros solo tengamos que preocuparnos por escribir código React. 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 ¿Por qué no usamos create-react-app?
+
+        p La primera de estas alternativas fue 
+            strong Create React App
+            |   creado y mantenido por Facebook, era la forma más habitual para empezar a trabajar con React.
+
+        p Si nosotros nos vamos a la documentación de React, veremos que es la forma que Facebook recomienda para crear nuestra primera aplicación de React, porque realmente es muy sencillo, solo utilizar un simple comando 
+            strong npx create-react-app my app
+            |   y tener nuestra app montada "teoricamente en segundos" y esto de segundos no es así como lo prometen. 
+
+        p La realidad, es que, esta no es la forma que ocuparemos para realizar nuestros proyectos con React y veremo el porque.
+
+        h3 Razones para no montar nuestra app con Create React App 
+
+        ol 
+            li 
+                p Al ejecutar el comando, demora varios minutos ya que descarga bastantes recursos. 
+            li 
+                p La aplicación base está sobrecargada de recursos que quizás no utilizaremos, nos obligan a ocupar ciertas cosas y no deberia ser así, por ejemplo crear los test con testing-library aunque no es mala opción, o suponer que tendremos una PWA al proporcionarlos el archivo manifest.json, tener un archivo robots.txt para suponer que nuestra app estará indexada en google y otras muchas cosas.
+
+                img(src="../../assets/img/2-6-no-react-app/1.png" alt="example") 
+            li 
+                p Al arrancar la aplicación, es decir al ejecutar el comando 
+                    strong npm start
+                    |   son casi 10 segundos para arrancar una simple página que contiene un logo y un enlace.
+                img(src="../../assets/img/2-6-no-react-app/2.png" alt="example") 
+
+            li 
+                p La carpeta 
+                    strong node_modules
+                    |   pesa 
+                    strong 249mb
+                    |   lo cual es una barbaridad para una simple página con un logo y un enlace.
+                img(src="../../assets/img/2-6-no-react-app/3.png" alt="example") 
+            li 
+                p Pero el verdadero problema es que fuera de las carpetas de public, src, y node_modules no tenemos para configurar cosas a nuestro gusto, o si algo llega a fallar no hay manera de configurarlo.
+                img(src="../../assets/img/2-6-no-react-app/4.png" alt="example") 
+
+                p Para lograr configurar nos proporcionan un comando: 
+                    strong npm run eject
+                    |   lo cual nos proporcionará los archivos de configuración, y una vez hecho esto, ya no hay forma para volver atrás.
+                img(src="../../assets/img/2-6-no-react-app/5.png" alt="example") 
+
+
+        p Por todas estas razones no utilizaremos 
+            strong Create React App
+            |   y utilizaremos otra manera más moderna.
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'El problema de las configuraciones'],[2,'¿Por qué no usamos create-react-app?']]
     +submenu(submenuLinks)

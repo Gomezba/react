@@ -4,14 +4,309 @@ append h1
     h1 Cónfigurando ESLint
 
 append content 
+    p Hasta ahora nos hemos centrado en las tareas que debemos de realizar para que nuestro proyecto funcione y las alternativas que tenemos para lograrlo. Ahora vamos hablar sobre las 
+        strong buenas prácticas
+        |   a la hora de escribir nuestro código.
+
+    p Hasta este punto hemos escrito el código de la forma que no ha parecido más oportuna y el editor nos ha proporcionado poca o ninguna ayuda.
+
+    p A partir de las últimas versiones de 
+        strong Vite
+        |   ESLint ya viene incluido y configurado, así que solo explicaremos que es el linter y algunas configuraciones.
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 ¿Qué es un linter?
+
+        p Un 
+            strong linter
+            |   es una herramienta que analiza el código fuente para detectar errores, malas prácticas o inconsistencias con respecto a un conjunto de reglas predefinidas. Su objetivo principal es mejorar la calidad del código, ayudando a los desarrolladores a escribir código más limpio, consistente y menos propenso a errores.
+
+        p Características clave de un linter:
+        ul 
+            li 
+                p 
+                    strong Detección de errores de sintaxis
+                    | : Los linters pueden encontrar errores de sintaxis antes de que se ejecuten, como variables mal declaradas o funciones mal escritas.
+            li 
+                p 
+                    strong Cumplimiento de convenciones
+                    | : Pueden forzar el cumplimiento de convenciones de estilo de código (como el uso de comillas simples o dobles, espacios o tabulaciones) para mantener un código uniforme en todo el proyecto.        
+            li 
+                p 
+                    strong Advertencias de buenas prácticas
+                    | : Los linters pueden advertir sobre patrones de código que, aunque válidos, no siguen las mejores prácticas (como variables no usadas, funciones demasiado largas, etc.).        
+            li 
+                p 
+                    strong Prevención de errores comunes
+                    | : Algunas reglas ayudan a evitar errores comunes que pueden causar problemas en el funcionamiento del programa, como la referencia a variables no definidas. 
+
+        p Ejemplos de linters:
+        ul 
+            li
+                p
+                    | JavaScript/TypeScript: 
+                    strong ESLint
+            li
+                p
+                    | CSS:  
+                    strong Stylelint
+            li
+                p
+                    | HTML: 
+                    strong HTMLHint   
+
+        p En resumen, un 
+            strong linter
+            |   actúa como un 
+            strong "corrector" de código
+            | , ayudando a mantener el proyecto libre de errores y siguiendo estándares de calidad desde el principio.            
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Configuración predeterminada de ESLint
 
+        p Cuando nosotros creamos nuestra aplicación con 
+            strong Vite, 
+            |   ESLint ya viene instalado y configurado.
+
+        p Veamos la configuración predeterminada.    
+        img(src="../../assets/img/2-10-configurando-eslint/1.png" alt="example")
+
+        h3 Explicación de configuración 
+
+        p: strong.ts-3 Ignorar la carpeta "dist"
+
+        ul 
+            li 
+                p
+                    code { ignores: ['dist'] }
+                    |   Este fragmento indica que ESLint debe ignorar la carpeta 
+                    strong dist
+                    | , que generalmente contiene los archivos generados después del proceso de 
+                    strong build
+                    | , y no se desea hacer linting de esos archivos.
+
+        p: strong.ts-3 Configuración de lenguaje y entorno          
+        ul
+            li 
+                p
+                    code files: ['**/*.{js,jsx}']
+                    |    Define que ESLint debe analizar todos los archivos con extensión 
+                    strong .js
+                    |   y 
+                    strong .jsx
+                    |   en tu proyecto.
+            li 
+                p
+                    code ecmaVersion
+                    |   Establece que el código debe estar basado en 
+                    strong ECMAScript 2020
+                    | , lo que permite utilizar características más avanzadas de JavaScript.
+            li 
+                p
+                    code globals.browser
+                    |   Define que estás trabajando en un entorno de 
+                    strong navegador 
+                    |   y carga los identificadores globales de los navegadores, como 
+                    strong window
+                    | , 
+                    strong document
+                    |, etc., para que ESLint no los marque como indefinidos.
+            li 
+                p
+                    code ecmaFeatures: { jsx: true }
+                    |   Habilita JSX, que es esencial para React, permitiendo que ESLint lo entienda.
+            li 
+                p
+                    code sourceType: 'module'
+                    |   Indica que estás usando módulos ES6 
+                    strong (import/export)
+                    | , lo cual es común en proyectos de React.
+
+        p: strong.ts-3 Configuración específica para React
+        ul            
+            li 
+                p
+                    code settings: { react: { version: '18.3' } }
+                    |    Esto especifica que tu proyecto está utilizando 
+                    strong React versión 18.3
+                    | . ESLint usará esto para aplicar reglas de React correctamente, lo que es especialmente importante ya que algunas reglas pueden variar dependiendo de la versión de React que utilices.
+
+        p: strong.ts-3 Plugins de ESLint
+        ul 
+            li 
+                p
+                    code react
+                    |   Carga el plugin de React 
+                    strong (eslint-plugin-react)
+                    | , que proporciona reglas específicas para linting de código React.
+            li 
+                p
+                    code react-hooks
+                    |   Este plugin 
+                    strong (eslint-plugin-react-hooks)
+                    |   asegura que los 
+                    strong hooks
+                    |   de React se usen de manera correcta siguiendo las reglas de React, como las de dependencia de efectos 
+                    strong (useEffect)
+                    | .
+            li 
+                p
+                    code react-refresh
+                    |   Este plugin 
+                    strong (eslint-plugin-react-refresh)
+                    |   asegura que las actualizaciones de componentes en caliente (HMR) funcionen correctamente en entornos de desarrollo, como con Vite.
+
+        p: strong.ts-3 Reglas personalizadas
+        ul
+            li 
+                p
+                    code js. configs.recommended.rules
+                    |   Estas son las reglas recomendadas para 
+                    strong JavaScript
+                    |   en general. Incluye reglas básicas como evitar variables no usadas, evitar declaraciones ambiguas, etc
+        li 
+            p
+                code react. configs.recommended.rules
+                |   Reglas recomendadas para 
+                strong React
+                | .
+        li 
+            p
+                code react. configs['jsx-runtime'].rules
+                |   Reglas que son específicas para el nuevo JSX runtime de React 17+.
+        li 
+            p
+                code reactHooks. configs.recommended.rules
+                |   Reglas recomendadas para el correcto uso de hooks en React.
+
+        p: strong.ts-3 Reglas personalizadas adicionales
+        ul
+            li 
+                p
+                    code 'react/jsx-no-target-blank': 'off'
+                    |   Esta regla evita advertencias cuando usas enlaces con 
+                    strong target="_blank"
+                    | . Al establecerla en 
+                    strong off
+                    | , indicas que no te preocupas por esa advertencia.
+        li 
+            p
+                code 'react-refresh/only-export-components': ['warn', { allowConstantExport: true }]
+                |   Advierte si exportas algo que no sea un componente en un entorno donde react-refresh esté activo, pero permite constantes de exportación.
+
+
+        p Si necesitas hacer ajustes en el futuro, puedes personalizar las reglas según tu estilo de código o las necesidades del proyecto.
+
+    article(id="3" class="content")
+        h2 Agregando guía de estilos - Standard
+        p 
+            strong Vite
+            |   no incluye la configuración de 
+            strong StandardJS
+            |   por defecto. Solo se incluyen las reglas recomendadas de JavaScript y React.  
+
+        h3 ¿Qué es StandardJS?
+        p 
+            strong StandardJS
+            |   es una guía de estilos ampliamente utilizada para JavaScript que  impone un conjunto de reglas de estilo muy estrictas, como no usar punto y coma al final de las líneas, uso consistente de comillas simples, y más. Esto puede mejorar la consistencia del código y reducir debates sobre el estilo dentro de un equipo. 
+
+        p Anteriormente cuando se configuraba ESLint manualmente, una de las opciones más comunes era seguir la guía de estilo de Standard para tener un código uniforme y bien estructurado.
+
+        h3 Inconvenientes de agregar StandardJS:
+        ul 
+            li 
+                p 
+                    strong Posible incompatibilidad con reglas actuales
+                    | : Si ya tienes configuraciones personalizadas en ESLint, agregar StandardJS puede generar conflictos o inconsistencias con las reglas que ya has definido.
+
+            li 
+                p 
+                    strong Reglas muy estrictas
+                    | : Algunas reglas de StandardJS (como no usar punto y coma) pueden ser demasiado estrictas o no alinearse con tus preferencias o las de tu equipo. Si no te gusta su estilo, puede que prefieras algo más flexible o personalizado.
+
+            li 
+                p 
+                    strong No es necesario si ya tienes reglas que te funcionen
+                    | : Si ya tienes una configuración que cubre las reglas que prefieres y te sientes cómodo con ella, añadir StandardJS podría ser redundante.
+
+        h3 Alternativas
+        ul 
+            li 
+                p 
+                    strong Configurar ESLint a medida
+                    | : Puedes continuar usando ESLint y configurarlo manualmente con las reglas que mejor se adapten a tu proyecto. Ya tienes una buena configuración de ESLint que incluye reglas para JavaScript y React.
+            li 
+                p 
+                    strong Prettier
+                    |   : Si solo te interesa el formato del código, podrías usar Prettier, que es una herramienta específica para formateo de código y puede trabajar en conjunto con ESLint.       
+
+        h3 Instalar ESLint con la configuración de StandardJS
+
+        p Agregar 
+            strong StandardJS
+            |   a una configuración existente de ESLint puede requerir ajustes y pruebas para asegurarte de que todo funcione bien. La configuración predeterminada de Vite no incluye StandardJS para mantener la flexibilidad, permitiendo que los desarrolladores elijan sus propias configuraciones y guías de estilo según sus necesidades.
+
+        p Primero, necesitas instalar StandardJS y su conjunto de reglas:
+
+        div: pre: code.language-bash 
+            | npm install eslint-config-standard eslint-plugin-import eslint-plugin-node eslint-plugin-promise --save-dev
+
+        p Después debemos modificar el archivo de configuración de ESLint para incluir StandardJS en extends: 
+
+        div: pre: code.language-javascript
+            |import js from '@eslint/js'
+            |import globals from 'globals'
+            |import react from 'eslint-plugin-react'
+            |import reactHooks from 'eslint-plugin-react-hooks'
+            |import reactRefresh from 'eslint-plugin-react-refresh'
+            |
+            |export default [
+            |  { ignores: ['dist'] },
+            |  {
+            |    files: ['**/*.{js,jsx}'],
+            |    languageOptions: {
+            |      ecmaVersion: 2020,
+            |      globals: globals.browser,
+            |      parserOptions: {
+            |        ecmaVersion: 'latest',
+            |        ecmaFeatures: { jsx: true },
+            |        sourceType: 'module',
+            |      },
+            |    },
+            |    settings: { react: { version: '18.3' } },
+            |    extends: [
+            |      'eslint:recommended',
+            |      'plugin:react/recommended',
+            |      'plugin:react-hooks/recommended',
+            |      'standard'  // Agrega esta línea para usar las reglas de StandardJS
+            |    ],
+            |    plugins: {
+            |      react,
+            |      'react-hooks': reactHooks,
+            |      'react-refresh': reactRefresh,
+            |    },
+            |    rules: {
+            |      ...js.configs.recommended.rules,
+            |      ...react.configs.recommended.rules,
+            |      ...react.configs['jsx-runtime'].rules,
+            |      ...reactHooks.configs.recommended.rules,
+            |      'react/jsx-no-target-blank': 'off',
+            |      'react-refresh/only-export-components': [
+            |        'warn',
+            |        { allowConstantExport: true },
+            |      ],
+            |    },
+            |  },
+            |]
+
+        p Después debemos revisar y ajustar las reglas de ESLint y StandardJS para asegurarte de que no haya conflictos. Puedes ajustar las reglas en tu configuración si es necesario.
+
+        p Después de agregar StandardJS, ejecuta 
+            strong npm run lint
+            |   y corrige los problemas que aparezcan. Esto te ayudará a adaptar tu código a las nuevas reglas de estilo.       
+
+        p Agregar Standard es puramente opcional, lo puedes omitir.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'¿Qué es un linter?'],[2,'Configuración predeterminada de ESLint'],[3,'Agregando guía de estilos - Standard']]
     +submenu(submenuLinks)
