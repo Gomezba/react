@@ -358,11 +358,11 @@
             <p>Lo que tenemos que entender ahora es como funciona este servidor frontal y como resuelve las distintas peticiones <strong>get</strong> de <strong>HTTP</strong> que recibe a través del navegador, que reglas está utilizando para determinar si debe servir un archivo estático o una página o simplemente devolver un <strong>error 404</strong>.</p>
             <p>Para entender el servidor de desarrollo vamos a empezar por levantar nuestro <strong>servidor de desarrollo</strong> con : </p>
             <p><code>npm run dev</code></p>
-            <p>Para este <strong>servidor de desarrollo</strong> su raíz será toda la carpeta del proyecto, es decir, la carpeta <strong>First-Project</strong></p><img src="../../assets/img/2-9-como-funciona-dev-server/1.webp" alt="example">
+            <p>Para este <strong>servidor de desarrollo</strong> su raíz será toda la carpeta del proyecto, es decir, la carpeta <strong>First-Project</strong></p><img class="img-md" src="../../assets/img/2-9-como-funciona-dev-server/1.webp" alt="example">
             <p>Por eso cuando nosotros buscamos desde la barra de navegación, por ejemplo: <strong>"/src/assets/react.svg"</strong> vemos que el recurso al que queremos acceder, se puede acceder sin problema. </p><img src="../../assets/img/2-9-como-funciona-dev-server/2.webp" alt="example">
             <p>Ahora tenemos que entender la prioridad de este servidor y es que su prioridad es <strong>siempre buscar archivos estáticos</strong>, es decir, si existe un archivo estático que coincida con alguna ruta, lo devolverá sobre cualquier cosa.</p>
             <p>Solo en el caso de que encuentre una ruta que no coincida con ningún archivo, por ejemplo: <strong>"/asd"</strong> lo interpretará como una <strong>página</strong> y no como un archivo estático. </p>
-            <figure> <img src="../../assets/img/2-9-como-funciona-dev-server/3.webp" alt="example">
+            <figure> <img class="img-md" src="../../assets/img/2-9-como-funciona-dev-server/3.webp" alt="example">
               <figcaption class="ts-1">En este casó como en todas las páginas nos devuelve el <strong>index.html</strong> es por eso que podemos ver el logo, recordemos que en el index.html estamos cargando el logo de React.</figcaption>
             </figure>
             <div class="ts-2">
@@ -370,13 +370,13 @@
               <div>Este comportamiento se controla a través de la configuración del <strong>middleware</strong> de Vite, que utiliza una estrategia llamada <strong>"history fallback"</strong> o <strong>"HTML5 history API fallback"</strong>. Esto significa que si no se encuentra un archivo estático que coincida con la ruta, el servidor automáticamente devuelve index.html, de modo que la aplicación React pueda manejar la ruta. </div>
             </div>
             <p>Pero para comprobar que esto es así, crearemos un archivo en la raiz de nuestro proyecto que se llame <strong>asd</strong>, y pondremos un simple saludo. </p><img src="../../assets/img/2-9-como-funciona-dev-server/4.webp" alt="example">
-            <p>Entonces si volvemos hacer la petición que habiamos hecho antes <strong>"/asd"</strong>, como existe un archivo estático que coincide con la ruta, pues lo mostrará en pantalla.</p><img src="../../assets/img/2-9-como-funciona-dev-server/5.webp" alt="example">
+            <p>Entonces si volvemos hacer la petición que habiamos hecho antes <strong>"/asd"</strong>, como existe un archivo estático que coincide con la ruta, pues lo mostrará en pantalla.</p><img class="img-md" src="../../assets/img/2-9-como-funciona-dev-server/5.webp" alt="example">
             <p class="note">En resumen, cualquier ruta que no coincida inicialmente con un archivo estático será tratada como una página. Si la ruta no coincide con ninguna página o si esa página no existe, <strong>Vite</strong> redireccionará automáticamente al <strong>index.html</strong>.</p>
             <h3>Carpeta public </h3>
             <p>Pero a mayores de esto, recordemos que tenemos la carpeta <strong>public</strong> donde deben alojarse los <strong>archivos estáticos</strong>, entonces cualquier archivo estático que exista dentro de esta carpeta, nuestra carpeta <strong>public</strong> será tratada como si fuera la raíz de nuestro proyecto y se le dará proridad sobre todos los demás. </p>
-            <p>Pongamos a prueba esto, crearemos dentro la carpeta <strong>public</strong> un archivo que tambien se llame <strong>"asd"</strong> y escribiremos un texto por ejemplo: <strong>"Hola desde public"</strong>. </p><img src="../../assets/img/2-9-como-funciona-dev-server/6.webp" alt="example">
-            <p>Recordemos que ya tenemos un archivo llamado <strong>"asd"</strong> en la raíz de nuestro proyecto, y a su vez hemos creado otro archivo tambien llamado <strong>"asd"</strong> que se encuentra dentro de la carpeta <strong>public</strong>.</p><img src="../../assets/img/2-9-como-funciona-dev-server/7.webp" alt="example">
-            <p>Si ahora volvemos hacer la petición a la ruta <strong>"/asd"</strong> miraremos que toma como prioridad los archivos estáticos que se encuentren dentro de la carpeta <strong>public</strong>.</p><img src="../../assets/img/2-9-como-funciona-dev-server/8.webp" alt="example">
+            <p>Pongamos a prueba esto, crearemos dentro la carpeta <strong>public</strong> un archivo que tambien se llame <strong>"asd"</strong> y escribiremos un texto por ejemplo: <strong>"Hola desde public"</strong>. </p><img class="img-md" src="../../assets/img/2-9-como-funciona-dev-server/6.webp" alt="example">
+            <p>Recordemos que ya tenemos un archivo llamado <strong>"asd"</strong> en la raíz de nuestro proyecto, y a su vez hemos creado otro archivo tambien llamado <strong>"asd"</strong> que se encuentra dentro de la carpeta <strong>public</strong>.</p><img class="img-md" src="../../assets/img/2-9-como-funciona-dev-server/7.webp" alt="example">
+            <p>Si ahora volvemos hacer la petición a la ruta <strong>"/asd"</strong> miraremos que toma como prioridad los archivos estáticos que se encuentren dentro de la carpeta <strong>public</strong>.</p><img class="img-md" src="../../assets/img/2-9-como-funciona-dev-server/8.webp" alt="example">
             <p>Entonces cuando encontremos 2 archivos que coincidan con el mismo nombre, siempre se le dará la prioridad al que se encuentre dentro de <strong>public</strong>, veremos que está carpeta <strong>public</strong> es muy importante cuando lleguemos hablar del servidor de <strong>preview</strong>.</p>
             <div class="note">
               <ul>
@@ -395,18 +395,18 @@
             <p><code>npm run build</code></p><img src="../../assets/img/2-9-como-funciona-dev-server/9.webp" alt="example">
             <p>Ahora creamos nuestro servidor de producción o previsualización con el comando: </p>
             <p><code>npm run preview </code></p>
-            <figure><img src="../../assets/img/2-9-como-funciona-dev-server/10.webp" alt="example">
+            <figure><img class="img-md" src="../../assets/img/2-9-como-funciona-dev-server/10.webp" alt="example">
               <figcaption> Vemos que la imagen no funciona.</figcaption>
             </figure>
             <P>¿Por qué la imagen que estamos intentando cargar en el main.jsx no funciona? Porque la carpeta raíz de este servidor ahora mismo pasa a ser la carpeta <strong>"dist" </strong> y ya no la carpeta <strong>"firs-project"</strong>.</P>
-            <p>Entonces todo lo que exista en <strong>"dist"</strong> será accesible desde la barra del navegador, por ejemplo: accederemos al archivo <strong>"/assets/index-CXSZ1NGP.js"</strong>. </p><img src="../../assets/img/2-9-como-funciona-dev-server/11.webp" alt="example">
+            <p>Entonces todo lo que exista en <strong>"dist"</strong> será accesible desde la barra del navegador, por ejemplo: accederemos al archivo <strong>"/assets/index-CXSZ1NGP.js"</strong>. </p><img class="img-md" src="../../assets/img/2-9-como-funciona-dev-server/11.webp" alt="example">
             <p>Ahora, si nosotros intentamos acceder, por ejemplo, al archivo <strong>"asd"</strong> que tenemos dentro de la raíz principal del proyecto, miraremos que no es accesible ya que no se encuentra en la carpeta <strong>"dist"</strong>.</p><img src="../../assets/img/2-9-como-funciona-dev-server/12.webp" alt="example">
             <p>Como ya nos habremos percatado, se están siguiendo las mismas reglas que en el <strong>servidor de desarrollo</strong>. Si la ruta no coincide con ningún archivo estático o a ninguna página o si esa página no existe, <strong>Vite</strong> redireccionará automáticamente al <strong>index.html</strong>. La única diferencia es que toma en cuenta la raiz <strong>"dist"</strong>.</p>
             <p class="note">En resumen todo archivo al que queramos acceder desde la barra del navgeador, si no se encuentra o no coincide con nigun archivo en la carpeta <strong>"dist"</strong> redireccionará al <strong>index.html</strong>. </p>
           </article>
           <article class="content" id="4">
             <h2>¿Como puedo hacer que mis archivos estáticos que yo genere en mi "src" o donde sea, se copien dentro de "dist"?</h2>
-            <p>Intentaremos importar el archivo <strong>"react.svg"</strong> que se encuentra en la ubicación <strong>"/src/assets/react.svg"</strong> de forma que sea válido tanto para <strong>desarrollo </strong> como para <strong>producción</strong> . </p><img src="../../assets/img/2-9-como-funciona-dev-server/13.webp" alt="example">
+            <p>Intentaremos importar el archivo <strong>"react.svg"</strong> que se encuentra en la ubicación <strong>"/src/assets/react.svg"</strong> de forma que sea válido tanto para <strong>desarrollo </strong> como para <strong>producción</strong> . </p><img class="img-md" src="../../assets/img/2-9-como-funciona-dev-server/13.webp" alt="example">
             <h3>Opción 1: Utilizando import - "No recomendada"</h3>
             <p>La primera opción que no es recomendable, es utilizar un <strong>import</strong> desde el código, obteniendo la <strong>URL</strong> de la imagen y sustituyendola en el <strong>src</strong> de nuestra imagen que queremos importar. </p>
             <figure> <img src="../../assets/img/2-9-como-funciona-dev-server/14.webp" alt="example">
@@ -427,7 +427,7 @@
             <h3>Opción 2: Utilizando la carpeta public - "Recomendada"</h3>
             <p>Hay que recordar que todo lo que se encuentre dentro de la carpeta <strong>public</strong> se copiará tal cual en la raíz de la carpeta <strong>"dist"</strong>, esto incluye el nombre de los archivos, carpetas, todo se pasa exactamente igual a <strong>"dist"</strong>.</p>
             <p>Empezaremos por eliminar el archivo <strong>"asd"</strong> que habiamos creado en la raíz del proyecto.</p>
-            <p>En la raíz del proyecto crearemos la carpeta <strong>public </strong> y moveremos la carpeta <strong>"assets"</strong> que se encuentra en <strong>"src"</strong> a la carpeta <strong>public</strong>.</p><img src="../../assets/img/2-9-como-funciona-dev-server/18.webp" alt="example">
+            <p>En la raíz del proyecto crearemos la carpeta <strong>public </strong> y moveremos la carpeta <strong>"assets"</strong> que se encuentra en <strong>"src"</strong> a la carpeta <strong>public</strong>.</p><img class="img-md" src="../../assets/img/2-9-como-funciona-dev-server/18.webp" alt="example">
             <p>En nuestro archivo <strong>main.jsx</strong> haremos referencia al archivo empezando por la carpeta <strong>"assets"</strong> y ya no a la carpeta <strong>"src"</strong>.</p><img src="../../assets/img/2-9-como-funciona-dev-server/19.webp" alt="example">
             <p>Ahora simplemente creamos la versión de <strong>producción</strong> con el comando: </p>
             <p><code>npm run build</code></p>

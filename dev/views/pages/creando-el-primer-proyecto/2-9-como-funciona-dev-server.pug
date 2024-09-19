@@ -65,7 +65,7 @@ append content
             |   su raíz será toda la carpeta del proyecto, es decir, la carpeta 
             strong First-Project
 
-        img(src="../../assets/img/2-9-como-funciona-dev-server/1.webp" alt="example") 
+        img(src="../../assets/img/2-9-como-funciona-dev-server/1.webp" alt="example").img-md
 
         p Por eso cuando nosotros buscamos desde la barra de navegación, por ejemplo: 
             strong "/src/assets/react.svg"
@@ -83,7 +83,7 @@ append content
             |   y no como un archivo estático.   
 
         figure 
-            img(src="../../assets/img/2-9-como-funciona-dev-server/3.webp" alt="example") 
+            img(src="../../assets/img/2-9-como-funciona-dev-server/3.webp" alt="example").img-md
             figcaption.ts-1 En este casó como en todas las páginas nos devuelve el 
                 strong index.html
                 |   es por eso que podemos ver el logo, recordemos que en el index.html estamos cargando el logo de React.
@@ -114,7 +114,7 @@ append content
         p Entonces si volvemos hacer la petición que habiamos hecho antes 
             strong "/asd"
             | , como existe un archivo estático que coincide con la ruta, pues lo mostrará en pantalla.
-        img(src="../../assets/img/2-9-como-funciona-dev-server/5.webp" alt="example")
+        img(src="../../assets/img/2-9-como-funciona-dev-server/5.webp" alt="example").img-md
 
         p.note En resumen, cualquier ruta que no coincida inicialmente con un archivo estático será tratada como una página. Si la ruta no coincide con ninguna página o si esa página no existe, 
             strong Vite
@@ -138,7 +138,7 @@ append content
             |   y escribiremos un texto por ejemplo: 
             strong "Hola desde public"
             | .      
-        img(src="../../assets/img/2-9-como-funciona-dev-server/6.webp" alt="example")
+        img(src="../../assets/img/2-9-como-funciona-dev-server/6.webp" alt="example").img-md
 
         p Recordemos que ya tenemos un archivo llamado 
             strong "asd"
@@ -147,14 +147,14 @@ append content
             |   que se encuentra dentro de la carpeta 
             strong public
             | .
-        img(src="../../assets/img/2-9-como-funciona-dev-server/7.webp" alt="example")
+        img(src="../../assets/img/2-9-como-funciona-dev-server/7.webp" alt="example").img-md
 
         p Si ahora volvemos hacer la petición a la ruta 
             strong "/asd"
             |   miraremos que toma como prioridad los archivos estáticos que se encuentren dentro de la carpeta 
             strong public
             | .
-        img(src="../../assets/img/2-9-como-funciona-dev-server/8.webp" alt="example")
+        img(src="../../assets/img/2-9-como-funciona-dev-server/8.webp" alt="example").img-md
 
         p Entonces cuando encontremos 2 archivos que coincidan con el mismo nombre, siempre se le dará la prioridad al que se encuentre dentro de 
             strong public
@@ -189,7 +189,7 @@ append content
         p Ahora creamos nuestro servidor de producción o previsualización con el comando: 
         p: code npm run preview 
         figure
-            img(src="../../assets/img/2-9-como-funciona-dev-server/10.webp" alt="example")
+            img(src="../../assets/img/2-9-como-funciona-dev-server/10.webp" alt="example").img-md
             figcaption  Vemos que la imagen no funciona.
 
         P ¿Por qué la imagen que estamos intentando cargar en el main.jsx no funciona? Porque la carpeta raíz de este servidor ahora mismo pasa a ser la carpeta 
@@ -203,7 +203,7 @@ append content
             |   será accesible desde la barra del navegador, por ejemplo: accederemos al archivo 
             strong "/assets/index-CXSZ1NGP.js"
             | .    
-        img(src="../../assets/img/2-9-como-funciona-dev-server/11.webp" alt="example")
+        img(src="../../assets/img/2-9-como-funciona-dev-server/11.webp" alt="example").img-md
 
         p Ahora, si nosotros intentamos acceder, por ejemplo, al archivo 
             strong "asd"
@@ -240,7 +240,7 @@ append content
             |   como para 
             strong producción
             |  . 
-        img(src="../../assets/img/2-9-como-funciona-dev-server/13.webp" alt="example")
+        img(src="../../assets/img/2-9-como-funciona-dev-server/13.webp" alt="example").img-md
 
         h3 Opción 1: Utilizando import - "No recomendada"
 
@@ -329,7 +329,7 @@ append content
             strong public
             | .
 
-        img(src="../../assets/img/2-9-como-funciona-dev-server/18.webp" alt="example")
+        img(src="../../assets/img/2-9-como-funciona-dev-server/18.webp" alt="example").img-md
 
         p En nuestro archivo 
             strong main.jsx

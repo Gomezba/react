@@ -65,12 +65,12 @@ append content
             li 
                 p La aplicación base está sobrecargada de recursos que quizás no utilizaremos, nos obligan a ocupar ciertas cosas y no deberia ser así, por ejemplo crear los test con testing-library aunque no es mala opción, o suponer que tendremos una PWA al proporcionarlos el archivo manifest.json, tener un archivo robots.txt para suponer que nuestra app estará indexada en google y otras muchas cosas.
 
-                img(src="../../assets/img/2-6-no-react-app/1.webp" alt="example") 
+                img(src="../../assets/img/2-6-no-react-app/1.webp" alt="example").img-md
             li 
                 p Al arrancar la aplicación, es decir al ejecutar el comando 
                     strong npm start
                     |   son casi 10 segundos para arrancar una simple página que contiene un logo y un enlace.
-                img(src="../../assets/img/2-6-no-react-app/2.webp" alt="example") 
+                img(src="../../assets/img/2-6-no-react-app/2.webp" alt="example").img-hg
 
             li 
                 p La carpeta 
@@ -78,15 +78,15 @@ append content
                     |   pesa 
                     strong 249mb
                     |   lo cual es una barbaridad para una simple página con un logo y un enlace.
-                img(src="../../assets/img/2-6-no-react-app/3.webp" alt="example") 
+                img(src="../../assets/img/2-6-no-react-app/3.webp" alt="example").img-md 
             li 
                 p Pero el verdadero problema es que fuera de las carpetas de public, src, y node_modules no tenemos para configurar cosas a nuestro gusto, o si algo llega a fallar no hay manera de configurarlo.
-                img(src="../../assets/img/2-6-no-react-app/4.webp" alt="example") 
+                img(src="../../assets/img/2-6-no-react-app/4.webp" alt="example").img-hg
 
                 p Para lograr configurar nos proporcionan un comando: 
                     strong npm run eject
                     |   lo cual nos proporcionará los archivos de configuración, y una vez hecho esto, ya no hay forma para volver atrás.
-                img(src="../../assets/img/2-6-no-react-app/5.webp" alt="example") 
+                img(src="../../assets/img/2-6-no-react-app/5.webp" alt="example").img-md 
 
 
         p Por todas estas razones no utilizaremos 
