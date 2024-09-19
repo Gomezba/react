@@ -15,13 +15,13 @@ append content
         h2 DOM vs VDOM
         p A diferencia del DOM, Virtual DOM no almacena todo el documento HTML sino solo una parte de el, que es la que va a utilizar, por ejemplo el Virtual DOM no almacena las etiquetas html, head o body, porque nunca las va a modificar sino que su nodo raiz, estará directamente dentro del body habitualemente en un div.
 
-        img(src="../../assets/img/1-7-el-virtual-dom/1.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/1.webp" alt="arbol vdom")
 
         p A diferencia del DOM original, los nodos del Virtual DOM son objetos mucho más simples, ya que almacenan unicamente la informacion de las propiedades que estan actualmente en uso en lugar de almacenar todas, esto hace que los objetos sean mucho mas manipulables y sea mas sencillo y menos costoso crear un algoritmo que trabaje sobre el, pero la principal diferencia entre ambos son las referencias a otros nodos que almacenan dentro.
-        img(src="../../assets/img/1-7-el-virtual-dom/2.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/2.webp" alt="arbol vdom")
 
         p En un nodo del Virtual DOM no podemos saber quien es su padre, tampoco podemos saber quienes son sus hermanos, unicamente podemos saber quienes son sus hijos, ¿Qué implica esto? que desde un nodo del Virtual DOM, solo se puede navegar hacia abajo, nunca hacia arriba (hacia su padre) ni hacia los lados (hacia sus hermanos).
-        img(src="../../assets/img/1-7-el-virtual-dom/3.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/3.webp" alt="arbol vdom")
 
         h3 El Virtual DOM
             div "No es una estructura circular"
@@ -40,16 +40,16 @@ append content
             strong que será la raíz de nuestro Virtual DOM
             | .
 
-        img(src="../../assets/img/1-7-el-virtual-dom/4.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/4.webp" alt="arbol vdom")
 
         p En este momento React crea el Virtual DOM con todos sus nodos.
-        img(src="../../assets/img/1-7-el-virtual-dom/5.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/5.webp" alt="arbol vdom")
 
         p Una vez creado se traslada todo su contenido al DOM.
-        img(src="../../assets/img/1-7-el-virtual-dom/6.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/6.webp" alt="arbol vdom")
 
         p Y al hacerlo, como ya sabemos, los elementos se crean dentro del propio documento HTML y la web estará lista para el usuario.
-        img(src="../../assets/img/1-7-el-virtual-dom/7.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/7.webp" alt="arbol vdom")
 
         p A partir de aquí, el usuario puede realizar acciones que modifiquen la interfaz. Vamos a ver cómo se comporta React ante estas modificaciones.
 
@@ -59,22 +59,22 @@ append content
             |   y por otro el 
             strong DOM real
             | .
-        img(src="../../assets/img/1-7-el-virtual-dom/8.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/8.webp" alt="arbol vdom")
 
         P Cuando se produce un cambio en un nodo, lo primero que se hace es crear la nueva versión de ese nodo en el Virtual DOM. 
-        img(src="../../assets/img/1-7-el-virtual-dom/9.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/9.webp" alt="arbol vdom")
 
         p Para ello este nodo puede ir sufriendo distintas modificaciones hasta llegar un estado final.
-        img(src="../../assets/img/1-7-el-virtual-dom/10.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/10.webp" alt="arbol vdom")
 
         p Lo siguiente es calcular la diferencia entre esta nueva versión del nodo y la versión actual en el Virtual DOM; es decir, el estado inicial pasa al estado final.
-        img(src="../../assets/img/1-7-el-virtual-dom/11.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/11.webp" alt="arbol vdom")
 
         p Una vez que tenemos esta diferencia, se aplican los cambios sobre el Virtual DOM, generando una nueva versión del mismo que ya no coincide con el DOM original.
-        img(src="../../assets/img/1-7-el-virtual-dom/12.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/12.webp" alt="arbol vdom")
 
         p ¿Cuál será el siguiente paso? Utilizar un algoritmo muy optimizado para calcular cuál es la forma más eficiente de trasladar estos cambios al DOM real. En este caso, el cambio sería modificar el texto de "React" a "React JS".
-        img(src="../../assets/img/1-7-el-virtual-dom/13.png" alt="arbol vdom")
+        img(src="../../assets/img/1-7-el-virtual-dom/13.webp" alt="arbol vdom")
 
         p De esta manera, donde antes habríamos provocado 3 cambios en el DOM —recordemos que de 
             strong "React"
