@@ -352,14 +352,14 @@
             <p>Para ello hay una solución muy sencilla que es instalar un paquete: </p>
             <p><code>npm i -D eslint-config-prettier </code></p><img src="../../assets/img/2-12-conflictos-prettier-eslint/1.webp" alt="example">
             <p>Con este paquete lo que haremos será simplemente añadirlo a nuestro archivo de configuración de ESLint en extends, lo único que tenemos que saber, es que si tenemos instalado Standard o cualuier otra regla de estilos, se debe poner seguido de ese paquete de reglas.</p>
-            <p>Sabiendo esto agregaremos <strong>"eslint-config-prettier"</strong> seguido de Standard o cualquier otra regla de estilos.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/2.webp" loading="lazy" alt="example">
-            <p>Si tuvieramos más paquetes externos, como por ejemplo <strong>Standard</strong> el paquete de <strong>"eslint-config-prettier"</strong> deberia ir debajo.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/3.webp" loading="lazy" alt="example">
+            <p>Sabiendo esto agregaremos <strong>"eslint-config-prettier"</strong> seguido de Standard o cualquier otra regla de estilos.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/2.webp" alt="example">
+            <p>Si tuvieramos más paquetes externos, como por ejemplo <strong>Standard</strong> el paquete de <strong>"eslint-config-prettier"</strong> deberia ir debajo.</p><img class="img-md" src="../../assets/img/2-12-conflictos-prettier-eslint/3.webp" alt="example">
             <p>Esto debe ser así porque lo que esté dentro de <strong>extends</strong> tiene una importancia y es el orden en que se aplica, primero se aplica <strong>Standard</strong> y después nuestro paquete de <strong>ESLint con prettier. </strong></p>
             <p>Con esto ya no deberia de haber problemas entre ESLint y Prettier.</p>
           </article>
           <article class="content" id="2">
             <h2>Problema de formateo con archivos diferentes a JSX</h2>
-            <p>Si somos observativos nos habremos dado cuenta que en nuestro <strong>archivo de configuración</strong> de <strong>ESLint</strong> no se está aplicando el format de Prettier, en ninguna momento agrega los tabs como espacio que habiamos definido en Prettier. </p><img src="../../assets/img/2-12-conflictos-prettier-eslint/4.webp" loading="lazy" alt="example">
+            <p>Si somos observativos nos habremos dado cuenta que en nuestro <strong>archivo de configuración</strong> de <strong>ESLint</strong> no se está aplicando el format de Prettier, en ninguna momento agrega los tabs como espacio que habiamos definido en Prettier. </p><img src="../../assets/img/2-12-conflictos-prettier-eslint/4.webp" alt="example">
             <p>Esto pasa porque nuestro archivo de configuración de ESLint es un archivo con <strong>extensión JS</strong>, y nosotros solo hemos definido el formateador por defecto para los archivos <strong>JSX</strong>. </p>
             <p>Para conseguir el formateo en los demás archivos donde queramos ocupar Prettier, en versiones anteriores de Prettier deberiamos de ir seteando uno por uno para que Prettier actue como formateador por defecto, pero ahora con solo agregar una simple línea de código lo podemos hacer.</p>
             <P>Los archivos que son compatibles con Prettier son los siguientes: </P>
@@ -380,10 +380,10 @@
             </ul>
             <p>Los que nos importan, son: <strong>JavaScript</strong>, <strong>JSX</strong>, <strong>CSS</strong>, <strong>HTML </strong> y <strong>JSON</strong>. Así que vamos a ver como configurar Prettier como formateador por defecto para estos tipos de archivo.</p>
             <p>En nuestro editor de Código abrimos el archivo <strong>"settings.json"</strong> qué es el archivo de configuración de nuestro VSCode.</p>
-            <p>Agregaremos lo siguiente.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/5.webp" loading="lazy" alt="example">
+            <p>Agregaremos lo siguiente.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/5.webp" alt="example">
             <p>Con está simple línea de código ya tenemos configurado Prettier con todos los archivos que son compatibles con Prettier.</p>
             <p>Tambien agregaremos una configuración extra para el caso de los <strong>imports.</strong> Lo que queremos hacer es que cuando tengamos <strong>imports</strong> que no se esten utilizando, queremos que automáticamente se quiten y que tambien se ordenen alfabéticamente.</p>
-            <p>Veamos este caso, donde tenemos <strong>imports</strong> que no se están utilizando, por lo cual aunque guardemos, se quedan ahí.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/6.webp" loading="lazy" alt="example">
+            <p>Veamos este caso, donde tenemos <strong>imports</strong> que no se están utilizando, por lo cual aunque guardemos, se quedan ahí.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/6.webp" alt="example">
             <p>En nuestro <strong>"settings.json"</strong> agregaremos lo siguiente.</p>
             <div>
               <pre><code class="language-json"> "[javascript]": {
@@ -399,7 +399,7 @@
  }
 },</code></pre>
             </div>
-            <p>Ahora al guardar nuestro archivo, automáticamente se quitan aquellos <strong>imports</strong> que no están siendo utilizados y además se ordenan alfabéticamente. </p><img src="../../assets/img/2-12-conflictos-prettier-eslint/7.webp" loading="lazy" alt="example">
+            <p>Ahora al guardar nuestro archivo, automáticamente se quitan aquellos <strong>imports</strong> que no están siendo utilizados y además se ordenan alfabéticamente. </p><img src="../../assets/img/2-12-conflictos-prettier-eslint/7.webp" alt="example">
             <p>Con esta configuración tambien evitaremos cambios fantasmas.</p>
             <p>Puede que nos preguntemos que esta última configuración no está configurada para todos, no es como Prettier o como ESLint que nos ofrecen archivos de configuración y la realidad es que no hay una opción medianamente estándar que utilize todo el mundo para hacer esto, entonces es una de esas cosas que toca configurar localmente.</p>
           </article>
@@ -408,13 +408,13 @@
             <p>Hasta este punto ya tenemos configurado nuestro <strong>VSCode</strong>, nuestro <strong>ESLint</strong> y nuestro <strong>Prettier</strong> para funcionar a través de las extensiones de <strong>VSCode</strong>, pero realmente tenemos que proporcionar alguna forma alternativa de poder formatear este código y aplicarle el <strong>linter</strong> sin utilizar ninguna extensión, es decir, en la medida de lo posible facilitarlo a través de un comando, y como tanto <strong>Prettier</strong> como <strong>ESLint</strong> tienen una línea de comandos, lo correcto es crear un comando en el <strong>"package.json"</strong> que nos permita realizar estas tareas. </p>
             <p>Antes de crear nuestro Script personalizado, ejecutaremos los comandos desde la terminal.</p>
             <p><code>npx prettier --check  . </code></p>
-            <p>Lo que hacemos con este comando es checar que es lo que haria hipotéticamente o a que archivos afectaria Prettier en nuestro proyecto.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/8.webp" loading="lazy" alt="example">
+            <p>Lo que hacemos con este comando es checar que es lo que haria hipotéticamente o a que archivos afectaria Prettier en nuestro proyecto.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/8.webp" alt="example">
             <p>Aunque parezca que Prettier no afectará la carpeta <strong>"dist"</strong> en realidad si la afectará, es decir, que si nosotros formateamos algún archivo de la carpeta <strong>"dist"</strong> nos cargaremos todo el <strong>"bundle"</strong> de ese archivo, es decir, si formateamos un bundle deshacemos toda esa <strong>ofuscación</strong>, toda esa <strong>minificación</strong> que hemos creado. </p>
             <p>Entonces tenemos que indicarle a Prettier que no afecte a la carpeta <strong>"dist"</strong>. </p>
             <p>Para eso al igual que <strong>"git"</strong> tiene un <strong>".gitignore</strong> para ignorar archivos que no se subirán al repositorio, <strong>Prettier</strong> nos ofrece el archivo <strong>".prettierignore"</strong>. </p>
-            <p>Crearemos entonces el archivo <strong>".prettierignore"</strong> en la raíz de nuestro proyecto y agregamos la carpeta <strong>"dist"</strong> para que Prettier la ignore.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/9.webp" loading="lazy" alt="example">
+            <p>Crearemos entonces el archivo <strong>".prettierignore"</strong> en la raíz de nuestro proyecto y agregamos la carpeta <strong>"dist"</strong> para que Prettier la ignore.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/9.webp" alt="example">
             <p>Si ahora nos vamos a un bundle como el <strong>index.js</strong> de la carpeta <strong>"dist"</strong> y guardamos con <strong>"ctrl + s"</strong> Prettier no actuará sobre este archivo, ni ningún archivo de la carpeta <strong>"dist"</strong>.</p>
-            <figure> <img src="../../assets/img/2-12-conflictos-prettier-eslint/10.webp" loading="lazy" alt="example">
+            <figure> <img src="../../assets/img/2-12-conflictos-prettier-eslint/10.webp" alt="example">
               <figcaption>Al guardar el archivo, el archivo se queda tal cual.</figcaption>
             </figure>
             <h3>Creación de script para Prettier</h3>
@@ -423,12 +423,12 @@
             <p><code>npx prettier --write .</code></p>
             <p>Este comando ejecuta Prettier para formatear automáticamente todos los archivos en un proyecto o en una ruta especificada, reescribiéndolos con el formato adecuado. </p>
             <p>Por ejemplo, al ejecutar <strong>npx prettier --write .</strong> , Prettier buscará y formateará todos los archivos compatibles en el directorio actual. </p>
-            <p>Ahora si creamos el script, que se llamará <strong>"format"</strong>.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/11.webp" loading="lazy" alt="example">
+            <p>Ahora si creamos el script, que se llamará <strong>"format"</strong>.</p><img src="../../assets/img/2-12-conflictos-prettier-eslint/11.webp" alt="example">
             <p>Ahora si podemos ejecutar el script con el comando:</p>
-            <p><code>npm run format</code></p><img src="../../assets/img/2-12-conflictos-prettier-eslint/12.webp" loading="lazy" alt="example">
+            <p><code>npm run format</code></p><img src="../../assets/img/2-12-conflictos-prettier-eslint/12.webp" alt="example">
             <p>De esta manera podemos ocupar Prettier, ya sin ninguna extensión.</p>
             <h3>Script de ESLint</h3>
-            <P>Para el caso de <strong>ESLint</strong>, <strong>Vite</strong> en sus últimas versiones ya integra automáticamente <strong>ESLint</strong> por lo que no tenemos que hacer nada más, ya esta todo configurado.</P><img src="../../assets/img/2-12-conflictos-prettier-eslint/13.webp" loading="lazy" alt="example">
+            <P>Para el caso de <strong>ESLint</strong>, <strong>Vite</strong> en sus últimas versiones ya integra automáticamente <strong>ESLint</strong> por lo que no tenemos que hacer nada más, ya esta todo configurado.</P><img src="../../assets/img/2-12-conflictos-prettier-eslint/13.webp" alt="example">
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />

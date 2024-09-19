@@ -34,7 +34,7 @@ append content
 
         p Establecemos un nombre de proyecto, el framework y su variante.
 
-        img(src="../../assets/img/2-7-creando-una-app-vite/2.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/2.webp" alt="example")
 
         p Nos movemos a la carpeta del proyecto que nos a creado 
             strong Vite
@@ -44,21 +44,21 @@ append content
         p  Ejectamos el comando 
             code npm i
             |   para instalar las dependencias.   
-        img(src="../../assets/img/2-7-creando-una-app-vite/3.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/3.webp" alt="example")
 
         p De primer vistazo, podemos ver que, es un proyecto mucho más simple que el que habiamos creado con create-react-app.
-        img(src="../../assets/img/2-7-creando-una-app-vite/4.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/4.webp" alt="example")
 
         p A demás, el peso de la carpeta de las dependencias (node_modules) es considerablemente bajo, con solo 
             strong 94mb
             |    a comparación de los 149mb de las dependencias de create-react-app.
-        img(src="../../assets/img/2-7-creando-una-app-vite/5.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/5.webp" alt="example")
 
         p Hechemos un vistazo al 
             strong package.json 
             | , observaremos que solo tenemos 4 scripts.
 
-        img(src="../../assets/img/2-7-creando-una-app-vite/6.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/6.webp" alt="example")
 
         ol 
             li 
@@ -89,10 +89,10 @@ append content
         p: code npm run dev
         p y seleccionamos nuestro servidor local.
 
-        img(src="../../assets/img/2-7-creando-una-app-vite/7.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/7.webp" alt="example")
 
         p Y en menos de 1 segundo nuestra app estará ejecutandose
-        img(src="../../assets/img/2-7-creando-una-app-vite/8.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/8.webp" alt="example")
 
         h3 ¿Por qué es tan rápido?
 
@@ -109,7 +109,7 @@ append content
             | , lo que quiere decir que solo tenemos una versión 
             strong transpilada
             |   sin llegar a bandelizar.
-        img(src="../../assets/img/2-7-creando-una-app-vite/9.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/9.webp" alt="example")
 
         p Como hemos mencionado, cuando estamos en modo 
             strong desarrollo
@@ -123,13 +123,13 @@ append content
             a(href="https://vitejs.dev/guide/why.html" target="_blank").link ¿Por qué Vite?     
 
         figure.ts-1 
-            img(src="../../assets/img/2-7-creando-una-app-vite/10.webp" loading="lazy" alt="example").has-mb
+            img(src="../../assets/img/2-7-creando-una-app-vite/10.webp" alt="example").has-mb
             figcaption Mientras que un servidor de desarrollo basado en 
                 strong bundle,
                 |   tiene que bandelizar y así posteriormente el servidor estará listo para ser ejecutado. Esto es demasiado lento, ya que, una app puede llegar a tener miles de documentos JS, y el bandelizar todos estos para que el servidor pueda estar listo, será demasiado lento.
 
         figure.ts-1 
-            img(src="../../assets/img/2-7-creando-una-app-vite/11.webp" loading="lazy" alt="example").has-mb
+            img(src="../../assets/img/2-7-creando-una-app-vite/11.webp" alt="example").has-mb
             figcaption Mientras que un servidor basado en los 
                 strong módulos nativos de Ecma Script (ESM)
                 |   es decir utilizar 
@@ -147,14 +147,14 @@ append content
 
         p Ejecutamos el comando 
         p: code npm run build
-        img(src="../../assets/img/2-7-creando-una-app-vite/12.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/12.webp" alt="example")
         p Esto nos genera rápidamente una carpeta llamada 
             strong dist
             |   con una carpeta dentro llamada 
             strong assets
             |   con los siguientes archivos.
 
-        img(src="../../assets/img/2-7-creando-una-app-vite/13.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/13.webp" alt="example")
         p.ts-2
             span Esta carpeta 
             strong "dist"
@@ -167,7 +167,7 @@ append content
             | .
 
         figure 
-            img(src="../../assets/img/2-7-creando-una-app-vite/14.webp" loading="lazy" alt="example")
+            img(src="../../assets/img/2-7-creando-una-app-vite/14.webp" alt="example")
             figcaption Como vemos, está añadiendo el script 
                 strong index-DfQ3Eo-l.js
                 |   y los estilos de la aplicación 
@@ -186,12 +186,12 @@ append content
             strong minificado
             | .          
 
-        img(src="../../assets/img/2-7-creando-una-app-vite/15.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/15.webp" alt="example")
 
         p Los estilos de nuestra aplicación se encuentran de igual manera 
             strong bandelizados
             |   (Todos los archivos css se unifican), y a su vez minificados.
-        img(src="../../assets/img/2-7-creando-una-app-vite/16.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/16.webp" alt="example")
 
         h3 ¿Y para qué sirve la carpeta 
             strong public
@@ -230,7 +230,7 @@ append content
             strong estará disponible en la raíz del proyecto
             | .    
         figure 
-            img(src="../../assets/img/2-7-creando-una-app-vite/17.webp" loading="lazy" alt="example")
+            img(src="../../assets/img/2-7-creando-una-app-vite/17.webp" alt="example")
             figcaption Como observamos, el 
                 strong svg
                 |   dentro de la carpeta 
@@ -249,14 +249,14 @@ append content
 
         p para previsualizar nuestra aplicación y ver que todo este correcto y funcione.
         p Ejecutamos el comando y nos generará un servidor para visualizar.
-        img(src="../../assets/img/2-7-creando-una-app-vite/18.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/18.webp" alt="example")
         p Abrimos el servidor y visualizaremos nuestra aplicación. 
-        img(src="../../assets/img/2-7-creando-una-app-vite/19.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/19.webp" alt="example")
 
         p Y ahora si vamos a la pestaña 
             strong sources
             |   miraremos todo bandelizado.
-        img(src="../../assets/img/2-7-creando-una-app-vite/20.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/20.webp" alt="example")
 
         p Entonces con 
             strong Vite
@@ -278,7 +278,7 @@ append content
             strong vite.config.js
             | , donde podremos configurar todo lo que queramos.
 
-        img(src="../../assets/img/2-7-creando-una-app-vite/21.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/21.webp" alt="example")
 
         p 
             strong Vite
@@ -288,7 +288,7 @@ append content
             strong react()
             |), que nos sirve para configurar un proyecto genérico de Vite como un proyecto de React. Dentro de los paréntesis podremos aplicar un monton de configuraciones de React que extiende la configuración por defecto. Es decir si modificamos una pequeña opción, no tenemos que tomar todo el archivo de configuración del empaquetador y montarlo por nuestra cuenta como se hace con Create React App, si no que simplemente pisamos esa opción y seguimos manteniendo todo tal y como está.
 
-        img(src="../../assets/img/2-7-creando-una-app-vite/22.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-7-creando-una-app-vite/22.webp" alt="example")
 
         p De la misma forma tenemos un monton de plugins oficiales de 
             strong Vite

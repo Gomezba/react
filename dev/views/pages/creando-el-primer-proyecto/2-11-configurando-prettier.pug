@@ -100,7 +100,7 @@ append content
             strong VScode
             |   tenemos un formateador por defecto, si damos click derecho sobre nuestro archivo podemos verlo.
 
-        img(src="../../assets/img/2-11-configurando-prettier/1.webp" loading="lazy" alt="example") 
+        img(src="../../assets/img/2-11-configurando-prettier/1.webp" alt="example") 
 
         p Entonces, podemos preguntarnos: ¿por qué no utilizamos este formateador? El principal problema de este formateador surge cuando estamos trabajando en el mismo proyecto desde distintas máquinas y utilizamos un controlador de versiones como 
             strong "Git"
@@ -124,12 +124,12 @@ append content
 
         p Empezamos por instalar Prettier con el comando: 
         p: code npm i -D prettier 
-        img(src="../../assets/img/2-11-configurando-prettier/2.webp" loading="lazy" alt="example") 
+        img(src="../../assets/img/2-11-configurando-prettier/2.webp" alt="example") 
 
         p Ahora desde la consola, podemos utilizar Prettier ejecutando el siguiente comando: 
         p: code npx prettier ./src/main.jsx
         figure 
-            img(src="../../assets/img/2-11-configurando-prettier/3.webp" loading="lazy" alt="example") 
+            img(src="../../assets/img/2-11-configurando-prettier/3.webp" alt="example") 
             figcaption Nos devuelve el código formateado pero desde la consola.
 
         p Para hacer que Prettier formatee de verdad desde nuestro archivo y no de la consola, tenemos que agregar la opción 
@@ -137,7 +137,7 @@ append content
             | , el comando quedaria así:
 
         p: code npx prettier ./src/main.jsx --write       
-        img(src="../../assets/img/2-11-configurando-prettier/4.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-11-configurando-prettier/4.webp" alt="example")
 
         p Como podemos ver, ya se ha formateado nuestro código, pero de acuerdo a la configuración que tengamos en 
             strong ESLint 
@@ -150,12 +150,12 @@ append content
             | ) entraria en conflicto, en nuestro caso no entra en conflicto porque nuestra configuración de ESLint permite las comillas.  
 
         p Lo que haremos ahora, es instalar la extensión de Prettier, para que actue directamente.
-        img(src="../../assets/img/2-11-configurando-prettier/5.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-11-configurando-prettier/5.webp" alt="example")
 
         P Después elegimos a Prettier como formateador por defecto, y una vez hecho esto necesitamos configurar VSCode para que al guardar con 
             strong "ctrl + s"
             |   se nos aplique el formateo de Prettier
-        img(src="../../assets/img/2-11-configurando-prettier/6.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-11-configurando-prettier/6.webp" alt="example")
 
         p Para hacer que 
             strong ESLint 
@@ -173,7 +173,7 @@ append content
             strong Prettier
             |  . 
 
-        img(src="../../assets/img/2-11-configurando-prettier/7.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-11-configurando-prettier/7.webp" alt="example")
 
         p Pero el problema de hacerlo de esta manera, es que estamos configurando Prettier de manera 
             strong local
@@ -191,7 +191,7 @@ append content
             |   en la raíz de nuestro proyecto, este archivo estará escrito en 
             strong JSON
             | .
-        img(src="../../assets/img/2-11-configurando-prettier/8.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-11-configurando-prettier/8.webp" alt="example").img-md
 
         p Nuestro archivo de configuración quedará de la siguiente manera: 
         div: pre: code.language-json

@@ -15,7 +15,7 @@ append content
             strong main.jsx
             |   para poder recrearlo desde cero y entender como funciona.
 
-        img(src="../../assets/img/2-8-entendiendo-vite/2.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-8-entendiendo-vite/2.webp" alt="example")
 
         p Ahora empezaremos por crear un H1 en nuestro 
             strong main.jsx
@@ -30,7 +30,7 @@ append content
             |
             |root.render(h1)
 
-        img(src="../../assets/img/2-8-entendiendo-vite/3.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-8-entendiendo-vite/3.webp" alt="example")
 
         p Como podemos ver todo funciona bien, pero quizás te preguntes varias cosas, como: 
             strong ¿Por qué el main tiene la extensión JSX?
@@ -96,12 +96,12 @@ append content
             |	&lt;/body&gt;
             |&lt;/html&gt;
 
-        img(src="../../assets/img/2-8-entendiendo-vite/4.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-8-entendiendo-vite/4.webp" alt="example")
         p Ejecutamos nuestro servidor de desarrollo 
             strong npm run dev
             |.
 
-        img(src="../../assets/img/2-8-entendiendo-vite/5.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-8-entendiendo-vite/5.webp" alt="example")
 
         h4 Importando directamente desde el código 
 
@@ -142,7 +142,7 @@ append content
 
         p Podemos observar que funciona.    
 
-        img(src="../../assets/img/2-8-entendiendo-vite/5.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-8-entendiendo-vite/5.webp" alt="example")
 
         p Realmente, la posibilidad de hacerlo mediante un 
             strong import
@@ -173,7 +173,7 @@ append content
 
         p En nuestro servidor de desarollo esto funciona correctamente.
 
-        img(src="../../assets/img/2-8-entendiendo-vite/6.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-8-entendiendo-vite/6.webp" alt="example")
 
         p Pero si ahora creamos la versión de producción: 
         p: code npm run build
@@ -184,13 +184,13 @@ append content
             strong assets
             | , no se encuentra el logo (react.svg) que estamos queriendo visualizar.
 
-        img(src="../../assets/img/2-8-entendiendo-vite/7.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-8-entendiendo-vite/7.webp" alt="example")
 
         p Entonces al correr nuestro servidor de producción o nuestra prueba de producción con el comando: 
         p: code npm run preview
         p Podemos ver que la imagen no se puede visualizar.
 
-        img(src="../../assets/img/2-8-entendiendo-vite/8.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-8-entendiendo-vite/8.webp" alt="example")
 
         p ¿Por qué está pasando esto? Porque hay que entender como funciona este 
             strong dev server

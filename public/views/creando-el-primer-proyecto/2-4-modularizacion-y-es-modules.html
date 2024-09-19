@@ -348,16 +348,16 @@
             <p>Como en todo proyecto a medida que el código crece, surge la necesidad de modularizar, es decir separar nuestro código en distintos archivos y utilizar una sintaxis de <code>import</code> y <code>export</code> para utilizarlos.</p>
             <p>Lo primero que haremos es dejar nuestra estructura de la siguiente manera, pero guardaremos el código que teniamos anteriormente en <strong>index-alt.js, ya que lo modularizaremos en arhivos por separado.</strong></p><img src="../../assets/img/2-4-modularizacion-y-es-modules/1.webp" alt="example">
             <p>Nuestro código modularizado queadría de la siguiente manera</p>
-            <p><strong class="ts-1">data.js </strong></p><img src="../../assets/img/2-4-modularizacion-y-es-modules/2.webp" loading="lazy" alt="example">
-            <p><strong class="ts-1">component.js </strong></p><img src="../../assets/img/2-4-modularizacion-y-es-modules/3.webp" loading="lazy" alt="example">
-            <p><strong class="ts-1">render.js </strong></p><img src="../../assets/img/2-4-modularizacion-y-es-modules/4.webp" loading="lazy" alt="example">
+            <p><strong class="ts-1">data.js </strong></p><img src="../../assets/img/2-4-modularizacion-y-es-modules/2.webp" alt="example">
+            <p><strong class="ts-1">component.js </strong></p><img src="../../assets/img/2-4-modularizacion-y-es-modules/3.webp" alt="example">
+            <p><strong class="ts-1">render.js </strong></p><img src="../../assets/img/2-4-modularizacion-y-es-modules/4.webp" alt="example">
             <p><strong class="ts-1">.babelrc</strong></p>
-            <figure> <img src="../../assets/img/2-4-modularizacion-y-es-modules/5.webp" loading="lazy" alt="example">
+            <figure> <img src="../../assets/img/2-4-modularizacion-y-es-modules/5.webp" alt="example">
               <figcaption>Hemos agregado una configuración para que el código resultado sea con ESM.</figcaption>
             </figure>
             <p>Ahora ejecutamos el siguiente comando que transpilará la carpeta <strong>src</strong> y creara un directorio llamado <strong>dist</strong> en la raíz de nuestro proyecto.</p>
             <p><code>npx babel src -d dist</code></p>
-            <p>Así quedaría nuestra carpeta <strong>dist</strong> generada, y su código transpilado con ESM.</p><img src="../../assets/img/2-4-modularizacion-y-es-modules/6.webp" loading="lazy" alt="example">
+            <p>Así quedaría nuestra carpeta <strong>dist</strong> generada, y su código transpilado con ESM.</p><img src="../../assets/img/2-4-modularizacion-y-es-modules/6.webp" alt="example">
             <p>Por último cambiaremos nuestro script a la nueva versión transpilada.</p>
             <div class="has-mb">
               <pre><code class="language-html"> &lt;!DOCTYPE html&gt;
@@ -376,17 +376,17 @@
 		&lt;div id="root"&gt;&lt;/div&gt;
 	&lt;/body&gt;
 &lt;/html&gt;</code></pre>
-            </div><img class="has-mb" src="../../assets/img/2-4-modularizacion-y-es-modules/7.webp" loading="lazy" alt="example">
+            </div><img class="has-mb" src="../../assets/img/2-4-modularizacion-y-es-modules/7.webp" alt="example">
           </article>
           <article class="content" id="2">
             <h2>Navegador con ESM </h2>
-            <p>Ahora toca hablar de los ESM y de como el navegador los carga, para ello nos vamos a la pestaña de <strong>Network</strong> en el navegador y filtramos por archivos JS y desabilitamos la caché.</p><img src="../../assets/img/2-4-modularizacion-y-es-modules/8.webp" loading="lazy" alt="example">
-            <p>Ahora recargamos la página y lo que vemos, es el orden en que se ejecutan nuestros archivos JS, estos vienen de nuestro HTML.</p><img src="../../assets/img/2-4-modularizacion-y-es-modules/9.webp" loading="lazy" alt="example">
-            <p>Recordemos que nuestro archivo <strong>render.js</strong> es el que importa el código de los archivos de <strong>data.js</strong> y <strong>component.js</strong> , y para que <strong>render.js </strong> pueda ocupar esos archivos lo que hace es hacer otras 2 peticiones, una para <strong>data.js </strong> y otra para <strong>component.js</strong></p><img src="../../assets/img/2-4-modularizacion-y-es-modules/10.webp" loading="lazy" alt="example">
+            <p>Ahora toca hablar de los ESM y de como el navegador los carga, para ello nos vamos a la pestaña de <strong>Network</strong> en el navegador y filtramos por archivos JS y desabilitamos la caché.</p><img src="../../assets/img/2-4-modularizacion-y-es-modules/8.webp" alt="example">
+            <p>Ahora recargamos la página y lo que vemos, es el orden en que se ejecutan nuestros archivos JS, estos vienen de nuestro HTML.</p><img src="../../assets/img/2-4-modularizacion-y-es-modules/9.webp" alt="example">
+            <p>Recordemos que nuestro archivo <strong>render.js</strong> es el que importa el código de los archivos de <strong>data.js</strong> y <strong>component.js</strong> , y para que <strong>render.js </strong> pueda ocupar esos archivos lo que hace es hacer otras 2 peticiones, una para <strong>data.js </strong> y otra para <strong>component.js</strong></p><img src="../../assets/img/2-4-modularizacion-y-es-modules/10.webp" alt="example">
             <h3>El ¿Por qué hay que empaquetar nuestros archivos?</h3>
             <p>Lo de la imagen anterior en sí no es un problema realmente, pero puede llegar a serlo cuando estamos en producción. ¿Por qué? Porque cuando estamos en desarrollo, las peticiones las hacemos nosotros mismos, y van dirigidas hacia nuestra propia máquina. Es decir, tenemos un único usuario (nosotros), y nuestra propia máquina es la que nos responde. En este caso, las solicitudes van desde nuestra máquina hasta nuestra máquina, por lo que la latencia de red es nula. Sin embargo, cuando llegamos a producción en un escenario real, podemos tener miles de usuarios. </p>
             <p>En un proyecto real, evidentemente no habrá solo 3 archivos; puede haber 100, 200 o incluso 500 en una misma página. Si cada usuario que visita la página tiene que cargar entre 100 y 500 archivos, podemos encontrarnos con una cantidad ingente de peticiones al servidor. Todas estas peticiones, evidentemente, tienen un pequeño retraso debido al tiempo que tarda el servidor en responder. Además, si se acumulan demasiadas peticiones, nuestro servidor podría saturarse simplemente por responder a todas ellas.</p>
-            <p>Entonces, ¿qué se suele hacer para evitar esto? Pues se suelen juntar todos estos archivos en uno solo cuando generamos la versión transpilada. Esto se conoce como <strong class="ts-3">empaquetado</strong> o <strong class="ts-3">bundle</strong>, y es lo que hacen los archivos <strong>react.development.js</strong> y <strong>react-dom.development.js</strong>, como podemos observar en la pestaña "Sources" de los archivos de unpkg.com.</p><img src="../../assets/img/2-4-modularizacion-y-es-modules/11.webp" loading="lazy" alt="example">
+            <p>Entonces, ¿qué se suele hacer para evitar esto? Pues se suelen juntar todos estos archivos en uno solo cuando generamos la versión transpilada. Esto se conoce como <strong class="ts-3">empaquetado</strong> o <strong class="ts-3">bundle</strong>, y es lo que hacen los archivos <strong>react.development.js</strong> y <strong>react-dom.development.js</strong>, como podemos observar en la pestaña "Sources" de los archivos de unpkg.com.</p><img src="../../assets/img/2-4-modularizacion-y-es-modules/11.webp" alt="example">
             <p>Para poder realizar este empaquetado, necesitamos una herramienta adicional a Babel: un empaquetador.</p>
           </article>
         </section>

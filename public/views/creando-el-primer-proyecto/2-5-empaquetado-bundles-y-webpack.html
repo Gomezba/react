@@ -353,8 +353,8 @@
             <p>Webpack admite el empaquetado partiendo de un único archivo que se llama punto de entrada (entry point), ¿Cuál será este archivo de punto de entrada?, pues el que nos permita a través de el cargar toda la aplicación, a través de esos imports, en nuestro caso es el archivo render.js, ya que nuestro archivo render.js es un archivo en el cuál se llega a toda la aplicación, por eso es el punto de entrada.</p>
             <p>Para empezar a utilizar Webpack ejecutamos el siguiente comando, que se encarga de empaquetar nuestro entry point.</p>
             <p><strong>npx webpack --mode=development ./dist/render.js</strong></p>
-            <p>Lo que hace es generarnos un archivo llamado <strong>main.js </strong> dentro de nuestra carpeta <strong>dist</strong>, este archivo es un bundle, donde están agrupados todos los archivos anteriores en uno solo y tiene un monton de sintaxis extraña porque hemos puesto el modo desarrollo.</p><img class="has-mb" src="../../assets/img/2-5-empaquetado-bundles-y-webpack/1.webp" loading="lazy" alt="example">
-            <figure> <img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/2.webp" loading="lazy" alt="example">
+            <p>Lo que hace es generarnos un archivo llamado <strong>main.js </strong> dentro de nuestra carpeta <strong>dist</strong>, este archivo es un bundle, donde están agrupados todos los archivos anteriores en uno solo y tiene un monton de sintaxis extraña porque hemos puesto el modo desarrollo.</p><img class="has-mb" src="../../assets/img/2-5-empaquetado-bundles-y-webpack/1.webp" alt="example">
+            <figure> <img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/2.webp" alt="example">
               <figcaption>Como podemos ver, generá código extraño, porque lo hemos puesto en modo desarrollo, pero en producción se comportará de manera distinta.</figcaption>
             </figure>
             <p>En definitiva lo que tenemos que hacer ahora es cargar este <strong>main.js</strong> en nuestro HTML, en lugar de cargar el <strong>./dist/render.js</strong> y como este archivo <strong>main.js</strong> ya está empaquetado, ya no utilizaremos el <strong>type="module"</strong> porque ya no utilizaremos imports.</p>
@@ -376,42 +376,42 @@
 	&lt;/body&gt;
 &lt;/html&gt;</code></pre>
             </div>
-            <p>Al correr nuestro servidor con live server, vemos que todo funciona bien. </p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/3.webp" loading="lazy" alt="example">
-            <p>Si ahora nos vamos a la pestaña Network, haciendo el filtro por JS y desabilitando la caché, vemos que ya no se están haciendo las peticiones extras que teniamos en el capítulo anterior.</p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/4.webp" loading="lazy" alt="example">
+            <p>Al correr nuestro servidor con live server, vemos que todo funciona bien. </p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/3.webp" alt="example">
+            <p>Si ahora nos vamos a la pestaña Network, haciendo el filtro por JS y desabilitando la caché, vemos que ya no se están haciendo las peticiones extras que teniamos en el capítulo anterior.</p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/4.webp" alt="example">
             <p>Esta sería la función principal de Webpack, de la misma forma que Babel, Webpack tambien admite un fichero de configuración, que crearemos a continuación.</p>
             <p>En la raíz de nuestro proyecto, crearemos el archivo <strong>webpack.config.js</strong></p>
-            <p>En este archivo, utilizando CJS estableceremos la configuración siguiente.</p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/5.webp" loading="lazy" alt="example">
-            <p>Ahora solo ejecutamos el comando <strong>npx webpack</strong> y nos generará un archivo llamado <strong>bundle.js</strong> en la carpeta <strong>dist</strong>.</p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/6.webp" loading="lazy" alt="example">
-            <p>Procedemos a borrar el archivo <strong>main.js</strong> que se habia generado anteriormente, y ahora en nuestro index.html, cambiamos la ruta por el arhivo <strong>bundle.js</strong></p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/7.webp" loading="lazy" alt="example">
+            <p>En este archivo, utilizando CJS estableceremos la configuración siguiente.</p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/5.webp" alt="example">
+            <p>Ahora solo ejecutamos el comando <strong>npx webpack</strong> y nos generará un archivo llamado <strong>bundle.js</strong> en la carpeta <strong>dist</strong>.</p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/6.webp" alt="example">
+            <p>Procedemos a borrar el archivo <strong>main.js</strong> que se habia generado anteriormente, y ahora en nuestro index.html, cambiamos la ruta por el arhivo <strong>bundle.js</strong></p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/7.webp" alt="example">
             <p>Hasta aquí Webpack, parece ser una herramienta sencilla, pero realmente es todo un director de orquesta, y es que, la función de webpack no es solamente empaquetar, si no que puede cordinar absolutamente todas las tareas que tenemos que realizar desde que nuestro código está en la verión original hasta que llega a este <strong>bundle.js </strong></p>
             <p>Por ejemplo, puede ser Webpack el que se encargue de lanzar Babel, ya no tenemos que hacerlo por comando, sino que Webpack puede hacerlo por nosotros con una pequeña configuración.</p>
             <p>Para ello tenemos que instalar un paquete más: </p>
             <p><strong>npm i -D babel-loader</strong></p>
             <p>Una vez instalado tenemos que ir a nuestro archivo <strong>webpack.config.js</strong> e indicarle una configuración extra.</p>
-            <p>En este punto, en lugar de apuntar al <strong>dist</strong>, como ya vamos a cargar con el <strong>babel-loader</strong> podemos apuntar directamente al entry point de nuestro código fuente, es decir al archivo <strong>render.js</strong> que se encuentra en la carpeta <strong>src.</strong></p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/8.webp" loading="lazy" alt="example">
+            <p>En este punto, en lugar de apuntar al <strong>dist</strong>, como ya vamos a cargar con el <strong>babel-loader</strong> podemos apuntar directamente al entry point de nuestro código fuente, es decir al archivo <strong>render.js</strong> que se encuentra en la carpeta <strong>src.</strong></p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/8.webp" alt="example">
             <p>Ahora eliminamos la carpeta <strong>dist</strong>.</p>
-            <figure> <img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/9.webp" loading="lazy" alt="example">
+            <figure> <img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/9.webp" alt="example">
               <figcaption>Hemos eliminado la carpeta dist.</figcaption>
             </figure>
-            <p>Ahora ejecutamos el comando <strong>npx webpack</strong> nos generará de nuevo la carpeta <strong>dist</strong> pero ahora con un solo archivo de <strong>bundle</strong> de producción y transpilación todo en uno.</p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/10.webp" loading="lazy" alt="example">
+            <p>Ahora ejecutamos el comando <strong>npx webpack</strong> nos generará de nuevo la carpeta <strong>dist</strong> pero ahora con un solo archivo de <strong>bundle</strong> de producción y transpilación todo en uno.</p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/10.webp" alt="example">
           </article>
           <article class="content" id="2">
             <h2>Instalando dependencias react y react-dom</h2>
-            <p>Ahora para finalizar esta configuración, lo que vamos hacer es quitarnos de en medio los 2 scripts que tenemos en origen en nuestro <strong>index.html </strong></p><img class="has-mb" src="../../assets/img/2-5-empaquetado-bundles-y-webpack/11.webp" loading="lazy" alt="example">
-            <figure> <img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/12.webp" loading="lazy" alt="example">
+            <p>Ahora para finalizar esta configuración, lo que vamos hacer es quitarnos de en medio los 2 scripts que tenemos en origen en nuestro <strong>index.html </strong></p><img class="has-mb" src="../../assets/img/2-5-empaquetado-bundles-y-webpack/11.webp" alt="example">
+            <figure> <img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/12.webp" alt="example">
               <figcaption>Hemos eliminado los scripts de react y react-dom.</figcaption>
             </figure>
             <p>Lo que haremos ahora es instalarlas como dependecias de producción en nuestro proyecto, con el comando: </p>
             <p><strong>npm i react react-dom</strong></p>
             <p>Una vez instaladas, importaremos <strong>react</strong> y <strong>react-dom</strong> en donde vayan a ser utilizadas.</p>
             <p>Entonces nos vamos al archivo <strong>render.js</strong> y al archivo <strong> component.js</strong>.</p>
-            <p><strong>render.js</strong></p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/13.webp" loading="lazy" alt="example">
-            <p><strong>component.js</strong></p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/14.webp" loading="lazy" alt="example">
+            <p><strong>render.js</strong></p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/13.webp" alt="example">
+            <p><strong>component.js</strong></p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/14.webp" alt="example">
             <p>Si ahora ejecutamos el comando <strong>npx webpack</strong> miraremos que nos genera un archivo <strong>bundle.js</strong> que ya no se parece para nada al que teniamos anteriormente.</p>
-            <figure> <img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/15.webp" loading="lazy" alt="example">
+            <figure> <img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/15.webp" alt="example">
               <figcaption>Ahora nuestro archivo bundle, es un pedazo de archivo enorme que contiene todo el código de las dependencias de <strong>react</strong> y de <strong>react-dom</strong>. </figcaption>
             </figure>
-            <p>Por último Webpack es tan maravilloso que si lo configuramos a modo producción (prduction), el <strong>bundle</strong> ahora se genera completamente minificado y ofuscado, para ocupar el mínimo espacio posible, e incluso nos genera una licencia.</p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/17.webp" loading="lazy" alt="example"><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/16.webp" loading="lazy" alt="example">
+            <p>Por último Webpack es tan maravilloso que si lo configuramos a modo producción (prduction), el <strong>bundle</strong> ahora se genera completamente minificado y ofuscado, para ocupar el mínimo espacio posible, e incluso nos genera una licencia.</p><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/17.webp" alt="example"><img src="../../assets/img/2-5-empaquetado-bundles-y-webpack/16.webp" alt="example">
             <p>En definitiva <strong>Webpack</strong> puede hacer muchas cosas por nosotros, <strong>siempre y cuando sepamos configurarlo</strong>, y este es el problema, la configuración de <strong>Webpack</strong> la configuración de <strong>Babel</strong> como ya nos hemos dado cuenta, es un tema bastante dificíl y si no sabemos que opciones tenemos que utilizar y como configurar cada una de estas herramientas, es muy dificíl sacar un proyecto adelante y que todo funcione, y terminemos desesperandonos porque realmente es pesado y dificíl de configurar.</p>
           </article>
         </section>

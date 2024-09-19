@@ -19,17 +19,17 @@ append content
 
         p Nuestro código modularizado queadría de la siguiente manera
         p: strong.ts-1 data.js     
-        img(src="../../assets/img/2-4-modularizacion-y-es-modules/2.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-4-modularizacion-y-es-modules/2.webp" alt="example")
 
         p: strong.ts-1 component.js     
-        img(src="../../assets/img/2-4-modularizacion-y-es-modules/3.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-4-modularizacion-y-es-modules/3.webp" alt="example")
 
         p: strong.ts-1 render.js     
-        img(src="../../assets/img/2-4-modularizacion-y-es-modules/4.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-4-modularizacion-y-es-modules/4.webp" alt="example")
 
         p: strong.ts-1 .babelrc
         figure 
-            img(src="../../assets/img/2-4-modularizacion-y-es-modules/5.webp" loading="lazy" alt="example")
+            img(src="../../assets/img/2-4-modularizacion-y-es-modules/5.webp" alt="example")
             figcaption Hemos agregado una configuración para que el código resultado sea con ESM.
 
         p Ahora ejecutamos el siguiente comando que transpilará la carpeta 
@@ -42,7 +42,7 @@ append content
         p Así quedaría nuestra carpeta 
             strong dist
             |   generada, y su código transpilado con ESM.
-        img(src="../../assets/img/2-4-modularizacion-y-es-modules/6.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-4-modularizacion-y-es-modules/6.webp" alt="example")
 
         p Por último cambiaremos nuestro script a la nueva versión transpilada.
         div.has-mb: pre: code.language-html 
@@ -62,17 +62,17 @@ append content
             |		&lt;div id="root"&gt;&lt;/div&gt;
             |	&lt;/body&gt;
             |&lt;/html&gt;
-        img(src="../../assets/img/2-4-modularizacion-y-es-modules/7.webp" loading="lazy" alt="example").has-mb
+        img(src="../../assets/img/2-4-modularizacion-y-es-modules/7.webp" alt="example").has-mb
 
     article(id="2" class="content")
         h2 Navegador con ESM 
         p Ahora toca hablar de los ESM y de como el navegador los carga, para ello nos vamos a la pestaña de 
             strong Network
             |   en el navegador y filtramos por archivos JS y desabilitamos la caché.
-        img(src="../../assets/img/2-4-modularizacion-y-es-modules/8.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-4-modularizacion-y-es-modules/8.webp" alt="example")
 
         p Ahora recargamos la página y lo que vemos, es el orden en que se ejecutan nuestros archivos JS, estos vienen de nuestro HTML.
-        img(src="../../assets/img/2-4-modularizacion-y-es-modules/9.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-4-modularizacion-y-es-modules/9.webp" alt="example")
 
         p Recordemos que nuestro archivo 
             strong render.js
@@ -86,7 +86,7 @@ append content
             strong data.js 
             |   y otra para 
             strong component.js
-        img(src="../../assets/img/2-4-modularizacion-y-es-modules/10.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-4-modularizacion-y-es-modules/10.webp" alt="example")
 
         h3 El ¿Por qué hay que empaquetar nuestros archivos?
 
@@ -104,7 +104,7 @@ append content
             strong react-dom.development.js
             | , como podemos observar en la pestaña "Sources" de los archivos de unpkg.com.
 
-        img(src="../../assets/img/2-4-modularizacion-y-es-modules/11.webp" loading="lazy" alt="example")
+        img(src="../../assets/img/2-4-modularizacion-y-es-modules/11.webp" alt="example")
 
         p Para poder realizar este empaquetado, necesitamos una herramienta adicional a Babel: un empaquetador.
 

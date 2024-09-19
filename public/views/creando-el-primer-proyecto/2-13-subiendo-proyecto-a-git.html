@@ -349,15 +349,15 @@
           <p>Este proyecto base, va a convivir durante el tiempo con todas las actualizaciones de todos los paquetes que vayan surgiendo, y al final esto puede llegar a ser un problema. </p>
           <p>Durante todas esas actualizaciones puede que haya <strong>issues</strong>, puede que algo deje de funcionar, o que algo funcione de manera distinta.</p>
           <h3>Problema con dependencias</h3>
-          <p>Si vemos el <strong>"package.json"</strong> podemos ver las vesiones de las dependencias que estamos utilizando.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/1.webp" loading="lazy" alt="example">
+          <p>Si vemos el <strong>"package.json"</strong> podemos ver las vesiones de las dependencias que estamos utilizando.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/1.webp" alt="example">
           <p>El problema de esto, es que, si después queremos actualizar nuestros paquetes, puede que nuestra configuración deje de funcionar, y esto no es único de nuestro proyecto si no de cualquier proyecto.</p>
           <p>Lo que debemos hacer siempre, es fijar nuestras dependencias en cualquier proyecto que emprendamos.</p>
           <article class="content" id="1">
             <h2>Problema de no fijar las dependencias</h2>
-            <p>Si nosotros vemos el <strong>"packgage.json"</strong> en las versiones de nuestras dependencias tenemos un <strong>caret o acento circunflejo (^)</strong>.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/2.webp" loading="lazy" alt="example">
+            <p>Si nosotros vemos el <strong>"packgage.json"</strong> en las versiones de nuestras dependencias tenemos un <strong>caret o acento circunflejo (^)</strong>.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/2.webp" alt="example">
             <p><strong class="ts-3">¿Qúe es este caret ^ ?</strong></p>
             <p>Cuando nosotros hacemos un <strong>"npm i"</strong> para instalar las dependencias de <strong>Vite</strong> o de cualquier otro proyecto, es cuando se agregan estos carets <strong>(^)</strong>.</p>
-            <p>Lo que indican estos carets por ejemplo en el caso de <strong>react: </strong></p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/3.webp" loading="lazy" alt="example">
+            <p>Lo que indican estos carets por ejemplo en el caso de <strong>react: </strong></p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/3.webp" alt="example">
             <p>Indica que cuando nosotros hagamos un <strong>npm i </strong>, <strong>npm</strong> puede instalar esta versión <strong>"^18.3.1"</strong> o cualquier versión menor superior a esta.</p>
             <p>¿Qué significa esto? Si por ejemplo en <strong>react</strong> sacan una versión <strong>"minor" </strong><strong class="ts-2">"18.4.1"</strong>, cuando yo haga un <strong>npm i</strong> aunque en el <strong>"package.json"</strong> del proyecto tenga <strong>"react": &nbsp;"^18.3.1"</strong>, <strong>npm</strong> me instalará la siguiente versión que este publicada en los servidores de <strong>npm</strong>, siempre y cuando no sea una versión <strong>"major"</strong> , es decir, siempre y cuando no sea una versión <strong class="ts-2">19.0.0</strong>.</p>
             <p>Si no fijas tus dependencias puede ser que tú tengas una dependencia inclusive en una maquína, en otra tengas otra, y a lo mejor un compañero de equipo haya hecho un <strong>npm i</strong> despúes que tú y se le haya instalado la versión <strong>"18.4.1"</strong> y a lo mejor lo que a él le funciona a ti no. </p>
@@ -368,11 +368,11 @@
             <p>Algo que debemos saber, cundo queramos instalar una dependencia y queremos que quede fijada de una vez, es decir que no se le agregue el caret, debemos de agregar el prefijo -E.</p>
             <p><code>npm i nombreDependencia -E</code></p>
             <p>En nuestro caso fijaremos las dependencias, quitando los carets de manera manual.</p>
-            <figure> <img src="../../assets/img/2-13-subiendo-proyecto-a-git/4.webp" loading="lazy" alt="example">
+            <figure> <img src="../../assets/img/2-13-subiendo-proyecto-a-git/4.webp" alt="example">
               <figcaption>Ya hemos quitado los carets de manera manual.</figcaption>
             </figure>
             <p>Su ahora ejecutamos un <strong>npm i</strong> vamos a ver si alguno de estos paquetes realmente estaba en una versión superior a la que estaba marcada.</p>
-            <figure> <img src="../../assets/img/2-13-subiendo-proyecto-a-git/5.webp" loading="lazy" alt="example">
+            <figure> <img src="../../assets/img/2-13-subiendo-proyecto-a-git/5.webp" alt="example">
               <figcaption>Podemos ver que efectivamente hay 9 paquetes que han cambiado, es decir había 9 paquetes que no estaban explícitamente puesta en el <strong>package.json</strong>. </figcaption>
             </figure>
             <p>Cuando ejecutamos <strong>npm i</strong>, cambiamos 9 paquetes, y recibimos varias advertencias sobre la incompatibilidad de la versión de <strong>Node.js</strong> con las versiones mínimas requeridas por algunos de esos paquetes. </p>
@@ -400,7 +400,7 @@
                 <p> <strong>-E</strong>: Este modificador asegura que cuando actualices dependencias, las nuevas versiones se guardarán con el número exacto en el archivo package.json, eliminando los rangos flexibles como <strong>^</strong> o <strong>~</strong>. Por ejemplo, en lugar de <strong>"react": "^17.0.1"</strong>, quedará <strong>"react": "17.0.1"</strong>.</p>
               </li>
             </ul>
-            <p>Al ejecutar este comando, en nuestro caso miraremos lo siguiente.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/6.webp" loading="lazy" alt="example">
+            <p>Al ejecutar este comando, en nuestro caso miraremos lo siguiente.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/6.webp" alt="example">
             <p>Ahora exmplicaremos la lista de sugerencias de actualización que nos sugiere.</p>
             <p><strong class="ts-3">1. Patch Update (Actualizaciones de parche)</strong></p>
             <p>Estas son actualizaciones menores que incluyen correcciones de errores, pero no introducen nuevas características ni rompen compatibilidad.</p>
@@ -435,17 +435,17 @@
                 <p> <strong>eslint-plugin-react-refresh</strong>: De <strong>0.4.9</strong> a <strong>0.4.12</strong>. Es una actualización dentro de una versión aún en desarrollo, por lo que podría haber mejoras y correcciones, pero podría no ser completamente estable.</p>
               </li>
             </ul>
-            <p>Sabiendo esto, actualizaremos las siguientes dependencias.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/7.webp" loading="lazy" alt="example">
+            <p>Sabiendo esto, actualizaremos las siguientes dependencias.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/7.webp" alt="example">
             <p>Una vez actualizadas nuestras dependencias, para que funcionen correctamente utilizaremos una versión de <strong>NodeJS</strong> requerida para las dependencias.</p>
             <p>En nuestro caso utilizamos <strong>NodeJS</strong> con <strong>"fnm"</strong> que nos permite tener instaladas diferentes versiones de <strong>NodeJS</strong>, en nuestro caso instalaremos la versión <strong>"20.17.0"</strong> que actualemente es actualmente la vesión más reciente en este momento (Sep/2024).</p>
             <p>Instalamos nuestra versión de Node con el comando: </p>
-            <p><code>fnm install 20.17.0     </code></p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/8.webp" loading="lazy" alt="example">
+            <p><code>fnm install 20.17.0     </code></p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/8.webp" alt="example">
             <p>Ahora procedemos a establecer la versión por defecto con el comando: </p>
             <p><code>fnm alias 20.17.0 default</code></p>
-            <p>Y mostraremos la lista de versiones de Node para ver que ya tenemos una versión establecida por defecto.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/9.webp" loading="lazy" alt="example">
+            <p>Y mostraremos la lista de versiones de Node para ver que ya tenemos una versión establecida por defecto.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/9.webp" alt="example">
             <p>En dado caso tengamos un problema con esta versión podemos escoger otra versión por defecto que sea más estable.</p>
             <p>Ahora para validar que la actualización de nuestras dependencias son correctas, siempre debemos subir el archivo <strong>"package-lock.json"</strong>, es así porque si hemos actualizado una dependencia y el <stribg>package-lock.json</stribg> cambia, podemos detectar que hay alguna versión que no está exactamente funcionando como deberia, así que debemos de utilizarlo siempre como respaldo y al ser un archivo autogenerado, no nos interesaría que nadie lo formatiase sin querer, es decir, no queremos ocupar <strong>Prettier</strong> sobre el. </p>
-            <p>Así que agregaremos el <strong>"package-lock.json"</strong> al archivo <strong>".prettierignore"</strong> para que no actue sobre el.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/10.webp" loading="lazy" alt="example">
+            <p>Así que agregaremos el <strong>"package-lock.json"</strong> al archivo <strong>".prettierignore"</strong> para que no actue sobre el.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/10.webp" alt="example">
             <p>Una vez que hemos terminado de quitar los carets, de actualizar las dependencias y demás, lo que haremos es subir nuestro proyecto al repositorio en <strong>GitHub.</strong></p>
           </article>
           <article class="content" id="4">
@@ -456,12 +456,12 @@
 git add . 
 git commit -m "First commit"  </code></pre>
             </div>
-            <p>Ahora crearemos nuestro repositorio en <strong>GitHub</strong>. </p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/11.webp" loading="lazy" alt="example">
-            <p>Copiamos los siguientes comandos. </p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/12.webp" loading="lazy" alt="example">
-            <p>Los pegamos en la consola de nuestro proyecto.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/13.webp" loading="lazy" alt="example">
-            <p>Ya tenemos nuestro repositorio subido en <strong>GitHub</strong></p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/14.webp" loading="lazy" alt="example">
-            <p>Ahora estableceremos nuestro repositorio como <strong>plantilla</strong>. </p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/15.webp" loading="lazy" alt="example">
-            <p>Ahora ya podemos crear repositorios a través de esta plantilla.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/16.webp" loading="lazy" alt="example">
+            <p>Ahora crearemos nuestro repositorio en <strong>GitHub</strong>. </p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/11.webp" alt="example">
+            <p>Copiamos los siguientes comandos. </p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/12.webp" alt="example">
+            <p>Los pegamos en la consola de nuestro proyecto.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/13.webp" alt="example">
+            <p>Ya tenemos nuestro repositorio subido en <strong>GitHub</strong></p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/14.webp" alt="example">
+            <p>Ahora estableceremos nuestro repositorio como <strong>plantilla</strong>. </p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/15.webp" alt="example">
+            <p>Ahora ya podemos crear repositorios a través de esta plantilla.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/16.webp" alt="example">
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />

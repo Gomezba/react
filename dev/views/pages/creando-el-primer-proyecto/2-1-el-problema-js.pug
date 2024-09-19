@@ -34,7 +34,7 @@ append content
             |    &lt;img class="avatar__img" src="../../assets/img/prueba/image-irene.jpg" /&gt;
             |    &lt;span class="avatar__name"&gt;Irene Stuart&lt;/span&gt;
             |&lt;/section&gt;
-        img(src="../../assets/img/2-1-el-problema-js/2.webp" loading="lazy" alt="example") 
+        img(src="../../assets/img/2-1-el-problema-js/2.webp" alt="example") 
 
         p Para automatizar esta tarea, será mejor utilizar JavaScript.
 
@@ -70,7 +70,7 @@ append content
             |
             |	document.body.innerHTML += avatar
             |})
-        img(src="../../assets/img/2-1-el-problema-js/2.webp" loading="lazy" alt="example") 
+        img(src="../../assets/img/2-1-el-problema-js/2.webp" alt="example") 
 
         p Nuestro componente parece ser muy legible, pero el problema que tenemos de componentizar en JavaScript de esta manera, es el hecho de que, nuestro componente es muy sensible a errores de ortografía, facilmente se nos puede ir el dedo en algunas comillas por ejemplo, lo cual hace muy difícil su mantenimiento.
 
@@ -102,7 +102,7 @@ append content
             |]
 
         p Como podemos ver nuestro resultado se ve afectado por la inyección de código.
-        img(src="../../assets/img/2-1-el-problema-js/3.webp" loading="lazy" alt="example") 
+        img(src="../../assets/img/2-1-el-problema-js/3.webp" alt="example") 
 
 
         h3 Componente JavaScript
@@ -135,6 +135,6 @@ append content
             |})
 
         p Como podemos ver aunque nos quieran inyectar código, al utilizar la API del DOM el código inyectado no tiene efecto, lo toma como texto simplemente.
-        img(src="../../assets/img/2-1-el-problema-js/4.webp" loading="lazy" alt="example") 
+        img(src="../../assets/img/2-1-el-problema-js/4.webp" alt="example") 
 
         p El problema de utilizar la Api del DOM, o hacer scripting como se le suele decir, es que es más complicado de leer, y mantener, es casi ilegible, cuesta comprender la estructura que estamos armando.
