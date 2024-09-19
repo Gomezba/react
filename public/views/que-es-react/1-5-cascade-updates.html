@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/prism-dracrula.css">
-    <link rel="stylesheet" href="../../css/styles.min.css">
+    <link rel="stylesheet" href="../../../dev/css/main.css">
     <title>React</title>
     <script src="../../js/app.js" type="module" defer> </script>
   </head>
@@ -346,8 +346,8 @@
           <article class="content" id="1">
             <h2>Cascade Updates</h2>
             <p>Uno de los últimos grandes problemas que enfrentaron los ingenieros de Facebook fue lo que llamaron "actualizaciones en cascada" o cascade updates. El sistema de plantillas que utilizaban permitía aplicar cambios a las vistas de manera dinámica, pero cada cambio provocaba una cascada de recargas que se volvía inmanejable.</p>
-            <p>Cada vez que una variable dentro de una plantilla cambiaba (por ejemplo, al hacer clic en un botón), toda la plantilla se recargaba, es decir, se sobreescribía completamente con una nueva versión. Aun cuando solo cambiaba un pequeño detalle, todo el contenido de la plantilla se reemplazaba.</p><img src="../../assets/img/1-5-cascade-updates/1.webp" alt="example">
-            <p>El problema se agravaba porque las plantillas estaban compuestas por múltiples plantillas internas. Cuando una plantilla externa se recargaba, todas las plantillas internas también lo hacían, una por una. Esto generaba una enorme cantidad de cambios innecesarios, lo que deterioraba gravemente el rendimiento de las vistas.</p><img src="../../assets/img/1-5-cascade-updates/2.webp" alt="example">
+            <p>Cada vez que una variable dentro de una plantilla cambiaba (por ejemplo, al hacer clic en un botón), toda la plantilla se recargaba, es decir, se sobreescribía completamente con una nueva versión. Aun cuando solo cambiaba un pequeño detalle, todo el contenido de la plantilla se reemplazaba.</p><img class="img-md" src="../../assets/img/1-5-cascade-updates/1.webp" alt="example">
+            <p>El problema se agravaba porque las plantillas estaban compuestas por múltiples plantillas internas. Cuando una plantilla externa se recargaba, todas las plantillas internas también lo hacían, una por una. Esto generaba una enorme cantidad de cambios innecesarios, lo que deterioraba gravemente el rendimiento de las vistas.</p><img class="img-md" src="../../assets/img/1-5-cascade-updates/2.webp" alt="example">
             <p>En algunos casos, una sola acción del usuario provocaba recargas en varias plantillas al mismo tiempo. Peor aún, muchas veces, tras todas esas recargas, el estado de las plantillas quedaba exactamente igual, lo que significaba que se había hecho un trabajo completamente inútil.</p>
             <h3>El objetivo </h3>
             <p>El objetivo era doble:</p>

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/prism-dracrula.css">
-    <link rel="stylesheet" href="../../css/styles.min.css">
+    <link rel="stylesheet" href="../../../dev/css/main.css">
     <title>React</title>
     <script src="../../js/app.js" type="module" defer> </script>
   </head>
@@ -353,7 +353,7 @@
   &lt;img class="avatar__img" src="../../assets/img/prueba/image-anne.jpg" /&gt;
   &lt;span class="avatar__name"&gt;Anne González&lt;/span&gt;
 &lt;/section&gt;</code></pre>
-            </div><img src="../../assets/img/2-1-el-problema-js/1.webp" alt="example">
+            </div><img class="img-md" src="../../assets/img/2-1-el-problema-js/1.webp" alt="example">
             <p>Si quisieramos mas avatares pues tendremos que replicar esta estructura de html.</p>
             <div class="has-mb">
               <pre><code class="language-html"> &lt;section class="avatar"&gt;
@@ -368,7 +368,7 @@
    &lt;img class="avatar__img" src="../../assets/img/prueba/image-irene.jpg" /&gt;
    &lt;span class="avatar__name"&gt;Irene Stuart&lt;/span&gt;
 &lt;/section&gt;</code></pre>
-            </div><img src="../../assets/img/2-1-el-problema-js/2.webp" alt="example">
+            </div><img class="img-md" src="../../assets/img/2-1-el-problema-js/2.webp" alt="example">
             <p>Para automatizar esta tarea, será mejor utilizar JavaScript.</p>
             <h3>Componente JavaScript <div>Forma 1: Problema de inyección de código</div>
             </h3>
@@ -401,7 +401,7 @@ AVATARS.forEach((params) => {
 
 	document.body.innerHTML += avatar
 })</code></pre>
-            </div><img src="../../assets/img/2-1-el-problema-js/2.webp" alt="example">
+            </div><img class="img-md" src="../../assets/img/2-1-el-problema-js/2.webp" alt="example">
             <p>Nuestro componente parece ser muy legible, pero el problema que tenemos de componentizar en JavaScript de esta manera, es el hecho de que, nuestro componente es muy sensible a errores de ortografía, facilmente se nos puede ir el dedo en algunas comillas por ejemplo, lo cual hace muy difícil su mantenimiento.</p>
             <div class="has-mb">
               <pre><code class="language-javascript"> //Fácilmente podemos cometer un error de dedo al ser string
@@ -430,7 +430,7 @@ const getAvatar = (params) => `
 	},
 ]</code></pre>
             </div>
-            <p>Como podemos ver nuestro resultado se ve afectado por la inyección de código.</p><img src="../../assets/img/2-1-el-problema-js/3.webp" alt="example">
+            <p>Como podemos ver nuestro resultado se ve afectado por la inyección de código.</p><img class="img-md" src="../../assets/img/2-1-el-problema-js/3.webp" alt="example">
             <h3>Componente JavaScript <div>Forma 2: API document - Problema de legibilidad</div>
             </h3>
             <p>Para evitar el tipo de conflictos que hemos visto anteriormente, se recomienda utilizar la API de DOM de Js, para tener mejor seguridad.</p>
@@ -459,7 +459,7 @@ AVATARS.forEach((params) => {
 	document.body.append(avatar)
 })</code></pre>
             </div>
-            <p>Como podemos ver aunque nos quieran inyectar código, al utilizar la API del DOM el código inyectado no tiene efecto, lo toma como texto simplemente.</p><img src="../../assets/img/2-1-el-problema-js/4.webp" alt="example">
+            <p>Como podemos ver aunque nos quieran inyectar código, al utilizar la API del DOM el código inyectado no tiene efecto, lo toma como texto simplemente.</p><img class="img-md" src="../../assets/img/2-1-el-problema-js/4.webp" alt="example">
             <p>El problema de utilizar la Api del DOM, o hacer scripting como se le suele decir, es que es más complicado de leer, y mantener, es casi ilegible, cuesta comprender la estructura que estamos armando.</p>
           </article>
         </section>
