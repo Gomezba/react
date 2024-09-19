@@ -343,19 +343,139 @@
       <h1>Subiendo el proyecto a git</h1>
       <section class="main-info">
         <section class="info">
+          <p>Ya tenemos nuestro proyecto de React configurado y listo para funcionar, el motivo por el cúal hemos invertido bastante teoría es porque toda esta configuración final será nuestra plantilla para proyectos con React. De esta manera no tendremos que volver a configurar todo esto de nuevo.</p>
+          <p>Lo que haremos a continuación es subir este proyecto a <strong>GitHub</strong> para tenerlo como plantilla y crear proyectos más adelante con ella.</p>
+          <p>Pero antes de esto, veremos los conflictos que podemos llegar a tener con el tiempo.</p>
+          <p>Este proyecto base, va a convivir durante el tiempo con todas las actualizaciones de todos los paquetes que vayan surgiendo, y al final esto puede llegar a ser un problema. </p>
+          <p>Durante todas esas actualizaciones puede que haya <strong>issues</strong>, puede que algo deje de funcionar, o que algo funcione de manera distinta.</p>
+          <h3>Problema con dependencias</h3>
+          <p>Si vemos el <strong>"package.json"</strong> podemos ver las vesiones de las dependencias que estamos utilizando.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/1.png" alt="example">
+          <p>El problema de esto, es que, si después queremos actualizar nuestros paquetes, puede que nuestra configuración deje de funcionar, y esto no es único de nuestro proyecto si no de cualquier proyecto.</p>
+          <p>Lo que debemos hacer siempre, es fijar nuestras dependencias en cualquier proyecto que emprendamos.</p>
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Problema de no fijar las dependencias</h2>
+            <p>Si nosotros vemos el <strong>"packgage.json"</strong> en las versiones de nuestras dependencias tenemos un <strong>caret o acento circunflejo (^)</strong>.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/2.png" alt="example">
+            <p><strong class="ts-3">¿Qúe es este caret ^ ?</strong></p>
+            <p>Cuando nosotros hacemos un <strong>"npm i"</strong> para instalar las dependencias de <strong>Vite</strong> o de cualquier otro proyecto, es cuando se agregan estos carets <strong>(^)</strong>.</p>
+            <p>Lo que indican estos carets por ejemplo en el caso de <strong>react: </strong></p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/3.png" alt="example">
+            <p>Indica que cuando nosotros hagamos un <strong>npm i </strong>, <strong>npm</strong> puede instalar esta versión <strong>"^18.3.1"</strong> o cualquier versión menor superior a esta.</p>
+            <p>¿Qué significa esto? Si por ejemplo en <strong>react</strong> sacan una versión <strong>"minor" </strong><strong class="ts-2">"18.4.1"</strong>, cuando yo haga un <strong>npm i</strong> aunque en el <strong>"package.json"</strong> del proyecto tenga <strong>"react": &nbsp;"^18.3.1"</strong>, <strong>npm</strong> me instalará la siguiente versión que este publicada en los servidores de <strong>npm</strong>, siempre y cuando no sea una versión <strong>"major"</strong> , es decir, siempre y cuando no sea una versión <strong class="ts-2">19.0.0</strong>.</p>
+            <p>Si no fijas tus dependencias puede ser que tú tengas una dependencia inclusive en una maquína, en otra tengas otra, y a lo mejor un compañero de equipo haya hecho un <strong>npm i</strong> despúes que tú y se le haya instalado la versión <strong>"18.4.1"</strong> y a lo mejor lo que a él le funciona a ti no. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Fijando las dependencias</h2>
+            <p>Siempre debemos fijar nuestras dependencias, cuando hablamos de <strong>fijar las dependencias</strong>, nos referimos a dejar establecidas las dependencias en una sola versión para toda la vida del proyecto. Esto lo logramos quitando los <strong>carets</strong>. </p>
+            <p>Algo que debemos saber, cundo queramos instalar una dependencia y queremos que quede fijada de una vez, es decir que no se le agregue el caret, debemos de agregar el prefijo -E.</p>
+            <p><code>npm i nombreDependencia -E</code></p>
+            <p>En nuestro caso fijaremos las dependencias, quitando los carets de manera manual.</p>
+            <figure> <img src="../../assets/img/2-13-subiendo-proyecto-a-git/4.png" alt="example">
+              <figcaption>Ya hemos quitado los carets de manera manual.</figcaption>
+            </figure>
+            <p>Su ahora ejecutamos un <strong>npm i</strong> vamos a ver si alguno de estos paquetes realmente estaba en una versión superior a la que estaba marcada.</p>
+            <figure> <img src="../../assets/img/2-13-subiendo-proyecto-a-git/5.png" alt="example">
+              <figcaption>Podemos ver que efectivamente hay 9 paquetes que han cambiado, es decir había 9 paquetes que no estaban explícitamente puesta en el <strong>package.json</strong>. </figcaption>
+            </figure>
+            <p>Cuando ejecutamos <strong>npm i</strong>, cambiamos 9 paquetes, y recibimos varias advertencias sobre la incompatibilidad de la versión de <strong>Node.js</strong> con las versiones mínimas requeridas por algunos de esos paquetes. </p>
+            <p>Todos estos paquetes son componentes clave de ESLint o herramientas relacionadas que necesitan una versión más reciente de <strong>Node.js (>= 18.18.0)</strong>. Actualmente, tenemos la versión <strong>18.17.0</strong>, lo cual es muy cercana, pero no lo suficiente para evitar estos avisos.</p>
+            <p>Para solucionar esto debemos actualizar <strong>Node.js</strong> a una versión compatible <strong>(18.18.0 o superior)</strong> resolvería estas advertencias.</p>
+            <p>Con todo esto podemos imaginarnos la cantidad de problemas que puede haber.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Actualizar dependencias antes de subir repositorio</h2>
+            <p>Para evitar problemas, antes de subir nuestro repositorio, actualizaremos las versiones de nuestras dependencias. Pero cabe aclarar que antes, debemos revisar la documentación de las dependencias para no romper nuestra configuración, es decir, siempre hay que actualizar pero con conocimiento, verificando antés que nada rompa nuestra app.</p>
+            <p>Una manera de actualizar las dependencias es utilizando el comando: </p>
+            <p><code>npx npm-check -u -E </code></p>
+            <p>Sirve para revisar el estado de las dependencias en tu proyecto de Node.js y asegurarte de que todo esté actualizado.</p>
+            <ul>
+              <li>
+                <p> <strong>npx</strong>: Ejecuta paquetes de <strong>npm</strong> sin necesidad de instalarlos globalmente. En este caso, ejecuta <strong>npm-check</strong>.</p>
+              </li>
+              <li>
+                <p> <strong>npm-check</strong>: Es una herramienta que ayuda a revisar cuáles dependencias están desactualizadas, se pueden eliminar o actualizar, y cuáles tienen problemas. Muestra un resumen claro de lo que necesitas actualizar.</p>
+              </li>
+              <li>
+                <p> <strong>-u</strong>: Activa el modo interactivo, donde se abre una interfaz en la consola que te permite seleccionar manualmente (presionando space) qué dependencias deseas actualizar, en lugar de hacerlo automáticamente para todas.</p>
+              </li>
+              <li>
+                <p> <strong>-E</strong>: Este modificador asegura que cuando actualices dependencias, las nuevas versiones se guardarán con el número exacto en el archivo package.json, eliminando los rangos flexibles como <strong>^</strong> o <strong>~</strong>. Por ejemplo, en lugar de <strong>"react": "^17.0.1"</strong>, quedará <strong>"react": "17.0.1"</strong>.</p>
+              </li>
+            </ul>
+            <p>Al ejecutar este comando, en nuestro caso miraremos lo siguiente.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/6.png" alt="example">
+            <p>Ahora exmplicaremos la lista de sugerencias de actualización que nos sugiere.</p>
+            <p><strong class="ts-3">1. Patch Update (Actualizaciones de parche)</strong></p>
+            <p>Estas son actualizaciones menores que incluyen correcciones de errores, pero no introducen nuevas características ni rompen compatibilidad.</p>
+            <ul>
+              <li>
+                <p> <strong>@types/react</strong>: Actualización de <strong>18.3.3 </strong> a <strong>18.3.7</strong>. Son solo tipos para <strong>TypeScript</strong>, por lo que es una actualización que no afectará el funcionamiento de nuestro proyecto, pero sí podría mejorar la validación de tipos.</p>
+              </li>
+              <li>
+                <p> <strong>vite</strong>: Actualización de <strong>5.4.1</strong> a <strong>5.4.6</strong>. Esta versión corrige errores pero mantiene la compatibilidad, así que es seguro aplicarla.</p>
+              </li>
+            </ul>
+            <p><strong class="ts-3">2. Minor Update (Actualizaciones menores)</strong></p>
+            <p>Estas actualizaciones incluyen nuevas funcionalidades compatibles con versiones anteriores, sin romper la compatibilidad.</p>
+            <ul>
+              <li>
+                <p> <strong>@eslint/js</strong>: Actualización de <strong>9.9.0</strong> a <strong>9.10.0</strong>. Nuevas funciones para las reglas de ESLint que podrían ofrecer más opciones en el análisis de código.</p>
+              </li>
+              <li>
+                <p> <strong>@vitejs/plugin-react-swc</strong>: De <strong>3.5.0</strong> a <strong>3.7.0</strong>. Agrega nuevas funcionalidades para integrar <strong>React</strong> con <strong>Vite</strong> usando <strong>SWC</strong>.</p>
+              </li>
+              <li>
+                <p> <strong>eslint</strong>: De <strong>9.9.0</strong> a <strong>9.10.0</strong>. Nuevas reglas o mejoras en la herramienta de análisis estático de código.</p>
+              </li>
+              <li>
+                <p> <strong>eslint-plugin-react</strong>: De <strong>7.35.0</strong> a <strong>7.36.1</strong>. Mejora en las reglas específicas para React.</p>
+              </li>
+            </ul>
+            <p><strong class="ts-3">3. Non-Semver Versions (Versiones no semánticas)</strong></p>
+            <p>Estas actualizaciones son para versiones que aún están por debajo de la versión 1.0.0. Esto significa que aún podrían introducir cambios importantes, aunque sin romper compatibilidad.</p>
+            <ul>
+              <li>
+                <p> <strong>eslint-plugin-react-refresh</strong>: De <strong>0.4.9</strong> a <strong>0.4.12</strong>. Es una actualización dentro de una versión aún en desarrollo, por lo que podría haber mejoras y correcciones, pero podría no ser completamente estable.</p>
+              </li>
+            </ul>
+            <p>Sabiendo esto, actualizaremos las siguientes dependencias.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/7.png" alt="example">
+            <p>Una vez actualizadas nuestras dependencias, para que funcionen correctamente utilizaremos una versión de <strong>NodeJS</strong> requerida para las dependencias.</p>
+            <p>En nuestro caso utilizamos <strong>NodeJS</strong> con <strong>"fnm"</strong> que nos permite tener instaladas diferentes versiones de <strong>NodeJS</strong>, en nuestro caso instalaremos la versión <strong>"20.17.0"</strong> que actualemente es actualmente la vesión más reciente en este momento (Sep/2024).</p>
+            <p>Instalamos nuestra versión de Node con el comando: </p>
+            <p><code>fnm install 20.17.0     </code></p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/8.png" alt="example">
+            <p>Ahora procedemos a establecer la versión por defecto con el comando: </p>
+            <p><code>fnm alias 20.17.0 default</code></p>
+            <p>Y mostraremos la lista de versiones de Node para ver que ya tenemos una versión establecida por defecto.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/9.png" alt="example">
+            <p>En dado caso tengamos un problema con esta versión podemos escoger otra versión por defecto que sea más estable.</p>
+            <p>Ahora para validar que la actualización de nuestras dependencias son correctas, siempre debemos subir el archivo <strong>"package-lock.json"</strong>, es así porque si hemos actualizado una dependencia y el <stribg>package-lock.json</stribg> cambia, podemos detectar que hay alguna versión que no está exactamente funcionando como deberia, así que debemos de utilizarlo siempre como respaldo y al ser un archivo autogenerado, no nos interesaría que nadie lo formatiase sin querer, es decir, no queremos ocupar <strong>Prettier</strong> sobre el. </p>
+            <p>Así que agregaremos el <strong>"package-lock.json"</strong> al archivo <strong>".prettierignore"</strong> para que no actue sobre el.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/10.png" alt="example">
+            <p>Una vez que hemos terminado de quitar los carets, de actualizar las dependencias y demás, lo que haremos es subir nuestro proyecto al repositorio en <strong>GitHub.</strong></p>
+          </article>
+          <article class="content" id="4">
+            <h2>Subiendo proyecto a GitHub</h2>
+            <p>En la consola de nuestro proyecto inicializaremos <strong>"Git"</strong> y ejecutaremos los siguientes comandos.</p>
+            <div>
+              <pre><code class="language-bash"> git init 
+git add . 
+git commit -m "First commit"  </code></pre>
+            </div>
+            <p>Ahora crearemos nuestro repositorio en <strong>GitHub</strong>. </p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/11.png" alt="example">
+            <p>Copiamos los siguientes comandos. </p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/12.png" alt="example">
+            <p>Los pegamos en la consola de nuestro proyecto.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/13.png" alt="example">
+            <p>Ya tenemos nuestro repositorio subido en <strong>GitHub</strong></p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/14.png" alt="example">
+            <p>Ahora estableceremos nuestro repositorio como <strong>plantilla</strong>. </p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/15.png" alt="example">
+            <p>Ahora ya podemos crear repositorios a través de esta plantilla.</p><img src="../../assets/img/2-13-subiendo-proyecto-a-git/16.png" alt="example">
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Problema de no fijar las dependencias</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Fijando las dependencias</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Actualizar dependencias antes de subir repositorio</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Subiendo proyecto a GitHub</a></li>
           </ul>
         </nav>
       </section>

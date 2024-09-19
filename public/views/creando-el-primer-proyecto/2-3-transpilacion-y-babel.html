@@ -344,18 +344,118 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Explicando transpilación con Babel</h2>
+            <p>El proceso de transformación que hemos aplicado en el capítulo anterior con JSX, código JavaScript legible por el navegador se conoce con el nombre de transpilación.</p>
+            <p>La transpilacion es un proceso mediante el cual convertimos nuestro código original en una versión compatible con el entorno en que lo vamos a ejecutar, en este caso puede ser el navegador, pero bien puede ser Node o cualquier otro.</p>
+            <p>Hay una leve diferencia entre la transpilación y la compilación, que son 2 conceptos que suelen confundirse muy a menudo.</p>
+            <p>En la transpilación la clave es que mantenemos el mismo lenguaje en el que estabamos trabajando, e decir nuestro código original estaba basado en JavaScript y nuestro código original seguirá siendo JavaScript, mientras que por ejemplo en lenguajes compilados el código original esta en JAVA y termina convirtiendose a byte code, o termina convirtiendose en definitiva a otro lenguaje totalemente distinto, este proceso lo realiza una herramienta llamada transpilador y de uno de los más famoso es babel, porque es el primero que se utilizó en React.</p>
+            <p>En esta lección vamos a entender un poco que es lo que hace Babel de forma visual, así que iremos a su web en el apartado de editor de código: <a class="link" href="https://babeljs.io/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&amp;build=&amp;builtIns=false&amp;corejs=3.21&amp;spec=false&amp;loose=false&amp;code_lz=Q&amp;debug=false&amp;forceAllTransforms=false&amp;modules=false&amp;shippedProposals=false&amp;evaluate=false&amp;fileSize=false&amp;timeTravel=false&amp;sourceType=module&amp;lineWrap=true&amp;presets=env%2Creact%2Cstage-2&amp;prettier=false&amp;targets=&amp;version=7.25.6&amp;externalPlugins=&amp;assumptions=%7B%7D" target="_blank">babel </a></p>
+            <p>Copiaremos nuestro <strong>getAvatar</strong> hecho con JSX del código anterior y lo pegaremos.</p>
+            <figure> <img src="../../assets/img/2-3-transpilacion-y-babel/1.png" alt="example">
+              <figcaption>Podemos ver como se convierte nuestro código JSX a Js.</figcaption>
+            </figure>
+            <p>El editor nos ofrece la opción de ver el viaje del tiempo en el proceso de transpilación </p><img src="../../assets/img/2-3-transpilacion-y-babel/2.png" alt="example">
+            <p>En los pasos del proceso de transpilación en el tiempo, siempre empieza de dentro hacia fuera, pasando primero por crear el div, después la imagen, y por último el span.</p>
+            <p>Pero lo que hay que entender es que, esta transpilación que hace Babel, no solamente se realiza para JSX o similares, sino que es un proceso totalmente habitual en el sistema de JavaScript, un caso muy típico es en el que queremos utilizar una sintaxis moderna dentro de un navegador antiguo, por ejemplo utilizar el spread operator {...}</p>
+            <p>Para eso Babel nos ofrece la opción de <strong>targets</strong> que es el navegador destino en el que vamos a trabajar, es decir que nuestro código será transpilado para los navegadores que nosotros le indiquemos.</p>
+            <p>Veamos un ejemplo con un código con <strong>spread operator</strong> transpilandolo para que sea compatible con <strong>Internet Explorer</strong>. </p>
+            <figure> <img src="../../assets/img/2-3-transpilacion-y-babel/3.png" alt="example">
+              <figcaption>Podemos observar que el JS transpilado emula el spread operator, y así le damos soporte para Internet Explorer 11.</figcaption>
+            </figure>
+            <p>Algo que hay que explicar de nuestro código generado para Internet Explorer 11 es que crea un <strong class="ts-3">polyfill</strong> que es una función en código compatible totalmente con el target al que apuntamos, que se hace para sustituir algún operador o alguna funcionalidad de JavaScript que no es compatible con dicho target.</p>
+            <p>En definitva, el resúmen, es que la transpilación no es de JSX, ni siquiera es propia de React, si no que es de JavaScript de todo el lenguaje y simplemente sirve para transformar un código inicial en algo compatible con un entorno de ejecución.</p>
+            <p>Otro ejemplo muy claro de transpilación es <code>TypeScript</code> que es un lenguaje que nos permite tipar JavaScript y hacer cosas como estas: </p>
+            <div>
+              <pre><code class="language-typescript"> const a: number = 3;
+const b: string = "3" </code></pre>
+            </div>
+            <p>Pero esto no existe como tal, es decir, <strong>TypeScript</strong> no es un lenguaje de programación, si no que es una sintaxis extra (super set de JS), de la misma forma que <strong>JSX</strong> y luego se transforma a JavaScript.</p>
+            <p>La transpilación no es algo propio para JavaScript, tambien tenemos el caso de <strong>SCSS</strong> y su transpilación a <strong>CSS. </strong></p>
+            <p>Ahora vamos a ver como vamos a utilizar esta transpilación para servir el archivo directamente ya procesado, es decir ya transpilado. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Como utilizar Babel</h2>
+            <p>Primeramente nuestro <strong>index.html</strong> quedará de la siguiente manera.</p>
+            <div>
+              <pre><code class="language-html"> &lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+	&lt;head&gt;
+		&lt;meta charset="UTF-8" /&gt;
+		&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+		&lt;title&gt;Document&lt;/title&gt;
+		&lt;link rel="stylesheet" href="css/styles.css" /&gt;
+        &lt;script src="https://unpkg.com/react@18/umd/react.development.js"&gt;&lt;/script&gt;
+        &lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"&gt;&lt;/script&gt;
+        &lt;!-- De una vez definimos el archivo index.js transpilado para producción y estará en la raiz --&gt;
+		&lt;script src="index.js" defer&gt;&lt;/script&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;div id="root"&gt;&lt;/div&gt;
+	&lt;/body&gt;
+&lt;/html&gt;    </code></pre>
+            </div>
+            <p class="des-code">Hemos eliminado el script de Babel. </p>
+            <p>Ahora nos dirijimos a la documentación de Babel a su <a class="link" href="https://babeljs.io/docs/usage#basic-usage-with-cli" target="_blank">línea de comandos</a></p>
+            <p>A continuación la linea de comandos para instalar Babel.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Comando </th>
+                  <th>Descripción </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>npm init -y </td>
+                  <td>Inicia un proyecto node </td>
+                </tr>
+                <tr>
+                  <td>npm install --save-dev @babel/core @babel/cli</td>
+                  <td>Instala Babel y su CLI(línea de comandos) para que puedas utilizar Babel en tus proyectos durante el desarrollo para transformar y compilar tu código JavaScript. </td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Ahora nos vamos a <a class="link" href="https://babeljs.io/docs/babel-cli" target="_blank">@babel/cli</a> lo cual nos enseñará compilar un archivo. </p>
+            <p>A continuación la linea de comandos a utilizar para compilar un archivo.js.</p>
+            <p>Primeramente instalaremos las siguientes dependencias de desarrollo.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Comando </th>
+                  <th>Descripción </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>npm i -D @babel/preset-env</td>
+                  <td>Instala un preset de Babel (como dependencia de desarrollo) que convierte código JavaScript moderno (ES6+) a versiones compatibles con navegadores más antiguos.</td>
+                </tr>
+                <tr>
+                  <td>npm i -D @babel/preset-react</td>
+                  <td>Instala un preset de Babel (como dependencia de desarrollo) que transforma código JSX y otras características específicas de React a JavaScript estándar. </td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Ahora en la raiz de nuestro proyecto crearemos el archivo de configuración de Babel llamado <strong class="ts-2">.babelrc</strong></p>
+            <p>A continuación pondremos el siguiente JSON en el archivo</p>
+            <div>
+              <pre><code class="language-json"> {
+	"presets": ["@babel/preset-env", "@babel/preset-react"]
+}</code></pre>
+            </div>
+            <p class="des-code">De esta manera configuramos Babel para que utilice los presets específicos durante el proceso de transpilación de JavaScript.</p>
+            <p>Ahora ejecutamos el siguiente comando para compilar nuestro archivo.js </p>
+            <p><strong class="ts-4">npx babel ./index-alt.js -o ./index.js </strong></p>
+            <p>Transpila el archivo ./index-alt.js usando Babel y guarda el código transformado en ./index.js, sin modificar el archivo original, el nombre que tendrá el archivo transpilado en este caso será index.js y se creara en la raiz del proyecto, es necesario poner el nombre real que tendra tu archivo JS para producción y la ubicación correcta donde se generará el archivo.js transpilado para producción.</p><img src="../../assets/img/2-3-transpilacion-y-babel/4.png" alt="example">
+            <p>Tambien podemos corear un --watch para que observe cada cambio y los transpile automáticamente al guardar nuestro archivo, pero veremos otras formas de iniciar un proyecto con React.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Explicando transpilación con Babel</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Como utilizar Babel</a></li>
           </ul>
         </nav>
       </section>

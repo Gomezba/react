@@ -344,18 +344,62 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>El problema de las configuraciones</h2>
+            <p>Por si toda esta parte de configurar <strong>Webpack</strong> y <strong>Babel</strong> nos ha parecido poco, pues hay que saber que <strong>Webpack</strong> no es el único empaquetador, ni <strong>Babel</strong> el único transpilador.</p>
+            <p>De hecho hay bastantes herramientas, que, hacen exactamente lo mismo pero de forma distinta.</p>
+            <ul>
+              <li>
+                <p> <strong><a class="link" href="https://parceljs.org/" target="_blank"> PARCEL</a></strong> : Es un empaquetador bastante similar a Webpack.</p>
+              </li>
+              <li>
+                <p> <strong><a class="link" href="https://esbuild.github.io/" target="_blank">esbuild</a></strong> : Es un empaquetador mucho más rápido y a demás es un transpilador a la vez.</p>
+              </li>
+              <li>
+                <p> <strong><a class="link" href="https://swc.rs/docs/usage/bundling" target="_blank">swc</a></strong> : Es un empaquetador y transpilador a la vez, igual que esbuild, pero está hecho con Rust.</p>
+              </li>
+              <li>
+                <p> <strong><a class="link" href="https://rollupjs.org/" target="_blank">rollup.js</a></strong> : Es otro empaquetador y transpilador a la vez.</p>
+              </li>
+              <li>
+                <p> <strong><a class="link" href="https://www.snowpack.dev/" target="_blank">Snowpack</a></strong> : Es otro empaquetador y transpilador, pero ocupa cosas de Webpack y de esbuild.</p>
+              </li>
+            </ul>
+            <p>Rápidamente el equipo de Facebook y todo el ecosistema, se dio cuenta de que esta parte de configurar el empaquetador y el transpilador se estaba volviendo un verdadero problema y una gran barrera de entrada para aprender React, y es que, configurar esto, sin unos conocimientos avanzados de JS es verdaderamente bastante retador.</p>
+            <p>Lo que hicieron para solucionar esto, fue proporcionar una serie de herramientas que nos permiten crear nuestros proyectos, utilizando un simple comando, es decir configuran por nosotros el empaquetador, el transpilador, el servidor de desarrollo y otras muchas cosas que necesitamos para que nosotros solo tengamos que preocuparnos por escribir código React. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>¿Por qué no usamos create-react-app?</h2>
+            <p>La primera de estas alternativas fue <strong>Create React App</strong> creado y mantenido por Facebook, era la forma más habitual para empezar a trabajar con React.</p>
+            <p>Si nosotros nos vamos a la documentación de React, veremos que es la forma que Facebook recomienda para crear nuestra primera aplicación de React, porque realmente es muy sencillo, solo utilizar un simple comando <strong>npx create-react-app my app</strong> y tener nuestra app montada "teoricamente en segundos" y esto de segundos no es así como lo prometen. </p>
+            <p>La realidad, es que, esta no es la forma que ocuparemos para realizar nuestros proyectos con React y veremo el porque.</p>
+            <h3>Razones para no montar nuestra app con Create React App </h3>
+            <ol>
+              <li>
+                <p>Al ejecutar el comando, demora varios minutos ya que descarga bastantes recursos. </p>
+              </li>
+              <li>
+                <p>La aplicación base está sobrecargada de recursos que quizás no utilizaremos, nos obligan a ocupar ciertas cosas y no deberia ser así, por ejemplo crear los test con testing-library aunque no es mala opción, o suponer que tendremos una PWA al proporcionarlos el archivo manifest.json, tener un archivo robots.txt para suponer que nuestra app estará indexada en google y otras muchas cosas.</p><img src="../../assets/img/2-6-no-react-app/1.png" alt="example">
+              </li>
+              <li>
+                <p>Al arrancar la aplicación, es decir al ejecutar el comando <strong>npm start</strong> son casi 10 segundos para arrancar una simple página que contiene un logo y un enlace.</p><img src="../../assets/img/2-6-no-react-app/2.png" alt="example">
+              </li>
+              <li>
+                <p>La carpeta <strong>node_modules</strong> pesa <strong>249mb</strong> lo cual es una barbaridad para una simple página con un logo y un enlace.</p><img src="../../assets/img/2-6-no-react-app/3.png" alt="example">
+              </li>
+              <li>
+                <p>Pero el verdadero problema es que fuera de las carpetas de public, src, y node_modules no tenemos para configurar cosas a nuestro gusto, o si algo llega a fallar no hay manera de configurarlo.</p><img src="../../assets/img/2-6-no-react-app/4.png" alt="example">
+                <p>Para lograr configurar nos proporcionan un comando: <strong>npm run eject</strong> lo cual nos proporcionará los archivos de configuración, y una vez hecho esto, ya no hay forma para volver atrás.</p><img src="../../assets/img/2-6-no-react-app/5.png" alt="example">
+              </li>
+            </ol>
+            <p>Por todas estas razones no utilizaremos <strong>Create React App</strong> y utilizaremos otra manera más moderna.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">El problema de las configuraciones</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">¿Por qué no usamos create-react-app?</a></li>
           </ul>
         </nav>
       </section>

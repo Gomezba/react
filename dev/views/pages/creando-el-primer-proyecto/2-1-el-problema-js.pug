@@ -4,14 +4,137 @@ append h1
     h1 El problema de JavaScript
 
 append content 
+    p Para empezar, es necesario entender que es un componente en su minima expresión, es decir, utilizando unicamente lenguajes que el navegador es capaz de interpretar (HTML, CSS Y JavaScript).
+
+    p A partir de aquí podremos detectar los diferentes problemas que surgen creando componentes de esta forma, y la solucion que nos aporta React para hacer este proceso mucho más sencillo y a la vez mucho más potente.
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Problema con JavaScript
+
+        p Tenemos la siguiente estructura de un componente avatar en html.
+
+        div.has-mb: pre: code.language-html 
+            |&lt;section class="avatar"&gt;
+            |   &lt;img class="avatar__img" src="../../assets/img/prueba/image-anne.jpg" /&gt;
+            |   &lt;span class="avatar__name"&gt;Anne González&lt;/span&gt;
+            |&lt;/section&gt;
+
+        img(src="../../assets/img/2-1-el-problema-js/1.png" alt="example") 
+
+        p Si quisieramos mas avatares pues tendremos que replicar esta estructura de html.
+        div.has-mb: pre: code.language-html 
+            |&lt;section class="avatar"&gt;
+            |    &lt;img class="avatar__img" src="../../assets/img/prueba/image-anne.jpg" /&gt;
+            |    &lt;span class="avatar__name"&gt;Anne González&lt;/span&gt;
+            |&lt;/section&gt;
+            |&lt;section class="avatar"&gt;
+            |    &lt;img class="avatar__img" src="../../assets/img/prueba/image-colton.jpg" /&gt;
+            |    &lt;span class="avatar__name"&gt;Colton Smith&lt;/span&gt;
+            |&lt;/section&gt;
+            |&lt;section class="avatar"&gt;
+            |    &lt;img class="avatar__img" src="../../assets/img/prueba/image-irene.jpg" /&gt;
+            |    &lt;span class="avatar__name"&gt;Irene Stuart&lt;/span&gt;
+            |&lt;/section&gt;
+        img(src="../../assets/img/2-1-el-problema-js/2.png" alt="example") 
+
+        p Para automatizar esta tarea, será mejor utilizar JavaScript.
+
+        h3 Componente JavaScript
+            div Forma 1: Problema de inyección de código
+
+        p Tenemos el siguiente código donde hemos componentizado nuestra estructura del HTML, pero en JavaScript 
+        div.has-mb: pre: code.language-javascript 
+            |const AVATARS = [
+            |	{
+            |		img: '../../assets/img/prueba/image-anne.jpg",
+            |		name: 'Anne González',
+            |	},
+            |	{
+            |		img: '../../assets/img/prueba/image-colton.jpg",
+            |		name: 'Colton Smith',
+            |	},
+            |	{
+            |		img: '../../assets/img/prueba/image-irene.jpg",
+            |		name: 'Irene Stuart',
+            |	},
+            |]
+            |
+            |const getAvatar = (params) => `
+            |    &lt;section class="avatar"&gt;
+            |		&lt;img class="avatar__img" src="${params.img}" /&gt;
+            |		&lt;span class="avatar__name"&gt;${params.name}&lt;/span&gt;
+            |	&lt;/section&gt;
+            |`
+            |
+            |AVATARS.forEach((params) => {
+            |	const avatar = getAvatar(params)
+            |
+            |	document.body.innerHTML += avatar
+            |})
+        img(src="../../assets/img/2-1-el-problema-js/2.png" alt="example") 
+
+        p Nuestro componente parece ser muy legible, pero el problema que tenemos de componentizar en JavaScript de esta manera, es el hecho de que, nuestro componente es muy sensible a errores de ortografía, facilmente se nos puede ir el dedo en algunas comillas por ejemplo, lo cual hace muy difícil su mantenimiento.
+
+        div.has-mb: pre: code.language-javascript 
+            |//Fácilmente podemos cometer un error de dedo al ser string
+            |const getAvatar = (params) => `
+            |    &lt;section class="avatar"&gt;
+            |		&lt;img class="avatar__img" src="${params.img}" /&gt;
+            |		&lt;span class="avatar__name"&gt;${params.name}&lt;/span&gt;
+            |	&lt;/section&gt;
+            |`
+
+        p A demás de que somos propensos a inyección de código.
+        div.has-mb: pre: code.language-javascript 
+            |const AVATARS = [
+            |	{
+            |		img: '../../assets/img/prueba/image-anne.jpg",
+            |		name: 'Anne González',
+            |	},
+            | // Estamos agregando un H2 al name
+            |	{
+            |		img: '../../assets/img/prueba/image-colton.jpg",
+            |		name: '&lt;h2&gt;Colton Smith&lt;/h2&gt;',
+            |	},
+            |	{
+            |		img: '../../assets/img/prueba/image-irene.jpg",
+            |		name: 'Irene Stuart',
+            |	},
+            |]
+
+        p Como podemos ver nuestro resultado se ve afectado por la inyección de código.
+        img(src="../../assets/img/2-1-el-problema-js/3.png" alt="example") 
 
 
-    article(id="2" class="content")
-        h2 Subtitulo 2
+        h3 Componente JavaScript
+            div Forma 2: API document - Problema de legibilidad
 
+        p Para evitar el tipo de conflictos que hemos visto anteriormente, se recomienda utilizar la API de DOM de Js, para tener mejor seguridad.
+        div.has-mb: pre: code.language-javascript 
+            |const getAvatar = (params) => {
+            |	const section = document.createElement('SECTION')
+            |	const img = document.createElement('IMG')
+            |	const span = document.createElement('SPAN')
+            |	const text = document.createTextNode(params.name)
+            |
+            |	section.className = 'avatar'
+            |	img.className = 'avatar__img'
+            |	img.src = params.img
+            |	span.className = 'avatar__name'
+            |
+            |	section.append(img)
+            |	section.append(span)
+            |	span.append(text)
+            |
+            |	return section
+            |}
+            |
+            |AVATARS.forEach((params) => {
+            |	const avatar = getAvatar(params)
+            |
+            |	document.body.append(avatar)
+            |})
 
-append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
-    +submenu(submenuLinks)
+        p Como podemos ver aunque nos quieran inyectar código, al utilizar la API del DOM el código inyectado no tiene efecto, lo toma como texto simplemente.
+        img(src="../../assets/img/2-1-el-problema-js/4.png" alt="example") 
+
+        p El problema de utilizar la Api del DOM, o hacer scripting como se le suele decir, es que es más complicado de leer, y mantener, es casi ilegible, cuesta comprender la estructura que estamos armando.

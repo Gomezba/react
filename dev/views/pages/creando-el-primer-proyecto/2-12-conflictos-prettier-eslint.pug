@@ -5,13 +5,257 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Solución de conflictos entre Prettier y ESLint
+        p Lo primero que tenemos que solucionar son los conflictos entre 
+            strong ESLint
+            |   y 
+            strong Prettier
+            | .
 
+        p.ts-6 Lo que haremos a continuación solo se recomienda hacer si hemos instalado ESLint por nuestra propia cuenta, pero si ESLint ya viene por defecto en Vite no debemos hacerlo porque nos dará Error ya que Vite ya tiene todo eso configurado por nosotros.    
+
+        p Los conflictos se dan cuando tenemos configuraciones distintas en cada uno, por lo cual no son compatibles entre ellas. 
+        p Entonces hay que conseguir que una de ellas prevalezca sobre la otra, en este caso lo que haremos es que la configuración de Prettier prevalezca sobre la de ESLint, es decir, lo que este definido en Prettier se queda como está en Prettier, y para todo lo demás utilizamos ESLint.
+
+        p Para ello hay una solución muy sencilla que es instalar un paquete: 
+
+        p: code npm i -D eslint-config-prettier 
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/1.png" alt="example")        
+
+        p Con este paquete lo que haremos será simplemente añadirlo a nuestro archivo de configuración de ESLint en extends, lo único que tenemos que saber, es que si tenemos instalado Standard o cualuier otra regla de estilos, se debe poner seguido de ese paquete de reglas.
+
+        p Sabiendo esto agregaremos 
+            strong "eslint-config-prettier"
+            |   seguido de Standard o cualquier otra regla de estilos.
+
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/2.png" alt="example")
+
+        p Si tuvieramos más paquetes externos, como por ejemplo 
+            strong Standard
+            |   el paquete de 
+            strong "eslint-config-prettier"
+            |   deberia ir debajo.
+
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/3.png" alt="example")
+
+        p Esto debe ser así porque lo que esté dentro de 
+            strong extends
+            |   tiene una importancia y es el orden en que se aplica, primero se aplica 
+            strong Standard
+            |   y después nuestro paquete de 
+            strong ESLint con prettier. 
+
+        p Con esto ya no deberia de haber problemas entre ESLint y Prettier.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Problema de formateo con archivos diferentes a JSX
+
+        p Si somos observativos nos habremos dado cuenta que en nuestro 
+            strong archivo de configuración
+            |   de 
+            strong ESLint
+            |   no se está aplicando el format de Prettier, en ninguna momento agrega los tabs como espacio que habiamos definido en Prettier. 
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/4.png" alt="example")
+
+        p Esto pasa porque nuestro archivo de configuración de ESLint es un archivo con 
+            strong extensión JS
+            | , y nosotros solo hemos definido el formateador por defecto para los archivos 
+            strong JSX
+            | . 
+
+        p Para conseguir el formateo en los demás archivos donde queramos ocupar Prettier, en versiones anteriores de Prettier deberiamos de ir seteando uno por uno para que Prettier actue como formateador por defecto, pero ahora con solo agregar una simple línea de código lo podemos hacer.
+
+        P Los archivos que son compatibles con Prettier son los siguientes: 
+        ul 
+            li JavaScript
+            li JSX 
+            li Angular 
+            li Vue 
+            li Flow
+            li TypeScript 
+            li CSS, Less, SCSS 
+            li HTML 
+            li Ember/Handlebars
+            li JSON
+            li GraphQL 
+            li Markdown, including GFM and MDX v1
+            li YAML    
+
+        p Los que nos importan, son: 
+            strong JavaScript
+            | , 
+            strong JSX
+            | , 
+            strong CSS
+            | , 
+            strong HTML 
+            |   y 
+            strong JSON
+            | . Así que vamos a ver como configurar Prettier como formateador por defecto para estos tipos de archivo.
+
+        p En nuestro editor de Código abrimos el archivo 
+            strong "settings.json"
+            |   qué es el archivo de configuración de nuestro VSCode.
+
+        p Agregaremos lo siguiente.
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/5.png" alt="example")
+
+        p Con está simple línea de código ya tenemos configurado Prettier con todos los archivos que son compatibles con Prettier.
+
+        p Tambien agregaremos una configuración extra para el caso de los 
+            strong imports.
+            |   Lo que queremos hacer es que cuando tengamos 
+            strong imports
+            |   que no se esten utilizando, queremos que automáticamente se quiten y que tambien se ordenen alfabéticamente.
+
+        p Veamos este caso, donde tenemos 
+            strong imports
+            |   que no se están utilizando, por lo cual aunque guardemos, se quedan ahí.
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/6.png" alt="example")
+
+        p En nuestro 
+            strong "settings.json"
+            |   agregaremos lo siguiente.
+
+        div: pre: code.language-json 
+            |"[javascript]": {
+            |  "editor.defaultFormatter": "esbenp.prettier-vscode",
+            |  "editor.codeActionsOnSave": {
+            |    "source.organizeImports": true
+            |  }
+            |},
+            |"[javascriptreact]": {
+            |  "editor.defaultFormatter": "esbenp.prettier-vscode",
+            |  "editor.codeActionsOnSave": {
+            |    "source.organizeImports": true
+            |  }
+            |},
+
+        p Ahora al guardar nuestro archivo, automáticamente se quitan aquellos 
+            strong imports
+            |   que no están siendo utilizados y además se ordenan alfabéticamente.   
+
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/7.png" alt="example")
+
+        p Con esta configuración tambien evitaremos cambios fantasmas.
+
+        p Puede que nos preguntemos que esta última configuración no está configurada para todos, no es como Prettier o como ESLint que nos ofrecen archivos de configuración y la realidad es que no hay una opción medianamente estándar que utilize todo el mundo para hacer esto, entonces es una de esas cosas que toca configurar localmente.
+
+    article(id="3" class="content")
+        h2 Ignorando formateo en "dist" y creando scripts personalizados
+
+        p Hasta este punto ya tenemos configurado nuestro 
+            strong VSCode
+            | , nuestro 
+            strong ESLint
+            |   y nuestro 
+            strong Prettier
+            |   para funcionar a través de las extensiones de 
+            strong VSCode
+            | , pero realmente tenemos que proporcionar alguna forma alternativa de poder formatear este código y aplicarle el 
+            strong linter
+            |   sin utilizar ninguna extensión, es decir, en la medida de lo posible facilitarlo a través de un comando, y como tanto 
+            strong Prettier
+            |   como 
+            strong ESLint
+            |   tienen una línea de comandos, lo correcto es crear un comando en el 
+            strong "package.json"
+            |   que nos permita realizar estas tareas. 
+
+        p Antes de crear nuestro Script personalizado, ejecutaremos los comandos desde la terminal.
+
+        p: code npx prettier --check  . 
+
+        p Lo que hacemos con este comando es checar que es lo que haria hipotéticamente o a que archivos afectaria Prettier en nuestro proyecto.
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/8.png" alt="example")
+
+        p Aunque parezca que Prettier no afectará la carpeta 
+            strong "dist"
+            |   en realidad si la afectará, es decir, que si nosotros formateamos algún archivo de la carpeta 
+            strong "dist"
+            |   nos cargaremos todo el 
+            strong "bundle"
+            |   de ese archivo, es decir, si formateamos un bundle deshacemos toda esa 
+            strong ofuscación
+            | , toda esa 
+            strong minificación
+            |   que hemos creado. 
+
+        p Entonces tenemos que indicarle a Prettier que no afecte a la carpeta 
+            strong "dist"
+            | . 
+        p Para eso al igual que 
+            strong "git"
+            |   tiene un 
+            strong ".gitignore
+            |   para ignorar archivos que no se subirán al repositorio, 
+            strong Prettier
+            |   nos ofrece el archivo 
+            strong ".prettierignore"
+            | . 
+
+        p Crearemos entonces el archivo 
+            strong ".prettierignore"
+            |   en la raíz de nuestro proyecto y agregamos la carpeta 
+            strong "dist"
+            |   para que Prettier la ignore.
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/9.png" alt="example")
+
+        p Si ahora nos vamos a un bundle como el 
+            strong index.js
+            |   de la carpeta 
+            strong "dist"
+            |   y guardamos con 
+            strong "ctrl + s"
+            |   Prettier no actuará sobre este archivo, ni ningún archivo de la carpeta 
+            strong "dist"
+            | .
+        figure 
+            img(src="../../assets/img/2-12-conflictos-prettier-eslint/10.png" alt="example")
+            figcaption Al guardar el archivo, el archivo se queda tal cual.
+
+        h3 Creación de script para Prettier
+        p Ahora si podemos ejecutar nuestro comando pero desde un 
+            strong script
+            |   en el 
+            strong "package.json"
+            | .
+
+        p El comando que agregaremos es: 
+
+        p: code npx prettier --write .
+
+        p Este comando ejecuta Prettier para formatear automáticamente todos los archivos en un proyecto o en una ruta especificada, reescribiéndolos con el formato adecuado. 
+
+        p Por ejemplo, al ejecutar 
+            strong npx prettier --write .
+            |   , Prettier buscará y formateará todos los archivos compatibles en el directorio actual.  
+
+        p Ahora si creamos el script, que se llamará 
+            strong "format"
+            | .
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/11.png" alt="example")
+
+        p Ahora si podemos ejecutar el script con el comando:
+        p: code npm run format
+
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/12.png" alt="example")
+
+        p De esta manera podemos ocupar Prettier, ya sin ninguna extensión.
+
+        h3 Script de ESLint
+
+        P Para el caso de 
+            strong ESLint
+            | , 
+            strong Vite
+            |   en sus últimas versiones ya integra automáticamente 
+            strong ESLint
+            |   por lo que no tenemos que hacer nada más, ya esta todo configurado.
+
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/13.png" alt="example")
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Solución de conflictos entre Prettier y ESLint'],[2,'Problema de formateo con archivos diferentes a JSX'], [3,'Ignorando formateo en "dist" y creando scripts personalizados']]
     +submenu(submenuLinks)

@@ -5,13 +5,243 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 ¿Qué es un formateador?
+        p Ahora que ya tenemos instalado nuestro 
+            strong linter
+            | , toca hablar del 
+            strong formateador
+            | .
+
+        p Un formateador es una herramienta que organiza el código de manera estandarizada para garantizar que cumpla con ciertas convenciones de estilo, mejorando su legibilidad y uniformidad. Su objetivo principal es estructurar el código fuente sin cambiar su funcionalidad, aplicando reglas como la     
+            strong indentación correcta
+            | , el uso de 
+            strong espacios o tabulaciones
+            | , el manejo de 
+            strong comillas ("" o '')
+            |, la inserción o no de 
+            strong puntos y comas (;)
+            |   donde sea necesario, y 
+            strong el orden adecuado de los elementos
+            | . Esto asegura que el código sea consistente, sin errores sintácticos debido a pequeños detalles de estilo.
+
+        h3 Prettier 
+
+        p Uno de los formateadores más populares en el desarrollo web es Prettier, una herramienta 
+            strong opinionada
+            |   que formatea el código automáticamente sin necesidad de configuraciones extensas. "Opinionado" significa que la herramienta sigue un conjunto de reglas o convenciones predefinidas, limitando las opciones de personalización. Prettier decide automáticamente aspectos como el uso de comillas, la longitud de las líneas, o la colocación de los puntos y comas, haciendo que el código sea consistente y legible, pero sin permitir muchas modificaciones al estilo de formateo. Soporta varios lenguajes como JavaScript, TypeScript, HTML, CSS, JSON, entre otros. Las características más destacadas de Prettier incluyen:
+
+        ul 
+            li 
+                p 
+                    strong Estilo consistente
+                    | : Prettier asegura que todo el código siga el mismo estilo, independientemente de quién lo haya escrito.
+            li 
+                p 
+                    strong Configuración mínima
+                    | : En lugar de tener que establecer reglas personalizadas para el formateo, Prettier toma la mayoría de las decisiones de estilo por el usuario, lo que reduce las discusiones en el equipo sobre cómo debe estructurarse el código.
+            li 
+                p 
+                    strong Integración con editores
+                    | : Prettier se puede integrar fácilmente con editores de texto como VS Code, para que formatee el código automáticamente al guardar un archivo.
+
+        p Prettier también se puede combinar con herramientas como ESLint, que además de verificar el formato, detectan errores potenciales en el código. 
+
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Diferencia entre un linter y un formateador
 
+        p Puede que nos preguntemos cúal es la diferencia entre un 
+            strong linter
+            |   y un 
+            strong formateador 
+            | .
+
+        h3 Diferencias clave:
+        p: strong.ts-3 Objetivo:
+        ul 
+            li 
+                p El 
+                    strong linter
+                    |   se enfoca en mejorar la calidad del código mediante la detección de errores y malas prácticas.
+            li 
+                p El 
+                    strong formateador
+                    |   se encarga de darle estilo y consistencia visual al código.
+
+        p: strong.ts-3 Resultado:
+        ul 
+            li 
+                p El 
+                    strong linter
+                    |   puede advertirte o prevenir errores que podrían causar fallos en el programa.
+            li 
+                p El 
+                    strong formateador
+                    |   simplemente organiza el código sin cambiar su lógica ni funcionalidad.
+
+        p: strong.ts-3 Enfoque:
+        ul 
+            li 
+                p El 
+                    strong linter
+                    |   se centra en la correctitud y calidad del código.
+            li 
+                p El 
+                    strong formateador
+                    |   se centra en la apariencia y legibilidad.
+
+        p Ambas herramientas suelen usarse juntas en proyectos para garantizar que el código no solo esté libre de errores, sino también bien organizado y legible.
+
+    article(id="3" class="content")
+        h2 El problema de utilizar un formateador local
+
+        p En 
+            strong VScode
+            |   tenemos un formateador por defecto, si damos click derecho sobre nuestro archivo podemos verlo.
+
+        img(src="../../assets/img/2-11-configurando-prettier/1.png" alt="example") 
+
+        p Entonces, podemos preguntarnos: ¿por qué no utilizamos este formateador? El principal problema de este formateador surge cuando estamos trabajando en el mismo proyecto desde distintas máquinas y utilizamos un controlador de versiones como 
+            strong "Git"
+            | . Tanto si somos una sola persona trabajando en el proyecto desde diferentes máquinas, como si somos un equipo y cada uno trabaja en su propio ordenador, podemos encontrarnos con el siguiente problema.
+
+        p.ts-2 Imaginemos el caso de un archivo: creamos un fichero desde nuestro ordenador de escritorio que tiene configurado el formateador, por ejemplo, con 4 espacios. Cuando trabajamos sobre ese archivo desde nuestra laptop, si no nos hemos dado cuenta de que en la laptop el formateador está configurado con solo 2 espacios, al formatear el documento y hacer un commit al repositorio, Git detectará automáticamente cambios en todas las tabulaciones del documento. Esto nos generará lo que conocemos como 
+            strong "cambios fantasmas"
+            | , es decir, 
+            strong Git
+            |   nos dirá que hay cambios en varias líneas cuando en realidad solo hemos modificado una o dos.
+
+        p Este problema es aún más grave si trabajamos en equipo y hay 4 o 5 personas modificando el mismo documento con distintas configuraciones de formateo.
+
+        p Para evitar estos problemas, existen formateadores que permiten configurar reglas comunes para el formato de todo el proyecto. Es decir, cada vez que se edite el proyecto, el formato aplicado será el mismo.
+
+        p La herramienta más famosa para esto es Prettier.
+
+
+    article(id="4" class="content")
+        h2 Configurando Prettier
+
+        p Empezamos por instalar Prettier con el comando: 
+        p: code npm i -D prettier 
+        img(src="../../assets/img/2-11-configurando-prettier/2.png" alt="example") 
+
+        p Ahora desde la consola, podemos utilizar Prettier ejecutando el siguiente comando: 
+        p: code npx prettier ./src/main.jsx
+        figure 
+            img(src="../../assets/img/2-11-configurando-prettier/3.png" alt="example") 
+            figcaption Nos devuelve el código formateado pero desde la consola.
+
+        p Para hacer que Prettier formatee de verdad desde nuestro archivo y no de la consola, tenemos que agregar la opción 
+            strong --write
+            | , el comando quedaria así:
+
+        p: code npx prettier ./src/main.jsx --write       
+        img(src="../../assets/img/2-11-configurando-prettier/4.png" alt="example")
+
+        p Como podemos ver, ya se ha formateado nuestro código, pero de acuerdo a la configuración que tengamos en 
+            strong ESLint 
+            |   puede entrar en conflicto con 
+            strong Prettier
+            | , por ejemplo, si en ESLint tenemos declarada la regla de no utilizar (
+            strong ;
+            | ) y como Prettier por defecto agrega (
+            strong ;
+            | ) entraria en conflicto, en nuestro caso no entra en conflicto porque nuestra configuración de ESLint permite las comillas.  
+
+        p Lo que haremos ahora, es instalar la extensión de Prettier, para que actue directamente.
+        img(src="../../assets/img/2-11-configurando-prettier/5.png" alt="example")
+
+        P Después elegimos a Prettier como formateador por defecto, y una vez hecho esto necesitamos configurar VSCode para que al guardar con 
+            strong "ctrl + s"
+            |   se nos aplique el formateo de Prettier
+        img(src="../../assets/img/2-11-configurando-prettier/6.png" alt="example")
+
+        p Para hacer que 
+            strong ESLint 
+            |   y 
+            strong Prettier
+            |   convivan juntos, empezaremos por configurar las reglas de 
+            strong Prettier
+            | .
+
+        h3 Configuración local - No recomendada     
+
+        p Podemos irnos a la configuración de 
+            strong VSCode &#8594; settings/extensions/prettier
+            | , aquí podemos configurar todas las opciones que nos permite 
+            strong Prettier
+            |  . 
+
+        img(src="../../assets/img/2-11-configurando-prettier/7.png" alt="example")
+
+        p Pero el problema de hacerlo de esta manera, es que estamos configurando Prettier de manera 
+            strong local
+            | , y caemos en el mismo error que habiamos mencionado anteriormente, esta manera no es recomendable en absoluto ya que esto solo funcionaría para nuestra extensión de VSCode y si alguien más instala Prettier en su computadora, estás configuraciones no estarán disponibles y además en la línea de comandos tampoco existirán esas configuraciones.
+
+        h3 Configuración con un archivo - Recomendada
+        p Tenemos que buscar una configuración que sea persistente tanto para la extensión, como para la línea de comandos, como para cualquier otra persona que se descargue el proyecto. Esto lo podemos conseguir a través de un archivo de configuración.
+
+        p Podemos checar la documentación de 
+            a(href="https://prettier.io/docs/en/options" target="_blank").link configuración de Prettier
+            | .
+
+        p Creamos un archivo llamado 
+            strong .prettierrc
+            |   en la raíz de nuestro proyecto, este archivo estará escrito en 
+            strong JSON
+            | .
+        img(src="../../assets/img/2-11-configurando-prettier/8.png" alt="example")
+
+        p Nuestro archivo de configuración quedará de la siguiente manera: 
+        div: pre: code.language-json
+            |{
+            |	"useTabs": true, // Usa tabs en lugar de espacios.
+            |	"semi": false, // No usar punto y coma al final.
+            |	"singleQuote": true, // Usa comillas simples ('').
+            |	"jsxSingleQuote": true, // Comillas simples en JSX.
+            |	"trailingComma": "none" // No agrega comas al final de una estructura como {}, [].
+            |}  
+
+        p Con esto ya tenemos configurado Prettier de manera persistente tanto para la extensión, como para la línea de comandos, como para cualquier otra persona que se descargue el proyecto.
+
+    article(id="5" class="content")
+        h2 Nuevas herramientas
+        p Debemos saber que actualmente las herramientas de apoyo para los desarrolladores como un 
+            strong linter
+            |   o un 
+            strong formateador
+            | , con el tiempo han ido inovando, y con la llegada de 
+            strong rust
+            |, se pueden crear herramientas demásiado potentes y rápidas.
+
+        p Actualmente año 2024, han salido herramientas que son muy fáciles de configurar y que que no solo se encargan de una tarea, si no que son un pack de herramientas, tal caso como lo es: 
+
+        ul 
+            li 
+                p 
+                    strong 
+                        a(href="https://biomejs.dev/" target="_blank").link  biome
+                    | : es una herramienta moderna que combina formateador y linter en un solo paquete, diseñada para simplificar el proceso de mantener el código limpio y organizado en proyectos web. Es una alternativa a herramientas como Prettier y ESLint, pero con un rendimiento superior, ya que está escrita en Rust. Esta tecnología le permite ser significativamente más rápida que Prettier al formatear grandes cantidades de código.   
+
+            li 
+                p 
+                    strong 
+                        a(href="https://oxc.rs/" target="_blank").link oxc
+                    | : Oxc es un nuevo conjunto de herramientas de alto rendimiento para JavaScript y TypeScript, desarrollado en Rust. Está diseñado para ser extremadamente rápido y eficiente en comparación con herramientas tradicionales como ESLint y Prettier.
+
+                ul 
+                    li 
+                        p 
+                            strong Linter
+                        p Oxc incluye un linter que se enfoca en la simplicidad y el rendimiento. A diferencia de ESLint, que puede requerir una configuración compleja con múltiples plugins, el linter de Oxc elimina esa necesidad y funciona directamente con un solo comando. Este linter es entre 50 y 100 veces más rápido que ESLint y puede procesar grandes bases de código en cuestión de segundos, lo que lo hace ideal para proyectos de gran escala y monorepos.
+                    li 
+                        p 
+                            strong Formateador
+                        p El formateador de Oxc todavía está en desarrollo, pero la meta es crear una herramienta más flexible y menos "opinionada" que Prettier, la cual ha dominado el mercado. Se busca permitir más personalización y adaptarse mejor a las necesidades individuales de los desarrolladores sin forzar un estilo de código tan rígido.
+
+                p Oxc también incluye otras herramientas avanzadas como un minificador y un parser que mejoran la velocidad y el manejo de la sintaxis en proyectos JavaScript/TypeScript.         
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'¿Qué es un formateador?'],[2,'Diferencia entre un linter y un formateador'],[3,'El problema de utilizar un formateador local'],[4,'Configurando Prettier'],[5,'Nuevas herramientas']]
     +submenu(submenuLinks)

@@ -343,21 +343,126 @@
       <h1>El problema de JavaScript</h1>
       <section class="main-info">
         <section class="info">
+          <p>Para empezar, es necesario entender que es un componente en su minima expresión, es decir, utilizando unicamente lenguajes que el navegador es capaz de interpretar (HTML, CSS Y JavaScript).</p>
+          <p>A partir de aquí podremos detectar los diferentes problemas que surgen creando componentes de esta forma, y la solucion que nos aporta React para hacer este proceso mucho más sencillo y a la vez mucho más potente.</p>
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
-          </article>
-          <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Problema con JavaScript</h2>
+            <p>Tenemos la siguiente estructura de un componente avatar en html.</p>
+            <div class="has-mb">
+              <pre><code class="language-html"> &lt;section class="avatar"&gt;
+  &lt;img class="avatar__img" src="../../assets/img/prueba/image-anne.jpg" /&gt;
+  &lt;span class="avatar__name"&gt;Anne González&lt;/span&gt;
+&lt;/section&gt;</code></pre>
+            </div><img src="../../assets/img/2-1-el-problema-js/1.png" alt="example">
+            <p>Si quisieramos mas avatares pues tendremos que replicar esta estructura de html.</p>
+            <div class="has-mb">
+              <pre><code class="language-html"> &lt;section class="avatar"&gt;
+   &lt;img class="avatar__img" src="../../assets/img/prueba/image-anne.jpg" /&gt;
+   &lt;span class="avatar__name"&gt;Anne González&lt;/span&gt;
+&lt;/section&gt;
+&lt;section class="avatar"&gt;
+   &lt;img class="avatar__img" src="../../assets/img/prueba/image-colton.jpg" /&gt;
+   &lt;span class="avatar__name"&gt;Colton Smith&lt;/span&gt;
+&lt;/section&gt;
+&lt;section class="avatar"&gt;
+   &lt;img class="avatar__img" src="../../assets/img/prueba/image-irene.jpg" /&gt;
+   &lt;span class="avatar__name"&gt;Irene Stuart&lt;/span&gt;
+&lt;/section&gt;</code></pre>
+            </div><img src="../../assets/img/2-1-el-problema-js/2.png" alt="example">
+            <p>Para automatizar esta tarea, será mejor utilizar JavaScript.</p>
+            <h3>Componente JavaScript <div>Forma 1: Problema de inyección de código</div>
+            </h3>
+            <p>Tenemos el siguiente código donde hemos componentizado nuestra estructura del HTML, pero en JavaScript </p>
+            <div class="has-mb">
+              <pre><code class="language-javascript"> const AVATARS = [
+	{
+		img: '../../assets/img/prueba/image-anne.jpg",
+		name: 'Anne González',
+	},
+	{
+		img: '../../assets/img/prueba/image-colton.jpg",
+		name: 'Colton Smith',
+	},
+	{
+		img: '../../assets/img/prueba/image-irene.jpg",
+		name: 'Irene Stuart',
+	},
+]
+
+const getAvatar = (params) => `
+   &lt;section class="avatar"&gt;
+		&lt;img class="avatar__img" src="${params.img}" /&gt;
+		&lt;span class="avatar__name"&gt;${params.name}&lt;/span&gt;
+	&lt;/section&gt;
+`
+
+AVATARS.forEach((params) => {
+	const avatar = getAvatar(params)
+
+	document.body.innerHTML += avatar
+})</code></pre>
+            </div><img src="../../assets/img/2-1-el-problema-js/2.png" alt="example">
+            <p>Nuestro componente parece ser muy legible, pero el problema que tenemos de componentizar en JavaScript de esta manera, es el hecho de que, nuestro componente es muy sensible a errores de ortografía, facilmente se nos puede ir el dedo en algunas comillas por ejemplo, lo cual hace muy difícil su mantenimiento.</p>
+            <div class="has-mb">
+              <pre><code class="language-javascript"> //Fácilmente podemos cometer un error de dedo al ser string
+const getAvatar = (params) => `
+   &lt;section class="avatar"&gt;
+		&lt;img class="avatar__img" src="${params.img}" /&gt;
+		&lt;span class="avatar__name"&gt;${params.name}&lt;/span&gt;
+	&lt;/section&gt;
+`</code></pre>
+            </div>
+            <p>A demás de que somos propensos a inyección de código.</p>
+            <div class="has-mb">
+              <pre><code class="language-javascript"> const AVATARS = [
+	{
+		img: '../../assets/img/prueba/image-anne.jpg",
+		name: 'Anne González',
+	},
+// Estamos agregando un H2 al name
+	{
+		img: '../../assets/img/prueba/image-colton.jpg",
+		name: '&lt;h2&gt;Colton Smith&lt;/h2&gt;',
+	},
+	{
+		img: '../../assets/img/prueba/image-irene.jpg",
+		name: 'Irene Stuart',
+	},
+]</code></pre>
+            </div>
+            <p>Como podemos ver nuestro resultado se ve afectado por la inyección de código.</p><img src="../../assets/img/2-1-el-problema-js/3.png" alt="example">
+            <h3>Componente JavaScript <div>Forma 2: API document - Problema de legibilidad</div>
+            </h3>
+            <p>Para evitar el tipo de conflictos que hemos visto anteriormente, se recomienda utilizar la API de DOM de Js, para tener mejor seguridad.</p>
+            <div class="has-mb">
+              <pre><code class="language-javascript"> const getAvatar = (params) => {
+	const section = document.createElement('SECTION')
+	const img = document.createElement('IMG')
+	const span = document.createElement('SPAN')
+	const text = document.createTextNode(params.name)
+
+	section.className = 'avatar'
+	img.className = 'avatar__img'
+	img.src = params.img
+	span.className = 'avatar__name'
+
+	section.append(img)
+	section.append(span)
+	span.append(text)
+
+	return section
+}
+
+AVATARS.forEach((params) => {
+	const avatar = getAvatar(params)
+
+	document.body.append(avatar)
+})</code></pre>
+            </div>
+            <p>Como podemos ver aunque nos quieran inyectar código, al utilizar la API del DOM el código inyectado no tiene efecto, lo toma como texto simplemente.</p><img src="../../assets/img/2-1-el-problema-js/4.png" alt="example">
+            <p>El problema de utilizar la Api del DOM, o hacer scripting como se le suele decir, es que es más complicado de leer, y mantener, es casi ilegible, cuesta comprender la estructura que estamos armando.</p>
           </article>
         </section>
-        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
-          <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
-          </ul>
-          <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
-          </ul>
-        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>
