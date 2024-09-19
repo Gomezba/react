@@ -24,7 +24,7 @@ append content
         strong "package.json"
         |   podemos ver las vesiones de las dependencias que estamos utilizando.
 
-    img(src="../../assets/img/2-13-subiendo-proyecto-a-git/1.png" alt="example") 
+    img(src="../../assets/img/2-13-subiendo-proyecto-a-git/1.webp" loading="lazy" alt="example") 
 
     p El problema de esto, es que, si después queremos actualizar nuestros paquetes, puede que nuestra configuración deje de funcionar, y esto no es único de nuestro proyecto si no de cualquier proyecto.
 
@@ -37,7 +37,7 @@ append content
             |   en las versiones de nuestras dependencias tenemos un 
             strong caret o acento circunflejo (^)
             | .
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/2.png" alt="example") 
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/2.webp" loading="lazy" alt="example") 
 
         p: strong.ts-3 ¿Qúe es este caret ^ ?
 
@@ -51,7 +51,7 @@ append content
 
         p Lo que indican estos carets por ejemplo en el caso de 
             strong react:       
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/3.png" alt="example") 
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/3.webp" loading="lazy" alt="example") 
 
         p Indica que cuando nosotros hagamos un 
             strong npm i 
@@ -102,7 +102,7 @@ append content
 
         p En nuestro caso fijaremos las dependencias, quitando los carets de manera manual.
         figure 
-            img(src="../../assets/img/2-13-subiendo-proyecto-a-git/4.png" alt="example") 
+            img(src="../../assets/img/2-13-subiendo-proyecto-a-git/4.webp" loading="lazy" alt="example") 
             figcaption Ya hemos quitado los carets de manera manual.
 
         p Su ahora ejecutamos un 
@@ -110,7 +110,7 @@ append content
             |   vamos a ver si alguno de estos paquetes realmente estaba en una versión superior a la que estaba marcada.
 
         figure 
-            img(src="../../assets/img/2-13-subiendo-proyecto-a-git/5.png" alt="example") 
+            img(src="../../assets/img/2-13-subiendo-proyecto-a-git/5.webp" loading="lazy" alt="example") 
             figcaption Podemos ver que efectivamente hay 9 paquetes que han cambiado, es decir había 9 paquetes que no estaban explícitamente puesta en el 
                 strong package.json
                 |. 
@@ -177,7 +177,7 @@ append content
                     | .
 
         p Al ejecutar este comando, en nuestro caso miraremos lo siguiente.
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/6.png" alt="example") 
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/6.webp" loading="lazy" alt="example") 
 
         p Ahora exmplicaremos la lista de sugerencias de actualización que nos sugiere.
 
@@ -260,7 +260,7 @@ append content
                     | . Es una actualización dentro de una versión aún en desarrollo, por lo que podría haber mejoras y correcciones, pero podría no ser completamente estable.
 
         p Sabiendo esto, actualizaremos las siguientes dependencias.
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/7.png" alt="example") 
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/7.webp" loading="lazy" alt="example") 
 
         p Una vez actualizadas nuestras dependencias, para que funcionen correctamente utilizaremos una versión de 
             strong NodeJS
@@ -278,12 +278,12 @@ append content
 
         p Instalamos nuestra versión de Node con el comando: 
         p: code fnm install 20.17.0     
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/8.png" alt="example")
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/8.webp" loading="lazy" alt="example")
 
         p Ahora procedemos a establecer la versión por defecto con el comando: 
         p: code fnm alias 20.17.0 default
         p Y mostraremos la lista de versiones de Node para ver que ya tenemos una versión establecida por defecto.
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/9.png" alt="example")
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/9.webp" loading="lazy" alt="example")
 
         p En dado caso tengamos un problema con esta versión podemos escoger otra versión por defecto que sea más estable.
 
@@ -301,7 +301,7 @@ append content
             strong ".prettierignore"
             |   para que no actue sobre el.
 
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/10.png" alt="example")
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/10.webp" loading="lazy" alt="example")
 
         p Una vez que hemos terminado de quitar los carets, de actualizar las dependencias y demás, lo que haremos es subir nuestro proyecto al repositorio en 
             strong GitHub.
@@ -320,21 +320,21 @@ append content
         p Ahora crearemos nuestro repositorio en 
             strong GitHub
             | .    
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/11.png" alt="example")
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/11.webp" loading="lazy" alt="example")
 
         p Copiamos los siguientes comandos.  
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/12.png" alt="example")
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/12.webp" loading="lazy" alt="example")
         p Los pegamos en la consola de nuestro proyecto.
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/13.png" alt="example")
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/13.webp" loading="lazy" alt="example")
         p Ya tenemos nuestro repositorio subido en 
             strong GitHub
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/14.png" alt="example")
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/14.webp" loading="lazy" alt="example")
         p Ahora estableceremos nuestro repositorio como 
             strong plantilla
             | . 
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/15.png" alt="example")
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/15.webp" loading="lazy" alt="example")
         p Ahora ya podemos crear repositorios a través de esta plantilla.
-        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/16.png" alt="example")
+        img(src="../../assets/img/2-13-subiendo-proyecto-a-git/16.webp" loading="lazy" alt="example")
 
 append submenu 
     -submenuLinks = [[1,'Problema de no fijar las dependencias'],[2,'Fijando las dependencias'],[3,'Actualizar dependencias antes de subir repositorio'],[4,'Subiendo proyecto a GitHub']]

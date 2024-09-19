@@ -37,20 +37,20 @@ append content
 
         h3 Templates 
         p Cada plantilla se componía de un archivo en PHP que contenía una función sencilla. Esta función recibía una serie de parámetros y, a partir de ellos, generaba el fragmento HTML correspondiente. Además, cada plantilla tenía asociado su propio archivo CSS para definir sus estilos, y un archivo JavaScript para el comportamiento dinámico, aunque en ese momento dicho comportamiento era mínimo.
-        img(src="../../assets/img/1-2-primeros-componentes/2.webp" alt="sistema de plantillas")
+        img(src="../../assets/img/1-2-primeros-componentes/2.webp" loading="lazy" alt="sistema de plantillas")
 
         h3 Templates con string 
         p Para crear estas plantillas, inicialmente optaron por un sistema simple basado en la concatenación de cadenas de texto (strings) para generar el HTML. Sin embargo, este enfoque presentaba varios problemas. Las plantillas eran frágiles, ya que era fácil cometer errores de sintaxis, como dejar etiquetas sin cerrar, lo que las volvía poco confiables. Además, combinar estas plantillas basadas en strings con otras era casi imposible.
 
         p Es importante recordar que antes de 2011 ni siquiera existían los template strings en JavaScript, lo que hacía este enfoque aún más limitado y propenso a errores.
-        img(src="../../assets/img/1-2-primeros-componentes/3.webp" alt="sistema de plantillas")
+        img(src="../../assets/img/1-2-primeros-componentes/3.webp" loading="lazy" alt="sistema de plantillas")
 
     article(id="3" class="content")
         h2 XHP (XML-PHP)
         p El manejo de plantillas con cadenas de texto resultaba en un código ilegible debido a la cascada de anidamientos. Por ello, buscaron una alternativa más robusta a nivel semántico y crearon XHP (XML-PHP).
 
         p XHP es una extensión de PHP que proporciona una sintaxis similar a HTML, permitiendo a los desarrolladores escribir plantillas de forma más intuitiva. Con XHP, era posible manipular etiquetas HTML como variables y crear componentes reutilizables a partir de otros componentes, en lugar de trabajar con simples cadenas de texto. Esto ofrecía un motor de plantillas más potente, capaz de satisfacer sus necesidades de forma eficiente.
-        img(src="../../assets/img/1-2-primeros-componentes/4.webp" alt="sistema de plantillas").img-md
+        img(src="../../assets/img/1-2-primeros-componentes/4.webp" loading="lazy" alt="sistema de plantillas").img-md
 
         p Sin embargo, aunque XHP resolvía muchos de los problemas iniciales, pronto se enfrentaron a un nuevo desafío. ¿Cuál era el problema ahora?
 

@@ -351,15 +351,15 @@
             <p>En la transpilación la clave es que mantenemos el mismo lenguaje en el que estabamos trabajando, e decir nuestro código original estaba basado en JavaScript y nuestro código original seguirá siendo JavaScript, mientras que por ejemplo en lenguajes compilados el código original esta en JAVA y termina convirtiendose a byte code, o termina convirtiendose en definitiva a otro lenguaje totalemente distinto, este proceso lo realiza una herramienta llamada transpilador y de uno de los más famoso es babel, porque es el primero que se utilizó en React.</p>
             <p>En esta lección vamos a entender un poco que es lo que hace Babel de forma visual, así que iremos a su web en el apartado de editor de código: <a class="link" href="https://babeljs.io/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&amp;build=&amp;builtIns=false&amp;corejs=3.21&amp;spec=false&amp;loose=false&amp;code_lz=Q&amp;debug=false&amp;forceAllTransforms=false&amp;modules=false&amp;shippedProposals=false&amp;evaluate=false&amp;fileSize=false&amp;timeTravel=false&amp;sourceType=module&amp;lineWrap=true&amp;presets=env%2Creact%2Cstage-2&amp;prettier=false&amp;targets=&amp;version=7.25.6&amp;externalPlugins=&amp;assumptions=%7B%7D" target="_blank">babel </a></p>
             <p>Copiaremos nuestro <strong>getAvatar</strong> hecho con JSX del código anterior y lo pegaremos.</p>
-            <figure> <img src="../../assets/img/2-3-transpilacion-y-babel/1.png" alt="example">
+            <figure> <img src="../../assets/img/2-3-transpilacion-y-babel/1.webp" alt="example">
               <figcaption>Podemos ver como se convierte nuestro código JSX a Js.</figcaption>
             </figure>
-            <p>El editor nos ofrece la opción de ver el viaje del tiempo en el proceso de transpilación </p><img src="../../assets/img/2-3-transpilacion-y-babel/2.png" alt="example">
+            <p>El editor nos ofrece la opción de ver el viaje del tiempo en el proceso de transpilación </p><img src="../../assets/img/2-3-transpilacion-y-babel/2.webp" loading="lazy" alt="example">
             <p>En los pasos del proceso de transpilación en el tiempo, siempre empieza de dentro hacia fuera, pasando primero por crear el div, después la imagen, y por último el span.</p>
             <p>Pero lo que hay que entender es que, esta transpilación que hace Babel, no solamente se realiza para JSX o similares, sino que es un proceso totalmente habitual en el sistema de JavaScript, un caso muy típico es en el que queremos utilizar una sintaxis moderna dentro de un navegador antiguo, por ejemplo utilizar el spread operator {...}</p>
             <p>Para eso Babel nos ofrece la opción de <strong>targets</strong> que es el navegador destino en el que vamos a trabajar, es decir que nuestro código será transpilado para los navegadores que nosotros le indiquemos.</p>
             <p>Veamos un ejemplo con un código con <strong>spread operator</strong> transpilandolo para que sea compatible con <strong>Internet Explorer</strong>. </p>
-            <figure> <img src="../../assets/img/2-3-transpilacion-y-babel/3.png" alt="example">
+            <figure> <img src="../../assets/img/2-3-transpilacion-y-babel/3.webp" loading="lazy" alt="example">
               <figcaption>Podemos observar que el JS transpilado emula el spread operator, y así le damos soporte para Internet Explorer 11.</figcaption>
             </figure>
             <p>Algo que hay que explicar de nuestro código generado para Internet Explorer 11 es que crea un <strong class="ts-3">polyfill</strong> que es una función en código compatible totalmente con el target al que apuntamos, que se hace para sustituir algún operador o alguna funcionalidad de JavaScript que no es compatible con dicho target.</p>
@@ -446,7 +446,7 @@ const b: string = "3" </code></pre>
             <p class="des-code">De esta manera configuramos Babel para que utilice los presets específicos durante el proceso de transpilación de JavaScript.</p>
             <p>Ahora ejecutamos el siguiente comando para compilar nuestro archivo.js </p>
             <p><strong class="ts-4">npx babel ./index-alt.js -o ./index.js </strong></p>
-            <p>Transpila el archivo ./index-alt.js usando Babel y guarda el código transformado en ./index.js, sin modificar el archivo original, el nombre que tendrá el archivo transpilado en este caso será index.js y se creara en la raiz del proyecto, es necesario poner el nombre real que tendra tu archivo JS para producción y la ubicación correcta donde se generará el archivo.js transpilado para producción.</p><img src="../../assets/img/2-3-transpilacion-y-babel/4.png" alt="example">
+            <p>Transpila el archivo ./index-alt.js usando Babel y guarda el código transformado en ./index.js, sin modificar el archivo original, el nombre que tendrá el archivo transpilado en este caso será index.js y se creara en la raiz del proyecto, es necesario poner el nombre real que tendra tu archivo JS para producción y la ubicación correcta donde se generará el archivo.js transpilado para producción.</p><img src="../../assets/img/2-3-transpilacion-y-babel/4.webp" loading="lazy" alt="example">
             <p>Tambien podemos corear un --watch para que observe cada cambio y los transpile automáticamente al guardar nuestro archivo, pero veremos otras formas de iniciar un proyecto con React.</p>
           </article>
         </section>

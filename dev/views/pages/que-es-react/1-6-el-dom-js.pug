@@ -26,14 +26,14 @@ append content
         p Un árbol n-ario es una estructura de datos en la que cada nodo puede tener desde cero hasta un número ilimitado de hijos. Se empieza siempre con un nodo llamado nodo raíz 
             strong (root)
             | , y a partir de este, se crean nodos hijos, que a su vez pueden tener más nodos hijos. Cada nodo del árbol tiene un solo padre, excepto el nodo raíz, que no tiene padre. Los nodos que comparten el mismo padre se consideran hermanos entre sí.
-        img(src="../../assets/img/1-6-el-dom-js/1.webp" alt="árbol n-ario")
+        img(src="../../assets/img/1-6-el-dom-js/1.webp" loading="lazy" alt="árbol n-ario")
 
         p Los nodos que no tienen hijos se consideran nodos finales y se pueden llamar tambien hojas del árbol.
-        img(src="../../assets/img/1-6-el-dom-js/2.webp" alt="árbol")
+        img(src="../../assets/img/1-6-el-dom-js/2.webp" loading="lazy" alt="árbol")
 
         h3 Visualización del HTML
         p En el DOM (Document Object Model), el nodo raíz corresponde a la etiqueta &lt;html&gt;, actualmente conocido como el objeto Document. Los hijos directos de este nodo raíz son las etiquetas &lt;head&gt; y &lt;body&gt;, que se consideran hermanos entre sí. A partir de estos dos elementos, se llena el árbol del DOM con todos los nodos que representan el contenido del documento HTML.
-        img(src="../../assets/img/1-6-el-dom-js/3.webp" alt="dom")
+        img(src="../../assets/img/1-6-el-dom-js/3.webp" loading="lazy" alt="dom")
 
         p Para manipular el DOM y sus nodos, los navegadores nos ofrecen una API a través del objeto Document. Algunas funciones comunes que nos permiten interactuar con el DOM son: 
 
@@ -57,7 +57,7 @@ append content
 
         p Con estas funciones, podemos modificar atributos, propiedades, o incluso eliminar elementos del DOM. 
 
-        img(src="../../assets/img/1-6-el-dom-js/4.webp" alt="dom")
+        img(src="../../assets/img/1-6-el-dom-js/4.webp" loading="lazy" alt="dom")
 
         p Es importante comprender que cada cambio que realizamos en el DOM se refleja inmediatamente en el documento renderizado en la web. No hay un mecanismo de "control" o "validación previa" que nos permita decidir cuándo aplicar el cambio; una vez que se modifica el DOM, el navegador inmediatamente actualiza la vista que el usuario ve. Esto puede hacer que el proceso sea poco eficiente si se realizan múltiples actualizaciones de manera continua, afectando el rendimiento del sitio.
 
@@ -71,7 +71,7 @@ append content
             |   en el DOM puede tener muchas propiedades relacionadas con eventos o estilos que no necesariamente están activas en ese momento.
 
         figure 
-            img(src="../../assets/img/1-6-el-dom-js/5.webp" alt="dom")
+            img(src="../../assets/img/1-6-el-dom-js/5.webp" loading="lazy" alt="dom")
             figcaption Como podemos ver, es una cantidad grande de atributos, propiedades y funciones que puede tener un simple nodo, en este caso un 
                 strong "p"
 
@@ -91,7 +91,7 @@ append content
             |   y por la derecha en el caso de 
             strong nextSibling.
 
-        img(src="../../assets/img/1-6-el-dom-js/6.webp" alt="dom")
+        img(src="../../assets/img/1-6-el-dom-js/6.webp" loading="lazy" alt="dom")
 
         p Lo que hay que entender es que estas propiedades crean lo que se conoce como 
             strong estructura circular
@@ -122,7 +122,7 @@ append content
             | . 
 
         figure 
-            img(src="../../assets/img/1-6-el-dom-js/7.webp" alt="dom")
+            img(src="../../assets/img/1-6-el-dom-js/7.webp" loading="lazy" alt="dom")
             figcaption Error al querer convertir a JSON una estructura circular.
 
     article(id="4" class="content")

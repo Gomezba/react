@@ -397,7 +397,7 @@
           </article>
           <article class="content" id="3">
             <h2>El problema de utilizar un formateador local</h2>
-            <p>En <strong>VScode</strong> tenemos un formateador por defecto, si damos click derecho sobre nuestro archivo podemos verlo.</p><img src="../../assets/img/2-11-configurando-prettier/1.png" alt="example">
+            <p>En <strong>VScode</strong> tenemos un formateador por defecto, si damos click derecho sobre nuestro archivo podemos verlo.</p><img src="../../assets/img/2-11-configurando-prettier/1.webp" loading="lazy" alt="example">
             <p>Entonces, podemos preguntarnos: ¿por qué no utilizamos este formateador? El principal problema de este formateador surge cuando estamos trabajando en el mismo proyecto desde distintas máquinas y utilizamos un controlador de versiones como <strong>"Git"</strong>. Tanto si somos una sola persona trabajando en el proyecto desde diferentes máquinas, como si somos un equipo y cada uno trabaja en su propio ordenador, podemos encontrarnos con el siguiente problema.</p>
             <p class="ts-2">Imaginemos el caso de un archivo: creamos un fichero desde nuestro ordenador de escritorio que tiene configurado el formateador, por ejemplo, con 4 espacios. Cuando trabajamos sobre ese archivo desde nuestra laptop, si no nos hemos dado cuenta de que en la laptop el formateador está configurado con solo 2 espacios, al formatear el documento y hacer un commit al repositorio, Git detectará automáticamente cambios en todas las tabulaciones del documento. Esto nos generará lo que conocemos como <strong>"cambios fantasmas"</strong>, es decir, <strong>Git</strong> nos dirá que hay cambios en varias líneas cuando en realidad solo hemos modificado una o dos.</p>
             <p>Este problema es aún más grave si trabajamos en equipo y hay 4 o 5 personas modificando el mismo documento con distintas configuraciones de formateo.</p>
@@ -407,25 +407,25 @@
           <article class="content" id="4">
             <h2>Configurando Prettier</h2>
             <p>Empezamos por instalar Prettier con el comando: </p>
-            <p><code>npm i -D prettier </code></p><img src="../../assets/img/2-11-configurando-prettier/2.png" alt="example">
+            <p><code>npm i -D prettier </code></p><img src="../../assets/img/2-11-configurando-prettier/2.webp" loading="lazy" alt="example">
             <p>Ahora desde la consola, podemos utilizar Prettier ejecutando el siguiente comando: </p>
             <p><code>npx prettier ./src/main.jsx</code></p>
-            <figure> <img src="../../assets/img/2-11-configurando-prettier/3.png" alt="example">
+            <figure> <img src="../../assets/img/2-11-configurando-prettier/3.webp" loading="lazy" alt="example">
               <figcaption>Nos devuelve el código formateado pero desde la consola.</figcaption>
             </figure>
             <p>Para hacer que Prettier formatee de verdad desde nuestro archivo y no de la consola, tenemos que agregar la opción <strong>--write</strong>, el comando quedaria así:</p>
-            <p><code>npx prettier ./src/main.jsx --write       </code></p><img src="../../assets/img/2-11-configurando-prettier/4.png" alt="example">
+            <p><code>npx prettier ./src/main.jsx --write       </code></p><img src="../../assets/img/2-11-configurando-prettier/4.webp" loading="lazy" alt="example">
             <p>Como podemos ver, ya se ha formateado nuestro código, pero de acuerdo a la configuración que tengamos en <strong>ESLint </strong> puede entrar en conflicto con <strong>Prettier</strong>, por ejemplo, si en ESLint tenemos declarada la regla de no utilizar (<strong>;</strong>) y como Prettier por defecto agrega (<strong>;</strong>) entraria en conflicto, en nuestro caso no entra en conflicto porque nuestra configuración de ESLint permite las comillas. </p>
-            <p>Lo que haremos ahora, es instalar la extensión de Prettier, para que actue directamente.</p><img src="../../assets/img/2-11-configurando-prettier/5.png" alt="example">
-            <P>Después elegimos a Prettier como formateador por defecto, y una vez hecho esto necesitamos configurar VSCode para que al guardar con <strong>"ctrl + s"</strong> se nos aplique el formateo de Prettier</P><img src="../../assets/img/2-11-configurando-prettier/6.png" alt="example">
+            <p>Lo que haremos ahora, es instalar la extensión de Prettier, para que actue directamente.</p><img src="../../assets/img/2-11-configurando-prettier/5.webp" loading="lazy" alt="example">
+            <P>Después elegimos a Prettier como formateador por defecto, y una vez hecho esto necesitamos configurar VSCode para que al guardar con <strong>"ctrl + s"</strong> se nos aplique el formateo de Prettier</P><img src="../../assets/img/2-11-configurando-prettier/6.webp" loading="lazy" alt="example">
             <p>Para hacer que <strong>ESLint </strong> y <strong>Prettier</strong> convivan juntos, empezaremos por configurar las reglas de <strong>Prettier</strong>.</p>
             <h3>Configuración local - No recomendada </h3>
-            <p>Podemos irnos a la configuración de <strong>VSCode &#8594; settings/extensions/prettier</strong>, aquí podemos configurar todas las opciones que nos permite <strong>Prettier</strong> . </p><img src="../../assets/img/2-11-configurando-prettier/7.png" alt="example">
+            <p>Podemos irnos a la configuración de <strong>VSCode &#8594; settings/extensions/prettier</strong>, aquí podemos configurar todas las opciones que nos permite <strong>Prettier</strong> . </p><img src="../../assets/img/2-11-configurando-prettier/7.webp" loading="lazy" alt="example">
             <p>Pero el problema de hacerlo de esta manera, es que estamos configurando Prettier de manera <strong>local</strong>, y caemos en el mismo error que habiamos mencionado anteriormente, esta manera no es recomendable en absoluto ya que esto solo funcionaría para nuestra extensión de VSCode y si alguien más instala Prettier en su computadora, estás configuraciones no estarán disponibles y además en la línea de comandos tampoco existirán esas configuraciones.</p>
             <h3>Configuración con un archivo - Recomendada</h3>
             <p>Tenemos que buscar una configuración que sea persistente tanto para la extensión, como para la línea de comandos, como para cualquier otra persona que se descargue el proyecto. Esto lo podemos conseguir a través de un archivo de configuración.</p>
             <p>Podemos checar la documentación de <a class="link" href="https://prettier.io/docs/en/options" target="_blank">configuración de Prettier</a>.</p>
-            <p>Creamos un archivo llamado <strong>.prettierrc</strong> en la raíz de nuestro proyecto, este archivo estará escrito en <strong>JSON</strong>.</p><img src="../../assets/img/2-11-configurando-prettier/8.png" alt="example">
+            <p>Creamos un archivo llamado <strong>.prettierrc</strong> en la raíz de nuestro proyecto, este archivo estará escrito en <strong>JSON</strong>.</p><img src="../../assets/img/2-11-configurando-prettier/8.webp" loading="lazy" alt="example">
             <p>Nuestro archivo de configuración quedará de la siguiente manera: </p>
             <div>
               <pre><code class="language-json">{

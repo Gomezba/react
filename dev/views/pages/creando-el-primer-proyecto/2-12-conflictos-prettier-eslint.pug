@@ -20,7 +20,7 @@ append content
         p Para ello hay una solución muy sencilla que es instalar un paquete: 
 
         p: code npm i -D eslint-config-prettier 
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/1.png" alt="example")        
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/1.webp" alt="example")        
 
         p Con este paquete lo que haremos será simplemente añadirlo a nuestro archivo de configuración de ESLint en extends, lo único que tenemos que saber, es que si tenemos instalado Standard o cualuier otra regla de estilos, se debe poner seguido de ese paquete de reglas.
 
@@ -28,7 +28,7 @@ append content
             strong "eslint-config-prettier"
             |   seguido de Standard o cualquier otra regla de estilos.
 
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/2.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/2.webp" loading="lazy" alt="example")
 
         p Si tuvieramos más paquetes externos, como por ejemplo 
             strong Standard
@@ -36,7 +36,7 @@ append content
             strong "eslint-config-prettier"
             |   deberia ir debajo.
 
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/3.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/3.webp" loading="lazy" alt="example")
 
         p Esto debe ser así porque lo que esté dentro de 
             strong extends
@@ -55,7 +55,7 @@ append content
             |   de 
             strong ESLint
             |   no se está aplicando el format de Prettier, en ninguna momento agrega los tabs como espacio que habiamos definido en Prettier. 
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/4.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/4.webp" loading="lazy" alt="example")
 
         p Esto pasa porque nuestro archivo de configuración de ESLint es un archivo con 
             strong extensión JS
@@ -98,7 +98,7 @@ append content
             |   qué es el archivo de configuración de nuestro VSCode.
 
         p Agregaremos lo siguiente.
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/5.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/5.webp" loading="lazy" alt="example")
 
         p Con está simple línea de código ya tenemos configurado Prettier con todos los archivos que son compatibles con Prettier.
 
@@ -111,7 +111,7 @@ append content
         p Veamos este caso, donde tenemos 
             strong imports
             |   que no se están utilizando, por lo cual aunque guardemos, se quedan ahí.
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/6.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/6.webp" loading="lazy" alt="example")
 
         p En nuestro 
             strong "settings.json"
@@ -135,7 +135,7 @@ append content
             strong imports
             |   que no están siendo utilizados y además se ordenan alfabéticamente.   
 
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/7.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/7.webp" loading="lazy" alt="example")
 
         p Con esta configuración tambien evitaremos cambios fantasmas.
 
@@ -167,7 +167,7 @@ append content
         p: code npx prettier --check  . 
 
         p Lo que hacemos con este comando es checar que es lo que haria hipotéticamente o a que archivos afectaria Prettier en nuestro proyecto.
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/8.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/8.webp" loading="lazy" alt="example")
 
         p Aunque parezca que Prettier no afectará la carpeta 
             strong "dist"
@@ -199,7 +199,7 @@ append content
             |   en la raíz de nuestro proyecto y agregamos la carpeta 
             strong "dist"
             |   para que Prettier la ignore.
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/9.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/9.webp" loading="lazy" alt="example")
 
         p Si ahora nos vamos a un bundle como el 
             strong index.js
@@ -211,7 +211,7 @@ append content
             strong "dist"
             | .
         figure 
-            img(src="../../assets/img/2-12-conflictos-prettier-eslint/10.png" alt="example")
+            img(src="../../assets/img/2-12-conflictos-prettier-eslint/10.webp" loading="lazy" alt="example")
             figcaption Al guardar el archivo, el archivo se queda tal cual.
 
         h3 Creación de script para Prettier
@@ -234,12 +234,12 @@ append content
         p Ahora si creamos el script, que se llamará 
             strong "format"
             | .
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/11.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/11.webp" loading="lazy" alt="example")
 
         p Ahora si podemos ejecutar el script con el comando:
         p: code npm run format
 
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/12.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/12.webp" loading="lazy" alt="example")
 
         p De esta manera podemos ocupar Prettier, ya sin ninguna extensión.
 
@@ -253,7 +253,7 @@ append content
             strong ESLint
             |   por lo que no tenemos que hacer nada más, ya esta todo configurado.
 
-        img(src="../../assets/img/2-12-conflictos-prettier-eslint/13.png" alt="example")
+        img(src="../../assets/img/2-12-conflictos-prettier-eslint/13.webp" loading="lazy" alt="example")
 
 
 append submenu 

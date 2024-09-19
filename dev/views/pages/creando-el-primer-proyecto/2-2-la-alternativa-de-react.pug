@@ -13,7 +13,7 @@ append content
 
         p Tenemos la siguiente estructura 
         figure 
-            img(src="../../assets/img/2-2-la-alternativa-de-react/1.png" alt="example")
+            img(src="../../assets/img/2-2-la-alternativa-de-react/1.webp" alt="example")
             figcaption El archivo index.js es el código vimos en el capítulo anterior.
 
         p A continuación, incluimos los scripts necesarios para utilizar React en una página HTML sin dependencias externas. Es importante recordar que este enfoque es solo para fines demostrativos y no debe usarse en producción debido a los problemas de rendimiento asociados.
@@ -57,7 +57,7 @@ append content
             |
             |//Ahora renderizamos en el DOM con el método render() por ejemplo un texto
             |root.render('¡Hello world!')
-        img(src="../../assets/img/2-2-la-alternativa-de-react/2.png" alt="example")
+        img(src="../../assets/img/2-2-la-alternativa-de-react/2.webp" loading="lazy" alt="example")
 
         h3 ¿Que podemos hacer y que no al momento de renderizar?
         p Veamos ahora, que podemos hacer y que no podemos hacer al momento de renderizar.
@@ -74,7 +74,7 @@ append content
             |root.render('&lt;h1&gt;¡Hello world!&lt;/h1&gt;')
 
         figure 
-            img(src="../../assets/img/2-2-la-alternativa-de-react/3.png" alt="example")
+            img(src="../../assets/img/2-2-la-alternativa-de-react/3.webp" loading="lazy" alt="example")
             figcaption Como podemos ver en la imagen, la etiqueta la está tomando como texto plano simplemente, esto nos ayuda a evitar inyecciones de código.
 
         p Otra cosa que no podemos hacer es renderizar, varias cosas a la vez.
@@ -96,7 +96,7 @@ append content
             |const wrapper = React.createElement('div', null, [cta1, cta2, cta3])
             |
             |root.render(wrapper)
-        img(src="../../assets/img/2-2-la-alternativa-de-react/5.png" alt="example")
+        img(src="../../assets/img/2-2-la-alternativa-de-react/5.webp" loading="lazy" alt="example")
 
         h4 Lo que si podemos    
 
@@ -149,7 +149,7 @@ append content
             |const button = React.createElement('button', { className: 'btn btn--primary' }, 'Me gusta')
             |
             |root.render(button)
-        img(src="../../assets/img/2-2-la-alternativa-de-react/4.png" alt="example")
+        img(src="../../assets/img/2-2-la-alternativa-de-react/4.webp" loading="lazy" alt="example")
 
         p Hasta este punto, nuestro código es imperativo, para hacerlo declarativo necesitamos utilizar 
             code JSX
@@ -216,7 +216,7 @@ append content
             |
             |root.render(button)
 
-        img(src="../../assets/img/2-2-la-alternativa-de-react/4.png" alt="example").has-mb
+        img(src="../../assets/img/2-2-la-alternativa-de-react/4.webp" loading="lazy" alt="example").has-mb
 
         h4 Importante saber al renderizar 
         p.ts-1 "Algo importante a tener en cuenta es por qué React normalmente se renderiza sobre un 
@@ -279,7 +279,7 @@ append content
             |
             |root.render(avatars)    
 
-        img(src="../../assets/img/2-2-la-alternativa-de-react/6.png" alt="example").has-mb
+        img(src="../../assets/img/2-2-la-alternativa-de-react/6.webp" loading="lazy" alt="example").has-mb
 
         h3 Solución declarativa - JSX
         div.has-mb: pre: code.language-js 
@@ -297,7 +297,7 @@ append content
             |
             |root.render(avatars)
 
-        img(src="../../assets/img/2-2-la-alternativa-de-react/6.png" alt="example").has-mb
+        img(src="../../assets/img/2-2-la-alternativa-de-react/6.webp" loading="lazy" alt="example").has-mb
 
 
         p En el próximo capítulo, veremos cómo preparar nuestro código de React para producción, transpilándolo previamente a JavaScript. Hasta este momento, el código se transpila cada vez que el usuario accede a la página, lo que puede afectar el rendimiento. El enfoque ideal es transpilar el código solo una vez antes de desplegarlo, de modo que cuando el usuario entre en la página, ya pueda leer directamente el código en JavaScript optimizado, mejorando considerablemente la velocidad de carga.
