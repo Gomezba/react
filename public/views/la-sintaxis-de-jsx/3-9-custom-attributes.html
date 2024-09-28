@@ -344,18 +344,84 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>En el desarrollo moderno, a menudo es necesario utilizar atributos que no son estándar en HTML ni en React. Estos atributos, conocidos como <strong>custom attributes</strong>, permiten añadir funcionalidad adicional a los elementos HTML. Un ejemplo común es cuando los navegadores implementan nuevas características experimentales que pueden estar disponibles solo en ciertos navegadores y, aunque algunos se convierten en estándar, muchos otros se abandonan.</p>
+            <p>A partir de <strong>React 16</strong>, se permite el uso de <strong>propiedades personalizadas (custom attributes)</strong> en cualquier elemento JSX. Esto permite a los desarrolladores extender las capacidades de sus componentes de manera flexible.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Uso de Custom Attributes en JSX</h2>
+            <p>Cualquier atributo personalizado que se invente puede ser usado en JSX y será renderizado en el DOM tal como se define.</p>
+            <p><strong>Ejemplo:</strong></p>
+            <div>
+              <pre><code class="language-jsx">&lt;div cualquiercosa='asd'&gt;&lt;/div&gt;</code></pre>
+            </div>
+            <p>Si inspeccionamos este elemento en el DOM, veremos que React lo renderiza tal cual: </p>
+            <div>
+              <pre><code class="language-html">&lt;div cualquiercosa='asd'&gt;&lt;/div&gt;</code></pre>
+            </div>
+            <p>Esto es útil cuando deseamos agregar atributos experimentales o específicos para ciertos navegadores o tecnologías. </p>
+          </article>
+          <article class="content" id="3">
+            <h2>Restricciones en los Custom Attributes</h2>
+            <p>Aunque puedes agregar cualquier atributo personalizado, hay una regla importante: los <strong>custom attributes</strong> no deben estar en <strong>camelCase</strong>. Esto es porque <strong>HTML</strong> utiliza atributos en <strong>minúsculas</strong> y <strong>React</strong> sigue este mismo patrón para diferenciarlos de las propiedades <strong>JSX</strong>, que sí pueden estar en <strong>camelCase</strong>. Si intentamos utilizar <strong>camelCase</strong>, <strong>React</strong> nos mostrará un <strong>warning</strong>.</p>
+            <p><strong>Ejemplo con advertencia: </strong></p>
+            <div>
+              <pre><code class="language-jsx">&lt;div cualquierCosa='asd'&gt;&lt;/div&gt;</code></pre>
+            </div>
+            <p>Este código genera el siguiente mensaje:</p><img class="has-mb" src="../../assets/img/3-9-custom-attributes/1.webp" alt="example">
+          </article>
+          <article class="content" id="4">
+            <h2>Atributos estándar en HTML vs JSX</h2>
+            <p>React detecta cuando estamos intentando utilizar atributos estándar de HTML, como <stron>class</stron> o <strong>for</strong>, en lugar de sus equivalentes en <strong>JSX (className y htmlFor respectivamente)</strong>. Si intentamos usar estos atributos de <strong>HTML</strong>, <strong>React</strong> lo tratará como un <strong>custom attribute</strong> y nos advertirá sobre el uso incorrecto, aunque no producirá un error crítico. </p>
+            <p><strong>Ejemplo: </strong></p>
+            <div>
+              <pre><code class="language-jsx">&lt;div class='title'&gt;Título&lt;/div&gt;</code></pre>
+            </div>
+            <p>Este código genera la advertencia: </p><img src="../../assets/img/3-9-custom-attributes/2.webp" alt="example">
+            <p>Aquí, React está indicando que debemos utilizar <strong>className</strong> en lugar de <strong>class</strong>, ya que el segundo es un atributo <strong>HTML</strong> y no una propiedad <strong>JSX</strong>.</p>
+          </article>
+          <article class="content" id="5">
+            <h2>Implicaciones de los Custom Attributes</h2>
+            <p>Cuando usamos un <strong>custom attribute</strong>, <strong>React</strong> lo renderiza directamente en el <strong>DOM</strong> como parte del elemento <strong>HTML</strong>. Sin embargo, debemos tener cuidado al usar atributos que <strong>React</strong> ya reconoce, ya que hacerlo incorrectamente puede causar advertencias y dificultar la depuración.</p>
+            <p>Por ejemplo, si usamos <strong>class</strong> en lugar de <strong>className</strong>, técnicamente funcionará, pero estamos haciendo un mal uso de las convenciones de <strong>React</strong>, y esto puede generar confusión.</p>
+          </article>
+          <article class="content" id="6">
+            <h2>Buenas Prácticas</h2>
+            <ul>
+              <li>
+                <p> <strong>Evitar usar atributos reservados de HTML como custom attributes</strong>: Atributos como <strong class="ts-1">class</strong> y <strong class="ts-1">for</strong> tienen sus equivalentes en <strong>JSX (className y htmlFor)</strong>. Utilizar los atributos de HTML directamente genera advertencias y puede llevar a errores en grandes proyectos.</p>
+              </li>
+              <li>
+                <p> <strong>Mantener los custom attributes en minúsculas</strong>: Siguiendo la convención de React y HTML, los custom attributes deben escribirse en minúsculas para evitar advertencias.</p>
+              </li>
+            </ul>
+          </article>
+          <article class="content" id="7">
+            <h2>Conclusión</h2>
+            <p>El uso de <strong>custom attributes</strong> en <strong>JSX</strong> permite extender la funcionalidad de los componentes y experimentar con nuevas características del navegador. Sin embargo, es importante seguir las convenciones de <strong>React</strong>, como utilizar los nombres de propiedades correctos (<strong>className</strong> en lugar de <strong>class</strong>) y evitar usar <strong>camelCase</strong> en atributos personalizados. Al hacerlo, evitamos advertencias innecesarias y mantenemos nuestro código limpio y coherente.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Uso de Custom Attributes en JSX</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Restricciones en los Custom Attributes</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Atributos estándar en HTML vs JSX</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Implicaciones de los Custom Attributes</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#6">Buenas Prácticas</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#7">Conclusión</a></li>
           </ul>
         </nav>
       </section>

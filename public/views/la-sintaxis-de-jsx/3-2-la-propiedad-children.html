@@ -344,18 +344,167 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>Entre las etiquetas de apertura <strong>&lt; &gt;</strong> y cierre de un nodo <strong>&lt; /&gt;</strong> podemos colocar sus nodos hijos, en inglés <strong>children</strong>, por ejemplo, si sustituimos nuestro elemento <strong>"img"</strong> por un <strong>"div"</strong> podemos colocar entre su etiqueta de apertura y cierre tantos hijos como queramos. </p>
+            <p class="note">Los <strong>children</strong> son lo que se coloca entre las <strong>etiquetas de apertura y cierre de un componente</strong>. Los <strong>children</strong> se pasan al componente como una propiedad especial (props.children). </p><img src="../../assets/img/3-2-la-propiedad-children/1.webp" alt="example">
+            <p>Al guardar esto, podemos ver que ha encerrado todo en <strong>()</strong> y esto evidentemente lo ha hecho <strong>prettier</strong>.</p><img src="../../assets/img/3-2-la-propiedad-children/2.webp" alt="example">
+            <h3>¿Por qué se pone entre paréntesis una etiqueta que ocupa múltiples líneas?</h3>
+            <p>Esto se hace así para mantener una jerarquía visual, si nosotros borramos los paréntesis <strong>()</strong> realmente esto puede funcionar, pero estamos perdiendo esa jerarquía, esa indentación que nos permite conocer rápidamente que abarca esta etiqueta, cual es su etiqueta raíz, etc.</p>
+            <figure> <img src="../../assets/img/3-2-la-propiedad-children/3.webp" alt="example">
+              <figcaption>Se pierde esa jerarquía al eliminar los paréntesis, es más complicado de entender.</figcaption>
+            </figure>
+            <p>Entonces siempre y cuando que nuestra etiqueta <strong>JSX</strong> ocupe más de una línea se deben poner los paréntesis <strong>()</strong>. </p>
+            <p>Si nuestra etiqueta solo ocupa una línea no es necesario poner los paréntesis <strong>()</strong>. </p><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/4.webp" alt="example">
+            <p>Hasta este punto podemos ver que <strong>JSX</strong> y <strong>HTML</strong> no se diferencian demasiado, pero realmente <strong>JSX</strong> es un lenguaje de plantillas.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Expresiones evaluadas</h2>
+            <p>Lo que podemos hacer dentro de los <strong>children</strong> es poner <strong>expresiones evaluadas.</strong></p>
+            <h3>¿Que són las expresiones evaluadas? </h3>
+            <p>Es toda expresión de <strong>JavaScript</strong> que termina devolviendo un <strong>valor</strong>.</p>
+            <p>Estas expresiones se colocan dentro de llaves <strong>{}</strong>.</p>
+            <p>Veamos algunas formas en las que podemos encerrar valores dentro de estas llaves.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/5.webp" alt="example"><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/6.webp" alt="example">
+            <p>Estás no son todas las formas en que podemos poner expresiones evaluadas, pero nos sirven para visualizar su comportamiento y poder verlo dentro de la consola del navegador.</p>
+            <p>Pero antes de continuar primero explicaremos un poco de la propiedad <strong class="ts-4">props.</strong></p>
+          </article>
+          <article class="content" id="3">
+            <h2>Propiedad props</h2>
+            <p>Ejecutamos nuestro servidor de desarrollo.</p>
+            <p><code>npm run dev</code></p>
+            <p>Miraremos en que se transforma una etiqueta autocerrada y una con hijos.</p>
+            <p>La única diferencia está en en la propiedad <strong class="ts-5">props</strong> del componente: </p>
+            <p>La propiedad <strong class="ts-5">props</strong> es un <strong>objeto</strong> que contiene todos los datos o atributos que se pasan a un componente desde su etiqueta JSX. </p>
+            <p><strong>Comportamiento</strong></p>
+            <ul>
+              <li>Cuando el componente es autocerrado, las <strong>props</strong> únicamente incluyen los atributos del elemento. </li>
+              <li>Si el componente tiene hijos, la propiedad <strong>props</strong> también incluirá una <strong>propiedad especial llamada children</strong>, que almacena los elementos hijos.</li>
+            </ul>
+            <p>Como mencionamos en la introducción <strong>children</strong> es una <strong>propiedad especial</strong> que guarda dentro los elementos que se encuentran dentro de las etiquetas de apertura y cierre. </p>
+            <p>Cualquier cosa entre las etiquetas de apertura y cierre será accesible dentro del componente como <strong>props.children</strong>. Los children pueden ser:</p>
+            <ul>
+              <li>Un solo elemento</li>
+              <li>Un array de elementos si tienes múltiples hijos, por ejemplo, varios párrafos o divs.</li>
+              <li>Texto plano o incluso expresiones evaluadas.</li>
+            </ul>
+            <p>Todas estas diferencias las veremos con claridad.</p>
+            <h3>Propiedad props en una etiqueta autocerrada o simple </h3>
+            <p>Nos referimos a una <strong>etiqueta simple</strong>, cuando esta no contiene hijos si no que es única.</p>
+            <p>Una <strong>etiqueta autocerrada</strong> no necesita una etiqueta de cierre y pueden escribirse como <strong>&lt;tag /&gt;</strong> o simplemente <strong>&lt;tag&gt;</strong></p>
+            <p>A continuación una pequeña lista de las <strong>etiquetas autocerradas</strong> más utilizadas.</p>
+            <ul>
+              <li> <strong>&lt;br&gt;</strong> - Inserta un salto de línea. </li>
+              <li> <strong>&lt;hr&gt;</strong> - Inserta una línea horizontal (usualmente un cambio de temática o separación). </li>
+              <li> <strong>&lt;img&gt;</strong> - Inserta una imagen. </li>
+              <li> <strong>&lt;input&gt;</strong> - Define un campo de entrada de datos.</li>
+              <li> <strong>&lt;source&gt;</strong> - Especifica varios recursos multimedia (usado en <strong>&lt;video&gt; </strong> o <strong>&lt;audio&gt;</strong>). </li>
+            </ul><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/7.webp" alt="example"><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/8.webp" alt="example">
+            <p>Como podemos observar cuando la etiqueta es autocerrada, la propiedad <strong>props</strong> que ya sabemos que es un <strong>objeto</strong>, contiene solo los atributos de la etiqueta.</p>
+            <p>Y como la propiedad <strong>children</strong> no existe pasa a ser <strong>undefined</strong>. </p>
+            <p>Si ponemos una <strong>expresión evaluada</strong> como valor de un atributo, simplemente se evalua la expresión y se muestra con el valor devuelto. </p><img class="has-mb img-md" src="../../assets/img/3-2-la-propiedad-children/17.webp" alt="example"><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/18.webp" alt="example">
+            <h3>Propiedad props en una etiqueta con hijos </h3>
+            <p>Miraremos la propiedad props cuando la etiqueta contiene hijos.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/9.webp" alt="example"><img src="../../assets/img/3-2-la-propiedad-children/10.webp" alt="example">
+            <p>Cuando tenemos hijos dentro de una etiqueta, en el objeto <strong>props</strong> se agrega una propiedad especial llamada <strong>children</strong> que en este ejemplo contiene un array de objetos que vienen siendo los hijos.</p>
+            <p>Ahora veamos cuando combinamos atributos.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/13.webp" alt="example"><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/14.webp" alt="example">
+            <p>Podemos ver que en el objeto props conviven los atributos y la propiedad children.</p>
+            <p>Veamos este otro ejemplo.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/15.webp" alt="example"><img class="has-mb img-md" src="../../assets/img/3-2-la-propiedad-children/16.webp" alt="example">
+          </article>
+          <article class="content" id="4">
+            <h2>Valores en children</h2>
+            <p>Como se mencionó los <strong>children</strong> pueden ser:</p>
+            <ul>
+              <li>Un solo elemento</li>
+              <li>Un array de elementos si tienes múltiples hijos, por ejemplo, varios párrafos o divs.</li>
+              <li>Texto plano o incluso expresiones evaluadas.</li>
+            </ul>
+            <p>En este subtitulo miraremos estos valores en <strong>children</strong>, pero las<strong>exprexiones evaluadas</strong> las miraremos más a fondo en el siguiente subtitulo. </p>
+            <h3>Etiqueta con un solo hijo </h3>
+            <p>Si hay un solo hijo <strong>(texto o elemento JSX)</strong>: la propiedad <strong>children</strong> será ese valor directamente. </p>
+            <p><strong class="ts-3">Un solo hijo - texto plano </strong></p><img class="has-mb img-md" src="../../assets/img/3-2-la-propiedad-children/19.webp" alt="example"><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/20.webp" alt="example">
+            <p><strong class="ts-3">Un solo hijo - Elemento HTML </strong></p><img class="has-mb img-md" src="../../assets/img/3-2-la-propiedad-children/21.webp" alt="example"><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/22.webp" alt="example">
+            <p>Guarda ese único hijo como objeto.</p>
+            <h3>Etiqueta con múltiples hijos</h3>
+            <p>Si hay múltiples hijos <strong>(varios nodos JSX)</strong>: en este caso, <strong>children</strong> será un <strong>array</strong> que contendrá todos los elementos hijos.</p>
+            <p><strong class="ts-3">Etiqueta con múltiples hijos JSX </strong></p>
+            <p>Miraremos uno de los ejemplos anteriores.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/9.webp" alt="example"><img src="../../assets/img/3-2-la-propiedad-children/10.webp" alt="example">
+            <p>Como podemos ver, cuando tenemos múltiples hijos JSX, la propiedad <strong>children</strong> contendrá un array de elementos.</p>
+            <p class="note">La propiedad <strong>children</strong> será un <strong class="ts-2">array</strong> <strong>solo si hay múltiples hijos</strong>. De lo contrario, será un <strong>valor único</strong> o estará <strong>undefined</strong> si no hay hijos. </p>
+            <p>A continuación explicaremos más a fondo el comportamiento de <strong>children</strong>, cuando tiene que ver con <strong>expresiones evaluadas</strong>. </p>
+          </article>
+          <article class="content" id="5">
+            <h2>Expresiones evaluadas en children</h2>
+            <p>Tenemos uno de los ejemplos anteriores, donde ocupamos expresiones evaludas.</p><img src="../../assets/img/3-2-la-propiedad-children/9.webp" alt="example">
+            <p>Si desplegamos <strong>children</strong>, que en este caso es un array de elementos, miraremos que cada objeto es una de las etiquetas que se encuentran dentro de la etiqueta padre.</p><img src="../../assets/img/3-2-la-propiedad-children/11.webp" alt="example">
+            <p>Cada uno de estos objetos (etiquetas) contiene las mismas propiedades que React maneja con un nodo. </p>
+            <p>Si desplegamos una de estas etiquetas, veremos la propiedad <strong>props</strong>, que también incluye la propiedad <strong>children</strong>, y esta última contiene los hijos de esa etiqueta, en este caso, texto plano.</p><img src="../../assets/img/3-2-la-propiedad-children/12.webp" alt="example">
+            <p>Si somos observativos nos habremos dado cuenta que la propiedad <strong>children</strong> del objeto que desplegamos, su array está dividido por 2 elementos.</p>
+            <p><code>['Curso de ', 'React']</code></p>
+            <p>Veremos un poco como funciona esto, viendo que se renderiza para cada uno de estos <strong>children. </strong></p>
+            <p>Lo primero que tenemos que tener en mente, es que al final nuestro código terminará siendo <strong>HTML</strong> y en <strong>HTML</strong> no podemos poner cualquier cosa como hijo, sino simplemente <strong>etiquetas</strong> o un <strong>string.</strong></p>
+            <p>Entonces, independientemente del resultado, todo nuestro código deberá transformarse a esta sintaxis válida.</p>
+            <h3>Expresión evaluada con tipos de datos</h3>
+            <p>Vamos a ver, como se transforma cada uno de los tipos de datos que tenemos en <strong>JavaScript</strong>. </p>
+            <h4>Tipos String y Number </h4>
+            <p>En el primero de los casos veremos los tipos de dato <strong>String</strong> y <strong>Number</strong>, que son los casos más fáciles evidentemente, ya que se transforman directamente a un texto y a un número.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/23.webp" alt="example">
+            <figure><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/24.webp" alt="example">
+              <figcaption>En el caso de un <strong>Number</strong> al momento de renderizarse a la pantalla, se convierte en un <strong>String,</strong> pero si lo tratamos desde el código o consola seguirá siendo un <strong>Number</strong>.</figcaption>
+            </figure>
+            <h4>Tipos boolean, null, undefined </h4>
+            <p>Miraremos lo que pasa al renderizar estos tipos de datos. </p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/25.webp" alt="example"><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/26.webp" alt="example">
+            <p>Como podemos observar este tipo de datos al renderizarse, se terminan transformando a un <strong>String vacio</strong>.</p>
+            <p>Entonces estos 3 tipos de datos no se tranforman en nada, no se renderizan en nada.</p>
+            <p>Conocer esto, es de gran utilidad para cuando estemos hablando del <strong>renderizado condicional</strong> más adelante, porque, en muchas expresiones lo que haremos es devolver <strong>null</strong> en el caso de que no nos interese pintar nada y otra cosa en el caso de que si.</p>
+            <p>Esto nos permitirá gestionar nuestras etiquetas de una forma mucho más eficiente. </p>
+            <h4>Tipo Object literal</h4>
+            <p>Cuando queramos renderizar un <strong>Objeto literal</strong> miraremos algo curioso.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/27.webp" alt="example">
+            <figure> <img class="img-md" src="../../assets/img/3-2-la-propiedad-children/28.webp" alt="example">
+              <figcaption>Podemos ver que no se renderiza nada.</figcaption>
+            </figure>
+            <P>Esto se debe a que tenemos un error, y si vamos a la consola podremos verlo. </P><img src="../../assets/img/3-2-la-propiedad-children/29.webp" alt="example">
+            <p>Nos dice que no puede generar ninguna de las expresiones que devuelva un objeto. Esto no es del todo cierto, ya que veremos que si que hay un tipo de objetos que podemos pasar como <strong>children</strong> , ¿Cúal será?, pues evidentemente una <strong>etiqueta</strong> un <strong>nodo</strong> de este <strong>Virtual DOM</strong>. </p>
+            <h4>Nodo del Virtual DOM </h4>
+            <p>Veremos que un <strong>nodo (etiqueta)</strong> del <strong>Virtual DOM</strong> si que se puede renderizar al ponerse como expresión evaluada.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/30.webp" alt="example"><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/31.webp" alt="example">
+            <p class="note">Entonces las <strong>etiquetas</strong> son el único tipo de objetos que podemos pasar como <strong>children (hijos)</strong>, cualquier otro objeto nos generará directamente un error.</p>
+            <h4>Funciones </h4>
+            <p>¿Qué pasa con las funciones?, miremos los ejemplos.</p>
+            <p><strong class="ts-3">Función sin ejecutar </strong></p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/32.webp" alt="example"><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/33.webp" alt="example">
+            <p>Como podemos ver, si que se renderiza una parte, pero la parte de la función no se muestra.</p>
+            <p>Si checamos la consola podremos ver un <strong>warning</strong> en lugar de un error.</p><img src="../../assets/img/3-2-la-propiedad-children/34.webp" alt="example">
+            <p>Nos dice que las <strong>funciones</strong> no son válidas como hijos de React, pero no nos da un <strong>error</strong>, sino un <strong>warning.</strong></p>
+            <p>Esto pasa porque <strong>React</strong> interpreta que se nos ha olvidado ejecutar la función.</p>
+            <p><strong class="ts-3">Función ejecutada</strong></p>
+            <p>Si nosotros ejecutamos la función podremos que es un objeto válido, ya que está devolviendo una <strong>etiqueta</strong>. </p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/35.webp" alt="example"><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/31.webp" alt="example">
+            <h4>Arrays </h4>
+            <p>El último de los casos del que tenemos que hablar es de los <strong>arrays</strong>.</p>
+            <p>Los arrays son un <strong>tipo bastante especial dentro de JSX</strong> y que se interpreta como una sucesión de hijos, ¿Qué quiere decir una sucesión de hijos?, pues lo veremos muy sencillamente en el siguiente ejemplo.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/36.webp" alt="example"><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/37.webp" alt="example">
+            <p>Cuando JSX detecta un array, React lo que intenta es concatenar cada uno de los elementos del array y así pintar la versión final.</p>
+            <p>¿Y como se concatenan los elementos del array?, pues siguiendo las mismas reglas que tenemos hasta ahora, es decir, si agregamos los tipos de datos <strong>boolean, null y undefined</strong>, miraremos que no pintará nada, los ignorará porque ya sabemos que no renderizan nada, solo concatenará aquellos elementos del array que se puedan concatenar, que puedan generar una versión final.</p><img src="../../assets/img/3-2-la-propiedad-children/38.webp" alt="example">
+            <p>Podemos ver no renderiza estos tipos de datos y concatena aquellos elementos que puedan generar una versión final.</p><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/37.webp" alt="example">
+            <p>Si intentamos poner un simple <strong>objeto</strong> miraremos que no renderizará nada, ya que como vimos anteriormente un objeto literal no se puede renderizar y nos devolverá un error.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/39.webp" alt="example"><img class="has-mb img-md" src="../../assets/img/3-2-la-propiedad-children/28.webp" alt="example"><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/40.webp" alt="example">
+            <p>Como podemos ver, se siguen las mismas reglas, y si ahora ponemos una función en lugar de un objeto, nos aparecerá un <strong>warning</strong> diciendo que las funciones no son válidas como hijos de React.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/41.webp" alt="example">
+            <p>Como podemos ver, se renderiza como habiamos visto anteriormente a diferencia de un objeto que no renderiza nada.</p><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/37.webp" alt="example">
+            <p>Pero nos muestra un warning diciendo que las funciones no son válidas como hijos de react.</p><img class="has-mb" src="../../assets/img/3-2-la-propiedad-children/42.webp" alt="example">
+            <p class="note">Cuando nosotros ponemos un array como expresión evaluda, lo que estamos diciendole a <strong>React</strong> es que pinte una <strong>sucesión de elementos</strong> y dependerá de cada uno de esos elementos lo que se genere como versión final, cada uno de esos elementos sigue todas las reglas que hemos visto hasta ahora para generar la versión final.</p>
+            <p>Si ponemos una etiqueta como elemento del array, miraremos que si se concatenará, ya que recordemos que el único objeto que permite como hijos es una <strong>etiqueta o un nodo</strong>.</p><img src="../../assets/img/3-2-la-propiedad-children/43.webp" alt="example">
+            <p>Como podemos observar esta concatenando la etiqueta con el resto de los elementos del array.</p><img class="img-md" src="../../assets/img/3-2-la-propiedad-children/44.webp" alt="example">
+            <p>Como podemos ver el código nos está marcando como error el poner una etiqueta como elemento de array y esto se debe por una serie de reglas que debemos de incluir y que veremos a lo largo del curso.</p>
+            <p>Pero hay que quedarnos con esto, que pintar un array es como poner una sucesión de etiquetas de la siguiente forma.</p><img src="../../assets/img/3-2-la-propiedad-children/45.webp" alt="example">
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Expresiones evaluadas</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Propiedad props</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Valores en children</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Expresiones evaluadas en children</a></li>
           </ul>
         </nav>
       </section>

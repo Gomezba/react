@@ -344,18 +344,93 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>En este capítulo aprenderemos agregar valores por defecto de manera correcta a etiquetas que pertenecen a un formulario.</p>
+            <p>En <strong>JSX</strong> la manera de establecer valores por defecto es diferente a como se hace en <strong>HTML.</strong></p>
+            <p>A continuación aprenderemos a lograr esto. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Error al definir valores por defecto igual que en HTML</h2>
+            <p>Como se mencionó en la introducción, la manera de definir valores por defecto se maneja diferente en JSX, así que primeramente miraremos lo que pasa cuando establecemos un valor por defecto como se hace en HTML.</p>
+            <p>A continuación tomaremos como ejemplo la etiqueta <strong>input de tipo texto</strong>.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/1.webp" alt="example">
+            <p>Nos devuelve un error diciendo que <strong>hemos proporcionado un value sin pasarle un onChange</strong>. </p>
+            <p>Lo que provoca este error es que si intentamos cambiar el valor desde el <strong>input</strong> no se modificará nunca, ya que se ha convertido en un <strong>readOnly. </strong></p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/2.webp" alt="example">
+            <p>Con JSX tenemos que ocupar la palabra <strong>default</strong> seguido del nombre del atributo para indicarle que será un valor por defecto.</p>
+            <div>
+              <pre><code class="language-JSX">   /* Sintaxis
+   defaultValue-Checked='Valor por defecto'
+*/
+
+defaultValue = 'Defecto'</code></pre>
+            </div>
+            <p>Quizás te preguntes porque sea convertido en <strong>readOnly, pues a continuación lo explicaremos. </strong></p>
+          </article>
+          <article class="content" id="3">
+            <h2>¿Por qué se convierte en readOnly al establecer un valor por defecto como en HTML?</h2>
+            <p>Pues justamente debemos de entender un concepto que es propio de <strong>JavaScript</strong> de la Api del DOM.</p>
+            <p>Para entender este concepto, miraremos la explicación sin utilizar React, lo haremos todo desde el navegador. </p>
+            <p>Primeramente quitamos del código el valor por defecto que le habiamos puesto al input.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/3.webp" alt="example">
+            <p>Nos dirigimos al navegador y desde las dev tools agregamos el valor por defecto como se hace normalmente en HTML.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/4.webp" alt="example">
+            <p>Ahora modificaremos el valor del input dejandolo vacio (aquí si se puede modificar porque no estamos utilizando JSX), y miraremos que el valor por defecto que agregamos desde las dev tools, se mantiene igual, nunca cambia.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/5.webp" alt="example">
+            <p>El valor que establecimos por defecto no se modifica al nuevo valor que contiene el input, porque nosotros establecimos el valor inicial y este atributo (value) siempre guardará el valor inicial que le demos por defecto, y no se actualizará con los cambios actuales.</p>
+            <p class="ts-2">Lo que acabamos de explicar puede parecer confuso, pero debemos saber que <strong>hay propiedades que sus valores son diferentes al de los atributos</strong>.</p>
+            <p>Hay que entender la diferencias entre propiedades y atributos, miremos lo siguiente.</p>
+            <p>Desde la consola del navegador, seleccionamos nuestro input. </p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/6.webp" alt="example">
+            <p>Si nosotros accedemos al valor del input, este nos devolverá el valor actual que contiene, en este caso una cadena vacia (" ").</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/7.webp" alt="example">
+            <p>Pero si ahora, accedemos al valor del atributo, este nos devolverá el valor por defecto que habiamos establecido.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/8.webp" alt="example">
+            <p>A esto nos referiamos cuando explicamos que hay propiedades que sus valores son diferentes al de los atributos.</p>
+            <p>Sin embargo hay propiedades que devuelven lo mismo que los atributos, pero esto no pasa con todas las propieades, como lo es en este caso. </p>
+            <p>Entonces cuando ocupamos <code>input.value</code> estamos trabajando con <strong>propiedades</strong> y cuando utilizamos <code>input.getAttribute('value')</code> estamos acediendo al atributo.</p>
+            <p>Miremos atributos vs propiedades para entender mucho mejor.</p>
+            <ul>
+              <li>
+                <p> <strong>Atributo (getAttribute('value'))</strong>: Son los valores iniciales que se declaran en el HTML y no cambian una vez que el elemento ha sido renderizado. El atributo define el valor "inicial" del input cuando se carga la página. </p>
+              </li>
+              <li>
+                <p> <strong>Propiedad (input.value)</strong>: Es el valor que representa el estado actual del elemento en el DOM. Este valor puede cambiar dinámicamente después de que el elemento ha sido renderizado. </p>
+              </li>
+            </ul>
+            <p class="ts-4">De tal manera cuando nosotros trabajamos con React, y asignamos un valor por defecto como en HTML <code>value:'Defecto'</code>, lo que estamos haciendo es <strong>asignar la propiedad con su valor actual </strong> y <strong>no un un atributo con un valor inicial </strong>. Entonces como la propiedad ya está asignada con su valor, nunca vamos a poder cambiar su valor, ya que ya está asignado, es decir lo estamos convirtiendo a <strong>readOnly</strong>.</p>
+            <p>Veamos una conclusión mas técnica:</p>
+            <p class="ts-4">Por lo tanto, cuando asignamos un valor con <strong>value</strong> en React, estamos asignando directamente la propiedad, lo que convierte al input en un <strong>componente controlado</strong>. Para permitir que el valor se pueda modificar sin la intervención de React, usamos <strong>defaultValue</strong> para que funcione como un valor inicial, pero sin controlar el estado a través de React.</p>
+          </article>
+          <article class="content" id="4">
+            <h2>Establecer valores por defecto de manera correcta</h2>
+            <p>Ahora mostraremos la manera correcta de establecer valores por defecto en las etiquetas de un formulario, utilizando <strong>defaultValue</strong> y <strong>defaultChecked</strong>.</p>
+            <h3>Input text </h3>
+            <p>Si ahora cambiamos <strong>value</strong> por <strong>defaultValue</strong> estaremos <strong>seteando</strong> el valor por defecto y no una propiedad directamente.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/9.webp" alt="example">
+            <p>Si ahora en la consola accedemos al valor de la propiedad value, y al valor del atributo value, nos devolverá el mismo valor, ya que no hemos modificado el input, estará todo normal.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/10.webp" alt="example">
+            <p>Como ya estamos utilizando <strong>defaultValue</strong> ahora si nos dejará modificar el valor del input, cambiaremos el valor dejando solo la letra D.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/11.webp" alt="example">
+            <p>Si volvemos acceder al valor de la propiedad value y al valor del atributo value, miraremos que el valor actual de la propiedad será el actual y el valor del atributo, como habiamos mencionado nunca cambiará, siempre será el valor inicial.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/12.webp" alt="example">
+            <p>Esta es la manera correcta de establecer un valor por defecto para un <strong>input text.</strong></p>
+            <p>Más adelante miraremos para que sirve el <strong>value</strong> porque tiene una utilidad increible y no está hecho así porque sí.</p>
+            <h3>Input checbox </h3>
+            <p>Tiene una opción parecida al input text pero con la propiedad <strong>checked</strong> . </p>
+            <p>Si la establecemos igual que en HTML, obtendremos el mismo resultado que con el input text, solo que aquí no nos dejará desmarcar la casilla. </p><img class="has-mb" src="../../assets/img/3-7-defaultvalue-y-defaultchecked/14.webp" alt="example"><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/13.webp" alt="example">
+            <p>De igual manera tenemos que ocupar <strong>defaultChecked</strong> para que se pueda desmarcar la casilla.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/15.webp" alt="example">
+            <h3>Select </h3>
+            <p>Esta etiqueta si que funciona bastante distinto a lo que tenemos actualmente.</p>
+            <p>La manera tradicional de establecer un valor por defecto de un <strong>select</strong> en HTML, es poniendo el atributo <strong>selected</strong> a una de las opciones.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/16.webp" alt="example">
+            <p>Entonces en JSX no deberiamos utilizar <strong>selected</strong> para establecer una opción por defecto, sino que debemos utilizar <strong>defaultValue</strong>. </p>
+            <p>Esto se debe a que React a hecho su API tratando los <strong>select</strong> como <strong>input</strong>. </p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/17.webp" alt="example">
+            <h3>Textarea </h3>
+            <p>La manera en que establecemos un valor por defecto en un <strong>textarea</strong> en HTML, es pasarlo como children: </p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/18.webp" alt="example">
+            <p>Como podemos ver nos devuelve un error, nos devuelve un warning.</p>
+            <p>Para los <strong>textarea</strong> en lugar de pasar el valor por defecto como un children, decidieron pasar el valor por defecto como si fuese un <strong>input text</strong>, es decir pasarlo como un atributo con <strong>defaultValue</strong>.</p><img src="../../assets/img/3-7-defaultvalue-y-defaultchecked/19.webp" alt="example">
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Error al definir valores por defecto igual que en HTML</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">¿Por qué se convierte en readOnly al establecer un valor por defecto como en HTML?</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Establecer valores por defecto de manera correcta</a></li>
           </ul>
         </nav>
       </section>

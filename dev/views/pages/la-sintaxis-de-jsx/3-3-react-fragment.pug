@@ -1,17 +1,192 @@
 extends ../../templates/template 
 
 append h1 
-    h1 React fragment
+    h1 React Fragment
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
 
+        p Ya sabemos lo que es una etiqueta 
+            strong JSX
+            |   y que se termina convirtiendo en un 
+            strong objeto de JavaScript
+            |   y esta es la razón evidentemente por la que se puede almacenar en una variable, pero que pasa cuando intentamos almacenar múltiples etiquetas dentro de una misma variable.
+
+        p Estaremos viendo distintas maneras de renderizar múltiples elementos.
+
+        p Pero, primero debemos de saber que el método 
+            code root.render()
+            |   solo es capáz de 
+            strong renderizar un solo elemento a la vez
+            | , solo puede recibir un argumento.
+
+        div: pre: code.language-jsx
+            |root.render(elemento1, elemento2, elemento 3) // ✖️ Esto no es posible
+        p ¿Como podemos renderizar múltiples elementos?, lo veremos en seguida.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Formas de renderizar multiples elementos 
+
+        h3 Etiqueta contenedora 
+        p Podemos tener una etiqueta contenedora que tendrá sus hijos dentro, esto ya lo habiamos visto en capitulos anteriores.
+
+        div: pre: code.language-jsx
+            |const app = (
+            |	&lt;div&gt;
+            |		&lt;h1&gt;Bienvenido al curso de React&lt;/h1&gt;
+            |		&lt;p&gt;Bienvenido al curso&lt;/p&gt;
+            |	&lt;/div&gt;
+            |)
+            |
+            |root.render(app)
+
+        h3 Un array de elementos
+        p En el capítulo anterior habiamos mencionado que podemos tener un array de elementos y nos sirve para renderizar múltiples elementos.
+        figure 
+            img(src="../../assets/img/3-3-react-Fragment/1.webp" alt="example")
+            figcaption Tenemos un error de la prop "Key" que miraremos en otro capítulo.
+
+
+        p Ahora, puede que quizás no quieras renderizar un simple 
+            strong &lt;div&gt;
+            |   como contenedor para unos simples elementos.
+
+        p Para este caso React, nos ofrece 
+            strong React.Fragment
+            | .
+
+    article(id="3" class="content")
+        h2 React.Fragment
+
+        p 
+            code React.Fragment
+            |   es un 
+            strong componente especial en React
+            |   que permite agrupar múltiples elementos hijos sin agregar un nodo adicional al DOM. Esto es útil cuando necesitas devolver varios elementos sin introducir contenedores innecesarios, evitando que se refleje un elemento padre extra en la estructura del DOM.
+
+
+        div: pre: code.language-jsx 
+            |import { Fragment } from 'react' // Necesitamos importar Fragment para utilizarlo    
+            |const app = (
+            |	&lt;Fragment&gt;
+            |		&lt;h1&gt;Bienvenido al curso de React&lt;/h1&gt;
+            |		&lt;p&gt;Bienvenido al curso&lt;/p&gt;
+            |	&lt;/Fragment&gt;
+            |)
+            |
+            |root.render(app)
+
+        p De esta manera con 
+            strong React.Fragment
+            |   evitamos agregar etiquetas contenedoras innecesarias al DOM, pero tenemos que estar importando y esto es un poco tedioso. Para eso React nos ofrece una alternativa.
+
+
+    article(id="4" class="content")
+        h2 Alternativa a React.Fragment &lt; &gt;&nbsp;&lt; /&gt;  
+
+        p Para seguir utilizando React.Fragment pero sin estar importando nada, React nos ofrece utilizar una etiqueta vacía 
+            strong.ts-1 &lt; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt; /&gt;
+            | .   
+
+        div: pre: code.language-jsx
+            |    const app = (
+            |	&lt;&gt;
+            |		&lt;h1&gt;Bienvenido al curso de React&lt;/h1&gt;
+            |		&lt;p&gt;Bienvenido al curso&lt;/p&gt;
+            |	&lt;/&gt;
+            |)
+            |
+            |root.render(app)     
+
+        p Puede que nos preguntemos cuando utilizamos 
+            strong Fragment
+            |   y cuando un 
+            strong array
+            |   para renderizar múltiples elementos, pues a continuación lo veremos.        
+
+    article(id="5" class="content")
+        h2 Cuando utilizar React.Fragment y cuando un array
+        h3 Caso de Array
+        p Utilizamos un array cuando los elementos tienen similitud o un patrón común entre ellos. Esto significa que comparten la misma estructura o el mismo formato, como cuando se mapea una lista de datos para generar un conjunto de elementos repetidos, pero con contenido diferente.
+
+        p: strong Ejemplo:
+
+        p Imagina que tienes una lista de nombres y quieres renderizarlos como elementos 
+            strong &lt;li&gt;
+            | . Cada uno de estos elementos es similar (todos son 
+            strong &lt;li&gt;
+            | ) pero su contenido es diferente:
+
+        div: pre: code.language-jsx 
+            |const nombres = ['Ana', 'Carlos', 'Luisa']
+            |
+            |//Nos seguirá mostrando el error de Key prop
+            |const listaNombres = nombres.map((nombre) => &lt;li&gt;{nombre}&lt;/li&gt;) // Missing "key" prop for element in iterator
+            |
+            |const app = &lt;ul&gt;{listaNombres}&lt;/ul&gt;
+            |
+            |root.render(app)
+
+        p En este caso, usar un array de elementos es lo más apropiado porque cada elemento sigue el mismo patrón: 
+            strong &lt;li&gt;
+            |   con un texto dentro.
+
+        p Este enfoque es ideal cuando estás renderizando listas o conjuntos homogéneos de elementos que comparten el mismo tipo de etiqueta y estructura.
+
+        div.note 
+            div 
+                strong Array de elementos
+                | : Usarlo cuando los elementos comparten una estructura común o un patrón, como al renderizar listas o elementos repetidos que solo varían en contenido, pero tienen la misma etiqueta y formato.
+            br    
+            div Ejemplo: 
+                strong &lt;li&gt;
+                | , 
+                strong &lt;div&gt;
+                | , o cualquier etiqueta repetida en una lista.
+
+        h3 Caso de Fragment 
+        p Utilizamos 
+            strong React.Fragment
+            |   cuando queremos agrupar varios elementos heterogéneos (diferentes entre sí), sin introducir un contenedor innecesario en el DOM. Este es el caso cuando los elementos no siguen un mismo formato o estructura, pero necesitan estar agrupados bajo un solo retorno de renderizado.
+
+        p: strong Ejemplo:
+
+        p Supongamos que tienes un título y varios párrafos, que no están relacionados en cuanto a estructura, pero necesitas agruparlos para que React pueda renderizarlos juntos:    
+
+        div: pre: code.language-jsx 
+            |const app = (
+            |	&lt;Fragment&gt;
+            |		&lt;h1&gt;Título del artículo&lt;/h1&gt;
+            |		&lt;p&gt;Primer párrafo del artículo.&lt;/p&gt;
+            |		&lt;p&gt;Segundo párrafo con más detalles.&lt;/p&gt;
+            |	&lt;/Fragment&gt;
+            |)
+            |
+            |root.render(app)
+
+        p En este caso, 
+            strong React.Fragment
+            |   te permite agrupar un conjunto de elementos dispares como 
+            strong &lt;h1&gt;
+            |   y 
+            strong &lt;p&gt;
+            | , que no tienen un patrón común, pero deben estar juntos en el DOM sin añadir un elemento padre extra.
+
+        div.note
+            div 
+                strong React.Fragment
+                | : Usarlo cuando necesitas agrupar varios elementos de diferentes tipos o estructuras, pero no quieres añadir un contenedor extra al DOM. Es útil cuando los elementos no tienen una relación directa entre sí, pero deben ser retornados como una única entidad.
+            br 
+            div Ejemplo: 
+                strong &lt;h1&gt;
+                | , 
+                strong &lt;p&gt;
+                | , 
+                strong &lt;div&gt;
+                |    en conjunto, donde no es necesario un nodo padre adicional.        
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción '],[2,'Formas de renderizar multiples elementos'], [3,'React.Fragment'],[4,'Alternativa a React.Fragment < > </>'],[5,'Cuando utilizar React.Fragment y cuando un array']]
     +submenu(submenuLinks)

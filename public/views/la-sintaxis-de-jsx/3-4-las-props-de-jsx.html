@@ -344,18 +344,178 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>En <strong>HTML</strong> podemos añadir <strong>atributos</strong> a nuestras etiquetas para modificar su comportamiento por defecto, como agregar un atributo <strong>class a un </strong><strong>&lt;div&gt;</strong> para especificar su clase CSS o un <strong>onclick</strong> a un botón para añadirle un manejador de ese evento.</p>
+            <p class="ts-2">En <strong>JSX</strong> también podemos añadir estos atributos, solo que en lugar de llamarlos atributos, los llamaremos <strong>propiedades</strong> o, en su forma abreviada, <strong>props.</strong></p>
+            <p>Es importante saber que todos los atributos de HTML existen como props en JSX, pero su forma de escritura no es exactamente igual. Las <strong>props</strong> siguen una nomenclatura en <strong class="ts-4">camel case</strong>.</p>
+            <p>También es importante saber que cada uno de estos atributos (props) recibe su propio tipo de valor y no siempre es una cadena de texto (String). Algunas props solo aceptan ciertos tipos de valores, como es el caso de las props de tipo evento, que solo reciben como valor una función.</p>
+            <p>En este capítulo veremos cómo añadir estos <strong>atributos</strong> o <strong>props</strong> en <strong>JSX</strong>.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Atributos (props) Excepción Nomenclatura</h2>
+            <p>Como se mencionó al inicio, los atributos <strong>(props)</strong> en <strong>JSX</strong>, siguen la nomenclatura <strong>camel case</strong>, pero hay una exepción que solo es para las props <strong>aria-label</strong> y <strong>data-nombre</strong>.</p>
+            <div>
+              <pre><code class="language-jsx"> const app = &lt;div aria-label='Hola' data-id='123'&gt;&lt;/div&gt;   </code></pre>
+            </div>
+            <p>Estas son las únicas props que se mantienen igual que en HTML, el resto de las demás se mantienen en camel case.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Como pasar un valor a estas props</h2>
+            <p><strong class="ts-3">Strings</strong></p>
+            <p>Para pasar un valor como <strong>string</strong> no hace falta poner las llaves <strong>{}, </strong> y tenemos varias formas de pasar un string:</p>
+            <ul>
+              <li>
+                <p><strong>Utilizando comillas simples (<strong>'&nbsp;&nbsp;'</strong>)</strong></p>
+                <div>
+                  <pre><code class="language-jsx">       className='example'</code></pre>
+                </div>
+              </li>
+              <li>
+                <p><strong>Utilizando comillas dobles (<strong>"&nbsp;&nbsp;"</strong>)</strong></p>
+                <div>
+                  <pre><code class="language-jsx">       className="example"</code></pre>
+                </div>
+              </li>
+            </ul>
+            <p>En <strong>JavaScript</strong> podemos pasar un <strong>string</strong> con los <strong>template string (`&nbsp;&nbsp;`)</strong>, pero en <strong>JSX</strong> para poder pasar un string con template string (`&nbsp;&nbsp;`) necesitamos ponerlo entre llaves {}. </p>
+            <p>Si intentamos pasar un <strong>string</strong> con <strong>template string sin llaves {}</strong> obtendremos un error. </p><img src="../../assets/img/3-4-las-props-de-jsx/8.webp" alt="example">
+            <p>El error se debe a que, al utilizar un template string, este es una expresión que debe ser evaluada. Cuando usamos un template string, se espera interpolar un valor con <strong>${valor}</strong>. Por lo tanto, es necesario usar las llaves {} para que esa expresión pueda ser evaluada correctamente.</p><img src="../../assets/img/3-4-las-props-de-jsx/9.webp" alt="example">
+            <p class="note">Todo lo que sea <strong>expresión</strong> o todo lo que <strong>no</strong> sea un <strong>String</strong> debe ir encerrado entre llaves <strong>{}</strong>.</p>
+          </article>
+          <article class="content" id="4">
+            <h2>Atributos (props) Normales</h2>
+            <p>Miraremos una pequeña lista de algunas etiquetas HTML y su derivado en JSX.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Atributo HTML</th>
+                  <th>Prop en JSX</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>class</td>
+                  <td>className</td>
+                </tr>
+                <tr>
+                  <td>for</td>
+                  <td>htmlFor</td>
+                </tr>
+                <tr>
+                  <td>src</td>
+                  <td>src</td>
+                </tr>
+                <tr>
+                  <td>tabindex</td>
+                  <td>tabIndex</td>
+                </tr>
+                <tr>
+                  <td>maxlength</td>
+                  <td>maxLength </td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Notas:</strong></p>
+            <p>En <strong>JSX</strong>, los atributos que son palabras reservadas en JavaScript, como <strong>class</strong> y <strong>for</strong>, se renombraron a <strong>className </strong> y <strong>htmlFor</strong>. </p>
+          </article>
+          <article class="content" id="5">
+            <h2>Atributos (props) Boleanos</h2>
+            <p>Estos atributos son verdaderos si están presentes y falsos si no lo están.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Atributo HTML </th>
+                  <th>Prop en JSX</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>readonly</td>
+                  <td>readOnly</td>
+                </tr>
+                <tr>
+                  <td>autofocus</td>
+                  <td>autoFocus</td>
+                </tr>
+                <tr>
+                  <td>checked</td>
+                  <td>checked</td>
+                </tr>
+                <tr>
+                  <td>disabled</td>
+                  <td>disabled</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Ya sabemos que un <strong>booleano</strong>, por defecto, es <strong>true</strong>, y si deseamos cambiar su valor, lo especificamos como false. Como vimos anteriormente, todo lo que no sea una cadena de texto debe ir entre llaves {}. </p><img class="has-mb" src="../../assets/img/3-4-las-props-de-jsx/10.webp" alt="example">
+          </article>
+          <article class="content" id="6">
+            <h2>Atributos (props) Eventos </h2>
+            <p>En JSX, los atributos de eventos siempre recibirán una <strong>función</strong>, ya sea como un <strong>handler</strong> o como como una <strong>función definida directamente</strong>.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Atributo HTML </th>
+                  <th>Prop en JSX</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>onclick</td>
+                  <td>onClick</td>
+                </tr>
+                <tr>
+                  <td>onchange</td>
+                  <td>onChange</td>
+                </tr>
+                <tr>
+                  <td>onfocus</td>
+                  <td>onFocus</td>
+                </tr>
+                <tr>
+                  <td>onblur</td>
+                  <td>onBlur</td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong class="ts-3">Ejemplo: Valor erroneo </strong></p>
+            <p>Como se explicó, los atributos de eventos reciben una función, y si pasamos algo diferente nos devolverá un error.</p><img class="has-mb" src="../../assets/img/3-4-las-props-de-jsx/1.webp" alt="example"><img class="img-md" src="../../assets/img/3-4-las-props-de-jsx/2.webp" alt="example">
+            <p>Al dar click al botón, nos dará un error.</p>
+            <figure> <img src="../../assets/img/3-4-las-props-de-jsx/3.webp" alt="example">
+              <figcaption>Al enviar algo que no es una función, como un string, nos devuelve un error.</figcaption>
+            </figure>
+            <p><strong class="ts-3">Ejemplo: Función handle </strong></p>
+            <p>Un <strong>handler</strong> debe ser una función que se ejecuta en respuesta a un evento, su uso común es pasarla como <strong>callback</strong>.</p><img src="../../assets/img/3-4-las-props-de-jsx/4.webp" alt="example">
+            <p>Al dar click al boton, se ejecutará el <strong>handle</strong>.</p><img class="has-mb img-md" src="../../assets/img/3-4-las-props-de-jsx/2.webp" alt="example"><img class="img-md" src="../../assets/img/3-4-las-props-de-jsx/5.webp" alt="example">
+            <p>Es el uso más comun de utilizar los eventos, utilizando funciones handle.</p>
+            <p>Pero tambien existe la manera de establecer la función y su cuerpo dentro del mismo evento, pero no es tan mantenible.</p>
+            <p><strong class="ts-3">Ejemplo: Función definida directamente</strong></p>
+            <p>Nos referimos a una función definida directamente cuando la establecemos dentro del evento. Sin embargo, es importante entender la diferencia entre cuando queremos que esa función actúe como un <strong>handler</strong> (es decir, que se active al ocurrir el evento) o que se ejecute inmediatamente. Casi siempre queremos que la función se active solo cuando el usuario interactúe.</p>
+            <p><strong>Ejemplo: Función ejecutada inmediatamente - Poco común de utilizar</strong></p><img src="../../assets/img/3-4-las-props-de-jsx/6.webp" alt="example">
+            <p>La función se ejecuta inmediatamente.</p><img src="../../assets/img/3-4-las-props-de-jsx/5.webp" alt="example">
+            <p><strong>Ejemplo: Función handle definida directamente </strong></p><img src="../../assets/img/3-4-las-props-de-jsx/7.webp" alt="example">
+            <p>Se ejecuta solo al dar click al botón.</p><img src="../../assets/img/3-4-las-props-de-jsx/5.webp" alt="example">
+            <p>Como mencionamos anteriormente, la forma más común de utilizar las funciones, es pasarlas como callbacks en lugar de definirlas directamente en el evento.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Atributos (props) Excepción Nomenclatura</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Como pasar un valor a estas props</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Atributos (props) clásicos</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Atributos (props) Boleanos</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#6">Atributos (props) Eventos</a></li>
           </ul>
         </nav>
       </section>

@@ -5,13 +5,229 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+        p En este capítulo aprenderemos agregar valores por defecto de manera correcta a etiquetas que pertenecen a un formulario.
+
+        p En 
+            strong JSX
+            |   la manera de establecer valores por defecto es diferente a como se hace en 
+            strong HTML.
+
+        p A continuación aprenderemos a lograr esto.    
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Error al definir valores por defecto igual que en HTML
+
+        p Como se mencionó en la introducción, la manera de definir valores por defecto se maneja diferente en JSX, así que primeramente miraremos lo que pasa cuando establecemos un valor por defecto como se hace en HTML.
+
+        p A continuación tomaremos como ejemplo la etiqueta 
+            strong input de tipo texto
+            | .
+
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/1.webp" alt="example")
+
+        p Nos devuelve un error diciendo que 
+            strong hemos proporcionado un value sin pasarle un onChange
+            | . 
+
+        p Lo que provoca este error es que si intentamos cambiar el valor desde el 
+            strong input
+            |   no se modificará nunca, ya que se ha convertido en un 
+            strong readOnly.     
+
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/2.webp" alt="example")
+
+        p Con JSX tenemos que ocupar la palabra 
+            strong default
+            |   seguido del nombre del atributo para indicarle que será un valor por defecto.
+
+        div: pre: code.language-JSX    
+            | /* Sintaxis
+            |    defaultValue-Checked='Valor por defecto'
+            | */
+            |
+            |defaultValue = 'Defecto'
+
+        p Quizás te preguntes porque sea convertido en 
+            strong readOnly, pues a continuación lo explicaremos.    
+
+
+    article(id="3" class="content")
+        h2 ¿Por qué se convierte en readOnly al establecer un valor por defecto como en HTML?
+
+        p Pues justamente debemos de entender un concepto que es propio de 
+            strong JavaScript
+            |   de la Api del DOM.
+
+        p Para entender este concepto, miraremos la explicación sin utilizar React, lo haremos todo desde el navegador.    
+
+        p Primeramente quitamos del código el valor por defecto que le habiamos puesto al input.
+
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/3.webp" alt="example")
+
+        p Nos dirigimos al navegador y desde las dev tools agregamos el valor por defecto como se hace normalmente en HTML.
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/4.webp" alt="example")
+
+        p Ahora modificaremos el valor del input dejandolo vacio (aquí si se puede modificar porque no estamos utilizando JSX), y miraremos que el valor por defecto que agregamos desde las dev tools, se mantiene igual, nunca cambia.
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/5.webp" alt="example")
+
+        p El valor que establecimos por defecto no se modifica al nuevo valor que contiene el input, porque nosotros establecimos el valor inicial y este atributo (value) siempre guardará el valor inicial que le demos por defecto, y no se actualizará con los cambios actuales.
+
+        p.ts-2 Lo que acabamos de explicar puede parecer confuso, pero debemos saber que 
+            strong hay propiedades que sus valores son diferentes al de los atributos
+            | .
+
+        p Hay que entender la diferencias entre propiedades y atributos, miremos lo siguiente.
+
+        p Desde la consola del navegador, seleccionamos nuestro input. 
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/6.webp" alt="example")
+        p Si nosotros accedemos al valor del input, este nos devolverá el valor actual que contiene, en este caso una cadena vacia (" ").
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/7.webp" alt="example")
+
+        p Pero si ahora, accedemos al valor del atributo, este nos devolverá el valor por defecto que habiamos establecido.
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/8.webp" alt="example")
+
+        p A esto nos referiamos cuando explicamos que hay propiedades que sus valores son diferentes al de los atributos.
+
+        p Sin embargo hay propiedades que devuelven lo mismo que los atributos, pero esto no pasa con todas las propieades, como lo es en este caso.   
+
+        p Entonces cuando ocupamos 
+            code input.value
+            |   estamos trabajando con 
+            strong propiedades
+            |   y cuando utilizamos 
+            code input.getAttribute('value')
+            |   estamos acediendo al atributo.
+
+
+        p Miremos atributos vs propiedades para entender mucho mejor.
+
+        ul 
+            li 
+                p 
+                    strong Atributo (getAttribute('value'))
+                    | : Son los valores iniciales que se declaran en el HTML y no cambian una vez que el elemento ha sido renderizado. El atributo define el valor "inicial" del input cuando se carga la página. 
+
+            li 
+                p 
+                    strong Propiedad (input.value)
+                    | : Es el valor que representa el estado actual del elemento en el DOM. Este valor puede cambiar dinámicamente después de que el elemento ha sido renderizado.           
+
+        p.ts-4 De tal manera cuando nosotros trabajamos con React, y asignamos un valor por defecto como en HTML 
+            code value:'Defecto'
+            | , lo que estamos haciendo es 
+            strong asignar la propiedad con su valor actual 
+            |  y 
+            strong no un un atributo con un valor inicial 
+            | . Entonces como la propiedad ya está asignada con su valor, nunca vamos a poder cambiar su valor, ya que ya está asignado, es decir lo estamos convirtiendo a 
+            strong readOnly
+            | .
+
+        p Veamos una conclusión mas técnica:
+        p.ts-4 Por lo tanto, cuando asignamos un valor con 
+            strong value
+            |   en React, estamos asignando directamente la propiedad, lo que convierte al input en un 
+            strong componente controlado
+            | . Para permitir que el valor se pueda modificar sin la intervención de React, usamos 
+            strong defaultValue
+            |   para que funcione como un valor inicial, pero sin controlar el estado a través de React.
+
+    article(id="4" class="content")
+        h2 Establecer valores por defecto de manera correcta
+
+        p Ahora mostraremos la manera correcta de establecer valores por defecto en las etiquetas de un formulario, utilizando 
+            strong defaultValue
+            |   y 
+            strong defaultChecked
+            | .
+
+        h3 Input text 
+        p Si ahora cambiamos  
+            strong value
+            |   por 
+            strong defaultValue
+            |   estaremos 
+            strong seteando
+            |   el valor por defecto y no una propiedad directamente.
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/9.webp" alt="example")
+
+        p Si ahora en la consola accedemos al valor de la propiedad value, y al valor del atributo value, nos devolverá el mismo valor, ya que no hemos modificado el input, estará todo normal.
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/10.webp" alt="example")
+        p Como ya estamos utilizando 
+            strong defaultValue
+            |   ahora si nos dejará modificar el valor del input, cambiaremos el valor dejando solo la letra D.
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/11.webp" alt="example")
+
+        p Si volvemos acceder al valor de la propiedad value y al valor del atributo value, miraremos que el valor actual de la propiedad será el actual y el valor del atributo, como habiamos mencionado nunca cambiará, siempre será el valor inicial.
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/12.webp" alt="example")
+
+        p Esta es la manera correcta de establecer un valor por defecto para un 
+            strong input text.
+
+        p Más adelante miraremos para que sirve el 
+            strong value
+            |   porque tiene una utilidad increible y no está hecho así porque sí.
+
+        h3 Input checbox 
+
+        p Tiene una opción parecida al input text pero con la propiedad 
+            strong checked
+            |  . 
+
+        p Si la establecemos igual que en HTML, obtendremos el mismo resultado que con el input text, solo que aquí no nos dejará desmarcar la casilla.      
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/14.webp" alt="example").has-mb
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/13.webp" alt="example")
+
+        p De igual manera tenemos que ocupar 
+            strong defaultChecked
+            |   para que se pueda desmarcar la casilla.
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/15.webp" alt="example")
+
+        h3 Select 
+        p Esta etiqueta si que funciona bastante distinto a lo que tenemos actualmente.
+
+        p La manera tradicional de establecer un valor por defecto de un 
+            strong select
+            |   en HTML, es poniendo el atributo 
+            strong selected
+            |   a una de las opciones.
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/16.webp" alt="example")
+
+        p Entonces en JSX no deberiamos utilizar 
+            strong selected
+            |   para establecer una opción por defecto, sino que debemos utilizar 
+            strong defaultValue
+            | . 
+
+        p Esto se debe a que React a hecho su API tratando los 
+            strong select
+            |   como 
+            strong input
+            | .     
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/17.webp" alt="example")
+
+        h3 Textarea 
+
+        p La manera en que establecemos un valor por defecto en un 
+            strong textarea
+            |   en HTML, es pasarlo como children: 
+
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/18.webp" alt="example")
+
+        p Como podemos ver nos devuelve un error, nos devuelve un warning.
+
+        p Para los 
+            strong textarea
+            |   en lugar de pasar el valor por defecto como un children, decidieron pasar el valor por defecto como si fuese un 
+            strong input text
+            | , es decir pasarlo como un atributo con 
+            strong defaultValue
+            | .
+
+        img(src="../../assets/img/3-7-defaultvalue-y-defaultchecked/19.webp" alt="example")
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Error al definir valores por defecto igual que en HTML'],[3,'¿Por qué se convierte en readOnly al establecer un valor por defecto como en HTML?'],[4,'Establecer valores por defecto de manera correcta']]
     +submenu(submenuLinks)

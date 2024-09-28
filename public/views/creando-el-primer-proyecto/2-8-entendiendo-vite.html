@@ -350,7 +350,7 @@
             <p>Eliminamos el contenido del archivo <strong>main.jsx</strong> para poder recrearlo desde cero y entender como funciona.</p><img src="../../assets/img/2-8-entendiendo-vite/2.webp" alt="example">
             <p>Ahora empezaremos por crear un H1 en nuestro <strong>main.jsx</strong></p>
             <div class="has-mb">
-              <pre><code class="language-jsx"> import ReactDOM from 'react-dom'
+              <pre><code class="language-jsx"> import ReactDOM from 'react-dom/client'
 
 const container = document.getElementById('root')
 const root = ReactDOM.createRoot(container)
@@ -406,7 +406,7 @@ root.render(h1)</code></pre>
             </div>
             <p>Ahora desde nuestro <strong>main.jsx </strong> importaremos nuestros estilos. </p>
             <div>
-              <pre><code class="language-jsx">import ReactDOM from 'react-dom'
+              <pre><code class="language-jsx">import ReactDOM from 'react-dom/client'
 //Importamos el css
 import './index.css'
 
@@ -423,7 +423,7 @@ root.render(h1)</code></pre>
             <p>Todo lo que hemos visto hasta ahora funciona exactamente en <strong>desarrollo</strong> como en <strong>producción</strong>, pero veremos uno de los casos donde esto no es así, y es una de las mayores fuentes de dudas que se suele tener con <strong>Vite</strong>. </p>
             <p>Intentaremos cargar una imagen.</p>
             <div>
-              <pre><code class="language-jsx">import ReactDOM from 'react-dom'
+              <pre><code class="language-jsx">import ReactDOM from 'react-dom/client'
 import './index.css'
 
 const container = document.getElementById('root')

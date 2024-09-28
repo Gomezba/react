@@ -5,13 +5,134 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
 
+        p En este capítulo miraremos porque usamos 
+            strong className
+            |   en lugar de 
+            strong class 
+            |   y 
+            strong htmlFor
+            |   en lugar de 
+            strong for
+            | .
+
+        p En el capítulo de 
+            a(href="./3-4-las-props-de-jsx.html#4" target="_blank").link  las props de JSX
+            |   habiamos mencionado que en JSX, las props que son palabras reservadas en JavaScript, como class y for, se renombraron a 
+            strong className
+            |   y 
+            strong htmlFor
+            | .
+
+        p Es importante saber que estas props, son las 2 únicas palabras reservadas que coinciden con HTML.
+
+        p A continuación explicaremos más detalladamente estas props.    
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 ¿Por que className y no class?
 
+        p Primero debemos saber, ¿Qué tiene de especial la palabra 
+            strong class
+            |   en 
+            strong JavaScript
+            | ?, pues que class en JS es una palabra reservada, y por lo tanto no podemos nombrar una variable con ese nombre, y como 
+            strong JSX
+            |   es 
+            strong JavaScript
+            | , no debemos poner como nombres de 
+            strong props
+            | , palabras reservadas.
+
+        p Las 
+            strong props
+            |   son simplemente propiedades de un 
+            strong objeto
+            |   en 
+            strong JavaScript
+            | , y no hay ningún error técnico en llamar a una propiedad class.
+
+        p: strong Ejemplo: 
+
+        img(src="../../assets/img/3-6-classname-y-htmlfor/1.webp" alt="example") 
+
+        p El problema viene cuando queremos usar la sintaxis de destructuring, miraremos primeramente desestructurando nuestro objeto 
+            strong props
+            |   con la propiedad 
+            strong className
+            |   con la cúal no habrá ningun problema. 
+        img(src="../../assets/img/3-6-classname-y-htmlfor/2.webp" alt="example")
+
+        p Pero si queremos desestructurar el objeto con la palabra 
+            strong class
+            | , aquí si habrá problema, ya que 
+            strong class
+            |   es una palabra reservada para 
+            strong JavaScript.
+
+        p Recordemos que cuando hacemos destructuring en realidad estamos creando variables y no podemos crear variables con nombres de palabras reservadas.
+
+        p Lo mismo ocurre en 
+            strong JSX
+            | , que es esencialmente 
+            strong JavaScript
+            | . Cada elemento 
+            strong JSX
+            |   es un 
+            strong objeto
+            | , y sus atributos son propiedades de ese objeto. Al intentar usar una palabra reservada como 
+            strong class
+            |   en 
+            strong JSX
+            | , entramos en conflicto con las reglas de 
+            strong JavaScript
+            | , ya que class es una palabra clave utilizada para declarar clases.
+
+        img(src="../../assets/img/3-6-classname-y-htmlfor/3.webp" alt="example")
+
+        p Entonces nos vemos obligados a utilizar un alias para cambiarle el nombre a la propiedad class que desestructuramos del objeto. 
+        img(src="../../assets/img/3-6-classname-y-htmlfor/4.webp" alt="example")
+
+        p Entonces para evitar esto, tanto en la Api del DOM de JavaScript como en muchos otros sitios, cuando tenemos que nombrar algo con una palabra reservada, lo que hacemos es alterar ese nombre y ponerle en ese caso 
+            strong className
+            |   y es por eso que se llama 
+            strong className
+            |   en lugar de 
+            strong class
+            | . 
+
+
+    article(id="3" class="content")
+        h2 ¿Por que htmlFor y no for?
+        p Lo mismo que sucede con 
+            strong className
+            |   sucede con 
+            strong htmlFor
+            |   de la etiqueta 
+            strong label
+            |   de un formulario.
+
+        p Crearemos un pequeño formulario utilizando 
+            strong for
+            |   en lugar de 
+            strong htmlFor
+            | .      
+        img(src="../../assets/img/3-6-classname-y-htmlfor/5.webp" alt="example")
+
+        p Podemos ver que funciona, ya que al dar click sobre el 
+            strong label
+            |   nos pone el 
+            strong foco
+            |   sobre el 
+            strong input
+            | , pero nos muestra un warning diciendonos que debemos utilizar 
+            strong htmlFor
+            | .
+        p Lo que haremos es utilizar 
+            strong htmlFor
+            |   para evitar el conflicto.
+        img(src="../../assets/img/3-6-classname-y-htmlfor/6.webp" alt="example")
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'¿Por que className y no class?'],[3,'¿Por que htmlFor y no for?']]
     +submenu(submenuLinks)

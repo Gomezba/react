@@ -340,22 +340,131 @@
       </nav>
     </header>
     <main class="container main" id="main">
-      <h1>React fragment</h1>
+      <h1>React Fragment</h1>
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>Ya sabemos lo que es una etiqueta <strong>JSX</strong> y que se termina convirtiendo en un <strong>objeto de JavaScript</strong> y esta es la razón evidentemente por la que se puede almacenar en una variable, pero que pasa cuando intentamos almacenar múltiples etiquetas dentro de una misma variable.</p>
+            <p>Estaremos viendo distintas maneras de renderizar múltiples elementos.</p>
+            <p>Pero, primero debemos de saber que el método <code>root.render()</code> solo es capáz de <strong>renderizar un solo elemento a la vez</strong>, solo puede recibir un argumento.</p>
+            <div>
+              <pre><code class="language-jsx">root.render(elemento1, elemento2, elemento 3) // ✖️ Esto no es posible</code></pre>
+            </div>
+            <p>¿Como podemos renderizar múltiples elementos?, lo veremos en seguida.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Formas de renderizar multiples elementos </h2>
+            <h3>Etiqueta contenedora </h3>
+            <p>Podemos tener una etiqueta contenedora que tendrá sus hijos dentro, esto ya lo habiamos visto en capitulos anteriores.</p>
+            <div>
+              <pre><code class="language-jsx">const app = (
+	&lt;div&gt;
+		&lt;h1&gt;Bienvenido al curso de React&lt;/h1&gt;
+		&lt;p&gt;Bienvenido al curso&lt;/p&gt;
+	&lt;/div&gt;
+)
+
+root.render(app)</code></pre>
+            </div>
+            <h3>Un array de elementos</h3>
+            <p>En el capítulo anterior habiamos mencionado que podemos tener un array de elementos y nos sirve para renderizar múltiples elementos.</p>
+            <figure> <img src="../../assets/img/3-3-react-Fragment/1.webp" alt="example">
+              <figcaption>Tenemos un error de la prop "Key" que miraremos en otro capítulo.</figcaption>
+            </figure>
+            <p>Ahora, puede que quizás no quieras renderizar un simple <strong>&lt;div&gt;</strong> como contenedor para unos simples elementos.</p>
+            <p>Para este caso React, nos ofrece <strong>React.Fragment</strong>.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>React.Fragment</h2>
+            <p> <code>React.Fragment</code> es un <strong>componente especial en React</strong> que permite agrupar múltiples elementos hijos sin agregar un nodo adicional al DOM. Esto es útil cuando necesitas devolver varios elementos sin introducir contenedores innecesarios, evitando que se refleje un elemento padre extra en la estructura del DOM.</p>
+            <div>
+              <pre><code class="language-jsx"> import { Fragment } from 'react' // Necesitamos importar Fragment para utilizarlo    
+const app = (
+	&lt;Fragment&gt;
+		&lt;h1&gt;Bienvenido al curso de React&lt;/h1&gt;
+		&lt;p&gt;Bienvenido al curso&lt;/p&gt;
+	&lt;/Fragment&gt;
+)
+
+root.render(app)</code></pre>
+            </div>
+            <p>De esta manera con <strong>React.Fragment</strong> evitamos agregar etiquetas contenedoras innecesarias al DOM, pero tenemos que estar importando y esto es un poco tedioso. Para eso React nos ofrece una alternativa.</p>
+          </article>
+          <article class="content" id="4">
+            <h2>Alternativa a React.Fragment &lt; &gt;&nbsp;&lt; /&gt; </h2>
+            <p>Para seguir utilizando React.Fragment pero sin estar importando nada, React nos ofrece utilizar una etiqueta vacía <strong class="ts-1">&lt; &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt; /&gt;</strong>. </p>
+            <div>
+              <pre><code class="language-jsx">   const app = (
+	&lt;&gt;
+		&lt;h1&gt;Bienvenido al curso de React&lt;/h1&gt;
+		&lt;p&gt;Bienvenido al curso&lt;/p&gt;
+	&lt;/&gt;
+)
+
+root.render(app)     </code></pre>
+            </div>
+            <p>Puede que nos preguntemos cuando utilizamos <strong>Fragment</strong> y cuando un <strong>array</strong> para renderizar múltiples elementos, pues a continuación lo veremos. </p>
+          </article>
+          <article class="content" id="5">
+            <h2>Cuando utilizar React.Fragment y cuando un array</h2>
+            <h3>Caso de Array</h3>
+            <p>Utilizamos un array cuando los elementos tienen similitud o un patrón común entre ellos. Esto significa que comparten la misma estructura o el mismo formato, como cuando se mapea una lista de datos para generar un conjunto de elementos repetidos, pero con contenido diferente.</p>
+            <p><strong>Ejemplo:</strong></p>
+            <p>Imagina que tienes una lista de nombres y quieres renderizarlos como elementos <strong>&lt;li&gt;</strong>. Cada uno de estos elementos es similar (todos son <strong>&lt;li&gt;</strong>) pero su contenido es diferente:</p>
+            <div>
+              <pre><code class="language-jsx"> const nombres = ['Ana', 'Carlos', 'Luisa']
+
+//Nos seguirá mostrando el error de Key prop
+const listaNombres = nombres.map((nombre) => &lt;li&gt;{nombre}&lt;/li&gt;) // Missing "key" prop for element in iterator
+
+const app = &lt;ul&gt;{listaNombres}&lt;/ul&gt;
+
+root.render(app)</code></pre>
+            </div>
+            <p>En este caso, usar un array de elementos es lo más apropiado porque cada elemento sigue el mismo patrón: <strong>&lt;li&gt;</strong> con un texto dentro.</p>
+            <p>Este enfoque es ideal cuando estás renderizando listas o conjuntos homogéneos de elementos que comparten el mismo tipo de etiqueta y estructura.</p>
+            <div class="note">
+              <div> <strong>Array de elementos</strong>: Usarlo cuando los elementos comparten una estructura común o un patrón, como al renderizar listas o elementos repetidos que solo varían en contenido, pero tienen la misma etiqueta y formato.</div><br>
+              <div>Ejemplo: <strong>&lt;li&gt;</strong>, <strong>&lt;div&gt;</strong>, o cualquier etiqueta repetida en una lista.</div>
+            </div>
+            <h3>Caso de Fragment </h3>
+            <p>Utilizamos <strong>React.Fragment</strong> cuando queremos agrupar varios elementos heterogéneos (diferentes entre sí), sin introducir un contenedor innecesario en el DOM. Este es el caso cuando los elementos no siguen un mismo formato o estructura, pero necesitan estar agrupados bajo un solo retorno de renderizado.</p>
+            <p><strong>Ejemplo:</strong></p>
+            <p>Supongamos que tienes un título y varios párrafos, que no están relacionados en cuanto a estructura, pero necesitas agruparlos para que React pueda renderizarlos juntos: </p>
+            <div>
+              <pre><code class="language-jsx"> const app = (
+	&lt;Fragment&gt;
+		&lt;h1&gt;Título del artículo&lt;/h1&gt;
+		&lt;p&gt;Primer párrafo del artículo.&lt;/p&gt;
+		&lt;p&gt;Segundo párrafo con más detalles.&lt;/p&gt;
+	&lt;/Fragment&gt;
+)
+
+root.render(app)</code></pre>
+            </div>
+            <p>En este caso, <strong>React.Fragment</strong> te permite agrupar un conjunto de elementos dispares como <strong>&lt;h1&gt;</strong> y <strong>&lt;p&gt;</strong>, que no tienen un patrón común, pero deben estar juntos en el DOM sin añadir un elemento padre extra.</p>
+            <div class="note">
+              <div> <strong>React.Fragment</strong>: Usarlo cuando necesitas agrupar varios elementos de diferentes tipos o estructuras, pero no quieres añadir un contenedor extra al DOM. Es útil cuando los elementos no tienen una relación directa entre sí, pero deben ser retornados como una única entidad.</div><br>
+              <div>Ejemplo: <strong>&lt;h1&gt;</strong>, <strong>&lt;p&gt;</strong>, <strong>&lt;div&gt;</strong> en conjunto, donde no es necesario un nodo padre adicional. </div>
+            </div>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción </a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Formas de renderizar multiples elementos</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">React.Fragment</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Alternativa a React.Fragment &lt; &gt; &lt;/&gt;</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Cuando utilizar React.Fragment y cuando un array</a></li>
           </ul>
         </nav>
       </section>

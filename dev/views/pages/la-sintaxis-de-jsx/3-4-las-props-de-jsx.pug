@@ -5,13 +5,258 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+        p En 
+            strong HTML
+            |   podemos añadir 
+            strong atributos
+            |   a nuestras etiquetas para modificar su comportamiento por defecto, como agregar un atributo 
+            strong class a un 
+            strong &lt;div&gt;
+            |   para especificar su clase CSS o un 
+            strong onclick
+            |   a un botón para añadirle un manejador de ese evento.
 
+        p.ts-2 En 
+            strong JSX
+            |   también podemos añadir estos atributos, solo que en lugar de llamarlos atributos, los llamaremos 
+            strong propiedades
+            |   o, en su forma abreviada, 
+            strong props.
+
+        p Es importante saber que todos los atributos de HTML existen como props en JSX, pero su forma de escritura no es exactamente igual. Las 
+            strong props
+            |   siguen una nomenclatura en 
+            strong.ts-4 camel case
+            | .
+
+        p También es importante saber que cada uno de estos atributos (props) recibe su propio tipo de valor y no siempre es una cadena de texto (String). Algunas props solo aceptan ciertos tipos de valores, como es el caso de las props de tipo evento, que solo reciben como valor una función.
+
+        p En este capítulo veremos cómo añadir estos 
+            strong atributos
+            |   o 
+            strong props
+            |   en 
+            strong JSX
+            | .
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Atributos (props) Excepción Nomenclatura
 
+        p Como se mencionó al inicio, los atributos 
+            strong (props)
+            |   en 
+            strong JSX
+            | , siguen la nomenclatura 
+            strong camel case
+            | , pero hay una exepción que solo es para las props 
+            strong aria-label
+            |   y 
+            strong data-nombre
+            | .
+
+        div: pre: code.language-jsx 
+            |const app = &lt;div aria-label='Hola' data-id='123'&gt;&lt;/div&gt;   
+
+        p Estas son las únicas props que se mantienen igual que en HTML, el resto de las demás se mantienen en camel case.
+
+    article(id="3" class="content")
+        h2 Como pasar un valor a estas props
+
+        p: strong.ts-3 Strings
+        p Para pasar un valor como 
+            strong string
+            |   no hace falta poner las llaves 
+            strong {}, 
+            |   y tenemos varias formas de pasar un string:
+
+        ul 
+            li 
+                p: strong Utilizando comillas simples (
+                    strong '&nbsp;&nbsp;'
+                    | )
+                div: pre: code.language-jsx        
+                    |className='example'
+            li 
+                p: strong Utilizando comillas dobles (
+                    strong "&nbsp;&nbsp;"
+                    | )
+                div: pre: code.language-jsx        
+                    |className="example"
+
+        p En 
+            strong JavaScript
+            |   podemos pasar un 
+            strong string
+            |   con los 
+            strong template string (`&nbsp;&nbsp;`)
+            | , pero en 
+            strong JSX
+            |   para poder pasar un string con template string (`&nbsp;&nbsp;`) necesitamos ponerlo entre llaves {}.  
+
+        p Si intentamos pasar un 
+            strong string
+            |   con 
+            strong template string sin llaves {}
+            |   obtendremos un error.              
+        img(src="../../assets/img/3-4-las-props-de-jsx/8.webp" alt="example") 
+
+        p El error se debe a que, al utilizar un template string, este es una expresión que debe ser evaluada. Cuando usamos un template string, se espera interpolar un valor con 
+            strong ${valor}
+            | . Por lo tanto, es necesario usar las llaves {} para que esa expresión pueda ser evaluada correctamente.
+        img(src="../../assets/img/3-4-las-props-de-jsx/9.webp" alt="example") 
+
+        p.note Todo lo que sea 
+            strong expresión
+            |   o todo lo que  
+            strong no
+            |   sea un 
+            strong String
+            |   debe ir encerrado entre llaves 
+            strong {}
+            | .
+
+    article(id="4" class="content")
+        h2 Atributos (props) Normales
+        p Miraremos una pequeña lista de algunas etiquetas HTML y su derivado en JSX.
+        table
+            thead 
+                tr 
+                    th Atributo HTML
+                    th Prop en JSX
+            tbody 
+                tr 
+                    td class
+                    td className
+                tr  
+                    td for
+                    td htmlFor
+                tr
+                    td src
+                    td src
+                tr 
+                    td tabindex
+                    td tabIndex
+
+                tr 
+                    td maxlength
+                    td maxLength    
+
+        p: strong Notas:
+        p En 
+            strong JSX
+            | , los atributos que son palabras reservadas en JavaScript, como 
+            strong class
+            |   y 
+            strong for
+            | , se renombraron a 
+            strong className 
+            |   y 
+            strong htmlFor
+            | .                        
+
+    article(id="5" class="content")
+        h2 Atributos (props) Boleanos
+        p Estos atributos son verdaderos si están presentes y falsos si no lo están.
+
+        table 
+            thead 
+                tr 
+                    th Atributo HTML 
+                    th Prop en JSX
+            tbody 
+                tr 
+                    td readonly
+                    td readOnly
+                tr 
+                    td autofocus
+                    td autoFocus
+                tr 
+                    td checked
+                    td checked
+                tr 
+                    td disabled
+                    td disabled
+
+        p Ya sabemos que un 
+            strong booleano
+            | , por defecto, es 
+            strong true
+            | , y si deseamos cambiar su valor, lo especificamos como false. Como vimos anteriormente, todo lo que no sea una cadena de texto debe ir entre llaves {}.       
+        img(src="../../assets/img/3-4-las-props-de-jsx/10.webp" alt="example").has-mb
+
+    article(id="6" class="content")
+        h2 Atributos (props) Eventos   
+
+        p En JSX, los atributos de eventos siempre recibirán una 
+            strong función
+            | , ya sea como un 
+            strong handler
+            |   o como como una 
+            strong función definida directamente
+            | .
+
+        table 
+            thead 
+                tr 
+                    th Atributo HTML 
+                    th Prop en JSX
+            tbody 
+                tr 
+                    td onclick
+                    td onClick
+                tr 
+                    td onchange
+                    td onChange
+                tr 
+                    td onfocus
+                    td onFocus
+                tr 
+                    td onblur
+                    td onBlur
+
+        p: strong.ts-3 Ejemplo: Valor erroneo 
+        p Como se explicó, los atributos de eventos reciben una función, y si pasamos algo diferente nos devolverá un error.
+        img(src="../../assets/img/3-4-las-props-de-jsx/1.webp" alt="example").has-mb 
+        img(src="../../assets/img/3-4-las-props-de-jsx/2.webp" alt="example").img-md
+
+        p Al dar click al botón, nos dará un error.
+        figure 
+            img(src="../../assets/img/3-4-las-props-de-jsx/3.webp" alt="example") 
+            figcaption Al enviar algo que no es una función, como un string, nos devuelve un error.
+
+        p: strong.ts-3 Ejemplo: Función handle 
+        p Un 
+            strong handler
+            |   debe ser una función que se ejecuta en respuesta a un evento, su uso común es pasarla como 
+            strong callback
+            | .
+        img(src="../../assets/img/3-4-las-props-de-jsx/4.webp" alt="example") 
+        p Al dar click al boton, se ejecutará el 
+            strong handle
+            | .
+        img(src="../../assets/img/3-4-las-props-de-jsx/2.webp" alt="example").has-mb.img-md
+        img(src="../../assets/img/3-4-las-props-de-jsx/5.webp" alt="example").img-md
+
+        p Es el uso más comun de utilizar los eventos, utilizando funciones handle.
+        p Pero tambien existe la manera de establecer la función y su cuerpo dentro del mismo evento, pero no es tan mantenible.
+
+        p: strong.ts-3 Ejemplo: Función definida directamente
+        p Nos referimos a una función definida directamente cuando la establecemos dentro del evento. Sin embargo, es importante entender la diferencia entre cuando queremos que esa función actúe como un 
+            strong handler
+            |   (es decir, que se active al ocurrir el evento) o que se ejecute inmediatamente. Casi siempre queremos que la función se active solo cuando el usuario interactúe.
+
+        p: strong Ejemplo: Función ejecutada inmediatamente - Poco común de utilizar
+        img(src="../../assets/img/3-4-las-props-de-jsx/6.webp" alt="example") 
+        p La función se ejecuta inmediatamente.
+        img(src="../../assets/img/3-4-las-props-de-jsx/5.webp" alt="example") 
+        p: strong Ejemplo: Función handle definida directamente 
+        img(src="../../assets/img/3-4-las-props-de-jsx/7.webp" alt="example") 
+        p Se ejecuta solo al dar click al botón.
+        img(src="../../assets/img/3-4-las-props-de-jsx/5.webp" alt="example") 
+
+        p Como mencionamos anteriormente, la forma más común de utilizar las funciones, es pasarlas como callbacks en lugar de definirlas directamente en el evento.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Atributos (props) Excepción Nomenclatura'],[3,'Como pasar un valor a estas props'],[4,'Atributos (props) clásicos'],[5,'Atributos (props) Boleanos'],[6,'Atributos (props) Eventos']]
     +submenu(submenuLinks)

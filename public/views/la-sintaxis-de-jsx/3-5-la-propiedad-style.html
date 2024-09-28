@@ -344,18 +344,76 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>En este capítulo miraremos una de las propiedades especiales en <strong>JSX</strong>, que es <strong>style</strong>, su atributo <strong>HTML</strong> correspondiente se llama de la misma manera y nos sirve para añadir nuestros estilos en línea a nuestros componentes.</p>
+            <p>En <strong>HTML</strong>, el valor de este atributo es una cadena de texto (<strong>string </strong>) con el CSS que queremos aplicar a la etiqueta, pero en <strong>JSX</strong> funciona de manera diferente.</p>
+            <p>A continuación, explicaremos en detalle el uso de esta propiedad.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Error al utilizar style de la misma manera que en HTML</h2>
+            <p>Si utilizamos <strong>style</strong> pasandole un <strong>string</strong> de la misma manera que en <strong>HTML</strong> obtendremos un error.</p>
+            <div class="has-mb">
+              <pre><code class="language-jsx">const app = &lt;h1 style='color:red'&gt;Título&lt;/h1&gt;
+
+root.render(app)     </code></pre>
+            </div><img src="../../assets/img/3-5-la-propiedad-style/1.webp" alt="example">
+            <p>El error nos dice que la propiedad <strong>syle</strong> espera un mapeo de <strong>style properties a valores</strong>, ¿que quiere decir todo esto?, pues que la propiedad <strong>style no es un string en JSX</strong> a pesar que si lo es en <strong>HTML.</strong></p>
+            <p>Miraremos el valor correcto de <strong>style</strong>, a continuación.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Pasando un objeto como valor de style </h2>
+            <p>En <strong>JSX</strong> esta propiedad es un <strong>objeto</strong>, así que tenemos que pasar su valor como objeto. </p>
+            <p>Debemos poner las llaves <strong>{}</strong> que nos marca el inicio de una expresión en <strong>JSX</strong> y tenemos que poner unas llaves {} dentro, para marcar un objeto.</p>
+            <div>
+              <pre><code class="language-jsx">style:{&nbsp;{&nbsp;}&nbsp;}       </code></pre>
+            </div>
+            <p>Para definir las <strong>propiedades CSS</strong>, se usa la nomenclatura <strong class="ts-2">camel case</strong> igual que las props, de lo contrario obtendremos un error.</p>
+            <p>Para definir el <strong>valor</strong> de las <strong>propiedades CSS</strong> se específica como <strong>String ('&nbsp;')</strong> y <strong>no se incluye el (;)</strong>, si incluimos el (;) nos devolverá un error. </p>
+            <div class="has-mb">
+              <pre><code class="language-jsx">// Utilizamos fontSize en lugar de font-size, seguimos la nomenclatura camel case.
+/* El valor de las propiedades debe ir como string ' ' 
+sin terminar la sentencia con un (;).*/
+style:{&nbsp;{fontSize:'1rem', color:'red'}&nbsp;}</code></pre>
+            </div>
+          </article>
+          <article class="content" id="4">
+            <h2>¿Por qué style es un objeto? </h2>
+            <p>Es posible que surja la pregunta de siempre: ¿por qué <strong>style</strong> en <strong>JSX</strong> es un <strong>objeto</strong> y no lo han hecho igual que en <strong>HTML</strong>? ¿Por qué no simplemente lo pasamos como un string igual que en HTML para no complicarnos y así sería más fácil de entender?</p>
+            <p>Aquí entra en juego lo que es el <strong>Virtual DOM</strong>, el <strong>Virtual DOM</strong> va intentar buscar las optimizaciones cuando nosotros hagamos cambios, veremos que a través de los <strong>estados</strong> podemos generar cambios sobre este <strong>Virtual DOM</strong> y se aplicarán de la forma más optima posible.</p>
+            <p>Para eso, se utilizaría un algoritmo que permita comparar la versión anterior de <strong>style</strong> con la nueva, lo cual nos daría problemas de rendimiento.</p>
+            <p><strong>Miremoslo con un ejemplo: </strong></p>
+            <p>Supongamos que React decide utilizar style pasando un simple string como se hace en HTML, y lo que tenemos que tener en cuenta es que habría distintas maneras de pasar estas propiedades.</p>
+            <div>
+              <pre><code class="language-jsx">const style1 = 'color:red; font-size:1rem;'
+const style2 = 'color:red;font-size:1rem;'
+const style3 = 'color: red; font-size: 1rem;'
+const style4 = 'font-size:1rem; color: red;'</code></pre>
+            </div>
+            <p>Lo que vemos en el ejemplo son solo pequeñas formas de agregar estilos usando un simple string. Al utilizar style como un string, solo algunos de los estilos generarían cambios en la estructura de nuestro HTML, mientras que los demás provocarían lo que llamamos <strong>"cambios fantasmas"</strong>. Esto significa que podría haber cambios en la visualización, como agregar o eliminar espacios después de las propiedades, pero sin modificar realmente ninguna propiedad o valor.</p>
+            <p>Gestionar un algoritmo que se encargue de analizar este string y verificar si realmente ha cambiado —si solo ha cambiado el orden de las propiedades, si ahora hay un espacio de más o menos, o si antes había un punto y coma al final y ahora no— sería extremadamente complejo. Un algoritmo que tratara de manejar esto comparando cadenas de texto ralentizaría mucho nuestra web.</p>
+            <p>Para evitar estos problemas, se decidió que <strong>style</strong> en <strong>JSX</strong> debía ser un <strong>objeto</strong>. De esta forma, es posible comparar propiedad por propiedad y detectar exactamente qué ha cambiado.</p>
+          </article>
+          <article class="content" id="5">
+            <h2>¿Cuándo utilizar style?</h2>
+            <p>Se siguen las mismas buenas prácticas de CSS. No deberíamos utilizar style para estilar toda nuestra aplicación, sino que debería reservarse para casos especiales, especialmente cuando sea necesario hacer cálculos o aplicar estilos dinámicos. Para todo lo demás, es mejor agregar los estilos utilizando className.</p>
+            <p>Por ejemplo, <strong>style</strong> es útil cuando necesitamos hacer cálculos dinámicos, como ajustar el scroll en función de la pantalla. Si necesitamos calcular el número exacto de píxeles y, cada vez que se haga scroll, modificar algún estilo en respuesta a ese evento, en esos casos es conveniente usar style en JSX. Nos permite modificar estilos de manera precisa y eficiente, actualizando propiedades específicas sin tener que manipular todo el CSS.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Error al utilizar style de la misma manera que en HTML</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Pasando un objeto como valor de style</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">¿Por qué style es un objeto?</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">¿Cuándo utilizar style?</a></li>
           </ul>
         </nav>
       </section>

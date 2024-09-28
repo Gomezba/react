@@ -344,18 +344,41 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>En este capítulo miraremos porque usamos <strong>className</strong> en lugar de <strong>class </strong> y <strong>htmlFor</strong> en lugar de <strong>for</strong>.</p>
+            <p>En el capítulo de <a class="link" href="./3-4-las-props-de-jsx.html#4" target="_blank"> las props de JSX</a> habiamos mencionado que en JSX, las props que son palabras reservadas en JavaScript, como class y for, se renombraron a <strong>className</strong> y <strong>htmlFor</strong>.</p>
+            <p>Es importante saber que estas props, son las 2 únicas palabras reservadas que coinciden con HTML.</p>
+            <p>A continuación explicaremos más detalladamente estas props. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>¿Por que className y no class?</h2>
+            <p>Primero debemos saber, ¿Qué tiene de especial la palabra <strong>class</strong> en <strong>JavaScript</strong>?, pues que class en JS es una palabra reservada, y por lo tanto no podemos nombrar una variable con ese nombre, y como <strong>JSX</strong> es <strong>JavaScript</strong>, no debemos poner como nombres de <strong>props</strong>, palabras reservadas.</p>
+            <p>Las <strong>props</strong> son simplemente propiedades de un <strong>objeto</strong> en <strong>JavaScript</strong>, y no hay ningún error técnico en llamar a una propiedad class.</p>
+            <p><strong>Ejemplo: </strong></p><img src="../../assets/img/3-6-classname-y-htmlfor/1.webp" alt="example">
+            <p>El problema viene cuando queremos usar la sintaxis de destructuring, miraremos primeramente desestructurando nuestro objeto <strong>props</strong> con la propiedad <strong>className</strong> con la cúal no habrá ningun problema. </p><img src="../../assets/img/3-6-classname-y-htmlfor/2.webp" alt="example">
+            <p>Pero si queremos desestructurar el objeto con la palabra <strong>class</strong>, aquí si habrá problema, ya que <strong>class</strong> es una palabra reservada para <strong>JavaScript.</strong></p>
+            <p>Recordemos que cuando hacemos destructuring en realidad estamos creando variables y no podemos crear variables con nombres de palabras reservadas.</p>
+            <p>Lo mismo ocurre en <strong>JSX</strong>, que es esencialmente <strong>JavaScript</strong>. Cada elemento <strong>JSX</strong> es un <strong>objeto</strong>, y sus atributos son propiedades de ese objeto. Al intentar usar una palabra reservada como <strong>class</strong> en <strong>JSX</strong>, entramos en conflicto con las reglas de <strong>JavaScript</strong>, ya que class es una palabra clave utilizada para declarar clases.</p><img src="../../assets/img/3-6-classname-y-htmlfor/3.webp" alt="example">
+            <p>Entonces nos vemos obligados a utilizar un alias para cambiarle el nombre a la propiedad class que desestructuramos del objeto. </p><img src="../../assets/img/3-6-classname-y-htmlfor/4.webp" alt="example">
+            <p>Entonces para evitar esto, tanto en la Api del DOM de JavaScript como en muchos otros sitios, cuando tenemos que nombrar algo con una palabra reservada, lo que hacemos es alterar ese nombre y ponerle en ese caso <strong>className</strong> y es por eso que se llama <strong>className</strong> en lugar de <strong>class</strong>. </p>
+          </article>
+          <article class="content" id="3">
+            <h2>¿Por que htmlFor y no for?</h2>
+            <p>Lo mismo que sucede con <strong>className</strong> sucede con <strong>htmlFor</strong> de la etiqueta <strong>label</strong> de un formulario.</p>
+            <p>Crearemos un pequeño formulario utilizando <strong>for</strong> en lugar de <strong>htmlFor</strong>. </p><img src="../../assets/img/3-6-classname-y-htmlfor/5.webp" alt="example">
+            <p>Podemos ver que funciona, ya que al dar click sobre el <strong>label</strong> nos pone el <strong>foco</strong> sobre el <strong>input</strong>, pero nos muestra un warning diciendonos que debemos utilizar <strong>htmlFor</strong>.</p>
+            <p>Lo que haremos es utilizar <strong>htmlFor</strong> para evitar el conflicto.</p><img src="../../assets/img/3-6-classname-y-htmlfor/6.webp" alt="example">
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">¿Por que className y no class?</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">¿Por que htmlFor y no for?</a></li>
           </ul>
         </nav>
       </section>

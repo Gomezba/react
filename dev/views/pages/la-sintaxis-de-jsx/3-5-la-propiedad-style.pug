@@ -5,13 +5,154 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
 
+        p En este capítulo miraremos una de las propiedades especiales en 
+            strong JSX
+            | , que es 
+            strong style
+            | , su atributo 
+            strong HTML
+            |   correspondiente se llama de la misma manera y nos sirve para añadir nuestros estilos en línea a nuestros componentes.
+
+        p En 
+            strong HTML
+            | , el valor de este atributo es una cadena de texto (
+            strong string   
+            | ) con el CSS que queremos aplicar a la etiqueta, pero en 
+            strong JSX
+            |   funciona de manera diferente.
+
+        p A continuación, explicaremos en detalle el uso de esta propiedad.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Error al utilizar style de la misma manera que en HTML
+        p Si utilizamos 
+            strong style
+            |   pasandole un 
+            strong string
+            |   de la misma manera que en 
+            strong HTML
+            |   obtendremos un error.
 
+        div.has-mb: pre: code.language-jsx
+            |const app = &lt;h1 style='color:red'&gt;Título&lt;/h1&gt;
+            |
+            |root.render(app)     
+
+        img(src="../../assets/img/3-5-la-propiedad-style/1.webp" alt="example")
+
+        p El error nos dice que la propiedad 
+            strong syle
+            |   espera un mapeo de 
+            strong style properties a valores
+            | , ¿que quiere decir todo esto?, pues que la propiedad 
+            strong style no es un string en JSX
+            |   a pesar que si lo es en 
+            strong HTML.
+
+        p Miraremos el valor correcto de 
+            strong style
+            | , a continuación.
+
+    article(id="3" class="content")
+        h2 Pasando un objeto como valor de style   
+
+        p En 
+            strong JSX
+            |   esta propiedad es un 
+            strong objeto
+            | , así que tenemos que pasar su valor como objeto.    
+
+        p Debemos poner las llaves 
+            strong {}
+            |   que nos marca el inicio de una expresión en 
+            strong JSX
+            |   y tenemos que poner unas llaves {} dentro, para marcar un objeto.
+
+        div: pre: code.language-jsx
+            | style:{&nbsp;{&nbsp;}&nbsp;}       
+
+        p Para definir las 
+            strong propiedades CSS
+            | , se usa la nomenclatura 
+            strong.ts-2 camel case
+            |   igual que las props, de lo contrario obtendremos un error.
+
+        p Para definir el 
+            strong valor
+            |   de las 
+            strong propiedades CSS
+            |   se específica como 
+            strong String ('&nbsp;')
+            |   y 
+            strong no se incluye el (;)
+            | , si incluimos el (;) nos devolverá un error.    
+
+        div.has-mb: pre: code.language-jsx
+            | // Utilizamos fontSize en lugar de font-size, seguimos la nomenclatura camel case.
+            | /* El valor de las propiedades debe ir como string ' ' 
+            | sin terminar la sentencia con un (;).*/
+            | style:{&nbsp;{fontSize:'1rem', color:'red'}&nbsp;}
+
+    article(id="4" class="content")
+        h2 ¿Por qué style es un objeto? 
+
+        p Es posible que surja la pregunta de siempre: ¿por qué 
+            strong style
+            |   en 
+            strong JSX
+            |   es un 
+            strong objeto
+            |   y no lo han hecho igual que en 
+            strong HTML
+            | ? ¿Por qué no simplemente lo pasamos como un string igual que en HTML  para no complicarnos y así sería más fácil de entender?
+
+        p Aquí entra en juego lo que es el 
+            strong Virtual DOM
+            | , el 
+            strong Virtual DOM
+            |   va intentar buscar las optimizaciones cuando nosotros hagamos cambios, veremos que a través de los 
+            strong estados
+            |   podemos generar cambios sobre este 
+            strong Virtual DOM
+            |   y se aplicarán de la forma más optima posible.
+
+        p Para eso, se utilizaría un algoritmo que permita comparar la versión anterior de 
+            strong style
+            |   con la nueva, lo cual nos daría problemas de rendimiento.
+
+        p: strong Miremoslo con un ejemplo: 
+        p Supongamos que React decide utilizar style pasando un simple string como se hace en HTML, y lo que tenemos que tener en cuenta es que habría distintas maneras de pasar estas propiedades.
+
+        div: pre: code.language-jsx
+            |const style1 = 'color:red; font-size:1rem;'
+            |const style2 = 'color:red;font-size:1rem;'
+            |const style3 = 'color: red; font-size: 1rem;'
+            |const style4 = 'font-size:1rem; color: red;'
+
+        p Lo que vemos en el ejemplo son solo pequeñas formas de agregar estilos usando un simple string. Al utilizar style como un string, solo algunos de los estilos generarían cambios en la estructura de nuestro HTML, mientras que los demás provocarían lo que llamamos 
+            strong "cambios fantasmas"
+            | . Esto significa que podría haber cambios en la visualización, como agregar o eliminar espacios después de las propiedades, pero sin modificar realmente ninguna propiedad o valor.
+
+        p Gestionar un algoritmo que se encargue de analizar este string y verificar si realmente ha cambiado —si solo ha cambiado el orden de las propiedades, si ahora hay un espacio de más o menos, o si antes había un punto y coma al final y ahora no— sería extremadamente complejo. Un algoritmo que tratara de manejar esto comparando cadenas de texto ralentizaría mucho nuestra web.
+
+        p Para evitar estos problemas, se decidió que 
+            strong style
+            |   en 
+            strong JSX
+            |   debía ser un 
+            strong objeto
+            | . De esta forma, es posible comparar propiedad por propiedad y detectar exactamente qué ha cambiado.
+
+    article(id="5" class="content")
+        h2 ¿Cuándo utilizar style?
+        p Se siguen las mismas buenas prácticas de CSS. No deberíamos utilizar style para estilar toda nuestra aplicación, sino que debería reservarse para casos especiales, especialmente cuando sea necesario hacer cálculos o aplicar estilos dinámicos. Para todo lo demás, es mejor agregar los estilos utilizando className.
+
+        p Por ejemplo, 
+            strong style
+            |   es útil cuando necesitamos hacer cálculos dinámicos, como ajustar el scroll en función de la pantalla. Si necesitamos calcular el número exacto de píxeles y, cada vez que se haga scroll, modificar algún estilo en respuesta a ese evento, en esos casos es conveniente usar style en JSX. Nos permite modificar estilos de manera precisa y eficiente, actualizando propiedades específicas sin tener que manipular todo el CSS.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Error al utilizar style de la misma manera que en HTML'],[3,'Pasando un objeto como valor de style'],[4,'¿Por qué style es un objeto?'],[5,'¿Cuándo utilizar style?']]
     +submenu(submenuLinks)

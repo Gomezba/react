@@ -443,10 +443,6 @@ th {
   text-align: left;
 }
 
-tr:nth-child(even) {
-  background-color: #6272a4;
-}
-
 caption {
   caption-side: bottom;
   padding-top: 10px;

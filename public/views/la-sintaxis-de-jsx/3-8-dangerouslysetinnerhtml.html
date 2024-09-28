@@ -344,18 +344,55 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>En esta lección hablaremos de la seguridad en React y de como utilizando React nos protegemos automáticamente contra la inyección de código.</p>
+            <p>En la Api del DOM existe una propiedad realmente peligrosa <strong>"innerHTML" </strong>. </p>
+            <p>Esta propiedad refleja y nos permite modificar el contenido de un elemento como HTML. </p>
+            <p>A continuación estaremos viendo más a detalle la cuestion de seguridad en React.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Funcionamiento tradicional de innerHTML en JavaScript</h2>
+            <p>Para este curso, ya necesitamos ciertas bases de JavaScript, así que deberiamos conocer el funcionamiento de <strong>innerHTML</strong>, miraremos rápidamente su uso.</p>
+            <p>Partimos del siguiente código de JSX.</p><img src="../../assets/img/3-8-dangerouslysetinnerhtml/1.webp" alt="example">
+            <p>Utilizaremos las developer tools para poder ver el funcionamiento de innerHTML nativamente.</p><img src="../../assets/img/3-8-dangerouslysetinnerhtml/2.webp" alt="example">
+            <p>Como podemos observar, <strong>innerHTML</strong> puede entender el <strong>HTML</strong> que le asignemos como <strong>texto y renderizarlo como tal.</strong></p>
+            <p>Lo que hicimos fue remplazar el contenido del <strong>div</strong> por un <strong>h2</strong> con un título diferente. </p>
+            <p>Cuando utilizamos innerHTML, estamos permitiendo que el navegador interprete cualquier contenido HTML que le pasemos como una cadena. Si ese contenido proviene de una fuente no confiable o externa, corremos el riesgo de permitir que un atacante <strong>inyecte scripts maliciosos</strong> en nuestro sitio, lo que puede causar vulnerabilidades de seguridad como el <strong>XSS (cross-site scripting)</strong>.</p>
+            <p>Ahora veamos el uso de innerHTML en JSX. </p>
+          </article>
+          <article class="content" id="3">
+            <h2>Setear peligrosamente contenido HTML - dangerouslySetInnerHTML</h2>
+            <p>En React, el uso de <strong>innerHTML</strong> se maneja mediante la prop <strong>dangerouslySetInnerHTML</strong>, que, como su nombre lo indica, debe ser utilizada con extrema precaución. Esta prop permite inyectar HTML en los componentes.</p>
+            <p>Entonces si intentamos inyectar HTML como string en un componente se utiliza <strong>dangerouslySetInnerHTML.</strong></p><img src="../../assets/img/3-8-dangerouslysetinnerhtml/3.webp" alt="example">
+            <p>Como podemos ver nos devuelve un error, y para que podamos ocuparlo realmente, React nos obliga pasar el HTML como un objeto, de la siguiente manera.</p><img src="../../assets/img/3-8-dangerouslysetinnerhtml/4.webp" alt="example">
+            <h3>¿Por qué React nos obliga a pasar el html como un objeto de una manera tan rara?</h3>
+            <p>El motivo es claro, ya que como lo dice el nombre de la prop <strong>dangerouslySetInnerHTML ("setear peligrosamente HTML")</strong>, React nos obliga a pasar el HTML como <strong>dangerouslySetInnerHTML={{ __html: ... }}</strong> para que sepa que estamos consientes de lo que implica agregar HTML de esta forma y que no lo estamos haciendo por error.</p>
+            <p>Y que implica agregar HTML así, pues lo veremos a continuación. </p>
+          </article>
+          <article class="content" id="4">
+            <h2>Peligros de ocupar dangerouslySetInnerHTML </h2>
+            <p>Pensemos en esta situación: si un usuario hace un post en nuestra aplicación, ¿qué problema podría haber en permitirle que lo ponga como HTML? Pues lo mismo que mencionamos anteriormente: puede haber inyecciones de HTML o scripts maliciosos. Por lo tanto, todo lo que el usuario ponga como HTML se interpretará como tal.</p>
+            <p>Hay usuarios normales con buenas intenciones, pero tambien podria ser un atacante.</p>
+            <p>Miremos el siguiente ejemplo. </p><img src="../../assets/img/3-8-dangerouslysetinnerhtml/5.webp" alt="example">
+            <p>Lo que hicimos fue simular el ataque, cuando el <strong>src</strong> no es válido se ejecuta el evento <strong>onerror</strong>. </p>
+            <p>Pero realmente puede ir cualquier cosa que interprete HTML o scripts, lo que podría permitir al navegador enviarle al atacante información sensible, como <strong>leer las cookies</strong>, <strong>acceder al localStorage</strong> o <strong>enviar el token de autenticación</strong>. De esta manera, estaríamos exponiendo nuestra aplicación a un posible fallo de seguridad.</p>
+            <p class="note note--error">No hay que permitir vulnerabilidades como estas en nuestra aplicación, por lo cual <strong>nunca debemos utilizar dangerouslySetInnerHTML.</strong></p>
+            <p>Para evitar estos fallos de seguridad hay que utilizar <strong>JSX</strong> de esta manera aunque intenten mandar código malicioso, nunca se va procesar y solo renderizará <strong>texto.</strong></p><img src="../../assets/img/3-8-dangerouslysetinnerhtml/6.webp" alt="example">
+            <p>De esta manera no tendremos que preocuparnos por estas fallas de seguridad ya que estaremos protegidos de estos ataques.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Funcionamiento tradicional de innerHTML en JavaScript</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Setear peligrosamente contenido HTML - dangerouslySetInnerHTML</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Peligros de ocupar dangerouslySetInnerHTML</a></li>
           </ul>
         </nav>
       </section>

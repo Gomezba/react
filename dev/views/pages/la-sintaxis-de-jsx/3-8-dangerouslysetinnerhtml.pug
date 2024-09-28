@@ -5,13 +5,116 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+
+        p En esta lección hablaremos de la seguridad en React y de como utilizando React nos protegemos automáticamente contra la inyección de código.
+
+        p En la Api del DOM existe una propiedad realmente peligrosa 
+            strong "innerHTML" 
+            | . 
+
+        p Esta propiedad refleja y nos permite modificar el contenido de un elemento como HTML. 
+
+        p A continuación estaremos viendo más a detalle la cuestion de seguridad en React.
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Funcionamiento tradicional de innerHTML en JavaScript
+
+        p Para este curso, ya necesitamos ciertas bases de JavaScript, así que deberiamos conocer el funcionamiento de 
+            strong innerHTML
+            | , miraremos rápidamente su uso.
+
+        p Partimos del siguiente código de JSX.
+        img(src="../../assets/img/3-8-dangerouslysetinnerhtml/1.webp" alt="example")    
+        p Utilizaremos las developer tools para poder ver el funcionamiento de innerHTML nativamente.
+
+        img(src="../../assets/img/3-8-dangerouslysetinnerhtml/2.webp" alt="example")    
+
+        p Como podemos observar,  
+            strong innerHTML
+            |   puede entender el 
+            strong HTML
+            |   que le asignemos como 
+            strong texto y renderizarlo como tal.
+
+        p Lo que hicimos fue remplazar el contenido del 
+            strong div
+            |   por un 
+            strong h2
+            |   con un título diferente. 
+
+        p Cuando utilizamos innerHTML, estamos permitiendo que el navegador interprete cualquier contenido HTML que le pasemos como una cadena. Si ese contenido proviene de una fuente no confiable o externa, corremos el riesgo de permitir que un atacante 
+            strong inyecte scripts maliciosos
+            |   en nuestro sitio, lo que puede causar vulnerabilidades de seguridad como el 
+            strong XSS (cross-site scripting)
+            | .
+
+        p Ahora veamos el uso de innerHTML en JSX.    
+
+    article(id="3" class="content")
+        h2 Setear peligrosamente contenido HTML - dangerouslySetInnerHTML
+
+        p En React, el uso de 
+            strong innerHTML
+            |   se maneja mediante la prop 
+            strong dangerouslySetInnerHTML
+            | , que, como su nombre lo indica, debe ser utilizada con extrema precaución. Esta prop permite inyectar HTML en los componentes.
+
+        p Entonces si intentamos inyectar HTML como string en un componente se utiliza 
+            strong dangerouslySetInnerHTML.
+
+        img(src="../../assets/img/3-8-dangerouslysetinnerhtml/3.webp" alt="example")
+
+        p Como podemos ver nos devuelve un error, y para que podamos ocuparlo realmente, React nos obliga pasar el HTML como un objeto, de la siguiente manera.
+        img(src="../../assets/img/3-8-dangerouslysetinnerhtml/4.webp" alt="example")
+
+        h3 ¿Por qué React nos obliga a pasar el html como un objeto de una manera tan rara?
+
+        p El motivo es claro, ya que como lo dice el nombre de la prop 
+            strong dangerouslySetInnerHTML ("setear peligrosamente HTML")
+            | , React nos obliga a pasar el HTML como 
+            strong dangerouslySetInnerHTML={{ __html: ... }}
+            |   para que sepa que estamos consientes de lo que implica agregar HTML de esta forma y que no lo estamos haciendo por error.
+
+        p Y que implica agregar HTML así, pues lo veremos a continuación.    
+
+    article(id="4" class="content")
+        h2 Peligros de ocupar dangerouslySetInnerHTML 
+
+        p Pensemos en esta situación: si un usuario hace un post en nuestra aplicación, ¿qué problema podría haber en permitirle que lo ponga como HTML? Pues lo mismo que mencionamos anteriormente: puede haber inyecciones de HTML o scripts maliciosos. Por lo tanto, todo lo que el usuario ponga como HTML se interpretará como tal.
+
+        p Hay usuarios normales con buenas intenciones, pero tambien podria ser un atacante.
+
+        p Miremos el siguiente ejemplo. 
+        img(src="../../assets/img/3-8-dangerouslysetinnerhtml/5.webp" alt="example")
+
+        p Lo que hicimos fue simular el ataque, cuando el 
+            strong src
+            |   no es válido se ejecuta el evento 
+            strong onerror
+            | . 
+
+        p Pero realmente puede ir cualquier cosa que interprete HTML o scripts, lo que podría permitir al navegador enviarle al atacante información sensible, como 
+            strong leer las cookies
+            | , 
+            strong acceder al localStorage
+            |   o 
+            strong enviar el token de autenticación
+            | . De esta manera, estaríamos exponiendo nuestra aplicación a un posible fallo de seguridad.
+
+        p.note.note--error No hay que permitir vulnerabilidades como estas en nuestra aplicación, por lo cual 
+            strong nunca debemos utilizar dangerouslySetInnerHTML.
+
+        p Para evitar estos fallos de seguridad hay que utilizar 
+            strong JSX
+            |   de esta manera aunque intenten mandar código malicioso, nunca se va procesar y solo renderizará 
+            strong texto.
+        img(src="../../assets/img/3-8-dangerouslysetinnerhtml/6.webp" alt="example")
+
+        p De esta manera no tendremos que preocuparnos por estas fallas de seguridad ya que estaremos protegidos de estos ataques.
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Funcionamiento tradicional de innerHTML en JavaScript'],[3,'Setear peligrosamente contenido HTML - dangerouslySetInnerHTML'],[4,'Peligros de ocupar dangerouslySetInnerHTML']]
     +submenu(submenuLinks)

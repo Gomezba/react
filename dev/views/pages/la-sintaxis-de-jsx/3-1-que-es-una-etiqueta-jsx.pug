@@ -5,13 +5,190 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
 
+        p En esta sección trataremos de entender que es lo que estamos creando cuando estamos tratando una etiqueta en JSX.
+
+        p Ya sabemos que 
+            strong JSX
+            |   se termina transpilando a 
+            strong JavaScript
+            |   y se transforma en 
+            strong React.createElement
+            |   o su equivalente 
+            strong JSX runtime.
+
+        p Pero ¿Qué es lo que devuelven estas funciones? Cuando trabajamos con 
+            strong HTML
+            |   tenemos una sintaxis predefinida que podemos utilizar para crear nuestros documentos, gracias a esta sintaxis podemos utilizar etiquetas para crear un contenedor de elementos, podemos utilizar la etiqueta 
+            strong script
+            |   para insertar un script, podemos utilizar las etiquetas 
+            strong meta
+            | , 
+            strong link
+            |   o la etiqueta 
+            strong title
+            | , etc.
+
+        p En esencia lo que nos proporciona 
+            strong HTML
+            |   son una serie de etiquetas que representan componentes nativos y pre creados que podemos utilizar para componer nuestras páginas.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Diferencia entre etiquetas HTML y JSX
+
+        p En 
+            strong JSX
+            |   disponemos de las mismas etiquetas que en 
+            strong HTML
+            |   con el mismo nombre. En ambos lenguajes existe una etiqueta de  
+            strong apertura &lt;&gt;
+            |   y una etiqueta de 
+            strong cierre &lt;/&gt;
+            | , o podemos crear etiquetas 
+            strong autocerrables como 
+            strong &lt;br /&gt; 
+            |   o 
+            strong &lt;img /&gt;
+
+        h3 En JSX es obligatorio el cierre    
+
+        p La única diferencia entre ambas sintáxis, es que mientras en ciertas etiquetas HTML podemos omitir su etiqueta de cierre y funcionaria, en 
+            strong JSX
+            |   es obligatorio este cierre para absolutamente todas las etiquetas.
+
+        figure 
+            img(src="../../assets/img/3-1-que-es-una-etiqueta-jsx/1.webp" alt="example").img-md
+            figcaption Obtenemos un error al no poner el cirre /    
+            img(src="../../assets/img/3-1-que-es-una-etiqueta-jsx/2.webp" alt="example").img-md
+            figcaption Es obligatorio el cierre para todas las etiquetas en JSX 
+
+        p Por eso es importante que sepamos las pequeñas diferencias entre ambas, mientras que en 
+            strong HTML
+            |   estamos utilizando una sintaxis que va ser interpretada por el 
+            strong navegador
+            | , en 
+            strong JSX
+            |   estamos utilizando una sintaxis que se va transformar a 
+            strong JavaScript,
+            |   y quitar la 
+            strong etiqueta de cierre
+            |   será equivalente a quitar la 
+            strong llave de cierre
+            |   de un 
+            strong objeto
+            | , es decir no podriamos cerrar el objeto correctamente.
+
+    article(id="3" class="content")
+        h2 ¿En qué se transforma una etiqueta JSX?
+
+        p Para ver realmente en que se transforma un etiqueta 
+            strong JSX
+            |   lo primero que debemos de hacer es 
+            strong logearla 
+            |   por consola.
+
+        img(src="../../assets/img/3-1-que-es-una-etiqueta-jsx/3.webp" alt="example").img-md
+
+        p Con esto podemos ver, que es lo que devuelve de forma primigenia, es decir, primeramente lo que se almacena como objeto.
+
+        h3 Transformación de una etiqueta JSX en Desarrollo
+
+        p Arrancamos el servidor de desarrollo con el comando: 
+        p: code npm run dev 
+
+        p Podemos ver que lo que imprime realmente, es un objeto que representará un 
+            strong nodo
+            |   del 
+            strong Virtual DOM
+            |.
+        img(src="../../assets/img/3-1-que-es-una-etiqueta-jsx/4.webp" alt="example")
+
+        h3 Transformación de una etiqueta JSX en Producción
+
+        p Creamos nuestra versión de producción: 
+        p: code npm run build
+        p Levantamos nuestro servidor de producción: 
+        p: code npm run preview
+        p Realmente una etiqueta 
+            strong JSX
+            |   lo que contiene es lo siguiente: 
+        img(src="../../assets/img/3-1-que-es-una-etiqueta-jsx/5.webp" alt="example")
+
+        p Esto es un 
+            strong nodo
+            |   del 
+            strong Virtual DOM
+            |   directamente, es decir, que el 
+            strong Virtual DOM
+            |   que estamos creando en 
+            strong React
+            | , realmente así es como se va reflejar esta etiqueta.
+
+        p Obviamente aquí nos falta cierta información, es decir, cuando trabajamos con un 
+            strong Virtual DOM
+            |   tenemos que tener identificado donde está este elemento renderizado, es decir, en que parte del 
+            strong Virtual DOM
+            |   y en que parte del 
+            strong DOM
+            |   real.
+
+        p Por supuesto esto es un 
+            strong objeto
+            |   que tiene una jerarquía y tiene que tener una forma directa de trasladarlo al 
+            strong DOM
+            | , hay que tener una seríe de indicativos que le permitan saber donde está renderizado ese elemento en el momento actual.
+
+
+        h3 root.render()
+        p Todo esto es lo que añade la función 
+            strong.ts-3 root.render()
+            |   lo que hace es crear el 
+            strong Virtual DOM
+            |   y posteriormente trasladarlo al 
+            strong DOM
+            | , es decir, lo primero que hace es crear el elemento, en nuestro caso un 
+            strong &lt;img"&gt;
+            |  que está guardado en una variable llamada 
+            strong "img"
+            |   que va representar al 
+            strong Virtual DOM
+            |   , y una vez creado lo tiene que llevar al 
+            strong DOM
+            |   original, pero tenemos que conectar ambos de alguna forma.
+
+        p Con 
+            strong root.render()
+            | , se indica qué componente 
+            strong React
+            |   debe ser renderizado dentro del contenedor raíz. Normalmente, este componente es el componente principal de tu aplicación, por ejemplo, 
+            strong &lt;App /&gt;.    
+
+        p
+            strong.ts-3 root.render()
+            |   lo que hace es 
+            strong crear
+            |   o 
+            strong actualizar
+            |   el 
+            strong Virtual DOM
+            |   a partir del componente que le pasamos. El 
+            strong Virtual DOM
+            |   es una representación en memoria del 
+            strong DOM
+            |   real. React se encarga de comparar (diffing) el nuevo Virtual DOM con la versión anterior para detectar los cambios, y luego actualiza eficientemente el 
+            strong DOM
+            |   real, aplicando solo las modificaciones necesarias. 
+
+        p Nosotros simplemente declaramos que queremos renderizar un componente en un contenedor, y React, de manera declarativa, se encarga de gestionar todo el proceso de actualización del Virtual DOM y la reconciliación con el DOM real. Los detalles de cómo se maneja el Virtual DOM pueden variar entre versiones de React, pero ese proceso está abstraído para que no tengamos que preocuparnos por él.`
+
+
+
+        p Una vez que tenemos en mente lo que es una etiqueta 
+            strong JSX
+            |   es momento de comenzar hablar de la sintaxis con la que podemos escribir estas etiquetas, es decir, todas las reglas que vamos aplicar para entender cual es este lenguaje que utilizaremos para definir nuestros componentes.
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Diferencia entre etiquetas HTML y JSX'],[3,'¿En qué se transforma una etiqueta JSX?']]
     +submenu(submenuLinks)

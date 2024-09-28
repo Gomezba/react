@@ -5,13 +5,492 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+
+        p Entre las etiquetas de apertura 
+            strong &lt; &gt;
+            |   y cierre de un nodo 
+            strong &lt; /&gt;
+            |   podemos colocar sus nodos hijos, en inglés 
+            strong children
+            | , por ejemplo, si sustituimos nuestro elemento 
+            strong "img"
+            |   por un 
+            strong "div"
+            |   podemos colocar entre su etiqueta de apertura y cierre tantos hijos como queramos. 
+
+        p.note Los 
+            strong children
+            |   son lo que se coloca entre las 
+            strong etiquetas de apertura y cierre de un componente
+            | . Los 
+            strong children
+            |   se pasan al componente como una propiedad especial (props.children).    
+
+        img(src="../../assets/img/3-2-la-propiedad-children/1.webp" alt="example")
+
+        p Al guardar esto, podemos ver que ha encerrado todo en 
+            strong ()
+            |   y esto evidentemente lo ha hecho 
+            strong prettier
+            | .
+        img(src="../../assets/img/3-2-la-propiedad-children/2.webp" alt="example")
+
+        h3 ¿Por qué se pone entre paréntesis una etiqueta que ocupa múltiples líneas?
+        p Esto se hace así para mantener una jerarquía visual, si nosotros borramos los paréntesis 
+            strong ()
+            |   realmente esto puede funcionar, pero estamos perdiendo esa jerarquía, esa indentación que nos permite conocer rápidamente que abarca esta etiqueta, cual es su etiqueta raíz, etc.
+        figure 
+            img(src="../../assets/img/3-2-la-propiedad-children/3.webp" alt="example")
+            figcaption Se pierde esa jerarquía al eliminar los paréntesis, es más complicado de entender.
+
+        p Entonces siempre y cuando que nuestra etiqueta 
+            strong JSX
+            |   ocupe más de una línea se deben poner los paréntesis 
+            strong ()
+            | . 
+
+        p Si nuestra etiqueta solo ocupa una línea no es necesario poner los paréntesis 
+            strong ()
+            | . 
+
+        img(src="../../assets/img/3-2-la-propiedad-children/4.webp" alt="example").img-md
+
+        p Hasta este punto podemos ver que 
+            strong JSX
+            |   y 
+            strong HTML
+            |   no se diferencian demasiado, pero realmente 
+            strong JSX
+            |   es un lenguaje de plantillas.
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Expresiones evaluadas
 
+        p Lo que podemos hacer dentro de los 
+            strong children
+            |   es poner 
+            strong expresiones evaluadas.
+
+        h3 ¿Que són las expresiones evaluadas?     
+        p Es toda expresión de 
+            strong JavaScript
+            |   que termina devolviendo un 
+            strong valor
+            | .
+
+        p Estas expresiones se colocan dentro de llaves 
+            strong {}
+            | .
+
+        p Veamos algunas formas en las que podemos encerrar valores dentro de estas llaves.
+        img(src="../../assets/img/3-2-la-propiedad-children/5.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/6.webp" alt="example").has-mb
+
+        p Estás no son todas las formas en que podemos poner expresiones evaluadas, pero nos sirven para visualizar su comportamiento y poder verlo dentro de la consola del navegador.
+
+        p Pero antes de continuar primero explicaremos un poco de la propiedad 
+            strong.ts-4 props.
+
+    article(id="3" class="content")
+        h2 Propiedad props
+        p Ejecutamos nuestro servidor de desarrollo.
+        p: code npm run dev
+
+        p Miraremos en que se transforma una etiqueta autocerrada y una con hijos.
+        p La única diferencia está en en la propiedad 
+            strong.ts-5 props
+            |   del componente: 
+
+        p La propiedad 
+            strong.ts-5 props
+            |   es un 
+            strong objeto
+            |   que contiene todos los datos o atributos que se pasan a un componente desde su etiqueta JSX. 
+
+        p: strong Comportamiento
+        ul 
+            li Cuando el componente es autocerrado, las 
+                strong props
+                |   únicamente incluyen los atributos del elemento. 
+            li Si el componente tiene hijos, la propiedad 
+                strong props
+                |   también incluirá una 
+                strong propiedad especial llamada children
+                | , que almacena los elementos hijos.
+
+        p Como mencionamos en la introducción 
+            strong children
+            |   es una 
+            strong propiedad especial
+            |   que guarda dentro los elementos que se encuentran dentro de las etiquetas de apertura y cierre.  
+        p Cualquier cosa entre las etiquetas de apertura y cierre será accesible dentro del componente como 
+            strong props.children
+            | . Los children pueden ser:
+        ul 
+            li Un solo elemento
+            li Un array de elementos si tienes múltiples hijos, por ejemplo, varios párrafos o divs.
+            li Texto plano o incluso expresiones evaluadas.
+
+        p Todas estas diferencias las veremos con claridad.
+
+        h3 Propiedad props en una etiqueta autocerrada o simple 
+        p Nos referimos a una 
+            strong etiqueta simple
+            | , cuando esta no contiene hijos si no que es única.
+        p Una 
+            strong etiqueta autocerrada
+            |    no necesita una etiqueta de cierre y pueden escribirse como 
+            strong &lt;tag /&gt;
+            |   o simplemente 
+            strong &lt;tag&gt;
+
+        p A continuación una pequeña lista de las 
+            strong etiquetas autocerradas
+            |   más utilizadas.
+
+        ul 
+            li 
+                strong &lt;br&gt;
+                |   - Inserta un salto de línea.  
+            li 
+                strong &lt;hr&gt;
+                |   - Inserta una línea horizontal (usualmente un cambio de temática o separación).      
+            li 
+                strong &lt;img&gt;
+                |   - Inserta una imagen.   
+            li 
+                strong &lt;input&gt;
+                |   - Define un campo de entrada de datos.
+            li 
+                strong &lt;source&gt;
+                |   - Especifica varios recursos multimedia (usado en 
+                strong &lt;video&gt; 
+                |   o 
+                strong &lt;audio&gt;
+                | ).         
+
+        img(src="../../assets/img/3-2-la-propiedad-children/7.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/8.webp" alt="example").has-mb
+        p Como podemos observar cuando la etiqueta es autocerrada, la propiedad 
+            strong props
+            |   que ya sabemos que es un 
+            strong objeto
+            | , contiene solo los atributos de la etiqueta.
+
+        p Y como la propiedad 
+            strong children
+            |   no existe pasa a ser 
+            strong undefined
+            | . 
+
+        p Si ponemos una 
+            strong expresión evaluada
+            |   como valor de un atributo, simplemente se evalua la expresión y se muestra con el valor devuelto.       
+        img(src="../../assets/img/3-2-la-propiedad-children/17.webp" alt="example").has-mb.img-md
+        img(src="../../assets/img/3-2-la-propiedad-children/18.webp" alt="example").img-md
+
+        h3 Propiedad props en una etiqueta con hijos 
+
+        p Miraremos la propiedad props cuando la etiqueta contiene hijos.
+        img(src="../../assets/img/3-2-la-propiedad-children/9.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/10.webp" alt="example")
+
+        p Cuando tenemos hijos dentro de una etiqueta, en el objeto 
+            strong props
+            |   se agrega una propiedad especial llamada 
+            strong children
+            |   que en este ejemplo contiene un array de objetos que vienen siendo los hijos.
+
+        p Ahora veamos cuando combinamos atributos.
+        img(src="../../assets/img/3-2-la-propiedad-children/13.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/14.webp" alt="example").img-md
+
+        p Podemos ver que en el objeto props conviven los atributos y la propiedad children.
+
+        p Veamos este otro ejemplo.
+        img(src="../../assets/img/3-2-la-propiedad-children/15.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/16.webp" alt="example").has-mb.img-md
+
+
+    article(id="4" class="content")
+        h2 Valores en children
+        p Como se mencionó los 
+            strong children
+            |   pueden ser:
+        ul 
+            li Un solo elemento
+            li Un array de elementos si tienes múltiples hijos, por ejemplo, varios párrafos o divs.
+            li Texto plano o incluso expresiones evaluadas.
+
+        p En este subtitulo miraremos estos valores en 
+            strong children
+            | , pero las
+            strong exprexiones evaluadas
+            |   las miraremos más a fondo en el siguiente subtitulo.    
+
+        h3 Etiqueta con un solo hijo 
+        p Si hay un solo hijo 
+            strong (texto o elemento JSX)
+            | : la propiedad 
+            strong children
+            |   será ese valor directamente. 
+
+        p: strong.ts-3 Un solo hijo - texto plano    
+        img(src="../../assets/img/3-2-la-propiedad-children/19.webp" alt="example").has-mb.img-md
+        img(src="../../assets/img/3-2-la-propiedad-children/20.webp" alt="example").img-md
+
+        p: strong.ts-3 Un solo hijo - Elemento HTML   
+        img(src="../../assets/img/3-2-la-propiedad-children/21.webp" alt="example").has-mb.img-md
+        img(src="../../assets/img/3-2-la-propiedad-children/22.webp" alt="example").img-md
+        p Guarda ese único hijo como objeto.
+
+        h3 Etiqueta con múltiples hijos
+        p Si hay múltiples hijos 
+            strong (varios nodos JSX)
+            | : en este caso, 
+            strong children
+            |   será un 
+            strong array
+            |   que contendrá todos los elementos hijos.
+
+        p: strong.ts-3 Etiqueta con múltiples hijos JSX 
+        p Miraremos uno de los ejemplos anteriores.
+        img(src="../../assets/img/3-2-la-propiedad-children/9.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/10.webp" alt="example")
+        p Como podemos ver, cuando tenemos múltiples hijos JSX, la propiedad 
+            strong children
+            |   contendrá un array de elementos.
+
+        p.note La propiedad 
+            strong children
+            |   será un 
+            strong.ts-2 array
+            | 
+            strong solo si hay múltiples hijos
+            | . De lo contrario, será un 
+            strong valor único
+            |   o estará 
+            strong undefined
+            |   si no hay hijos.    
+
+        p A continuación explicaremos más a fondo el comportamiento de 
+            strong children
+            | , cuando tiene que ver con 
+            strong expresiones evaluadas
+            | . 
+
+    article(id="5" class="content")
+        h2 Expresiones evaluadas en children
+
+        p Tenemos uno de los ejemplos anteriores, donde ocupamos expresiones evaludas.
+        img(src="../../assets/img/3-2-la-propiedad-children/9.webp" alt="example")
+
+        p Si desplegamos 
+            strong children
+            | , que en este caso es un array de elementos, miraremos que cada objeto es una de las etiquetas que se encuentran dentro de la etiqueta padre.
+        img(src="../../assets/img/3-2-la-propiedad-children/11.webp" alt="example")
+
+        p Cada uno de estos objetos (etiquetas) contiene las mismas propiedades que React maneja con un nodo. 
+        p Si desplegamos una de estas etiquetas, veremos la propiedad 
+            strong props
+            | , que también incluye la propiedad 
+            strong children
+            | , y esta última contiene los hijos de esa etiqueta, en este caso, texto plano.
+        img(src="../../assets/img/3-2-la-propiedad-children/12.webp" alt="example")
+
+        p Si somos observativos nos habremos dado cuenta que la propiedad 
+            strong children
+            |   del objeto que desplegamos, su array está dividido por 2 elementos.
+
+        p: code ['Curso de ', 'React']
+
+        p Veremos un poco como funciona esto, viendo que se renderiza para cada uno de estos 
+            strong children. 
+
+        p Lo primero que tenemos que tener en mente, es que al final nuestro código terminará siendo 
+            strong HTML
+            |   y en 
+            strong HTML
+            |   no podemos poner cualquier cosa como hijo, sino simplemente 
+            strong etiquetas
+            |   o un 
+            strong string.
+
+        p Entonces, independientemente del resultado, todo nuestro código deberá transformarse a esta sintaxis válida.
+
+        h3 Expresión evaluada con tipos de datos
+
+        p Vamos a ver, como se transforma cada uno de los tipos de datos que tenemos en 
+            strong JavaScript
+            | .       
+
+        h4 Tipos String y Number  
+        p En el primero de los casos veremos los tipos de dato 
+            strong String
+            |   y 
+            strong Number
+            |, que son los casos más fáciles evidentemente, ya que se transforman directamente a un texto y a un número.
+
+        img(src="../../assets/img/3-2-la-propiedad-children/23.webp" alt="example").has-mb
+        figure
+            img(src="../../assets/img/3-2-la-propiedad-children/24.webp" alt="example").img-md
+            figcaption En el caso de un 
+                strong Number
+                |   al momento de renderizarse a la pantalla, se convierte en un 
+                strong String,
+                |   pero si lo tratamos desde el código o consola seguirá siendo un 
+                strong Number
+                | .
+
+        h4 Tipos boolean, null, undefined 
+        p Miraremos lo que pasa al renderizar estos tipos de datos.       
+        img(src="../../assets/img/3-2-la-propiedad-children/25.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/26.webp" alt="example").img-md
+
+        p Como podemos observar este tipo de datos al renderizarse, se terminan transformando a un 
+            strong String vacio
+            | .
+
+        p Entonces estos 3 tipos de datos no se tranforman en nada, no se renderizan en nada.
+
+        p Conocer esto, es de gran utilidad para cuando estemos hablando del 
+            strong renderizado condicional
+            |   más adelante, porque, en muchas expresiones lo que haremos es devolver 
+            strong null
+            |   en el caso de que no nos interese pintar nada y otra cosa en el caso de que si.
+
+        p Esto nos permitirá gestionar nuestras etiquetas de una forma mucho más eficiente.    
+
+        h4 Tipo Object literal
+        p Cuando queramos renderizar un 
+            strong Objeto literal
+            |  miraremos algo curioso.
+
+        img(src="../../assets/img/3-2-la-propiedad-children/27.webp" alt="example").has-mb
+        figure 
+            img(src="../../assets/img/3-2-la-propiedad-children/28.webp" alt="example").img-md
+            figcaption Podemos ver que no se renderiza nada.
+
+        P Esto se debe a que tenemos un error, y si vamos a la consola podremos verlo.    
+        img(src="../../assets/img/3-2-la-propiedad-children/29.webp" alt="example")
+
+
+        p Nos dice que no puede generar ninguna de las expresiones que devuelva un objeto. Esto no es del todo cierto, ya que veremos que si que hay un tipo de objetos que podemos pasar como 
+            strong children
+            |  , ¿Cúal será?, pues evidentemente una 
+            strong etiqueta
+            |   un 
+            strong nodo
+            |   de este 
+            strong Virtual DOM
+            | .   
+
+        h4 Nodo del Virtual DOM 
+        p Veremos que un 
+            strong nodo (etiqueta)
+            |   del 
+            strong Virtual DOM
+            |   si que se puede renderizar al ponerse como expresión evaluada.
+        img(src="../../assets/img/3-2-la-propiedad-children/30.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/31.webp" alt="example").img-md
+
+        p.note Entonces las 
+            strong etiquetas
+            |   son el único tipo de objetos que podemos pasar como 
+            strong children (hijos)
+            | , cualquier otro objeto nos generará directamente un error.
+
+        h4 Funciones 
+        p ¿Qué pasa con las funciones?, miremos los ejemplos.
+
+        p: strong.ts-3 Función sin ejecutar 
+        img(src="../../assets/img/3-2-la-propiedad-children/32.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/33.webp" alt="example").img-md
+
+        p Como podemos ver, si que se renderiza una parte, pero la parte de la función no se muestra.
+
+        p Si checamos la consola podremos ver un 
+            strong warning
+            |   en lugar de un error.
+
+        img(src="../../assets/img/3-2-la-propiedad-children/34.webp" alt="example")
+
+        p Nos dice que las 
+            strong funciones
+            |   no son válidas como hijos de React, pero no nos da un 
+            strong error
+            | , sino un 
+            strong warning.
+
+        p Esto pasa porque 
+            strong React
+            |   interpreta que se nos ha olvidado ejecutar la función.
+
+        p: strong.ts-3 Función ejecutada
+
+        p Si nosotros ejecutamos la función podremos que es un objeto válido, ya que está devolviendo una 
+            strong etiqueta
+            | .         
+        img(src="../../assets/img/3-2-la-propiedad-children/35.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/31.webp" alt="example").img-md
+
+        h4 Arrays 
+        p El último de los casos del que tenemos que hablar es de los 
+            strong arrays
+            | .
+        p Los arrays son un 
+            strong tipo bastante especial dentro de JSX
+            |   y que se interpreta como una sucesión de hijos, ¿Qué quiere decir una sucesión de hijos?, pues lo veremos muy sencillamente en el siguiente ejemplo.
+
+        img(src="../../assets/img/3-2-la-propiedad-children/36.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/37.webp" alt="example").img-md
+
+        p Cuando JSX detecta un array, React lo que intenta es concatenar cada uno de los elementos del array y así pintar la versión final.
+
+        p ¿Y como se concatenan los elementos del array?, pues siguiendo las mismas reglas que tenemos hasta ahora, es decir, si agregamos los tipos de datos 
+            strong boolean, null y undefined
+            | , miraremos que no pintará nada, los ignorará porque ya sabemos que no renderizan nada, solo concatenará aquellos elementos del array que se puedan concatenar, que puedan generar una versión final.
+        img(src="../../assets/img/3-2-la-propiedad-children/38.webp" alt="example")
+        p Podemos ver no renderiza estos tipos de datos y concatena aquellos elementos que puedan generar una versión final.
+        img(src="../../assets/img/3-2-la-propiedad-children/37.webp" alt="example").img-md
+
+        p Si intentamos poner un simple 
+            strong objeto
+            |   miraremos que no renderizará nada, ya que como vimos anteriormente un objeto literal no se puede renderizar y nos devolverá un error.
+
+        img(src="../../assets/img/3-2-la-propiedad-children/39.webp" alt="example").has-mb
+        img(src="../../assets/img/3-2-la-propiedad-children/28.webp" alt="example").has-mb.img-md
+        img(src="../../assets/img/3-2-la-propiedad-children/40.webp" alt="example").has-mb
+
+        p Como podemos ver, se siguen las mismas reglas, y si ahora ponemos una función en lugar de un objeto, nos aparecerá un 
+            strong warning
+            |   diciendo que las funciones no son válidas como hijos de React.
+        img(src="../../assets/img/3-2-la-propiedad-children/41.webp" alt="example").has-mb
+        p Como podemos ver, se renderiza como habiamos visto anteriormente a diferencia de un objeto que no renderiza nada.
+        img(src="../../assets/img/3-2-la-propiedad-children/37.webp" alt="example").img-md
+        p Pero nos muestra un warning diciendo que las funciones no son válidas como hijos de react.
+        img(src="../../assets/img/3-2-la-propiedad-children/42.webp" alt="example").has-mb
+
+        p.note Cuando nosotros ponemos un array como expresión evaluda, lo que estamos diciendole a 
+            strong React
+            |   es que pinte una 
+            strong sucesión de elementos
+            |   y dependerá de cada uno de esos elementos lo que se genere como versión final, cada uno de esos elementos sigue todas las reglas que hemos visto hasta ahora para generar la versión final.
+
+        p Si ponemos una etiqueta como elemento del array, miraremos que si se concatenará, ya que recordemos que el único objeto que permite como hijos es una 
+            strong etiqueta o un nodo
+            | .
+        img(src="../../assets/img/3-2-la-propiedad-children/43.webp" alt="example")
+        p Como podemos observar esta concatenando la etiqueta con el resto de los elementos del array.
+        img(src="../../assets/img/3-2-la-propiedad-children/44.webp" alt="example").img-md
+
+        p Como podemos ver el código nos está marcando como error el poner una etiqueta como elemento de array y esto se debe por una serie de reglas que debemos de incluir y que veremos a lo largo del curso.
+
+        p Pero hay que quedarnos con esto, que pintar un array es como poner una sucesión de etiquetas de la siguiente forma.
+        img(src="../../assets/img/3-2-la-propiedad-children/45.webp" alt="example")
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Expresiones evaluadas'],[3,'Propiedad props'],[4,'Valores en children'],[5,'Expresiones evaluadas en children']]
     +submenu(submenuLinks)

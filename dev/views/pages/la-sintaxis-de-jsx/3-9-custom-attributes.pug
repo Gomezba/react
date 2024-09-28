@@ -5,13 +5,162 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+
+        p En el desarrollo moderno, a menudo es necesario utilizar atributos que no son estándar en HTML ni en React. Estos atributos, conocidos como 
+            strong custom attributes
+            | , permiten añadir funcionalidad adicional a los elementos HTML. Un ejemplo común es cuando los navegadores implementan nuevas características experimentales que pueden estar disponibles solo en ciertos navegadores y, aunque algunos se convierten en estándar, muchos otros se abandonan.
+
+        p A partir de 
+            strong React 16
+            | , se permite el uso de 
+            strong propiedades personalizadas (custom attributes)
+            |   en cualquier elemento JSX. Esto permite a los desarrolladores extender las capacidades de sus componentes de manera flexible.
+
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Uso de Custom Attributes en JSX
+        p Cualquier atributo personalizado que se invente puede ser usado en JSX y será renderizado en el DOM tal como se define.
+
+        p: strong Ejemplo:
+        div: pre: code.language-jsx
+            |&lt;div cualquiercosa='asd'&gt;&lt;/div&gt;
+
+        p Si inspeccionamos este elemento en el DOM, veremos que React lo renderiza tal cual:    
+
+        div: pre: code.language-html
+            |&lt;div cualquiercosa='asd'&gt;&lt;/div&gt;
+
+        p Esto es útil cuando deseamos agregar atributos experimentales o específicos para ciertos navegadores o tecnologías.    
+
+    article(id="3" class="content")
+        h2 Restricciones en los Custom Attributes
+
+        p Aunque puedes agregar cualquier atributo personalizado, hay una regla importante: los 
+            strong custom attributes
+            |   no deben estar en 
+            strong camelCase
+            | . Esto es porque 
+            strong HTML
+            |   utiliza atributos en 
+            strong minúsculas
+            |   y 
+            strong React
+            |   sigue este mismo patrón para diferenciarlos de las propiedades 
+            strong JSX
+            | , que sí pueden estar en 
+            strong camelCase
+            | . Si intentamos utilizar 
+            strong camelCase
+            | , 
+            strong React
+            |   nos mostrará un 
+            strong warning
+            | .
+
+        p: strong Ejemplo con advertencia:    
+        div: pre: code.language-jsx
+            |&lt;div cualquierCosa='asd'&gt;&lt;/div&gt;
+
+        p Este código genera el siguiente mensaje:
+
+        img(src="../../assets/img/3-9-custom-attributes/1.webp" alt="example").has-mb
+
+    article(id="4" class="content")
+        h2 Atributos estándar en HTML vs JSX
+
+        p React detecta cuando estamos intentando utilizar atributos estándar de HTML, como 
+            stron class
+            |   o 
+            strong for
+            | , en lugar de sus equivalentes en 
+            strong JSX (className y htmlFor respectivamente)
+            | . Si intentamos usar estos atributos de 
+            strong HTML
+            | , 
+            strong React
+            |   lo tratará como un 
+            strong custom attribute
+            |   y nos advertirá sobre el uso incorrecto, aunque no producirá un error crítico.
+
+        p: strong Ejemplo: 
+        div: pre: code.language-jsx
+            | &lt;div class='title'&gt;Título&lt;/div&gt;
+
+        p Este código genera la advertencia:    
+        img(src="../../assets/img/3-9-custom-attributes/2.webp" alt="example")
+        p Aquí, React está indicando que debemos utilizar 
+            strong className
+            |   en lugar de 
+            strong class
+            | , ya que el segundo es un atributo 
+            strong HTML
+            |   y no una propiedad 
+            strong JSX
+            | .
+
+    article(id="5" class="content")
+        h2 Implicaciones de los Custom Attributes
+
+        p Cuando usamos un 
+            strong custom attribute
+            | , 
+            strong React
+            |   lo renderiza directamente en el 
+            strong DOM
+            |   como parte del elemento 
+            strong HTML
+            | . Sin embargo, debemos tener cuidado al usar atributos que 
+            strong React
+            |   ya reconoce, ya que hacerlo incorrectamente puede causar advertencias y dificultar la depuración.
+
+        p Por ejemplo, si usamos 
+            strong class
+            |   en lugar de 
+            strong className
+            | , técnicamente funcionará, pero estamos haciendo un mal uso de las convenciones de 
+            strong React
+            | , y esto puede generar confusión.
+
+    article(id="6" class="content")
+        h2 Buenas Prácticas
+
+        ul 
+            li 
+                p 
+                    strong Evitar usar atributos reservados de HTML como custom attributes
+                    | : Atributos como 
+                    strong.ts-1 class
+                    |   y 
+                    strong.ts-1 for
+                    |   tienen sus equivalentes en 
+                    strong JSX (className y htmlFor)
+                    | . Utilizar los atributos de HTML directamente genera advertencias y puede llevar a errores en grandes proyectos.
+
+            li 
+                p 
+                    strong Mantener los custom attributes en minúsculas
+                    | : Siguiendo la convención de React y HTML, los custom attributes deben escribirse en minúsculas para evitar advertencias.
+
+    article(id="7" class="content")
+        h2 Conclusión
+
+        p El uso de 
+            strong custom attributes
+            |   en 
+            strong JSX
+            |   permite extender la funcionalidad de los componentes y experimentar con nuevas características del navegador. Sin embargo, es importante seguir las convenciones de 
+            strong React
+            | , como utilizar los nombres de propiedades correctos (
+            strong className
+            |   en lugar de 
+            strong class
+            | ) y evitar usar 
+            strong camelCase
+            |   en atributos personalizados. Al hacerlo, evitamos advertencias innecesarias y mantenemos nuestro código limpio y coherente.
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Uso de Custom Attributes en JSX'],[3,'Restricciones en los Custom Attributes'],[4,'Atributos estándar en HTML vs JSX'],[5,'Implicaciones de los Custom Attributes'],[6,'Buenas Prácticas'],[7,'Conclusión']]
     +submenu(submenuLinks)

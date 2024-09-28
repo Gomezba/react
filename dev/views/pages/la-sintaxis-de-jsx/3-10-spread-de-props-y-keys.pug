@@ -5,13 +5,221 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+
+        p En esta lección veremos un tip sobre otra forma alternativa de enviar props a nuestros componentes utilizando el 
+            strong spread operator
+            | . 
+
+        p Este uso verás que es muy común en React y normalmente se da cuando ya tenemos las propieades previamente almacenadas en un objeto y no queremos tener que estar pasandolas una por una.
+
+        p A su vez explicaremos superficialmente el uso de 
+            strong key
+            | , pero no abarcaremos a profundidad ya que de momento con el conocimiento que tenemos, no es sufiente para ver su uso.
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Agregando props sin spread operator
 
+        p Imaginemos que estamos construyendo un formulario con 3 inputs (nombre, email, password) y tenemos los valores de estos inputs en un array de objetos.
+
+        div: pre: code.language-jsx 
+            |const inputs = [
+            |	{
+            |		name: 'name',
+            |		type: 'text',
+            |		placeholder: 'Nombre'
+            |	},
+            |	{
+            |		name: 'email',
+            |		type: 'email',
+            |		placeholder: 'Correo electronico'
+            |	},
+            |	{
+            |		name: 'password',
+            |		type: 'password',
+            |		placeholder: 'Contraseña'
+            |	}
+            |]
+
+        p Para poder agregar las props de este objeto a nuestros inputs, tenemos la siguiente manera.
+
+        div: pre: code.language-jsx 
+            |const app = (
+            |	&lt;form&gt;
+            |		&lt;input
+            |			type={inputs[0].type}
+            |			name={inputs[0].name}
+            |			placeholder={inputs[0].placeholder}
+            |		/&gt;
+            |		&lt;input
+            |			type={inputs[1].type}
+            |			name={inputs[1].name}
+            |			placeholder={inputs[1].placeholder}
+            |		/&gt;
+            |		&lt;input
+            |			type={inputs[2].type}
+            |			name={inputs[2].name}
+            |			placeholder={inputs[2].placeholder}
+            |		/&gt;
+            |	&lt;/form&gt;
+            |)
+
+        img(src="../../assets/img/3-10-spread-de-props-y-keys/1.webp" alt="example")
+
+        p Esta claro que esta no sería una forma mantenible y fácil de ocupar, en estos casos podemos ocupar el 
+            strong spread operator
+            | .
+
+    article(id="3" class="content")
+        h2 Agregando props con spread operator
+
+        p Este uso es de lo más común en React y normalmente se usa cuando ya tenemos las propiedades previamente almacenadas en un objeto y no queremos estar pasandolas una por una como en el ejemplo anterior.
+
+        p Ahora si agreguremos nuestras props utilizando 
+            strong spread operator
+            | . 
+
+        div: pre: code.language-jsx 
+            |const app = (
+            |	&lt;form&gt;
+            |		&lt;input {...inputs[0]} /&gt;
+            |		&lt;input {...inputs[1]} /&gt;
+            |		&lt;input {...inputs[2]} /&gt;
+            |	&lt;/form&gt;
+            |)
+        img(src="../../assets/img/3-10-spread-de-props-y-keys/1.webp" alt="example")
+
+        p Como vemos esto es una forma muchísimo mas comoda que estar pasando las props una por una, pero tenemos que tener cuidado con la 
+            strong sobreescritura de props
+            | . 
+
+    article(id="4" class="content")
+        h2 Cuidado con la sobreescritura de props al utilizar spread operator
+
+        p Hay que saber que las props se pueden llegar a repetir solo que por cascada se eligirá la que este despúes.
+
+        p Imaginemos que queremos cambiar el tipo del input name a checkbox.
+
+        div: pre: code.language-jsx 
+            |const app = (
+            |	&lt;form&gt;
+            |		&lt;input type='checkbox' {...inputs[0]} /&gt;
+            |		&lt;input {...inputs[1]} /&gt;
+            |		&lt;input {...inputs[2]} /&gt;
+            |	&lt;/form&gt;
+            |)
+
+        p Si vemos la pantalla, miraremos que no se ha cambiado el tipo de input a checkbox.
+
+        img(src="../../assets/img/3-10-spread-de-props-y-keys/1.webp" alt="example")
+
+        p Esto pasa por que se esta sobreescribiendo la prop por la que está después, necesitamos agregar la prop después del spread operator para que ahora si se aplique.
+
+        div: pre: code.language-jsx 
+            | &lt;input {...inputs[0]} type='checkbox' /&gt;
+
+        img(src="../../assets/img/3-10-spread-de-props-y-keys/2.webp" alt="example").has-mb
+
+    article(id="5" class="content")
+        h2 Renderizado con un array 
+        p Quizás hayamos pensado en utilizar un método para recorrer el array y así poder renderizar cada uno de los inputs.
+
+        div: pre: code.language-jsx
+            |const inputsRendered = inputs.map((input) =&gt; &lt;input {...input}&gt;&lt;/input&gt;)
+            |
+            |const app = &lt;form&gt;{inputsRendered}&lt;/form&gt;
+        img(src="../../assets/img/3-10-spread-de-props-y-keys/1.webp" alt="example").has-mb
+
+        p En realidad esto sería lo más práctico, pero si vemos la consola, miraremos un 
+            strong warning
+            | . 
+        img(src="../../assets/img/3-10-spread-de-props-y-keys/3.webp" alt="example").has-mb
+
+        p El warning nos dice, que cada hijo de una lista o un array tiene que tener su propia 
+            strong unique "key" prop
+            | , es decir, tiene que tener una 
+            strong key
+            |   única.
+
+    article(id="6" class="content")
+        h2 Key prop 
+
+        p ¿Qué significa esto de la key única?, pues es una propiedad especial que tiene React para cuando estamos tratando una lista de elementos similares, poder distinguir efectivamente cúal es uno y cúal es otro.
+
+        h3 ¿Que valor puede tener key?
+        p Como se mencionó tiene que ser un valor único. 
+
+        p Cuando estamos tratando con un array, un error que suelen cometer los programadores juniors, es establecer el valor de una 
+            strong "key"
+            |   como el índice de cada elemento del array. 
+
+
+        div: pre: code.language-jsx
+            |const inputsRendered = inputs.map((input,index) =&gt; &lt;input key={index} {...input}&gt;&lt;/input&gt;)
+            |
+            |const app = &lt;form&gt;{inputsRendered}&lt;/form&gt;
+
+        img(src="../../assets/img/3-10-spread-de-props-y-keys/4.webp" alt="example")
+
+        p Esto funciona y ya no nos muestra un warning, pero esto no es válido, no es lo que debemos hacer.
+
+        p Lo que tenemos que buscar es uno de los parámetros del objeto que nos identifique univocamente cúal es el campo.
+
+        div: pre: code.language-jsx 
+            |const inputs = [
+            |	{
+            |		name: 'name', // El name si que es único ya que no se puede repetir en un formulario.
+            |		type: 'text', // Type text se puede repetir así que no es válido
+            |		placeholder: 'Nombre' // Placeholder puede funcionar como algo único pero no es lo más ideal.
+            |	},
+            |	{
+            |		name: 'email',
+            |		type: 'email',
+            |		placeholder: 'Correo electronico'
+            |	},
+            |	{
+            |		name: 'password',
+            |		type: 'password',
+            |		placeholder: 'Contraseña'
+            |	}
+            |]
+
+        p Entonces lo que debemos hacer es establecer 
+            strong "name"
+            |   como 
+            strong "key"
+            |   para cada uno de los elementos de la lista.
+
+        div: pre: code.language-jsx 
+            |const inputsRendered = inputs.map((input) =&gt; &lt;input key={input.name} {...input}&gt;&lt;/input&gt;)
+            |
+            |const app = &lt;form&gt;{inputsRendered}&lt;/form&gt;
+        img(src="../../assets/img/3-10-spread-de-props-y-keys/4.webp" alt="example")
+
+        p Puede que hasta aquí nos quedemos preguntandonos, pero bueno para que realmente sirve esta key y porque existe este key.
+
+        p Este key no se renderiza en el DOM, solo se utiliza internamente por React, así que solo lo podremos ver en la consola.
+
+        div: pre: code.language-jsx 
+            |const inputsRendered = inputs.map((input) =&gt; (
+            |	&lt;input key={input.name} {...input}&gt;&lt;/input&gt;
+            |))
+            |
+            |// Imprimimos por consola
+            |console.log(inputsRendered[0])
+            |
+            |const app = &lt;form&gt;{inputsRendered}&lt;/form&gt;
+        img(src="../../assets/img/3-10-spread-de-props-y-keys/5.webp" alt="example")
+
+        p Esta propiedad solo la podremos ver por consola, y lamentablemente es todo lo que podemos explicar hasta ahora sobre esta prop, ya que el conocimiento que tenemos hasta este punto no es suficiente.
+
+        p Así que no podremos explicar para que sirve esta prop, pero cuando veamos los estados (states) entenderás perfectamente cúal es la problematica de esto, pero de momento nos tiene que ir sonando esta prop.
+
+        p Dejaremos por el aire para que sirve esta prop hasta que veamos los estados, y así veremos la diferencia entre poner bien y poner mal este 
+            strong key
+            | . 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Agregando props sin spread operator'],[3,'Agregando props con spread operator'],[4,'Cuidado con la sobreescritura de props al utilizar spread operator'],[5,'Renderizado con un array'],[6,'Key prop']]
     +submenu(submenuLinks)
