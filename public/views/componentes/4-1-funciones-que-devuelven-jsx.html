@@ -344,18 +344,122 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>En la sección anterior vimos lo que es la sintaxis de JSX sobre como podemos crear nuestras etiquetas y vimos unas de las premisas de la que parte toda la libreria de React, una etiqueta es un objeto que representa un nodo del Virtual DOM y podemos manipularlo como tal, por ejemplo almacenandolo en una variable.</p>
+            <p>A la hora de crear nuestras interfaces es muy común ver que muchas partes de nuestro HTML se repiten constantemente simplemente cambiando algunos pequeños parámetros.</p>
+            <p>Así que en toda esta sección nos enfocaremos más componentizar nuestras interfaces para que sean reutilizables.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Estrictura no reutilizable </h2>
+            <p>Podemos tener una pequeña interfaz de gestión de usuarios que muestre el nombre, rol y estado (activo o falso).</p>
+            <p>Primeramente veremos la parte de una estructura que no es reutilizable.</p>
+            <div class="has-mb">
+              <pre><code class="language-jsx"> const app = (
+	&lt;div className='list'&gt;
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;Joel Gómez&lt;/span&gt;
+			&lt;span className='role'&gt;Profesor&lt;/span&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+)</code></pre>
+            </div>
+            <div>
+              <pre><code class="language-css"> .list {
+	max-width: 500px;
+	margin-inline: auto;
+	padding: 1rem;
+}
+
+.user {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border: 1px solid grey;
+	padding: 1rem;
+	border-radius: 1rem;
+	margin-bottom: 1rem;
+}
+
+.name {
+	font-weight: bold;
+}
+
+.role {
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	background-color: #61dafb;
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.5rem;
+}</code></pre>
+            </div><img src="../../assets/img/4-1-funciones-que-devuelven-jsx/1.webp" alt="example">
+            <p>El problema viene cuando queremos más usuarios, tenemos que volver a repetir el mismo código para un usuario más.</p>
+            <div>
+              <pre><code class="language-jsx"> const app = (
+	&lt;div className='list'&gt;
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;Joel Gómez&lt;/span&gt;
+			&lt;span className='role'&gt;Profesor&lt;/span&gt;
+		&lt;/div&gt;
+        &lt;div className='user'&gt;
+			&lt;span className='name'&gt;Israel Vázquez&lt;/span&gt;
+			&lt;span className='role'&gt;Profesor&lt;/span&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+)</code></pre>
+            </div><img src="../../assets/img/4-1-funciones-que-devuelven-jsx/2.webp" alt="example">
+            <p>El problema aumenta más, cuando se deciden agregar más adiciones a nuestra estructura, como el estado del usuario, de igual forma tenemos que estar volviendo a escribir de nuevo el mismo código para cada uno de los usuarios.</p>
+            <div>
+              <pre><code class="language-jsx"> const app = (
+	&lt;div className='list'&gt;
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;Joel Gómez&lt;/span&gt;
+			&lt;span className='active'&gt;Activo&lt;/span&gt;
+			&lt;span className='role'&gt;Profesor&lt;/span&gt;
+		&lt;/div&gt;
+        &lt;div className='user'&gt;
+			&lt;span className='name'&gt;Israel Vázquez&lt;/span&gt;
+			&lt;span className='active'&gt;Activo&lt;/span&gt;
+			&lt;span className='role'&gt;Profesor&lt;/span&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+)</code></pre>
+            </div><img src="../../assets/img/4-1-funciones-que-devuelven-jsx/3.webp" alt="example">
+            <p>La manera en que estamos manejando esto, no es reutilizable.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Estructura reutilizable </h2>
+            <p>Si volvemos a la premisa de la que hemos partido en este capítulo, una etiqueta <strong>JSX</strong> es un <strong>objeto</strong> y se puede almacenar en una variable y todo lo que se puede almacenar en una variable se puede devolver como el <strong>resultado de una función</strong>, esto es justo lo que haremos.</p>
+            <p>Crearemos una función que nos permita imprimir el usuario.</p>
+            <div>
+              <pre><code class="language-jsx">const getUser = ({ name, state = 'Activo', role }) =&gt; {
+	return (
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;{name}&lt;/span&gt;
+			&lt;span className='active'&gt;{state}&lt;/span&gt;
+			&lt;span className='role'&gt;{role}&lt;/span&gt;
+		&lt;/div&gt;
+	)
+}
+
+const app = (
+	&lt;div className='list'&gt;
+		{getUser({ name: 'Joel Gómez', role: 'Profesor' })}
+		{getUser({ name: 'Israel Vázquez', role: 'Profesor' })}
+	&lt;/div&gt;
+)</code></pre>
+            </div><img src="../../assets/img/4-1-funciones-que-devuelven-jsx/3.webp" alt="example">
+            <p>Hemos creado una función parámetrizada que devuelve nuestra estructura, con esto ya hemos conseguido una pequeña reutilización dentro de nuestro código, pero esto solo es el principio, solo es una forma sencilla que tenemos de reutilizar este fragmento de JSX, pero todavia nos falta algo más para poder decir que esto es un componente y es que esta sintaxis desde luego nos sirve para reutilizar pero no es nada comoda para estar trabajando con ella.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Estructura no reutilizable</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Estructura reutilizable</a></li>
           </ul>
         </nav>
       </section>
