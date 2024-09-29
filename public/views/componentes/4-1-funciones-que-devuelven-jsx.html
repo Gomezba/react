@@ -431,15 +431,13 @@
             <p>Si volvemos a la premisa de la que hemos partido en este capítulo, una etiqueta <strong>JSX</strong> es un <strong>objeto</strong> y se puede almacenar en una variable y todo lo que se puede almacenar en una variable se puede devolver como el <strong>resultado de una función</strong>, esto es justo lo que haremos.</p>
             <p>Crearemos una función que nos permita imprimir el usuario.</p>
             <div>
-              <pre><code class="language-jsx">const getUser = ({ name, state = 'Activo', role }) =&gt; {
-	return (
-		&lt;div className='user'&gt;
-			&lt;span className='name'&gt;{name}&lt;/span&gt;
-			&lt;span className='active'&gt;{state}&lt;/span&gt;
-			&lt;span className='role'&gt;{role}&lt;/span&gt;
-		&lt;/div&gt;
-	)
-}
+              <pre><code class="language-jsx">const getUser = ({ name, state = 'Activo', role }) =&gt; (
+	&lt;div className='user'&gt;
+		&lt;span className='name'&gt;{name}&lt;/span&gt;
+		&lt;span className='active'&gt;{state}&lt;/span&gt;
+		&lt;span className='role'&gt;{role}&lt;/span&gt;
+	&lt;/div&gt;
+)
 
 const app = (
 	&lt;div className='list'&gt;
