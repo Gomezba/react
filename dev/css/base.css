@@ -286,7 +286,7 @@ body {
 div:has(pre code) {
   max-width: 31ch;
   padding: var(--pd-small);
-  background-color: #282936;
+  background-color: #1e1e2a;
 
   @media (width > 900px) {
     max-width: 70ch;
