@@ -344,18 +344,44 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>Ya hemos modularizado nuestros distintos componentes, Title, UserRow y UsersList.</p>
+            <p>En esta lección nos enfocaremos en el componente App.</p>
+            <p>Hasta este punto hemos trabajado con una simple etiqueta JSX como app, pero esto no es correcto,a pesar de que funciona.</p>
+            <p>El componente App es el que actua como nodo raíz del <strong>Virtual DOM</strong>. </p>
+            <p>Así que necesitamos convertir nuestra simple etiqueta <strong>app</strong> en un componente <strong>App</strong>.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Creando componente App</h2>
+            <p>Necesitamos convertir nuestra simple etiqueta <strong>app</strong> aun componente <strong>App</strong> y renderizarlo en el root como componente.</p><img src="../../assets/img/4-6-el-componente-app/1.webp" alt="example">
+            <p>Como podemos ver esto funciona correctamente. </p><img src="../../assets/img/4-6-el-componente-app/2.webp" alt="example">
+            <h3>¿Por qué tenemos que crear un componente App si realmente esto es una variable?</h3>
+            <p>Cuando veamos las siguientes secciones, veremos que los componentes pueden tener su propio ciclo de vida y este componente <strong>App</strong> no es una escepción.</p>
+            <p>Este <strong>App</strong> va ser toda la raíz de nuestro <strong>Virtual DOM</strong> y en el tendremos que utilizar ciertas configuraciones, cuando tengamos que utilizar temas como los <strong>estados</strong> y otras series de cosas, todas las configuraciones de ello, que sean globales no iran en el <strong>main.jsx</strong> sino que se aplicaran directamente al componente <strong>App</strong>. </p>
+            <p>Actualmente con el conocimiento que tenemos hasta ahora, es dfícil explicar porque este componente <strong>App</strong> es tan importante, pero lo iremos aprendiendo, a medida que avancemos.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>¿Dónde poner el componente App? </h2>
+            <p>Mucha gente defiende que <strong>App</strong> al ser un componente deberia ir dentro de la carpeta <strong>componentes</strong>. </p>
+            <p>Otros muchos defienden que debe ir en la raíz de <strong>src</strong>, porque a pesar de ser un componente, es un componente especial.</p>
+            <p>Pero la realidad de todo esto es que da exactamente igual de donde lo pongamos.</p>
+            <p>Nosotros optaremos por colocarlo en la raíz de <strong>"src"</strong>. </p>
+            <p>Así que crearemos nuestro archivo <strong>App.jsx</strong> en <strong>PascalCase</strong> como habiamos dicho anteriormente. </p><img class="img-md" src="../../assets/img/4-6-el-componente-app/3.webp" alt="example">
+            <p>Dentro de este archivo colocaremos todo lo que sea necesario para que funcione este componente <strong>App.</strong></p><img src="../../assets/img/4-6-el-componente-app/4.webp" alt="example">
+            <p>En el archivo <strong>main.jsx</strong> importaremos nuestro componente <strong>App.</strong></p><img src="../../assets/img/4-6-el-componente-app/5.webp" alt="example">
+            <p>Hasta el momento lo único que hemos logrado con esta acción, es separar conceptos, por un lado tenemos el nodo raíz del <strong>Virtual DOM</strong> modularizado en un archivo <strong>App.jsx</strong> y por otro lado tenemos el proceso de renderización de un componente <strong>App</strong> en el DOM, es decir, por un lado definimos y por el otro trasladamos al Dom.</p>
+            <p>Pero como hemos dicho pronto hiremos entendiendo que esto no es solo una mera cuestión de mantener estas 2 cosas por separado.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Creando componente App</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">¿Dónde poner el componente App?</a></li>
           </ul>
         </nav>
       </section>

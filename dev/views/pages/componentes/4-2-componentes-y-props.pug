@@ -5,13 +5,296 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
 
+        p Un 
+            strong componente
+            |   en 
+            strong React
+            |   es esencialmente una 
+            strong función que recibe un conjunto de propiedades o props y devuelve una estructura de JSX
+            | . Si bien esto suena muy similar a una función que simplemente devuelve JSX, lo que distingue a los componentes es la sintaxis más potente y estructurada que nos ofrece React para trabajar con estos elementos. Los componentes permiten reutilizar código, manejar el estado interno, y gestionar propiedades para crear interfaces interactivas y dinámicas.
+
+        p En este capítulo estaremos convirtiendo el código de reutilización que vimos en el capítulo anterior, a un componente.
+
+        div: pre: code.language-jsx
+            |const getUser = ({ name, state = 'Activo', role }) =&gt; (
+            |	&lt;div className='user'&gt;
+            |		&lt;span className='name'&gt;{name}&lt;/span&gt;
+            |		&lt;span className='active'&gt;{state}&lt;/span&gt;
+            |		&lt;span className='role'&gt;{role}&lt;/span&gt;
+            |	&lt;/div&gt;
+            |)
+            |
+            |const app = (
+            |	&lt;div className='list'&gt;
+            |		{getUser({ name: 'Joel Gómez', role: 'Profesor' })}
+            |		{getUser({ name: 'Israel Vázquez', role: 'Profesor' })}
+            |	&lt;/div&gt;
+            |)
+
+        p Al concluir entenderemos la sintaxis de un componente y como pasar sus props.    
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Sintaxis de un componente
+
+        h3 Nombres declarativos para componentes
+        p El nombre de un componente debe ser declarativo, es decir, debe describir qué hace el componente en lugar de cómo lo hace. Esto sigue la filosofía declarativa de React, donde la intención es centrarse en qué debe mostrarse o suceder, dejando los detalles de implementación como secundarios.
+
+        p: strong Imperativo vs. Declarativo:
+        ul 
+            li 
+                strong Imperativo
+                | : MostrarBoton()
+            li 
+                strong Declarativo
+                | : Boton
+        p Esto hace que el código sea más legible y fácil de entender para otros desarrolladores o incluso para ti mismo en el futuro.
+
+        h3 Los componentes deben comenzar con mayúscula
+
+        p En 
+            strong React
+            | , todos los componentes deben tener nombres que empiecen con una letra mayúscula. Esto es una convención importante porque React usa este detalle para diferenciar entre un elemento nativo de HTML (como 
+            strong &lt;div/&gt;
+            | , 
+            strong &lt;h1/&gt;
+            | , etc.) y un componente React creado por el usuario como se suele decir. Si tu componente se llama, por ejemplo, 
+            strong "componente"
+            |   con una letra minúscula, React lo trataría como si fuera una etiqueta 
+            strong HTML
+            |   personalizada en lugar de un componente.
+
+        h3 El uso del return en los componentes
+        p Todo componente debe incluir un return, ya que este es el que se encarga de devolver el JSX que se va a renderizar en la interfaz. Si no se incluye, el componente no mostrará nada.  
+
+        p Hasta este punto nuestro código quedará de la siguiente manera. 
+        ul 
+            li Nombre de componente de manera declarativa "User" 
+            li Primer letra mayúscula "U" 
+            li Uso de return para devolver JSX que es un objeto 
+
+        div: pre: code.language-jsx
+            |const User = () =&gt; {
+            |	return (
+            |    
+            |	)
+            |}
+
+        h3 Uso de props
+        p Los componentes pueden recibir un parámetro llamado 
+            strong props
+            | , que es un 
+            strong objeto
+            |   que contiene todas las propiedades que se le pasan al componente. Las 
+            strong props
+            |   son una forma de hacer que los componentes sean dinámicos y reutilizables, ya que permiten pasar datos de un componente padre a un componente hijo.
+
+        p: strong Ejemplo básico de props:
+
+        div: pre: code.language-jsx
+            |const User = (props) =&gt; {
+            |	return &lt;p&gt;Hola, {props.nombre}&lt;/p&gt;
+            |}
+
+        p Aquí, 
+            strong props
+            |   es un objeto que puede contener múltiples propiedades como 
+            strong nombre
+            | , 
+            strong edad
+            | , etc
+
+        p Para acceder a cada propiedad, usamos la sintaxis, por ejemplo 
+            strong props.nombre
+            | .   
+
+        p Entonces, sabiendo esto, nuestro componente quedará de la siguiente manera.
+
+        div: pre: code.language-jsx
+            |//'Saldrá un warning  de eslint -> name' is missing in props validation eslint (react/prop-types)
+            |const User = (props) =&gt; {
+            |	return (
+            |		&lt;div className='user'&gt;
+            |			&lt;span className='name'&gt;{props.name}&lt;/span&gt; 
+            |			&lt;span className='active'&gt;{props.state}&lt;/span&gt; 
+            |			&lt;span className='role'&gt;{props.role}&lt;/span&gt; 
+            |		&lt;/div&gt;
+            |	)
+            |}
+
+        p.des-code Nos aparece un warning y un error de eslint.    
+
+        p Si miramos como se ve nuestro componente en el editor de código miraremos mejor el warning y el error. 
+
+        img(src="../../assets/img/4-2-componentes-y-props/1.webp" alt="example")
+
+        p.ts-1 El mensaje de warning indica que 
+            strong Fast Refresh
+            |   solo puede funcionar correctamente cuando el archivo que estás editando tiene exportaciones (exports).  Esto sucede porque Fast Refresh necesita saber qué partes del código son módulos exportables para poder actualizarlos selectivamente. Si tienes componentes en un archivo que no tiene ningún export, React no puede identificar qué necesita actualizarse.
+
+        p.ts-1 Para quitar este warning basta con poner un export a nuestro componente, pero no lo haremos ya que aún no vemos la modularización de nuestros componentes, pero ya sabemos como solucionarlo.
+
+        p.ts-1 El error que nos dá es de eslint y más adelante en este mismo capítulo explicaremos que es y como solucionarlo.  
+
+        p De vuelta con el objeto 
+            strong props
+            | , para que nos quede mas claro cuando ocupamos 
+            strong.ts-1 props.name
+            |   
+            strong.ts-1 props.state
+            |   y 
+            strong.ts-1 props.role.
+
+        p Lo que estamos haciendo es acceder a las propiedades del objeto 
+            strong props.
+
+        p Este objeto 
+            strong props
+            | ,  
+            strong React
+            |   lo genera automáticamente cuando el componente recibe props (propiedades), y estas se pasan desde el componente padre al hijo. Esto lo veremos a continuación.       
+
+    article(id="3" class="content")
+        h2 Sintaxis de Ejecución del Componente
+
+        h3 Los componentes se ejecutan como una etiqueta JSX
+
+        p Una de las razones por las que los componentes se ejecutan como si fueran etiquetas 
+            strong JSX 
+            |   (por ejemplo, 
+            strong &lt;MiComponente /&gt;)
+            |   es porque esta sintaxis hace que sea fácil identificar qué partes del código son componentes personalizados creados por el usuario, en lugar de etiquetas HTML estándar.
+
+        p Esto es muy útil desde un punto de vista visual, ya que ayuda a diferenciar de manera clara los elementos nativos de HTML de los componentes creados para nuestra aplicación.
+
+        p: strong Ejemplo de uso: 
+        div: pre: code.language-jsx
+            | &lt;MiComponente /&gt;
+
+        h3 Pasando props al ejecutar un componente 
+        p Un componente es una etiqueta JSX y las etiquetas JSX pueden recibir props y las props en JSX se pasan a través de la etiqueta de apertura y de esta manera se transmiten al objeto props. 
+
+        p Así ejecutariamos nuestro componente 
+            strong User
+            |   que tenemos hasta ahora.
+
+        div: pre: code.language-jsx
+            |const User = (props) =&gt; {
+            |	return (
+            |		&lt;div className='user'&gt;
+            |			&lt;span className='name'&gt;{props.name}&lt;/span&gt;
+            |			&lt;span className='active'&gt;{props.state}&lt;/span&gt;
+            |			&lt;span className='role'&gt;{props.role}&lt;/span&gt;
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |const app = (
+            |	&lt;div className='list'&gt;
+            |       //Así ejecutamos nuestro componente pasandole sus props
+            |		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+            |		&lt;User name='Israel Vázquez' role='Profesor' /&gt;
+            |	&lt;/div&gt;
+            |)
+
+
+        p.ts-2 Como podemos ver pasamos sus 
+            strong props
+            |   en el componente padre (Aquí es cuando se crea el 
+            strong objeto props
+            |   cuando ejecutamos el componente), y estas props se pasan a los hijos.
+
+        p Cuando usas 
+            code &lt;User name='Joel Gómez' /&gt;
+            | , estás pasando una propiedad llamada 
+            strong name
+            |   con el valor 
+            strong 'Joel Gómez'
+            |   al componente 
+            strong User
+            | . React toma todas las propiedades que se pasan al componente y las agrupa en un objeto llamado 
+            strong props
+            | . Así, 
+            strong.ts-1 props.nombre
+            |   será igual a 
+            strong.ts-1 'Joel Gómez'
+            |   dentro del componente 
+            strong User
+            | .     
+
+        p Para ver mas claro el objeto 
+            strong props
+            |   lo imprimiremos por consola para ver que está guardando las props que le pasamos al momento de ejecutar el componente.
+
+        div: pre: code.language-jsx 
+            |//Props se crea cuando ejecutamos el componente y es ahí donde se agregan las props
+            |const User = (props) =&gt; {
+            |	// Mostramos por consola el objeto props
+            |	console.log(props)
+            |	return (
+            |		&lt;div className='user'&gt;
+            |			&lt;span className='name'&gt;{props.name}&lt;/span&gt;
+            |			&lt;span className='active'&gt;{props.state}&lt;/span&gt;
+            |			&lt;span className='role'&gt;{props.role}&lt;/span&gt;
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |const app = (
+            |	// Al ejecutar el componente le pasamos las props al objeto props
+            |	&lt;div className='list'&gt;
+            |		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+            |		&lt;User name='Israel Vázquez' role='Profesor' /&gt;
+            |	&lt;/div&gt;
+            |)
+        p Podemos ver que el objeto 
+            strong props
+            |   guarda las propiedades que le pasamos al momento de ejecutar el componente.        
+        img(src="../../assets/img/4-2-componentes-y-props/2.webp" alt="example").has-mb
+
+    article(id="4" class="content")
+        h2 Quitando warning de eslint react/prop-types
+
+        p Que significan estos errores que nos da ESLint.
+        img(src="../../assets/img/4-2-componentes-y-props/3.webp" alt="example")
+
+        p Bueno, pues, React nos esta recomendado utilizar una libreria muy famosa dentro de React llamada 
+            strong react/prop-types
+            | , que se utiliza para tipar los componentes, para poder decirle que parámetros tiene ya que JavaScript como tal no permite marcar los parámetros que tiene este props, es decir utilizando JavaScript vanilla, no podemos indicarle que propiedades hay y cuales no. Tenemos que ser nosotros quienes controlemos eso.
+
+        p  Esta libreria es una libreria de terceros no es propia de React ni se le parece y realmente no se recomienda utilizar, ya que hay estrategias para evaluar estas propiedades si es que queremos hacerlo y como dejar todo esto un poquito más funcional sin necesidad de recurrir a librerias de terceros.
+
+        p De momento lo que tenemos que hacer es que ESLint no nos marque este error, para eso debemos de poner la regla de 
+            strong "react/prop-types"
+            |   como 
+            strong 'off'
+            |   dentro de las reglas del archivo de configuración de ESLint. 
+
+        img(src="../../assets/img/4-2-componentes-y-props/4.webp" alt="example").img-md
+
+        p De esta manera ya no nos molesta con el error.
+        img(src="../../assets/img/4-2-componentes-y-props/5.webp" alt="example").has-mb
+
+        p El problema que podemos tener ahora es que nos podemos equivocar en el nombre de las props, pero esto es algo que estaremos viendo despúes con técnicas que podemos hacer para controlar esto.
+        img(src="../../assets/img/4-2-componentes-y-props/6.webp" alt="example").has-mb
+
+
+    article(id="5" class="content")
+        h2 ¿Por qué props es un objeto y no una sucesión de parámetros?
+
+        p Quizás te hayas preguntado ¿Por qué las props de un componente son un objeto? ¿Por qué no nos permiten ponerlas como una sucesión de parámetros como se hace en una función?.
+
+        p Lo primero es que si ponemos las props como una sucesión de parámetros, estariamos obligando a pasar esas props siempre en el mismo orden.
+
+        div: pre: code.language-jsx 
+            | const Componente = (prop1, prop2, prop3) => {}
+
+        p Si React hubiera optado por esa sintaxis, nos veriamos obligados a siempre pasar las props en ese orden.
+
+        p Otra cosa, es que al decidir React que las props fueran un objeto, nosotros podemos omitir alguna prop y esta no se pintaria.
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Sintaxis de un componente'],[3,'Sintaxis de Ejecución del Componente'],[4,'Quitando warning de eslint react/prop-types'],[5,'¿Por qué props es un objeto y no una sucesión de parámetros?']]
     +submenu(submenuLinks)

@@ -344,18 +344,73 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>Hasta este momento, puede que parezca que nuestro componente <strong>UserRow</strong> no tenga un problema de legibilidad pero evidentemente es que este <strong>UserRow</strong> todavia es un componente demasiado básico, problamente cuando estemos tratando con React, empezaremos a trabajar en un comportamiento dinámico para este <strong>UserRow</strong>, probablemente queramos añadirle más campos a esta tabla de usuarios, porque hasta este momento, solo tiene el nombre, el estado y el rol. </p>
+            <p>Entonces es importante empezar a pensar en React y esto implica empezar a pensar de quien es cada responsabilidad.</p>
+            <p>Por ejemplo, vamos a empezar a distinguir responsabilidades que tenemos en nuestro componente <strong>UserRow. </strong></p><img src="../../assets/img/4-10-aislar-logica-en-componentes/1.webp" alt="example">
+            <p>Por un lado tenemos la parte mostrar el estado, si el usuario está activo tenemos que mostrar el texto "Activo" y de igual manera si está inactivo tenemos que mostar el texto "Inactivo". De igual manera dependiendo de si está activo o no tenemos que cambiar el <strong>className.</strong></p>
+            <p>Por otro lado tenemos la responsabilidad del Rol, si el rol es uno u otro tenemos que definir tanto el className como el nombre del rol y posteriormente pintar un <strong>span. </strong></p>
+            <p>Y por otro lado tenemos el de enmaquetar toda la fila, es decir colocar cada uno de los elementos en la posición que le corresponde.</p>
+            <p>Tenemos 3 responsabilidades para un mismo componente.</p>
+            <p><strong>¿Esto está bien?</strong></p>
+            <p>Pues realmente si tenemos un componente muy básico no pasa nada, pero a medida que añadamos cosas esto se va a complicar bastante.</p>
+            <p><strong>¿Qué soluciones ofrece React para esto?</strong></p>
+            <p>Componentizar, es decir, dividir la lógica y decir, oye este <strong>span</strong> es un componente como tal y este otro <strong>span</strong> es otro componente como tal y cada uno tiene su lógica. </p>
+            <p>Empezaremos por crear estos componentes para que veamos la utilidad que tiene.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Creando componente UserStatus </h2>
+            <p>De la siguiente lógica crearemos un nuevo componente.</p><img src="../../assets/img/4-10-aislar-logica-en-componentes/2.webp" alt="example">
+            <p>Entonces creamos un archivo llamado <strong>UserStatus.jsx</strong> y moveremos nuestra lógica para ese componente.</p><img src="../../assets/img/4-10-aislar-logica-en-componentes/3.webp" alt="example">
+            <p>Obviamente necesitaremos su CSS como module, llamado <strong>UserStatus.module.css</strong> por lo que moveremos los estilos que pertenecen a este nuevo componente.</p><img src="../../assets/img/4-10-aislar-logica-en-componentes/4.webp" alt="example">
+            <p>En nuestro componente <strong>UserRow</strong> simplemente importamos nuestro componente<strong>UserStatus</strong> y lo ejecutamos donde anteriormente teniamos la lógica respecto al estado.</p><img class="has-mb" src="../../assets/img/4-10-aislar-logica-en-componentes/5.webp" alt="example">
+            <p>Ya hemos concedido aislar toda la lógica correspondiente a la parte de los estados de activo-inactivo en un único componente que terminará renderizando el span de la forma que el considere oportuna.</p>
+            <p>Le acabamos de quitar una responsabilidad a <strong>UserRow</strong> y acabamos de crear un componente <strong>UserStatus</strong> con una única responsabilidad, pintar un span. </p>
+          </article>
+          <article class="content" id="3">
+            <h2>Creando componente UserRole </h2>
+            <p>De la siguiente lógica crearemos el componente UserRole.</p><img src="../../assets/img/4-10-aislar-logica-en-componentes/6.webp" alt="example">
+            <p>Antes de pasar la lógica, primeramente crearemos el archivo CSS module de <strong>UserRole</strong> y moveremos los estilos de este componente ahí. </p><img src="../../assets/img/4-10-aislar-logica-en-componentes/7.webp" alt="example">
+            <p>Ahora si procedemos a crear el archivo <strong>UserRole.jsx</strong> y creamos el componente moviendo la lógica a este componente.</p><img src="../../assets/img/4-10-aislar-logica-en-componentes/8.webp" alt="example">
+            <p>Importamos nuestro componente <strong>UserRole</strong> en el componente <strong>UserRow</strong> y lo ejecutamos pasandole como prop el <stront>role. </stront>
+            </p><img src="../../assets/img/4-10-aislar-logica-en-componentes/9.webp" alt="example">
+            <p>Como podemos ver todo esta funcionando correctamente, teniendo la lógica aislada.</p><img src="../../assets/img/4-10-aislar-logica-en-componentes/10.webp" alt="example">
+          </article>
+          <article class="content" id="4">
+            <h2>Decisiones sobre componentización: cuándo hacerlo y cuándo no </h2>
+            <p>El componentizar puede resultar bastante tentador, hay mucha gente que se dedica a componentizar absolutamente todo, de forma completamente absurda.</p>
+            <p>Entonces, cuándo merece la pena componentizar y cuando vale la penar dejarlo de una forma sencilla, pues bien, miremoslo en nuestro componente <strong>UserRow. </strong></p><img src="../../assets/img/4-10-aislar-logica-en-componentes/11.webp" alt="example">
+            <p>Ahora hablemos de una de las cosas que hemos hecho hasta ahora, y es que nosotros hemos creado un componente llamado <strong>Title.</strong></p><img src="../../assets/img/4-10-aislar-logica-en-componentes/12.webp" alt="example">
+            <p>Este componente lo que hace es simplemente tomar un children y devolver un <strong>h1</strong> con ese children.</p>
+            <p>¿Qué hace este componete Title?, pues absolutamente nada, ¿Tiene sentido este componente?, pues no, no tiene ningún tipo de sentido, es decir, no tiene sentido componentizar algo que hace lo mismo que el original. </p>
+            <p>Si borramos este <strong>Title</strong> y nos vamos al componente <strong>App</strong> que era donde se utilizaba, y ponemos un simple <strong>h1</strong> con su texto, obtenemos el mismo resultaldo.</p><img src="../../assets/img/4-10-aislar-logica-en-componentes/13.webp" alt="example">
+            <p>Entonces, ¿Merece la pena crear un componente para solo crear un h1?, pues no, no tenemos una carga lógica, aquí no tendría sentido componentizar.</p>
+          </article>
+          <article class="content" id="5">
+            <h2>Ajustando lógica de UserList para array vacios </h2>
+            <p>Ya que estamos hablando de lógica, ajustaremos el renderizado que devuelve <strong>UsersList</strong>, hasta ahora UsersList toma un array de objetos de usuarios, y crea los usuarios y los renderiza.</p><img src="../../assets/img/4-10-aislar-logica-en-componentes/14.webp" alt="example">
+            <p>Pero, ¿Qué pasa si el array de usuarios está vacio? </p><img class="has-mb" src="../../assets/img/4-10-aislar-logica-en-componentes/15.webp" alt="example"><img src="../../assets/img/4-10-aislar-logica-en-componentes/16.webp" alt="example">
+            <p>Como podemos ver, nuestro componente no renderiza nada, no contiene la lógica para este caso. </p>
+            <p>Así que agregaremos esta lógica, agregando un párrafo que diga, Sin usuarios.</p><img class="has-mb" src="../../assets/img/4-10-aislar-logica-en-componentes/17.webp" alt="example"><img src="../../assets/img/4-10-aislar-logica-en-componentes/18.webp" alt="example">
+            <p>Esto es solo una introducción a los componentes, pero en el resto del curso, iremos viendo distintas casuisticas, como componentes que crecen, que necesitan ser modularizados, con muy poquita lógica, con una lógica enorme que hay que gestionar y otra serie de cosas.</p>
+            <p>Por el momento solo hay que entender que crear un componente responde a un objetivo y a una necesidad.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Creando componente UserStatus</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Creando componente UserRole</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Decisiones sobre componentización: cuándo hacerlo y cuándo no</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Ajustando lógica de UserList para array vacios</a></li>
           </ul>
         </nav>
       </section>

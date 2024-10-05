@@ -5,13 +5,145 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+        p Hasta ahora hemos visto como evitar que el 
+            strong CSS
+            |   de nuestros componentes sea global usando 
+            strong CSS modules
+            |   y consiguiendo que unos componentes no afecten a otros.
 
+        p Pero esto no significa que no debamos usar 
+            strong CSS global
+            |   sino que tenemos que utilizarlo cuando realmente lo sea.
+
+        p En muchas ocasiones queremos definir clases CSS que sean globales y que puedan estar disponibles a lo largo de todos los componentes o simplemente aplicar unos estilos base para todo el proyecto.
+
+        p Como mencionamos anteriormente existen arquitecturas CSS como: 
+            strong Atomit Design
+            | , 
+            strong ITCSS
+            | , entre otras más. 
+
+        p Pero en este capítulo simplemente miraremos como organizar ese CSS que puede ser global para nuestro proyecto.
+
+        p Habiamos dicho en el capítulo anterior que el archivo 
+            strong index.css
+            |   es el que se encargará de contener nuestro estilos globales, pero este archivo como siempre puede crecer muchisimo y convertirse en algo poco legible y manejable.
+
+        p Entonces miraremos somo subdividir este 
+            strong index.css
+            |   en distintos archivos, uno para cada funcionalidad y tenemos que ver donde ubicar estos archivos.    
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Donde ubicar nuestros estilos globales
+        p La mejor forma es crear una carpeta 
+            strong "styles"
+            |   en la raíz de 
+            strong "src"
+            |   y colocar en esta carpeta nuestro archivo 
+            strong index.css
+
+        img(src="../../assets/img/4-8-css-global/1.webp" alt="example").img-md
+
+        p En el archivo 
+            strong main.jsx
+            |   ajustamos el import con la nueva ubicación del 
+            strong index.css
+        img(src="../../assets/img/4-8-css-global/2.webp" alt="example")
+
+        p Este archivo 
+            strong index.css
+            |   servirá como punto de entrada para todos los archivos css globales, es decir todos los archivos que se encuentren en 
+            strong styles
+            |   los importaremos dentro de 
+            strong index.css
+            | , de esta manera solo importaremos este 
+            strong index.css
+            |   al 
+            strong main.jsx
+            |   ya que contiene todos los demás estilos.
+
+    article(id="3" class="content")
+        h2 Integrando nuestros estilos globales en index.css 
+        p ¿Qué podemos incorporar en nuestro 
+            strong index.css
+            | ?, pues a demás de otras muchas cosas, los típicos 
+            strong resets
+            |   y 
+            strong tipografías.
+
+        p Así que empezaremos por estas 2 partes: 
+            strong resets 
+            |   y 
+            strong tipografías.
+
+        p Primero cabe aclarar que esto no es un curso de arquitectura CSS, así que solo daremos unas ligeras recomendaciones, evidentemente lo que veamos aquí no tenemos que tomarlo como las mejores prácticas en cuanto a CSS. 
+
+        h3 Integrando normalize.css
+        p La versión más estandar para incorporar estos resets, es 
+            a(href="https://necolas.github.io/normalize.css/" target="_blank").link normalize.css
+            |  , es la más utilizada y la mas popular, pero no es la única, evidentemente este tema de los resets, es algo muy cuestionable, cada uno tiene sus propias reglas, a unos les gusta una cosas y a otros otra. 
+
+        p A este 
+            strong normalize.css
+            |   le han salido distintas alternativas que sirven para según ellos corregir las cosas que le faltan y que no tiene perfectamente definidas. 
+
+        p Dentro de estas alternativas, a surgido una que está tomando bastante peso en estos últimos años que es 
+            a(href="https://github.com/sindresorhus/modern-normalize" target="_blank").link modern-normalize.
+
+        p 
+            strong Modern-normalize
+            |   está basado en 
+            strong normalize.css
+            |   pero incluye algunas cosas extra como: 
+            strong box-sizing: border-box
+            | .
+
+        p Como curiosidad esta hoja de estilos es la que utiliza 
+            strong tailwind.css
+            |   el framework de CSS tan famoso ultimamente.
+
+        p Entonces crearemos un archivo llamado 
+            strong "normalize.css"
+            |   dentro de la carpeta 
+            strong styles
+            |   y pegaremos el código sacado de 
+            a(href="https://cdn.jsdelivr.net/npm/modern-normalize/modern-normalize.css" target="_blank").link modern-normalize
+            | .  
+        img(src="../../assets/img/4-8-css-global/3.webp" alt="example")
+
+        p Ahora importamos este archivo en nuestro archivo CSS de entrada 
+            strong index.css
+        img(src="../../assets/img/4-8-css-global/4.webp" alt="example")
+
+        h4 Integrando fuentes
+        p Sin duda de los mejores servicios que existen para agregar un estilo de fuente a nuestras páginas es 
+            a(href="https://fonts.google.com/" target="_blank").link Google Fonts
+
+        p En nuestro caso eligiremos la fuente 
+            a(href="https://fonts.google.com/selection/embed" target="_blank").link popins
+            |   con los siguientes estilos.       
+
+        img(src="../../assets/img/4-8-css-global/5.webp" alt="example")
+
+        p Creamos un archivo llamado 
+            strong "fonts"
+            |   dentro de 
+            strong "styles"
+            |   e importamos nuesta fuente ahí.
+        img(src="../../assets/img/4-8-css-global/6.webp" alt="example")
+
+        p Ahora simplemente en nuestro 
+            strong index.css
+            |   importamos nuestro archivo 
+            strong fonts.css
+        img(src="../../assets/img/4-8-css-global/7.webp" alt="example")
+        p Como vemos todo funciona correctamente.
+        img(src="../../assets/img/4-8-css-global/8.webp" alt="example")
+
+        p Cabe aclarar que esta no es la manera correcta de agregar nuestras fuentes, pero nos sirve como ejemplo didáctico.
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Donde ubicar nuestros estilos globales'],[3,'Integrando nuestros estilos globales en index.css']]
     +submenu(submenuLinks)

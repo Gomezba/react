@@ -5,13 +5,109 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
 
+        p Ya hemos modularizado nuestros distintos componentes, Title, UserRow y UsersList.
+
+        p En esta lección nos enfocaremos en el componente App.
+
+        p Hasta este punto hemos trabajado con una simple etiqueta JSX como app, pero esto no es correcto,a pesar de que funciona.
+
+        p El componente App es el que actua como nodo raíz del 
+            strong Virtual DOM
+            | . 
+
+        p Así que necesitamos convertir nuestra simple etiqueta 
+            strong app
+            |   en un componente 
+            strong App
+            | .
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Creando componente App
 
+        p Necesitamos convertir nuestra simple etiqueta 
+            strong app
+            |   aun componente 
+            strong App
+            |   y renderizarlo en el root como componente.
+
+        img(src="../../assets/img/4-6-el-componente-app/1.webp" alt="example") 
+
+        p Como podemos ver esto funciona correctamente.   
+        img(src="../../assets/img/4-6-el-componente-app/2.webp" alt="example")
+
+        h3 ¿Por qué tenemos que crear un componente App si realmente esto es una variable?
+
+        p Cuando veamos las siguientes secciones, veremos que los componentes pueden tener su propio ciclo de vida y este componente 
+            strong App
+            |   no es una escepción.
+
+        p Este 
+            strong App
+            |   va ser toda la raíz de nuestro 
+            strong Virtual DOM
+            |   y en el tendremos que utilizar ciertas configuraciones, cuando tengamos que utilizar temas como los 
+            strong estados
+            |   y otras series de cosas, todas las configuraciones de ello, que sean globales no iran en el 
+            strong main.jsx
+            |   sino que se aplicaran directamente al componente 
+            strong App
+            | . 
+
+        p Actualmente con el conocimiento que tenemos hasta ahora, es dfícil explicar porque este componente 
+            strong App
+            |   es tan importante, pero lo iremos aprendiendo, a medida que avancemos.
+
+    article(id="3" class="content")
+        h2 ¿Dónde poner el componente App?  
+
+        p Mucha gente defiende que 
+            strong App
+            |   al ser un componente deberia ir dentro de la carpeta 
+            strong componentes
+            | . 
+
+        p Otros muchos defienden que debe ir en la raíz de 
+            strong src
+            | , porque a pesar de ser un componente, es un componente especial.
+
+        p Pero la realidad de todo esto es que da exactamente igual de donde lo pongamos.
+
+        p Nosotros optaremos por colocarlo en la raíz de 
+            strong "src"
+            | . 
+
+        p Así que crearemos nuestro archivo 
+            strong App.jsx
+            |   en 
+            strong PascalCase
+            |   como habiamos dicho anteriormente. 
+
+        img(src="../../assets/img/4-6-el-componente-app/3.webp" alt="example").img-md 
+
+        p Dentro de este archivo colocaremos todo lo que sea necesario para que funcione este componente 
+            strong App.
+
+        img(src="../../assets/img/4-6-el-componente-app/4.webp" alt="example") 
+
+        p En el archivo 
+            strong main.jsx
+            |   importaremos nuestro componente 
+            strong App.
+
+        img(src="../../assets/img/4-6-el-componente-app/5.webp" alt="example") 
+
+        p Hasta el momento lo único que hemos logrado con esta acción, es separar conceptos, por un lado tenemos el nodo raíz del 
+            strong Virtual DOM
+            |   modularizado en un archivo 
+            strong App.jsx
+            |   y por otro lado tenemos el proceso de renderización de un componente 
+            strong App
+            |   en el DOM, es decir, por un lado definimos y por el otro trasladamos al Dom.
+
+        p Pero como hemos dicho pronto hiremos entendiendo que esto no es solo una mera cuestión de mantener estas 2 cosas por separado.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Creando componente App'],[3,'¿Dónde poner el componente App?']]
     +submenu(submenuLinks)

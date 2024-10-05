@@ -5,13 +5,89 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+
+        p Antes de concluir con esta sección, hablaremos de los componentes basados en clases.
+
+        p Hasta ahora todos los componentes que hemos creado han sido a partir de funciones, pero esta no es la única forma de crear un componente. 
+
+        p Realmente en React existen 2 formas de crear componentes, usando 
+            strong funciones
+            |   o usando 
+            strong clases. 
+
+        p Entonces nos preguntaremos, ¿Por qué en toda esta sección solo hemos explicado componentes con funciones? 
+
+        p Como en todas las librerias, React ha ido cambiando mucho a lo largo de los años y a ido cambiado la forma de hacer las cosas.
+
+        p Uno de los grandes cambios que ha sufrido en los últimos tiempos, fueron los famosos 
+            strong React Hooks
+            | , seguro que si hemos investigado un mínimo sobre React antes de hacer el curso, no es la primera vez que escucharemos esta palabra.
+
+        p La versión de React que incluia estos Hooks es la 16.8 publicada en febrero del 2019.
+
+        p El principal objetivo de esta versión fue conseguir que todos los componentes de React se pudieran escribir como funciones y no tener que volver a utilizar clases nunca mas.
+
+        p Estos famosos 
+            strong Hooks
+            |   no son mas que una serie de funciones que podemos utilizar dentro de nuestros componentes y que nos permiten conseguir lo mismo que antes se hacia con clases pero con una sintaxis mucho más sencilla.
+
+        p A la hora de utilizar estos componentes no hay diferencia entre utilizar clases o Hooks, se utilizan y funciona exactamente igual, la diferencia esta solo a la hora de escribirlos.
+
+        p Es por eso que en este capítulo, haremos una pequeña prueba de concepto para que veas la diferencia entre escribir un componente como una función y su equivalente en clases.    
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Componentes con clases
+        div: pre: code.language-jsx 
+            |import { Component } from 'react'
+            |import style from './UserStatus.module.css'
+            |
+            |class UserStatus extends Component {
+            |    render() {
+            |        const activeClassName = this.props.state ? style.active : style.inactive
+            |
+            |        return (
+            |            &lt;span className={activeClassName}&gt;
+            |                {this.props.state ? 'Activo' : 'Inactivo'}
+            |            &lt;/span&gt;
+            |        )
+            |    }
+            |}
+            |
+            |export default UserStatus
+
+        p La manera en que se ejecuta es igual que un componente creado con funciones, lo uníco que cambia es la manera de crear los componentes.    
+
+        div: pre: code.language-jsx
+            |   &lt;UserStatus state={state} /&gt;
+
+        p La sintaxis de clases es mucho más compleja, tenemos que introducir, this, ocupar un metodo render, entre más 
+
+        p Con la aparición de React Hooks muchos componentes, redujeron sus tamaños de manera expectacular.     
+
+    article(id="3" class="content")
+        h2 Clases o Hooks
+
+        p Para terminar esta sección miraremos cual debemos de utilizar. 
+
+        p Los componentes basados en clases siguen existiendo por razones meramente de compatibilidad, en el momento en que salio esta versión todos los componentes estaban escritos con clases y el equipo de React no queria romper con todo y hacer que no funcionasen nunca más, es decir, que un proyecto con clases no pudiese actualizarse a la nuerva versión y recibir todas las mejoras. 
+
+        p La indicación que se dio entonces fue clara, todos los nuevos componentes se deben crear como funciones y utilizar los Hooks como forma estandar. 
+
+        p En la medida de lo posible, los componentes basados en clases deberian ser migrados a funciones para adaptarlos a la nueva sintaxis. 
+
+        p Pero si esto no es posible se pueden seguir utilizando las clases pero solo como 
+            strong opción de compatibilidad
+            | . 
+
+        p Cual es la realidad de hoy en día, actualmente la mayoría de los proyectos crean sus componentes utilizando estos Hooks y las clases practicamente ya no se utilizan, la mayoría de los proyectos basados en clases ya han migrado a Hooks.
+
+        p.note.note--warning Como en todo habrá proyectos en los que sigan utilizando clases, pero actualmente no merece la pena aprender esta sintaxis, para lo único que serviria es para modificar componentes viejos que ya existan en estos proyectos ya que los nuevos podemos combinarlos y utilizarlos simplemente con funciones.      
+
+        p Es por eso que todo el contenido de este curso, ocuparemos la forma de trabajar actualmente utilizando funciones en lugar de clases. 
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Componentes con clases'],[3,'Clases o Hooks']]
     +submenu(submenuLinks)

@@ -344,18 +344,309 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>Si hay una propiedad clave que podemos utilizar dentro de nuestros componentes esa es la propiedad <strong>children. </strong></p>
+            <p>Ya sabemos que <strong>children</strong> es una propiedad especial que se encuentra dentro del objeto <strong>props</strong> que forma parte de una etiqueta <strong>JSX</strong> y un componente es una etiqueta JSX.</p>
+            <p>Tambien sabemos que <strong>children</strong> es todo aquello que se pone entre la etiqueta de apertura y cierre, y que puede ser un simple texto, un objeto JSX o un array de objetos.</p>
+            <p>Entonces como un componente es una etiqueta JSX, podemos pasarle <strong>childrens</strong> entre su etiqueta de apertura y cierre.</p>
+            <p>Gracias a <strong>children</strong> podemos combinar componentes más pequeños dentro de otros más grandes, lo que se conoce como <strong>composición</strong>. </p>
+            <p>En este capítulo estaremos refactorizando nuestro componente de gestion de usuarios con el que hemos estado trabajando, a fin de que podamos combinar componentes.</p>
+            <div>
+              <pre><code class="language-jsx"> const Title = () =&gt; &lt;h1&gt;Listado de usuarios&lt;/h1&gt;
+
+export const User = ({ name, state, role }) =&gt; {
+	return (
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;{name}&lt;/span&gt;
+			&lt;span className='active'&gt;{state}&lt;/span&gt;
+			&lt;span className='role'&gt;{role}&lt;/span&gt;
+		&lt;/div&gt;
+	)
+}
+
+const app = (
+	&lt;div className='list'&gt;
+		&lt;Title /&gt;
+		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+		&lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+	&lt;/div&gt;
+)</code></pre>
+            </div><img src="../../assets/img/4-4-composicion-de-componentes/1.webp" alt="example">
+            <p>Para poder refactorizar nuestro código estaremos viendo como pasar estos children.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Pasar children a un componente </h2>
+            <h3>Forma correcta de pasar children</h3>
+            <p>Para pasar los <strong>children</strong> siempre deben ir entre la etiqueta de apertura y cierre del componente.</p>
+            <div>
+              <pre><code class="language-jsx"> &lt;componente&gt; childrens &lt;/componente&gt;</code></pre>
+            </div>
+            <p>Para poder acceder desde el componente a estos children, debemos recordar que la propiedad <strong>children</strong> se guarda dentro de la propiedad <strong>props</strong> de un elemento o un componente. </p>
+            <div>
+              <pre><code class="language-jsx">const componente = (props) =&gt; &lt;p&gt; props.children &lt;/p&gt; </code></pre>
+            </div>
+            <p>Anteriormente ya hemos hablado de la desestructuración, y siempre debemos ocuparl destrucuring, de forma que para acceder a nuestros children sería desestructurando. </p>
+            <div>
+              <pre><code class="language-jsx">const componente = ({children}) =&gt; &lt;p&gt; children &lt;/p&gt; </code></pre>
+            </div>
+            <h3>Forma incorrecta de pasar children </h3>
+            <p>En JSX es posible pasar los <strong>children</strong> en línea, es decir, dentro de la etiqueta de apertura.</p>
+            <div>
+              <pre><code class="language-jsx"> &lt;componente children='Soy children'&gt; &lt;/componente&gt;</code></pre>
+            </div>
+            <p>De la misma forma podemos acceder a estos children de forma en línea. </p>
+            <div>
+              <pre><code class="language-jsx"> const componente = ({children}) =&gt; &lt;p children={children}&gt; &lt;/p&gt; </code></pre>
+            </div>
+            <p>Esto funciona, pero nunca se debe hacer, el estandar es siempre pasar los children entre las etiquetas de apertura y cierre del componente. </p>
+          </article>
+          <article class="content" id="3">
+            <h2>Refactorizando a composición de componentes </h2>
+            <h3>Title</h3>
+            <p>Empezaremos por refactorizar nuestro componente <strong>Title</strong> de tal manera que en lugar de tener siempre el mismo texto, se pueda renderizar cualquier texto que pasemos como children. </p>
+            <p><strong class="ts-6">Código sin refactorizar</strong></p>
+            <div>
+              <pre><code class="language-jsx">const Title = () =&gt; &lt;h1&gt;Listado de usuarios&lt;/h1&gt;
+
+const app = (
+   &lt;div className='list'&gt;
+       &lt;Title /&gt;
+       &lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+       &lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+   &lt;/div&gt;
+) </code></pre>
+            </div>
+            <p><strong class="ts-3">Código refactorizado</strong></p>
+            <div>
+              <pre><code class="language-jsx"> const Title = ({children}) =&gt; &lt;h1&gt; {children} &lt;/h1&gt; //Refactorizado
+
+// Refactorizamos a &lt;Title&gt; Listado de usuarios &lt;/Title&gt;
+const app = (
+	&lt;div className='list'&gt;
+		&lt;Title&gt; Listado de usuarios &lt;/Title&gt;
+		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+		&lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+	&lt;/div&gt;
+)</code></pre>
+            </div>
+            <h3>Creando componente List</h3>
+            <p>Para seguir refactorizando nuestro código a fin de llegar a utilizar la composición, es decir, combinar componentes pequeños con componentes grandes, crearemos un componente <strong>List</strong> en lugar de simplemente renderizar un <strong>div.</strong></p>
+            <p><strong class="ts-6">Código hasta este punto sin crear componente List </strong></p>
+            <div>
+              <pre><code class="language-jsx"> const Title = ({ children }) =&gt; &lt;h1&gt;{children}&lt;/h1&gt;
+
+export const User = ({ name, state, role }) =&gt; {
+	return (
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;{name}&lt;/span&gt;
+			&lt;span className='active'&gt;{state}&lt;/span&gt;
+			&lt;span className='role'&gt;{role}&lt;/span&gt;
+		&lt;/div&gt;
+	)
+}
+
+const app = (
+	&lt;div className='list'&gt;
+		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+		&lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+	&lt;/div&gt;
+)</code></pre>
+            </div>
+            <p><strong class="ts-3">Código refactorizado con componente List </strong></p>
+            <div>
+              <pre><code class="language-jsx">const Title = ({ children }) =&gt; &lt;h1&gt;{children}&lt;/h1&gt;
+
+export const User = ({ name, state, role }) =&gt; {
+	return (
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;{name}&lt;/span&gt;
+			&lt;span className='active'&gt;{state}&lt;/span&gt;
+			&lt;span className='role'&gt;{role}&lt;/span&gt;
+		&lt;/div&gt;
+	)
+}
+
+/*Creamos el componente List, desestructuramos children 
+y lo pasmos como children del div 
+
+Children es un array que contiene todos los hijos que se
+pasan dentro del componente List en este caso un componente
+Title y 2 componentes User.
+
+Hay que recordar que cuando pasamos como children un array de elementos
+estos se concatenan y se renderizan.
+*/
+const List = ({ children }) =&gt; &lt;div className='list'&gt;{children}&lt;/div&gt;
+
+/*
+Ejecutamos el componente List y como hijos le pasamos 
+Un componente Title y 2 componentes User
+*/
+const app = (
+	&lt;List className='list'&gt;
+		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+		&lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+	&lt;/List&gt;
+)</code></pre>
+            </div>
+            <p>Hasta este punto todo funciona, pero parece que estamos componentizando sin una razón objetiva, así que podemos abstraer aun más nuestro código, por ejemplo cuando ejecutamos el componente <strong>List</strong> estamos teniendo un patrón donde vemos que se repite lo mismo, nos referimos a generar componentes <strong>User</strong> por cada uno de los usuarios.</p>
+            <div>
+              <pre><code class="language-jsx">/*
+Estamos repitiendo el mismo patrón de generar componentes
+User por cada uno de los usuarios.
+*/
+const app = (
+	&lt;List className='list'&gt;
+		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+		&lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+	&lt;/List&gt;
+)    </code></pre>
+            </div>
+            <p>Así que extraeremos esta lógica. Lo que haremos es hacer que nuestro componente <strong>List</strong> a demás de devolver un <strong>div</strong> con su children, lo que hará es renderizar los usuarios, es decir generar un <strong>User</strong> por cada uno de los usuarios.</p>
+            <p>Así que a nuestro componente <strong>List</strong>, le añadiremos un <strong>return</strong> para poder añadir lógica al componente.</p>
+            <p>Haremos que nuestro componente <strong>List</strong> reciba un objeto que llamaremos <strong>users</strong>, el cual mapearemos para devolver un componente y así renderizarlos dentro de <strong>List</strong>, este objeto users lo crearemos con las <strong>props</strong> que necesita un componente <strong>User</strong>, y pasaremos este objeto como un <strong>prop</strong> cuando ejecutemos el componente <strong>List.</strong></p>
+            <p>De tal manera que nuestro código quedaria de la siguiente manera. </p>
+            <div>
+              <pre><code class="language-jsx">/* 1. Creamos un array de objetos USERS, y como propiedades pondremos
+las props que necesita el componente User*/
+const USERS = [
+	{
+		name: 'Joel Gómez',
+		state: 'Activo',
+		role: 'PROFESOR'
+	},
+	{
+		name: 'Israel Vázquez',
+		state: 'Activo',
+		role: 'PROFESOR'
+	}
+]
+
+const Title = ({ children }) =&gt; &lt;h1&gt;{children}&lt;/h1&gt;
+
+export const User = ({ name, state, role }) =&gt; {
+	return (
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;{name}&lt;/span&gt;
+			&lt;span className='active'&gt;{state}&lt;/span&gt;
+			&lt;span className='role'&gt;{role}&lt;/span&gt;
+		&lt;/div&gt;
+	)
+}
+
+/*3. Al momento de pasarle las props al comoponente List, 
+ya sabemos que se genera un objeto llamado props, del cúal 
+estamos desestrucurando el array de objetos que pasamos como prop
+de List, y tambien desestructuramos la propiedad children que es
+nuestro componente Title.
+
+Creamos una constante llamada userRendered donde guardamos un 
+array de componentes(etiquetas JSX) que es el resultado de haber mapeado 
+cada uno de los objetos, al momento de generar los componentes 
+User agregamos una Key y sus props que son cada una de las 
+propiedades del objeto y las pasamos con spread operator.
+
+Y simplemente devolvemos un div con el children y los users renderizados.
+*/
+
+
+const List = ({ users, children }) =&gt; {
+	const userRendered = users.map((user) =&gt; (
+		&lt;User key={user.name} {...user}&gt;&lt;/User&gt;
+	))
+	return (
+		&lt;div className='list'&gt;
+			{children} {userRendered}
+		&lt;/div&gt;
+	)
+}
+
+/*2. Al ejecutar el componente List le pasamos como prop una 
+propiedad llamada users que contendra el array de objetos USERS */
+const app = (
+	&lt;List className='list' users={USERS}&gt;
+		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+	&lt;/List&gt;
+)</code></pre>
+            </div>
+            <p>Como podemos ver obtenemos el mismo resultado, pero sin tener que estar pasandole al componente <strong>List</strong> componentes <strong>User</strong> como hijos, de tal manera que la lista ya no se encarga de pintar solo una serie de children, sino que también tiene una lógica interna que se encarga de mapear cada uno de los usuarios que recibe del array como una instancia de User, es decir generando el componente User. </p><img src="../../assets/img/4-4-composicion-de-componentes/1.webp" alt="example">
+            <p><strong class="ts-3">Código completo sin comentarios. </strong></p>
+            <div class="has-mb">
+              <pre><code class="language-jsx">const USERS = [
+	{
+		name: 'Joel Gómez',
+		state: 'Activo',
+		role: 'PROFESOR'
+	},
+	{
+		name: 'Israel Vázquez',
+		state: 'Activo',
+		role: 'PROFESOR'
+	}
+]
+
+const Title = ({ children }) =&gt; &lt;h1&gt;{children}&lt;/h1&gt;
+
+export const User = ({ name, state, role }) =&gt; {
+	return (
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;{name}&lt;/span&gt;
+			&lt;span className='active'&gt;{state}&lt;/span&gt;
+			&lt;span className='role'&gt;{role}&lt;/span&gt;
+		&lt;/div&gt;
+	)
+}
+
+const List = ({ users, children }) =&gt; {
+	const userRendered = users.map((user) =&gt; (
+		&lt;User key={user.name} {...user}&gt;&lt;/User&gt;
+	))
+	return (
+		&lt;div className='list'&gt;
+			{children} {userRendered}
+		&lt;/div&gt;
+	)
+}
+
+const app = (
+	&lt;List className='list' users={USERS}&gt;
+		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+	&lt;/List&gt;
+)</code></pre>
+            </div>
+          </article>
+          <article class="content" id="4">
+            <h2>¿Qué pasa con Key?</h2>
+            <p>Puede que nos preguntemos, ¿Y que hacemos con la key que pasamos como prop al ejecutar el componente User?, ¿Podemos hacer algo con ella desde nuestro componente User?</p><img src="../../assets/img/4-4-composicion-de-componentes/2.webp" alt="example">
+            <p>Como podemos ver al querer utilizar la <strong>Key</strong> que pasamos como <strong>prop</strong> al ejecutar el componente User nos devuelve el siguiente error. </p><img src="../../assets/img/4-4-composicion-de-componentes/3.webp" alt="example">
+            <p>El error traducido al español dice lo siguiente.</p>
+            <p class="ts-2">Advertencia: Usuario: <strong>`key`</strong> no es una <strong>prop</strong>. Si intentas acceder a ella se devolverá <strong>`undefined`</strong>. Si necesitas acceder al mismo valor dentro del componente hijo, debes pasarlo como una prop diferente.</p>
+            <p class="note">De tal manera que <strong>Key</strong> no es una <strong>prop</strong> como tal que nosotros tengamos que manejar, es una prop que tenemos que enviar a React, y React automáticamente la detectará la extraerá y la utilizará, sin que nos llegue en absoluto al objeto <strong>props</strong> del componente donde la pasamos. Es algo que sucede de forma automática y que veremos en <strong>la sección de ESTADOS</strong> donde miraremos para que la utiliza React y porque es necesario.</p>
+          </article>
+          <article class="content" id="5">
+            <h2>Conclusión </h2>
+            <p>En escencia lo que acabamos de hacer es lo que se suele hacer en toda la libreria de React, es decir, dividir la interfáz en pequeños trocitos e ir reutilizando cada uno de ellos.</p>
+            <p>Hay que quedarnos con la base, de que lo que hacemos con React es crear componentes y a través de las props <strong>children</strong> y del resto de propiedades vamos creando una estructura que se va reutilizando hasta generar un pequeño puzzle que podamos utilizar, para ir construyendo pieza a pieza nuestras pantallas, nuestras interfaces.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Pasar children a un componente</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Refactorizando a composición de componentes</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">¿Qué pasa con Key?</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Conclusión</a></li>
           </ul>
         </nav>
       </section>

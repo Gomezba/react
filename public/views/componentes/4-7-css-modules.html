@@ -344,18 +344,126 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>Hasta ahora hemos modularizado nuestros componentes, prestando únicamente atención a la parte de JavaScript, es decir a la parte de JSX.</p>
+            <p>Pero un componente no es solo JavaScript, sino que tambien tiene su <strong>CSS</strong> asociado y actualmente estamos tratando el CSS de forma global, es decir, el mismo CSS para todos. </p>
+            <p>Hasta aquí todo es muy sencillo, pero a medida que esto va creciendo, el archivo <strong>index.css</strong> puede convertirse en un auténtico monstruo. </p>
+            <p>Lo que haremos este este capítulo es modularizar y divir en distintos archivos nuestro index.css </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>¿Dónde se coloca el CSS de cada componente?</h2>
+            <p>Habitualmente se colocan a lado del propio componente, es decir, en la carpeta de <strong>components</strong> se crea un archivo de <strong>CSS</strong> con el mismo nombre del componente y se coloca ahí sus estilos correspondientes. </p>
+            <p>Para añadir este CSS se hace importandolo desde el mismo componente.</p>
+            <p>De tal forma que cuando importemos el componente, el componente importará su propio CSS, y <strong>solo se cargará este CSS si el componente está importado</strong>.</p>
+            <p>Procedemos a crear los archivos de CSS con el mismo nombre del componente, en nuestro caso los únicos componentes que tienen estilos son: <strong>UserRow</strong> y <strong>UsersList</strong>. A su vez agregaremos su respectivo CSS.</p>
+            <p><strong class="ts-3">UserRow.css</strong></p><img src="../../assets/img/4-7-css-modules/1.webp" alt="example">
+            <p><strong class="ts-3">UsersList.css</strong></p><img src="../../assets/img/4-7-css-modules/2.webp" alt="example">
+            <p>En el archivo <strong class="ts-3">index.css</strong> solo se quedan los estilos globales.</p><img src="../../assets/img/4-7-css-modules/6.webp" alt="example">
+            <p>Importamos el CSS desde el respectivo componente.</p>
+            <p><strong class="ts-3">UserRow.jsx</strong></p><img src="../../assets/img/4-7-css-modules/3.webp" alt="example">
+            <p><strong class="ts-3">UsersList.jsx</strong></p><img src="../../assets/img/4-7-css-modules/4.webp" alt="example">
+            <p>Hasta este punto tenemos nuestro CSS modularizado, y todo funciona correctamente.</p><img src="../../assets/img/4-7-css-modules/5.webp" alt="example">
+            <p class="ts-2">Pero aquí no acaba todo, porque aunque este estilo esté importado dentro de un componente, no está restringido únicamente a ese componente. El <strong>CSS no se ha marcado con un ámbito específico que lo limite al componente en cuestión.</strong></p>
+          </article>
+          <article class="content" id="3">
+            <h2>Problema de colisión de CSS</h2>
+            <p>Como se mencionó anteriormente, el CSS de nuestros componentes a pesar de que los estemos importando desde su respectivo componente, no está ligado a el, no hemos restringido que ese CSS sea único del componente.</p>
+            <p>El problema que genera esto es que nuestro CSS colisionará </p>
+            <p><strong class="ts-2">Ejemplo: </strong></p>
+            <p>Vamos a ir al archivo <strong>UsersList.css</strong> y cambiaremos la clase por <strong>wrapper.</strong></p><img src="../../assets/img/4-7-css-modules/7.webp" alt="example">
+            <p>Lo mismo haremos con el componente <strong>UsersList.jsx</strong>. </p><img src="../../assets/img/4-7-css-modules/8.webp" alt="example">
+            <p>Lo mismo haremos con el componente <strong>UserRow.css </strong> y <strong>UserRow.jsx</strong> cambiaremos la clase a <strong>wrapper</strong> . </p><img class="has-mb" src="../../assets/img/4-7-css-modules/9.webp" alt="example"><img src="../../assets/img/4-7-css-modules/10.webp" alt="example">
+            <p>Si vemos la pantalla, será un completo caos.</p><img src="../../assets/img/4-7-css-modules/11.webp" alt="example">
+            <p>¿Qué es lo que está pasando con el proyecto?, pues que nuestras clases <strong>wrapper</strong> están colisionando, esto se debe a que no son únicas del componente como habiamos mencionado anteriormente, a pesar de que el CSS se esté importando desde su respectivo componente, ese CSS no es único del componente, es por eso que nos colisionan las clases.</p>
+            <p>Entonces una vez que importamos el CSS, no es único del componente, sino que forman parte de cualquier CSS global.</p>
+            <p>Para que lo veamos más claro, miremos el código html de nuestros componentes en el navegador.</p><img src="../../assets/img/4-7-css-modules/12.webp" alt="example">
+            <p>¿Como podemos solucionar esto y convertir este CSS en algo realmente propio del componente?, pues utilizando <strong>CSS modules</strong>.</p>
+          </article>
+          <article class="content" id="4">
+            <h2>Solucionando colisiones con CSS modules</h2>
+            <p> <strong>CSS modules</strong> es una forma de crear hojas de estilo para que sean propias de un componente, pero nos obliga a utilizar el CSS de una forma especial.</p>
+            <h3>Convirtiendo CSS en un módulo</h3>
+            <p>El estándar que tenemos en <strong>React</strong> y en <strong>Vite</strong>, es que nuestros archivos CSS tengan como nombre: </p>
+            <p><code>archivo.module.css</code></p>
+            <p>Sabiendo esto, procederemos a cambiar el nombre de nuestros archivos CSS siguiendo esta regla.</p>
+            <h4>Nombre correcto de archivos CSS modules</h4><img class="img-md" src="../../assets/img/4-7-css-modules/13.webp" alt="example">
+            <h4>Importando CSS module de manera incorrecta</h4>
+            <p>Actualizamos los imports del CSS de nuestros componentes a este nuevo nombre.</p><img class="has-mb" src="../../assets/img/4-7-css-modules/14.webp" alt="example"><img src="../../assets/img/4-7-css-modules/15.webp" alt="example">
+            <p>Si vemos nuestra pantalla miraremos que esto aún no funciona, no está generando nuestros estilos.</p><img src="../../assets/img/4-7-css-modules/16.webp" alt="example">
+            <p>No está funcionando porque la manera correcta de importar un <strong>CSS module</strong> es importandolo como un <strong>objeto</strong>.</p>
+            <h4>Importando CSS module de manera correcta</h4>
+            <p>Para poder importar de manera correcta nuestro <strong>CSS module</strong>, necesitamos importarlo como objeto: </p>
+            <p><code>import style from 'archivo.module.css' </code></p>
+            <p>El nombre del objeto por convención se suele llamar <strong>style</strong> pero podemos darle el nombre que nos apetezca.</p>
+            <p><strong>¿Qué es este style?</strong></p>
+            <p>Es un <strong>objeto</strong> que contiene todas las <strong>clases CSS</strong> puestas en forma de objeto. </p>
+            <p>Miremos un ejemplo:</p>
+            <div>
+              <pre><code class="language-css">// archivo.module.css
+
+.clase {
+color: tomato;   
+}</code></pre>
+            </div>
+            <p>Para poner nuestras clases en nuestros componentes, necesitamos acceder a ellas a través del objeto <strong>style.</strong></p>
+            <div>
+              <pre><code class="language-jsx">&lt;p className={style.clase}&gt; texto &lt;/p&gt;    </code></pre>
+            </div>
+            <p>Como <strong>style</strong> es un <strong>objeto</strong> no podemos tener propiedades que contengan guiones medios <strong>(-)</strong>, así que si tenemos clases que contengan guiones medios, tendremos que acceder a esas clases con la sintaxis de corchetes y con comillas.</p>
+            <div>
+              <pre><code class="language-css">// archivo.module.css
+
+/* Clase en kebab-case */
+.clase-example {
+color: tomato;   
+}    </code></pre>
+            </div>
+            <div>
+              <pre><code class="language-jsx">&lt;p className={style['clase-example']}&gt; texto &lt;/p&gt;</code></pre>
+            </div>
+            <p>En realidad trabajar con la sintaxis de corchetes es muy incomodo, en lugar de nombrar nuestras clases con la nomenclatura <strong>kebab-case</strong> podemos utilizar la nomenclatura <strong>camelCase.</strong></p>
+            <div>
+              <pre><code class="language-css">// archivo.module.css
+
+/* Nuestras clases estarán en camelCase */          
+.claseExample {
+color: tomato;   
+} </code></pre>
+            </div>
+            <p>De esta manera al asignar nuestras clases a nuestras etiquetas JSX, simplemente accedemos a ellas con la nomenclatura del punto. </p>
+            <div>
+              <pre><code class="language-jsx">&lt;p className={style.claseExample}&gt; texto &lt;/p&gt;</code></pre>
+            </div>
+            <p>Sabiendo todo esto, ahora si nuestras clases en nuestros componentes quedarían de la siguiente manera. </p><img class="has-mb" src="../../assets/img/4-7-css-modules/17.webp" alt="example"><img src="../../assets/img/4-7-css-modules/18.webp" alt="example">
+            <p>Ahora si que todo funciona correctamente.</p><img src="../../assets/img/4-7-css-modules/19.webp" alt="example">
+            <h4>¿Que pasa por detrás con CSS modules?</h4>
+            <p>Ya vimos que todo funciona correctamente, pero ¿Qué es lo que está pasando?, pues que estos <strong>CSS modules</strong> están siendo procesados por el empaquetador.</p>
+            <p>Si miramos las clases en el HTML del navegador miraremos algo distinto a lo que hemos escrito. </p><img src="../../assets/img/4-7-css-modules/20.webp" alt="example">
+            <p>Lo que vemos es que a nuestras clases se le agrega una serie de caracteres generados, para diferenciarlo de la otra clase wrapper.</p>
+            <p>Es decir que lo que viene dentro de este <strong>className={style.wrapper}</strong> no es simplemente la clase como tal, sino un nombre autogenerado que le da el empaquetador a esta clase. </p>
+          </article>
+          <article class="content" id="5">
+            <h2>Conclusiones</h2>
+            <p>Puede ser que no nos parezca la mejor forma de tratar clases y puede ser que nos resulte incomodo, pero la realidad es que esta es una de las mejores formas de garantizar que el CSS tiene el ámbito que debe tener, en este caso para nuestros componentes.</p>
+            <p>Obviamente en proyectos reales, podemos utilizar arquitecturas de CSS, existen frameworks de CSS como <strong>tailwind</strong> que nos proporciona <strong>utility clases.</strong></p>
+            <p>Existen mil alternativas para una arquitectura de CSS y está es solo una más de todas ellas, y está es la más habitual que solemos encontrar tanto en los cursos de React como en muchos de los proyectos, porque nos porporciona esta ventaja, pero no quiere decir que sea la única.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">¿Dónde se coloca el CSS de cada componente?</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Problema de colisión de CSS</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Solucionando colisiones con CSS modules</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Conclusiones</a></li>
           </ul>
         </nav>
       </section>

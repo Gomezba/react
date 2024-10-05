@@ -5,13 +5,170 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+        p En este capítulo miraremos como aprovechar la sintaxis de 
+            strong Destructuring
+            |   para hacer nuestros componentes más legibles y más potentes.
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Legibilizando nuestros componentes
+
+        p La desestructuración nos ayuda a legibilizar los componentes y así sean mucho más potentes.
+
+        p Partiremos desde la base haciendo un destructuring desde los parámetros en nuestro caso del componente.
+
+        div: pre: code.language-jsx 
+            |const User = ({ name, state, role }) =&gt; {
+            |	return (
+            |		&lt;div className='user'&gt;
+            |			&lt;span className='name'&gt;{name}&lt;/span&gt;
+            |			&lt;span className='active'&gt;{state}&lt;/span&gt;
+            |			&lt;span className='role'&gt;{role}&lt;/span&gt;
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |const app = (
+            |	&lt;div className='list'&gt;
+            |		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+            |		&lt;User name='Israel Vázquez' role='Profesor' /&gt;
+            |	&lt;/div&gt;
+            |)
+
+        p De esta manera evitamos estar haciendo 
+            strong props.prop
+            | . 
+
+        p Pero en realidad hay más, ya que desestructurando nos ayuda a tener valores por defecto, de esta manera si no se le pasa cierta propiedad, asignamos un valor por defecto.
+
+        img(src="../../assets/img/4-3-destructuring-de-props/1.webp" alt="example")
+        p Como podemos ver a pesar de que no se le está pasando la prop 
+            strong state
+            |   como en nuestro componente tenemos definido un 
+            strong span
+            |   pues se le agrega a ese 
+            strong span
+            |   el valor por defecto de la propiedad 
+            strong state
+            | .
+        img(src="../../assets/img/4-3-destructuring-de-props/2.webp" alt="example") 
+
+        h3 Omitiendo Return 
+
+        p Y para legibilizar aún más nuestro componente, ya que estamos ocupando 
+            strong destructuring desde los parámetros,
+            |   podemos omitir el 
+            strong return.
+        div: pre: code.language-jsx 
+            | // Nos evitamos el return al utilizar destructuring desde los parámetros
+            |const User = ({ name, state = 'Activo', role }) =&gt; (
+            |	&lt;div className='user'&gt;
+            |		&lt;span className='name'&gt;{name}&lt;/span&gt;
+            |		&lt;span className='active'&gt;{state}&lt;/span&gt;
+            |		&lt;span className='role'&gt;{role}&lt;/span&gt;
+            |	&lt;/div&gt;
+            |)
+
+        p Como podemos ver todo funciona correctamente.    
+        img(src="../../assets/img/4-3-destructuring-de-props/2.webp" alt="example")  
+
+        p Si no utilizaras 
+            strong destructuring
+            |   en los parámetros, y accedieras a las props mediante el objeto 
+            strong props
+            | , tendrías que usar un 
+            strong return explícito para devolver el 
+            strong JSX
+            | , ya que la función estaría utilizando un bloque de código. Cuando defines un bloque de código con llaves 
+            strong {}
+            | , la arrow function necesita un 
+            strong return
+            |   explícito para devolver algo.
+
+        p Por ejemplo, el componente del capítulo anterior no utilizabamos 
+            strong destructuring
+            |   y accediamos a las props con 
+            code props.nombreProp
+            |   y era obligatorio utilizar return.
+
+        div: pre: code.language-jsx 
+            |const User = (props) =&gt; {
+            |  return (
+            |    &lt;div className='user'&gt;
+            |      &lt;span className='name'&gt;{props.name}&lt;/span&gt;
+            |      &lt;span className='active'&gt;{props.state}&lt;/span&gt;
+            |      &lt;span className='role'&gt;{props.role}&lt;/span&gt;
+            |    &lt;/div&gt;
+            |  )
+            |}
+
+        p Entonces si usas 
+            strong destructuring
+            |   directamente en los parámetros, puedes eliminar tanto las llaves 
+            strong {}
+            |   como el 
+            strong return
+            | , y hacer el retorno implícito, lo que simplifica el código.
+
+        p Por lo tanto, la necesidad de usar 
+            strong return
+            |   depende de si tu componente tiene un bloque de código o si está retornando directamente el JSX.
+
+    article(id="3" class="content")
+        h2 Destructuring para renombrar propiedades
+
+        p Podemos ocupar la sintaxis de 
+            strong destructuring
+            |   para hacer un renombrado de las 
+            strong propiedades
+            | .
+
+        img(src="../../assets/img/4-3-destructuring-de-props/3.webp" alt="example")  
+        p Podemos preguntarnos y ¿Esto para que podria servirnos?
+        p Pues hay un caso cuando esto es muy útil, cuando recibimos un 
+            strong componente
+            |   como  
+            strong prop.
+        img(src="../../assets/img/4-3-destructuring-de-props/4.webp" alt="example").has-mb  
+        img(src="../../assets/img/4-3-destructuring-de-props/5.webp" alt="example")
+
+        p Solo hemos visto un uso sencillo para ver lo que podemos hacer, con el tiempo y ejercicios iremos ampliando los usos. 
+
+    article(id="4" class="content")
+        h2 Rest operator - Componente como prop
+
+        p El 
+            strong rest operator
+            |   es un operador muy común en destructuring.
+
+        p Nos sirve para guardar en un 
+            strong objeto
+            |   todas las demás 
+            strong props
+            |   que no hemos desestructurado previamente.
+
+        p Un ejemplo muy típico de cuando queremos usar este 
+            strong rest parameter
+            | , es cuando queremos añadir a un elemento una serie de funcionalidades extra, como, por ejemplo, añadir eventos.
+
+        p: strong Miremos el siguiente ejemplo: 
+        img(src="../../assets/img/4-3-destructuring-de-props/6.webp" alt="example")
+        img(src="../../assets/img/4-3-destructuring-de-props/7.webp" alt="example")
+
+        p Miremos por consola, que nuestro 
+            strong ...restProps
+            |   es un objeto que está guardando el resto de las propiedades que previamente no desestructuramos, en nuestro caso es un evento onClick.
+
+
+        img(src="../../assets/img/4-3-destructuring-de-props/8.webp" alt="example")
+
+
+        p Esta sintaxis es muy habitual para cuando queremos pasar alguna serie de propiedades extra que no son las principales, que no son las propiedades core de este componente, simplemente se utilizan como adicionales.
+
+        p Si tenemos un componente input, podemos recibir una label, el texto y su placeholder como sus propiedades habituales y luego podemos recibir algo a mayores por si queremos ponerle un formato al centro, un onChange, un onBlur, etc.
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Legibilizando nuestros componentes'],[3,'Destructuring para renombrar propiedades'],[4,'Rest operator - Componente como prop']]
     +submenu(submenuLinks)

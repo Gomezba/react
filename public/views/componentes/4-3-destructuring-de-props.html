@@ -344,18 +344,93 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>En este capítulo miraremos como aprovechar la sintaxis de <strong>Destructuring</strong> para hacer nuestros componentes más legibles y más potentes.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Legibilizando nuestros componentes</h2>
+            <p>La desestructuración nos ayuda a legibilizar los componentes y así sean mucho más potentes.</p>
+            <p>Partiremos desde la base haciendo un destructuring desde los parámetros en nuestro caso del componente.</p>
+            <div>
+              <pre><code class="language-jsx"> const User = ({ name, state, role }) =&gt; {
+	return (
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;{name}&lt;/span&gt;
+			&lt;span className='active'&gt;{state}&lt;/span&gt;
+			&lt;span className='role'&gt;{role}&lt;/span&gt;
+		&lt;/div&gt;
+	)
+}
+
+const app = (
+	&lt;div className='list'&gt;
+		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+		&lt;User name='Israel Vázquez' role='Profesor' /&gt;
+	&lt;/div&gt;
+)</code></pre>
+            </div>
+            <p>De esta manera evitamos estar haciendo <strong>props.prop</strong>. </p>
+            <p>Pero en realidad hay más, ya que desestructurando nos ayuda a tener valores por defecto, de esta manera si no se le pasa cierta propiedad, asignamos un valor por defecto.</p><img src="../../assets/img/4-3-destructuring-de-props/1.webp" alt="example">
+            <p>Como podemos ver a pesar de que no se le está pasando la prop <strong>state</strong> como en nuestro componente tenemos definido un <strong>span</strong> pues se le agrega a ese <strong>span</strong> el valor por defecto de la propiedad <strong>state</strong>.</p><img src="../../assets/img/4-3-destructuring-de-props/2.webp" alt="example">
+            <h3>Omitiendo Return </h3>
+            <p>Y para legibilizar aún más nuestro componente, ya que estamos ocupando <strong>destructuring desde los parámetros,</strong> podemos omitir el <strong>return.</strong></p>
+            <div>
+              <pre><code class="language-jsx"> // Nos evitamos el return al utilizar destructuring desde los parámetros
+const User = ({ name, state = 'Activo', role }) =&gt; (
+	&lt;div className='user'&gt;
+		&lt;span className='name'&gt;{name}&lt;/span&gt;
+		&lt;span className='active'&gt;{state}&lt;/span&gt;
+		&lt;span className='role'&gt;{role}&lt;/span&gt;
+	&lt;/div&gt;
+)</code></pre>
+            </div>
+            <p>Como podemos ver todo funciona correctamente. </p><img src="../../assets/img/4-3-destructuring-de-props/2.webp" alt="example">
+            <p>Si no utilizaras <strong>destructuring</strong> en los parámetros, y accedieras a las props mediante el objeto <strong>props</strong>, tendrías que usar un <strong>return explícito para devolver el </strong><strong>JSX</strong>, ya que la función estaría utilizando un bloque de código. Cuando defines un bloque de código con llaves <strong>{}</strong>, la arrow function necesita un <strong>return</strong> explícito para devolver algo.</p>
+            <p>Por ejemplo, el componente del capítulo anterior no utilizabamos <strong>destructuring</strong> y accediamos a las props con <code>props.nombreProp</code> y era obligatorio utilizar return.</p>
+            <div>
+              <pre><code class="language-jsx"> const User = (props) =&gt; {
+ return (
+   &lt;div className='user'&gt;
+     &lt;span className='name'&gt;{props.name}&lt;/span&gt;
+     &lt;span className='active'&gt;{props.state}&lt;/span&gt;
+     &lt;span className='role'&gt;{props.role}&lt;/span&gt;
+   &lt;/div&gt;
+ )
+}</code></pre>
+            </div>
+            <p>Entonces si usas <strong>destructuring</strong> directamente en los parámetros, puedes eliminar tanto las llaves <strong>{}</strong> como el <strong>return</strong>, y hacer el retorno implícito, lo que simplifica el código.</p>
+            <p>Por lo tanto, la necesidad de usar <strong>return</strong> depende de si tu componente tiene un bloque de código o si está retornando directamente el JSX.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Destructuring para renombrar propiedades</h2>
+            <p>Podemos ocupar la sintaxis de <strong>destructuring</strong> para hacer un renombrado de las <strong>propiedades</strong>.</p><img src="../../assets/img/4-3-destructuring-de-props/3.webp" alt="example">
+            <p>Podemos preguntarnos y ¿Esto para que podria servirnos?</p>
+            <p>Pues hay un caso cuando esto es muy útil, cuando recibimos un <strong>componente</strong> como <strong>prop.</strong></p><img class="has-mb" src="../../assets/img/4-3-destructuring-de-props/4.webp" alt="example"><img src="../../assets/img/4-3-destructuring-de-props/5.webp" alt="example">
+            <p>Solo hemos visto un uso sencillo para ver lo que podemos hacer, con el tiempo y ejercicios iremos ampliando los usos. </p>
+          </article>
+          <article class="content" id="4">
+            <h2>Rest operator - Componente como prop</h2>
+            <p>El <strong>rest operator</strong> es un operador muy común en destructuring.</p>
+            <p>Nos sirve para guardar en un <strong>objeto</strong> todas las demás <strong>props</strong> que no hemos desestructurado previamente.</p>
+            <p>Un ejemplo muy típico de cuando queremos usar este <strong>rest parameter</strong>, es cuando queremos añadir a un elemento una serie de funcionalidades extra, como, por ejemplo, añadir eventos.</p>
+            <p><strong>Miremos el siguiente ejemplo: </strong></p><img src="../../assets/img/4-3-destructuring-de-props/6.webp" alt="example"><img src="../../assets/img/4-3-destructuring-de-props/7.webp" alt="example">
+            <p>Miremos por consola, que nuestro <strong>...restProps</strong> es un objeto que está guardando el resto de las propiedades que previamente no desestructuramos, en nuestro caso es un evento onClick.</p><img src="../../assets/img/4-3-destructuring-de-props/8.webp" alt="example">
+            <p>Esta sintaxis es muy habitual para cuando queremos pasar alguna serie de propiedades extra que no son las principales, que no son las propiedades core de este componente, simplemente se utilizan como adicionales.</p>
+            <p>Si tenemos un componente input, podemos recibir una label, el texto y su placeholder como sus propiedades habituales y luego podemos recibir algo a mayores por si queremos ponerle un formato al centro, un onChange, un onBlur, etc.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Legibilizando nuestros componentes</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Destructuring para renombrar propiedades</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Rest operator - Componente como prop</a></li>
           </ul>
         </nav>
       </section>

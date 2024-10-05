@@ -344,18 +344,52 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>Hasta ahora hemos visto como evitar que el <strong>CSS</strong> de nuestros componentes sea global usando <strong>CSS modules</strong> y consiguiendo que unos componentes no afecten a otros.</p>
+            <p>Pero esto no significa que no debamos usar <strong>CSS global</strong> sino que tenemos que utilizarlo cuando realmente lo sea.</p>
+            <p>En muchas ocasiones queremos definir clases CSS que sean globales y que puedan estar disponibles a lo largo de todos los componentes o simplemente aplicar unos estilos base para todo el proyecto.</p>
+            <p>Como mencionamos anteriormente existen arquitecturas CSS como: <strong>Atomit Design</strong>, <strong>ITCSS</strong>, entre otras más. </p>
+            <p>Pero en este capítulo simplemente miraremos como organizar ese CSS que puede ser global para nuestro proyecto.</p>
+            <p>Habiamos dicho en el capítulo anterior que el archivo <strong>index.css</strong> es el que se encargará de contener nuestro estilos globales, pero este archivo como siempre puede crecer muchisimo y convertirse en algo poco legible y manejable.</p>
+            <p>Entonces miraremos somo subdividir este <strong>index.css</strong> en distintos archivos, uno para cada funcionalidad y tenemos que ver donde ubicar estos archivos. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Donde ubicar nuestros estilos globales</h2>
+            <p>La mejor forma es crear una carpeta <strong>"styles"</strong> en la raíz de <strong>"src"</strong> y colocar en esta carpeta nuestro archivo <strong>index.css</strong></p><img class="img-md" src="../../assets/img/4-8-css-global/1.webp" alt="example">
+            <p>En el archivo <strong>main.jsx</strong> ajustamos el import con la nueva ubicación del <strong>index.css</strong></p><img src="../../assets/img/4-8-css-global/2.webp" alt="example">
+            <p>Este archivo <strong>index.css</strong> servirá como punto de entrada para todos los archivos css globales, es decir todos los archivos que se encuentren en <strong>styles</strong> los importaremos dentro de <strong>index.css</strong>, de esta manera solo importaremos este <strong>index.css</strong> al <strong>main.jsx</strong> ya que contiene todos los demás estilos.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Integrando nuestros estilos globales en index.css </h2>
+            <p>¿Qué podemos incorporar en nuestro <strong>index.css</strong>?, pues a demás de otras muchas cosas, los típicos <strong>resets</strong> y <strong>tipografías.</strong></p>
+            <p>Así que empezaremos por estas 2 partes: <strong>resets </strong> y <strong>tipografías.</strong></p>
+            <p>Primero cabe aclarar que esto no es un curso de arquitectura CSS, así que solo daremos unas ligeras recomendaciones, evidentemente lo que veamos aquí no tenemos que tomarlo como las mejores prácticas en cuanto a CSS. </p>
+            <h3>Integrando normalize.css</h3>
+            <p>La versión más estandar para incorporar estos resets, es <a class="link" href="https://necolas.github.io/normalize.css/" target="_blank">normalize.css</a> , es la más utilizada y la mas popular, pero no es la única, evidentemente este tema de los resets, es algo muy cuestionable, cada uno tiene sus propias reglas, a unos les gusta una cosas y a otros otra. </p>
+            <p>A este <strong>normalize.css</strong> le han salido distintas alternativas que sirven para según ellos corregir las cosas que le faltan y que no tiene perfectamente definidas. </p>
+            <p>Dentro de estas alternativas, a surgido una que está tomando bastante peso en estos últimos años que es <a class="link" href="https://github.com/sindresorhus/modern-normalize" target="_blank">modern-normalize.</a></p>
+            <p> <strong>Modern-normalize</strong> está basado en <strong>normalize.css</strong> pero incluye algunas cosas extra como: <strong>box-sizing: border-box</strong>.</p>
+            <p>Como curiosidad esta hoja de estilos es la que utiliza <strong>tailwind.css</strong> el framework de CSS tan famoso ultimamente.</p>
+            <p>Entonces crearemos un archivo llamado <strong>"normalize.css"</strong> dentro de la carpeta <strong>styles</strong> y pegaremos el código sacado de <a class="link" href="https://cdn.jsdelivr.net/npm/modern-normalize/modern-normalize.css" target="_blank">modern-normalize</a>. </p><img src="../../assets/img/4-8-css-global/3.webp" alt="example">
+            <p>Ahora importamos este archivo en nuestro archivo CSS de entrada <strong>index.css</strong></p><img src="../../assets/img/4-8-css-global/4.webp" alt="example">
+            <h4>Integrando fuentes</h4>
+            <p>Sin duda de los mejores servicios que existen para agregar un estilo de fuente a nuestras páginas es <a class="link" href="https://fonts.google.com/" target="_blank">Google Fonts</a></p>
+            <p>En nuestro caso eligiremos la fuente <a class="link" href="https://fonts.google.com/selection/embed" target="_blank">popins</a> con los siguientes estilos. </p><img src="../../assets/img/4-8-css-global/5.webp" alt="example">
+            <p>Creamos un archivo llamado <strong>"fonts"</strong> dentro de <strong>"styles"</strong> e importamos nuesta fuente ahí.</p><img src="../../assets/img/4-8-css-global/6.webp" alt="example">
+            <p>Ahora simplemente en nuestro <strong>index.css</strong> importamos nuestro archivo <strong>fonts.css</strong></p><img src="../../assets/img/4-8-css-global/7.webp" alt="example">
+            <p>Como vemos todo funciona correctamente.</p><img src="../../assets/img/4-8-css-global/8.webp" alt="example">
+            <p>Cabe aclarar que esta no es la manera correcta de agregar nuestras fuentes, pero nos sirve como ejemplo didáctico.</p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Donde ubicar nuestros estilos globales</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Integrando nuestros estilos globales en index.css</a></li>
           </ul>
         </nav>
       </section>

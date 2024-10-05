@@ -5,13 +5,404 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+        p Si hay una propiedad clave que podemos utilizar dentro de nuestros componentes esa es la propiedad 
+            strong children. 
 
+        p Ya sabemos que 
+            strong children
+            |   es una propiedad especial que se encuentra dentro del objeto 
+            strong props
+            |   que forma parte de una etiqueta 
+            strong JSX
+            |   y un componente es una etiqueta JSX.
+
+        p Tambien sabemos que 
+            strong children
+            |   es todo aquello que se pone entre la etiqueta de apertura y cierre, y que puede ser un simple texto, un objeto JSX o un array de objetos.
+
+        p Entonces como un componente es una etiqueta JSX, podemos pasarle  
+            strong childrens
+            |   entre su etiqueta de apertura y cierre.
+
+        p Gracias a 
+            strong children
+            |   podemos combinar componentes más pequeños dentro de otros más grandes, lo que se conoce como 
+            strong composición
+            |. 
+
+        p En este capítulo estaremos refactorizando nuestro componente de gestion de usuarios con el que hemos estado trabajando, a fin de que podamos combinar componentes.
+        div: pre: code.language-jsx 
+            |const Title = () =&gt; &lt;h1&gt;Listado de usuarios&lt;/h1&gt;
+            |
+            |export const User = ({ name, state, role }) =&gt; {
+            |	return (
+            |		&lt;div className='user'&gt;
+            |			&lt;span className='name'&gt;{name}&lt;/span&gt;
+            |			&lt;span className='active'&gt;{state}&lt;/span&gt;
+            |			&lt;span className='role'&gt;{role}&lt;/span&gt;
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |const app = (
+            |	&lt;div className='list'&gt;
+            |		&lt;Title /&gt;
+            |		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+            |		&lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+            |	&lt;/div&gt;
+            |)
+        img(src="../../assets/img/4-4-composicion-de-componentes/1.webp" alt="example")    
+
+        p Para poder refactorizar nuestro código estaremos viendo como pasar estos children.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Pasar children a un componente 
 
+        h3 Forma correcta de pasar children
+
+        p Para pasar los 
+            strong children
+            |   siempre deben ir entre la etiqueta de apertura y cierre del componente.
+
+        div: pre: code.language-jsx 
+            | &lt;componente&gt; childrens &lt;/componente&gt;
+
+        p Para poder acceder desde el componente a estos children, debemos recordar que la propiedad 
+            strong children
+            |   se guarda dentro de la propiedad 
+            strong props
+            |   de un elemento o un componente.    
+
+        div: pre: code.language-jsx
+            | const componente = (props) =&gt; &lt;p&gt; props.children &lt;/p&gt; 
+
+        p Anteriormente ya hemos hablado de la desestructuración, y siempre debemos ocuparl destrucuring, de forma que para acceder a nuestros children sería desestructurando.     
+        div: pre: code.language-jsx
+            | const componente = ({children}) =&gt; &lt;p&gt; children &lt;/p&gt; 
+
+        h3 Forma incorrecta de pasar children 
+
+        p En JSX es posible pasar los 
+            strong children
+            |   en línea, es decir, dentro de la etiqueta de apertura.
+
+        div: pre: code.language-jsx 
+            | &lt;componente children='Soy children'&gt; &lt;/componente&gt;
+
+        p De la misma forma podemos acceder a estos children de forma en línea.        
+        div: pre: code.language-jsx 
+            | const componente = ({children}) =&gt; &lt;p children={children}&gt; &lt;/p&gt; 
+
+        p Esto funciona, pero nunca se debe hacer, el estandar es siempre pasar los children entre las etiquetas de apertura y cierre del componente. 
+
+    article(id="3" class="content")
+        h2 Refactorizando a composición de componentes 
+
+        h3 Title
+        p Empezaremos por refactorizar nuestro componente 
+            strong Title
+            |   de tal manera que en lugar de tener siempre el mismo texto, se pueda renderizar cualquier texto que pasemos como children. 
+
+        p: strong.ts-6 Código sin refactorizar
+        div: pre: code.language-jsx
+            |const Title = () =&gt; &lt;h1&gt;Listado de usuarios&lt;/h1&gt;
+            |
+            |const app = (
+            |    &lt;div className='list'&gt;
+            |        &lt;Title /&gt;
+            |        &lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+            |        &lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+            |    &lt;/div&gt;
+            |) 
+
+
+        p: strong.ts-3 Código refactorizado
+
+        div: pre: code.language-jsx 
+            | const Title = ({children}) =&gt; &lt;h1&gt; {children} &lt;/h1&gt; //Refactorizado
+            |
+            | // Refactorizamos a &lt;Title&gt; Listado de usuarios &lt;/Title&gt;
+            | const app = (
+            |	&lt;div className='list'&gt;
+            |		&lt;Title&gt; Listado de usuarios &lt;/Title&gt;
+            |		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+            |		&lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+            |	&lt;/div&gt;
+            |)
+
+        h3 Creando componente List
+
+        p Para seguir refactorizando nuestro código a fin de llegar a utilizar la composición, es decir, combinar componentes pequeños con componentes grandes, crearemos un componente 
+            strong List
+            |   en lugar de simplemente renderizar un 
+            strong div.
+
+        p: strong.ts-6 Código hasta este punto sin crear componente List    
+        div: pre: code.language-jsx 
+            |const Title = ({ children }) =&gt; &lt;h1&gt;{children}&lt;/h1&gt;
+            |
+            |export const User = ({ name, state, role }) =&gt; {
+            |	return (
+            |		&lt;div className='user'&gt;
+            |			&lt;span className='name'&gt;{name}&lt;/span&gt;
+            |			&lt;span className='active'&gt;{state}&lt;/span&gt;
+            |			&lt;span className='role'&gt;{role}&lt;/span&gt;
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |const app = (
+            |	&lt;div className='list'&gt;
+            |		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+            |		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+            |		&lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+            |	&lt;/div&gt;
+            |)
+
+        p: strong.ts-3 Código refactorizado con componente List  
+        div: pre: code.language-jsx
+            |const Title = ({ children }) =&gt; &lt;h1&gt;{children}&lt;/h1&gt;
+            |
+            |export const User = ({ name, state, role }) =&gt; {
+            |	return (
+            |		&lt;div className='user'&gt;
+            |			&lt;span className='name'&gt;{name}&lt;/span&gt;
+            |			&lt;span className='active'&gt;{state}&lt;/span&gt;
+            |			&lt;span className='role'&gt;{role}&lt;/span&gt;
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |/*Creamos el componente List, desestructuramos children 
+            |y lo pasmos como children del div 
+            |
+            |Children es un array que contiene todos los hijos que se
+            |pasan dentro del componente List en este caso un componente
+            |Title y 2 componentes User.
+            |
+            |Hay que recordar que cuando pasamos como children un array de elementos
+            |estos se concatenan y se renderizan.
+            |*/
+            |const List = ({ children }) =&gt; &lt;div className='list'&gt;{children}&lt;/div&gt;
+            |
+            |/*
+            |Ejecutamos el componente List y como hijos le pasamos 
+            |Un componente Title y 2 componentes User
+            |*/
+            |const app = (
+            |	&lt;List className='list'&gt;
+            |		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+            |		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+            |		&lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+            |	&lt;/List&gt;
+            |)
+
+        p Hasta este punto todo funciona, pero parece que estamos componentizando sin una razón objetiva, así que podemos abstraer aun más nuestro código, por ejemplo cuando ejecutamos el componente 
+            strong List
+            |   estamos teniendo un patrón donde vemos que se repite lo mismo, nos referimos a generar componentes 
+            strong User
+            |   por cada uno de los usuarios.
+
+        div: pre: code.language-jsx
+            |/*
+            |Estamos repitiendo el mismo patrón de generar componentes
+            |User por cada uno de los usuarios.
+            |*/
+            |const app = (
+            |	&lt;List className='list'&gt;
+            |		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+            |		&lt;User name='Joel Gómez' state='Activo' role='Profesor' /&gt;
+            |		&lt;User name='Israel Vázquez' state='Activo' role='Profesor' /&gt;
+            |	&lt;/List&gt;
+            |)    
+
+        p Así que extraeremos esta lógica. Lo que haremos es hacer que nuestro componente 
+            strong List
+            |   a demás de devolver un 
+            strong div
+            |   con su children, lo que hará es renderizar los usuarios, es decir generar un 
+            strong User
+            |   por cada uno de los usuarios.
+
+        p Así que a nuestro componente 
+            strong List
+            | , le añadiremos un 
+            strong return
+            |   para poder añadir lógica al componente.
+
+        p Haremos que nuestro componente 
+            strong List
+            |   reciba un objeto que llamaremos 
+            strong users
+            | , el cual mapearemos para devolver un componente y así renderizarlos dentro de 
+            strong List
+            | , este objeto users lo crearemos con las 
+            strong props
+            |   que necesita un componente 
+            strong User
+            | , y pasaremos este objeto como un 
+            strong prop
+            |   cuando ejecutemos el componente 
+            strong List.
+
+        p De tal manera que nuestro código quedaria de la siguiente manera.          
+
+        div: pre: code.language-jsx
+            |/* 1. Creamos un array de objetos USERS, y como propiedades pondremos
+            |las props que necesita el componente User*/
+            |const USERS = [
+            |	{
+            |		name: 'Joel Gómez',
+            |		state: 'Activo',
+            |		role: 'PROFESOR'
+            |	},
+            |	{
+            |		name: 'Israel Vázquez',
+            |		state: 'Activo',
+            |		role: 'PROFESOR'
+            |	}
+            |]
+            |
+            |const Title = ({ children }) =&gt; &lt;h1&gt;{children}&lt;/h1&gt;
+            |
+            |export const User = ({ name, state, role }) =&gt; {
+            |	return (
+            |		&lt;div className='user'&gt;
+            |			&lt;span className='name'&gt;{name}&lt;/span&gt;
+            |			&lt;span className='active'&gt;{state}&lt;/span&gt;
+            |			&lt;span className='role'&gt;{role}&lt;/span&gt;
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |/*3. Al momento de pasarle las props al comoponente List, 
+            |ya sabemos que se genera un objeto llamado props, del cúal 
+            |estamos desestrucurando el array de objetos que pasamos como prop
+            |de List, y tambien desestructuramos la propiedad children que es
+            |nuestro componente Title.
+            |
+            |Creamos una constante llamada userRendered donde guardamos un 
+            |array de componentes(etiquetas JSX) que es el resultado de haber mapeado 
+            |cada uno de los objetos, al momento de generar los componentes 
+            |User agregamos una Key y sus props que son cada una de las 
+            |propiedades del objeto y las pasamos con spread operator.
+            |
+            |Y simplemente devolvemos un div con el children y los users renderizados.
+            |*/
+            |
+            |
+            |const List = ({ users, children }) =&gt; {
+            |	const userRendered = users.map((user) =&gt; (
+            |		&lt;User key={user.name} {...user}&gt;&lt;/User&gt;
+            |	))
+            |	return (
+            |		&lt;div className='list'&gt;
+            |			{children} {userRendered}
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |/*2. Al ejecutar el componente List le pasamos como prop una 
+            |propiedad llamada users que contendra el array de objetos USERS */
+            |const app = (
+            |	&lt;List className='list' users={USERS}&gt;
+            |		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+            |	&lt;/List&gt;
+            |)
+
+        p Como podemos ver obtenemos el mismo resultado, pero sin tener que estar pasandole al componente 
+            strong List
+            |   componentes 
+            strong User
+            |   como hijos, de tal manera que la lista ya no se encarga de pintar solo una serie de children, sino que también tiene una lógica interna que se encarga de mapear cada uno de los usuarios que recibe del array como una instancia de User, es decir generando el componente User.    
+        img(src="../../assets/img/4-4-composicion-de-componentes/1.webp" alt="example") 
+
+        p: strong.ts-3 Código completo sin comentarios.   
+        div.has-mb: pre: code.language-jsx
+            |const USERS = [
+            |	{
+            |		name: 'Joel Gómez',
+            |		state: 'Activo',
+            |		role: 'PROFESOR'
+            |	},
+            |	{
+            |		name: 'Israel Vázquez',
+            |		state: 'Activo',
+            |		role: 'PROFESOR'
+            |	}
+            |]
+            |
+            |const Title = ({ children }) =&gt; &lt;h1&gt;{children}&lt;/h1&gt;
+            |
+            |export const User = ({ name, state, role }) =&gt; {
+            |	return (
+            |		&lt;div className='user'&gt;
+            |			&lt;span className='name'&gt;{name}&lt;/span&gt;
+            |			&lt;span className='active'&gt;{state}&lt;/span&gt;
+            |			&lt;span className='role'&gt;{role}&lt;/span&gt;
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |const List = ({ users, children }) =&gt; {
+            |	const userRendered = users.map((user) =&gt; (
+            |		&lt;User key={user.name} {...user}&gt;&lt;/User&gt;
+            |	))
+            |	return (
+            |		&lt;div className='list'&gt;
+            |			{children} {userRendered}
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |const app = (
+            |	&lt;List className='list' users={USERS}&gt;
+            |		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+            |	&lt;/List&gt;
+            |)
+
+    article(id="4" class="content")
+        h2 ¿Qué pasa con Key?
+
+        p Puede que nos preguntemos, ¿Y que hacemos con la key que pasamos como prop al ejecutar el componente User?, ¿Podemos hacer algo con ella desde nuestro componente User?
+
+        img(src="../../assets/img/4-4-composicion-de-componentes/2.webp" alt="example")
+        p Como podemos ver al querer utilizar la 
+            strong Key
+            |   que pasamos como 
+            strong prop
+            |   al ejecutar el componente User nos devuelve el siguiente error. 
+        img(src="../../assets/img/4-4-composicion-de-componentes/3.webp" alt="example") 
+
+        p El error traducido al español dice lo siguiente.
+
+        p.ts-2 Advertencia: Usuario: 
+            strong `key`
+            |   no es una 
+            strong prop
+            | . Si intentas acceder a ella se devolverá 
+            strong `undefined`
+            | . Si necesitas acceder al mismo valor dentro del componente hijo, debes pasarlo como una prop diferente.
+
+        p.note De tal manera que 
+            strong Key
+            |   no es una 
+            strong prop
+            |   como tal que nosotros tengamos que manejar, es una prop que tenemos que enviar a React, y React automáticamente la detectará la extraerá y la utilizará, sin que nos llegue en absoluto al objeto 
+            strong props
+            |   del componente donde la pasamos. Es algo que sucede de forma automática y que veremos en 
+            strong la sección de ESTADOS
+            |   donde miraremos para que la utiliza React y porque es necesario.
+
+    article(id="5" class="content")
+        h2 Conclusión 
+        p En escencia lo que acabamos de hacer es lo que se suele hacer en toda la libreria de React, es decir, dividir la interfáz en pequeños trocitos e ir reutilizando cada uno de ellos.
+
+        p Hay que quedarnos con la base, de que lo que hacemos con React es crear componentes y a través de las props 
+            strong children
+            |   y del resto de propiedades vamos creando una estructura que se va reutilizando hasta generar un pequeño puzzle que podamos utilizar, para ir construyendo pieza a pieza nuestras pantallas, nuestras interfaces.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Pasar children a un componente'],[3,'Refactorizando a composición de componentes'],[4,'¿Qué pasa con Key?'],[5,'Conclusión']]
     +submenu(submenuLinks)

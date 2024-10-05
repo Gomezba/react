@@ -5,13 +5,144 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+        p Ahora que sabemos como darle estilos a nuestros componentes, vamos a conseguir un estilo coherente al 
+            strong UserRow
+            | , como hacer que el 
+            strong rol
+            |   tenga el mismo tamaño,  los 
+            strong estados
+            |   tengan una misma dirección recta.
+
+        p Además agregaremos mas estados como, inactivos, etc.    
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Estilos coherentes al UserRow
+
+        p Lo primero que haremos es cambiar un poco la estructura de nuestro componente
+
+        p: strong.ts-6 Estructura anterior  
+        img(src="../../assets/img/4-9-renderizado-condicional/1.webp" alt="example")
+
+        p: strong.ts-3 Estructura actualizada
+        img(src="../../assets/img/4-9-renderizado-condicional/2.webp" alt="example")
+
+        p Lo siguiente es agregar los estilos coherentes a nuestro componente.
+
+        p: strong.ts-3 Estilos anteriores
+        img(src="../../assets/img/4-9-renderizado-condicional/3.webp" alt="example")
+
+        p: strong.ts-3 Estilos actualizados
+        img(src="../../assets/img/4-9-renderizado-condicional/4.webp" alt="example")
+
+        p Ahora si podemos ver los estilos coherentemente en nuestra pantalla.
+        img(src="../../assets/img/4-9-renderizado-condicional/5.webp" alt="example")
+
+    article(id="3" class="content")
+        h2 Pasando los estados como Booleanos
+
+        p Lo demás que podemos hacer es pasar los estados del usuario como 
+            strong booleanos
+            |   ya que los estamos pasando como un 
+            strong string
+            |.
+        img(src="../../assets/img/4-9-renderizado-condicional/6.webp" alt="example")
+
+        p En vez de enviar un 
+            strong string
+            |   enviaremos un 
+            strong boolean.
+        img(src="../../assets/img/4-9-renderizado-condicional/7.webp" alt="example")
+
+        p Si vemos nuestra pantalla, miraremos que ahora los estados no se renderizan, ya que recordemos que los 
+            strong booleans
+            |   React no los renderiza.
+        img(src="../../assets/img/4-9-renderizado-condicional/8.webp" alt="example")
+
+    article(id="4" class="content")
+        h2 Renderizado condicional
+        p Cuando ocupamos 
+            strong booleanos
+            |   utilizamos lo que se llama 
+            strong renderizado condicional
+            |, para que en caso de que algo sea 
+            strong true 
+            |   o 
+            strong false
+            |   renderizamos algo según el valor, y para esto ocupamos la sintaxis del 
+            strong operador ternario (?)
+            | .
+        img(src="../../assets/img/4-9-renderizado-condicional/9.webp" alt="example")
+
+        p Si vemos la pantalla podemos ver que ahora si se renderizan los estados.
+        img(src="../../assets/img/4-9-renderizado-condicional/10.webp" alt="example")
+
+    article(id="5" class="content")
+        h2 Renderizado condicional de una clase CSS 
+        p Se supone que cuando tengamos un estado inactivo deberia estar en un color, rojo, por lo cual necesitaremos una 
+            strong clase condicional
+            |   guardada en una variable para que cuando recibamos un boolean de tipo 
+            strong true
+            |   guardemos una clase de tipo 
+            strong active
+            |   y en caso de 
+            strong false
+            |   guardemos una clase de tipo
+            strong invative.
+
+        p Para lograr esto haremos el siguiente ajuste.
+
+        p En lugar de tengamos una clase llamada 
+            strong active
+            |   cambiaremos su nombre a 
+            strong status
+            |   y creamos clases para cuando los estados sean activos e inactivos.  
+        img(src="../../assets/img/4-9-renderizado-condicional/11.webp" alt="example")
+
+        p En nuestro componente renombramos la clase 
+            strong active
+            |   a 
+            strong status
+            |   y agregamos un 
+            strong className
+            |   al 
+            strong span
+            |   del 
+            strong status
+            | , este className tendrá una variable que contendrá la clase de nuestro CSS dependiendo de si el estado es activo o inactivo, y lo logramos con un renderizado condicional igualmente.  
+        img(src="../../assets/img/4-9-renderizado-condicional/12.webp" alt="example")
+
+        p Si miramos la pantalla ahora si dependiendo de si el estado es activo o inactivo tendrá sus estilos predeterminados para cada estado.
+        img(src="../../assets/img/4-9-renderizado-condicional/13.webp" alt="example")
+
+    article(id="6" class="content")
+        h2 Renderizado condicional de roles 
+        p Lo que nos hace falta es tener un estilo predeterminado para cada rol (profesor, estudiante), esto porque debemos pensar a futuro, ya que en algún momento se pueden añadir nuevos roles y de esta manera controlamos los estilos para cada rol.
+
+        p Para lograr esto, estaremos haciendo varios ajustes.
+
+        p: strong 1. Crear los estilos para cada rol.
+        img(src="../../assets/img/4-9-renderizado-condicional/14.webp" alt="example")
+
+        p: strong 2. Pasar una palabra clave en el role de los USERS.
+        img(src="../../assets/img/4-9-renderizado-condicional/15.webp" alt="example")
+
+        p: strong 3. Crear la lógica para evaluar la palabra clave y así renderizar los estilos dependiendo del rol.
+        img(src="../../assets/img/4-9-renderizado-condicional/16.webp" alt="example")
+
+        p Si miramos la pantalla ahora si tendremos los estilos dependiendo de cada rol. 
+        img(src="../../assets/img/4-9-renderizado-condicional/17.webp" alt="example")
+
+        p Si por ejemplo llegan a pasar un rol que no existe, pues se renderizará el estilo predeterminado para otros roles.
+        img(src="../../assets/img/4-9-renderizado-condicional/18.webp" alt="example").has-mb
+        img(src="../../assets/img/4-9-renderizado-condicional/19.webp" alt="example")
+
+        p El problema de ahora es que nuestro componente 
+            strong UserRow.jsx
+            |   está creciendo demasiado.
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Estilos coherentes al UserRow'], [3,'Pasando los estados como Booleanos'],[4,'Renderizado condicional'],[5,'Renderizado condicional de una clase CSS'],[6,'Renderizado condicional de roles']]
     +submenu(submenuLinks)

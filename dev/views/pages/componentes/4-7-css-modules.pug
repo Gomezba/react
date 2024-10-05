@@ -5,13 +5,245 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+        p Hasta ahora hemos modularizado nuestros componentes, prestando únicamente atención a la parte de JavaScript, es decir a la parte de JSX.
+
+        p Pero un componente no es solo JavaScript, sino que tambien tiene su 
+            strong CSS
+            |   asociado y actualmente estamos tratando el CSS de forma global, es decir, el mismo CSS para todos. 
+
+        p Hasta aquí todo es muy sencillo, pero a medida que esto va creciendo, el archivo 
+            strong index.css
+            |   puede convertirse en un auténtico monstruo. 
+
+        p Lo que haremos este este capítulo es modularizar y divir en distintos archivos nuestro index.css     
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 ¿Dónde se coloca el CSS de cada componente?
+        p Habitualmente se colocan a lado del propio componente, es decir, en la carpeta de 
+            strong components
+            |   se crea un archivo de 
+            strong CSS
+            |   con el mismo nombre del componente y se coloca ahí sus estilos correspondientes. 
 
+        p Para añadir este CSS se hace importandolo desde el mismo componente.
+        p De tal forma que cuando importemos el componente, el componente importará su propio CSS, y 
+            strong solo se cargará este CSS si el componente está importado
+            | .
+
+        p Procedemos a crear los archivos de CSS con el mismo nombre del componente, en nuestro caso los únicos componentes que tienen estilos son: 
+            strong UserRow
+            |   y 
+            strong UsersList
+            | . A su vez agregaremos su respectivo CSS.
+
+        p: strong.ts-3 UserRow.css
+        img(src="../../assets/img/4-7-css-modules/1.webp" alt="example")
+        p: strong.ts-3 UsersList.css
+        img(src="../../assets/img/4-7-css-modules/2.webp" alt="example")
+
+        p En el archivo  
+            strong.ts-3 index.css
+            |   solo se quedan los estilos globales.
+        img(src="../../assets/img/4-7-css-modules/6.webp" alt="example")
+
+        p Importamos el CSS desde el respectivo componente.
+        p: strong.ts-3 UserRow.jsx
+        img(src="../../assets/img/4-7-css-modules/3.webp" alt="example")
+        p: strong.ts-3 UsersList.jsx
+        img(src="../../assets/img/4-7-css-modules/4.webp" alt="example")
+
+
+        p Hasta este punto tenemos nuestro CSS modularizado, y todo funciona correctamente.
+        img(src="../../assets/img/4-7-css-modules/5.webp" alt="example")
+
+        p.ts-2 Pero aquí no acaba todo, porque aunque este estilo esté importado dentro de un componente, no está restringido únicamente a ese componente. El 
+            strong CSS no se ha marcado con un ámbito específico que lo limite al componente en cuestión.
+
+    article(id="3" class="content")
+        h2 Problema de colisión de CSS
+        p Como se mencionó anteriormente, el CSS de nuestros componentes a pesar de que los estemos importando desde su respectivo componente, no está ligado a el, no hemos restringido que ese CSS sea único del componente.
+
+        p El problema que genera esto es que nuestro CSS colisionará 
+
+        p: strong.ts-2 Ejemplo: 
+        p Vamos a ir al archivo 
+            strong UsersList.css
+            |   y cambiaremos la clase por 
+            strong wrapper.
+        img(src="../../assets/img/4-7-css-modules/7.webp" alt="example")
+
+        p Lo mismo haremos con el componente 
+            strong UsersList.jsx
+            | . 
+        img(src="../../assets/img/4-7-css-modules/8.webp" alt="example")
+
+        p Lo mismo haremos con el componente 
+            strong UserRow.css 
+            |   y 
+            strong UserRow.jsx
+            |   cambiaremos la clase a 
+            strong wrapper
+            |  . 
+        img(src="../../assets/img/4-7-css-modules/9.webp" alt="example").has-mb
+        img(src="../../assets/img/4-7-css-modules/10.webp" alt="example")
+
+        p Si vemos la pantalla, será un completo caos.
+        img(src="../../assets/img/4-7-css-modules/11.webp" alt="example")
+
+        p ¿Qué es lo que está pasando con el proyecto?, pues que nuestras clases 
+            strong wrapper
+            |   están colisionando, esto se debe a que no son únicas del componente como habiamos mencionado anteriormente, a pesar de que el CSS se esté importando desde su respectivo componente, ese CSS no es único del componente, es por eso que nos colisionan las clases.
+
+        p Entonces una vez que importamos el CSS, no es único del componente, sino que forman parte de cualquier CSS global.
+
+        p Para que lo veamos más claro, miremos el código html de nuestros componentes en el navegador.
+        img(src="../../assets/img/4-7-css-modules/12.webp" alt="example")
+
+        p ¿Como podemos solucionar esto y convertir este CSS en algo realmente propio del componente?, pues utilizando 
+            strong CSS modules
+            | .
+
+    article(id="4" class="content")
+        h2 Solucionando colisiones con CSS modules
+        p 
+            strong CSS modules
+            |   es una forma de crear hojas de estilo para que sean propias de un componente, pero nos obliga a utilizar el CSS de una forma especial.
+
+        h3 Convirtiendo CSS en un módulo
+        p El estándar que tenemos en 
+            strong React
+            |   y en 
+            strong Vite
+            | , es que nuestros archivos CSS tengan como nombre: 
+
+        p: code archivo.module.css
+
+        p Sabiendo esto, procederemos a cambiar el nombre de nuestros archivos CSS siguiendo esta regla.
+
+        h4 Nombre correcto de archivos CSS modules
+
+        img(src="../../assets/img/4-7-css-modules/13.webp" alt="example").img-md
+
+        h4 Importando CSS module de manera incorrecta
+        p Actualizamos los imports del CSS de nuestros componentes a este nuevo nombre.
+        img(src="../../assets/img/4-7-css-modules/14.webp" alt="example").has-mb
+        img(src="../../assets/img/4-7-css-modules/15.webp" alt="example")
+
+        p Si vemos nuestra pantalla miraremos que esto aún no funciona, no está generando nuestros estilos.
+        img(src="../../assets/img/4-7-css-modules/16.webp" alt="example")
+
+        p No está funcionando porque la manera correcta de importar un 
+            strong CSS module
+            |   es importandolo como un 
+            strong objeto
+            | .
+
+        h4 Importando CSS module de manera correcta
+        p Para poder importar de manera correcta nuestro 
+            strong CSS module
+            | , necesitamos importarlo como objeto:  
+        p: code import style from 'archivo.module.css' 
+
+        p El nombre del objeto por convención se suele llamar 
+            strong style
+            |   pero podemos darle el nombre que nos apetezca.
+
+        p: strong ¿Qué es este style?
+        p Es un 
+            strong objeto
+            |   que contiene todas las 
+            strong clases CSS
+            |   puestas en forma de objeto. 
+
+        p Miremos un ejemplo:
+
+        div: pre: code.language-css
+            | // archivo.module.css
+            |
+            | .clase {
+            | color: tomato;   
+            | }
+
+
+        p Para poner nuestras clases en nuestros componentes, necesitamos acceder a ellas a través del objeto 
+            strong style.
+
+        div: pre: code.language-jsx
+            | &lt;p className={style.clase}&gt; texto &lt;/p&gt;    
+
+        p Como 
+            strong style
+            |   es un 
+            strong objeto
+            |   no podemos tener propiedades que contengan guiones medios 
+            strong (-)
+            | , así que si tenemos clases que contengan guiones medios, tendremos que acceder a esas clases con la sintaxis de corchetes y con comillas.
+
+        div: pre: code.language-css
+            | // archivo.module.css
+            |
+            | /* Clase en kebab-case */
+            | .clase-example {
+            | color: tomato;   
+            | }    
+
+        div: pre: code.language-jsx
+            | &lt;p className={style['clase-example']}&gt; texto &lt;/p&gt;
+
+        p En realidad trabajar con la sintaxis de corchetes es muy incomodo, en lugar de nombrar nuestras clases con la nomenclatura 
+            strong kebab-case
+            |   podemos utilizar la nomenclatura 
+            strong camelCase.
+
+        div: pre: code.language-css
+            | // archivo.module.css
+            |
+            | /* Nuestras clases estarán en camelCase */          
+            | .claseExample {
+            | color: tomato;   
+            | } 
+
+        p De esta manera al asignar nuestras clases a nuestras etiquetas JSX, simplemente accedemos a ellas con la nomenclatura del punto.                 
+
+        div: pre: code.language-jsx
+            | &lt;p className={style.claseExample}&gt; texto &lt;/p&gt;
+
+
+        p Sabiendo todo esto, ahora si nuestras clases en nuestros componentes quedarían de la siguiente manera.   
+
+        img(src="../../assets/img/4-7-css-modules/17.webp" alt="example").has-mb
+        img(src="../../assets/img/4-7-css-modules/18.webp" alt="example")
+
+        p Ahora si que todo funciona correctamente.
+        img(src="../../assets/img/4-7-css-modules/19.webp" alt="example")
+
+        h4 ¿Que pasa por detrás con CSS modules?
+        p Ya vimos que todo funciona correctamente, pero ¿Qué es lo que está pasando?, pues que estos 
+            strong CSS modules
+            |   están siendo procesados por el empaquetador.
+
+        p Si miramos las clases en el HTML del navegador miraremos algo distinto a lo que hemos escrito.     
+        img(src="../../assets/img/4-7-css-modules/20.webp" alt="example")
+
+        p Lo que vemos es que a nuestras clases se le agrega una serie de caracteres generados, para diferenciarlo de la otra clase wrapper.
+
+        p Es decir que lo que viene dentro de este 
+            strong className={style.wrapper}
+            |   no es simplemente la clase como tal, sino un nombre autogenerado que le da el empaquetador a esta clase. 
+
+    article(id="5" class="content")
+        h2 Conclusiones
+        p Puede ser que no nos parezca la mejor forma de tratar clases y puede ser que nos resulte incomodo, pero la realidad es que esta es una de las mejores formas de garantizar que el CSS tiene el ámbito que debe tener, en este caso para nuestros componentes.
+
+        p Obviamente en proyectos reales, podemos utilizar arquitecturas de CSS, existen frameworks de CSS como 
+            strong tailwind
+            |   que nos proporciona 
+            strong utility clases.
+
+        p Existen mil alternativas para una arquitectura de CSS y está es solo una más de todas ellas, y está es la más habitual que solemos encontrar tanto en los cursos de React como en muchos de los proyectos, porque nos porporciona esta ventaja, pero no quiere decir que sea la única.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'¿Dónde se coloca el CSS de cada componente?'],[3,'Problema de colisión de CSS'],[4,'Solucionando colisiones con CSS modules'],[5,'Conclusiones']]
     +submenu(submenuLinks)

@@ -344,18 +344,137 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>A medida que avanzamos, el código de nuestra aplicación está creciendo devidamente, por lo tanto el tamaño del archivo <strong>main.jsx</strong> está creciendo con el, haciendo que esto se vuelva cada vez menos legible.</p>
+            <p>Así que llega el momento de hablar de modularización, de separar cada uno de estos componentes en un archivo propio.</p>
+            <p>Pero antes de eso, cambiaremos el nombre de unos de nuestros componentes ya que no están cumpliendo con una semántica correcta.</p>
+            <p>Seguiremos ocupando un nombre declarativo en lugar de uno imperativo, pero con una semántica correcta.</p>
+            <p>Hasta ahora hemos llamado el nombre de nuestros componentes: </p>
+            <ul>
+              <li>Title </li>
+              <li>User</li>
+              <li>List </li>
+            </ul>
+            <p>Pero realmente son nombres demasiados genéricos que no nos aportan una información realista, de que es lo que representa el componente.</p>
+            <p>Por ejemplo, el componente <strong>List</strong> no es una lista cualquiera, sino que es una lista de usuarios, por lo que cambiaremos su nombre a <strong>UsersList</strong></p>
+            <p>Con el componente <strong>User</strong> cambiaremos su nombre a <strong>UserRow</strong> ya que no es simplemente un usuario sino una fila de una lista. </p>
+            <p>Con nuestro componente <strong>Title</strong> ¿Realmente es necesario cambiar su nombre por ejemplo UsersTitle?, pues en realidad no, ya que podemos tener un título en cualquier otra parte, por lo que su nombre es correcto.</p>
+            <p>Habiendo hecho los cambios, ahora si modularizaremos nuestros componentes.</p>
+            <div>
+              <pre><code class="language-jsx"> // File main.jsx
+import ReactDOM from 'react-dom/client'
+import './index.css'
+
+const container = document.getElementById('root')
+const root = ReactDOM.createRoot(container)
+
+const USERS = [
+	{
+		name: 'Joel Gómez',
+		state: 'Activo',
+		role: 'PROFESOR'
+	},
+	{
+		name: 'Israel Vázquez',
+		state: 'Activo',
+		role: 'PROFESOR'
+	}
+]
+
+const Title = ({ children }) =&gt; &lt;h1&gt;{children}&lt;/h1&gt;
+
+const UserRow = ({ name, state, role }) =&gt; {
+	return (
+		&lt;div className='user'&gt;
+			&lt;span className='name'&gt;{name}&lt;/span&gt;
+			&lt;span className='active'&gt;{state}&lt;/span&gt;
+			&lt;span className='role'&gt;{role}&lt;/span&gt;
+		&lt;/div&gt;
+	)
+}
+
+const UsersList = ({ users, children }) =&gt; {
+	const userRendered = users.map((user) =&gt; (
+		&lt;UserRow key={user.name} {...user}&gt;&lt;/UserRow&gt;
+	))
+	return (
+		&lt;div className='list'&gt;
+			{children} {userRendered}
+		&lt;/div&gt;
+	)
+}
+
+const app = (
+	&lt;UsersList className='list' users={USERS}&gt;
+		&lt;Title&gt;Listado de usuarios&lt;/Title&gt;
+	&lt;/UsersList&gt;
+)
+
+root.render(app)</code></pre>
+            </div>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Un componente por archivo</h2>
+            <p>Para empezar a separar nuestros componentes debemos seguir una regla muy básica, y es que <strong>SOLO DEBEMOS DE TENER UN COMPONENTE POR ARCHIVO. </strong></p>
+            <p>Aquí podemos ver la <strong>"S"</strong> de <strong>Solid</strong> que nos indica <strong>Single Responsability</strong>, es decir, una sola responsabilidad.</p>
+            <p>Aquí puede venir la pregunta de siempre, ¿Si el componente es pequeño puedo dejarlo junto con otro en un archivo?, no, nunca, siempre tiene que haber un único archivo por componente.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Nombre de archivos</h2>
+            <p>El nombre que le debemos dar a los archivos, siempre tiene que ser equivalente al nombre del componente como tal, y podemos escribirlo de 2 formas: </p>
+            <ul>
+              <li>
+                <p> <strong>Nomenclatura PascalCase: </strong><strong class="ts-1">UserRow.jsx </strong></p>
+              </li>
+              <li>
+                <p> <strong>Nomenclatura kebab-case: </strong><strong class="ts-1">user-row.jsx </strong></p>
+              </li>
+            </ul>
+            <p>Podemos utilizar cualquier de las 2, la que más nos guste, pero no podemos estar nombrando unos archivos en PascalCase y otros en kebab-case, todos nuestros archivos deben tener una misma nomenclatura.</p>
+          </article>
+          <article class="content" id="4">
+            <h2>¿Dónde colocar los archivos? </h2>
+            <p>En cuanto a donde colocar estos archivos, se habre un gran debate y es que hay muchas organizaciones, arquitecturas posibles para un proyecto en React, en una sección posterior hablaremos de como organizar nuestro proyecto y que ventajas tiene de utilizar una y otra.</p>
+            <p>De momento todas las organizaciones coinciden en una cosa y es que van dentro de la carpeta <strong>"src"</strong> en una carpeta llamada <strong>"components" </strong>. </p>
+            <p> Entonces lo primero que debemos de hacer utilizemos la organización que utilizemos, es crear la carpeta <strong>"components"</strong> dentro de <strong>"src"</strong>. </p><img class="img-md" src="../../assets/img/4-5-modularizacion-y-nomenclatura/1.webp" alt="example">
+            <p>La nomenclatura que utilizaremos en este curso será <strong>PascalCase</strong>, para que coincidan con el nombre de nuestros componentes y sea más fácil de identificarlos.</p><img class="img-md has-mb" src="../../assets/img/4-5-modularizacion-y-nomenclatura/2.webp" alt="example">
+          </article>
+          <article class="content" id="5">
+            <h2>Separando componentes </h2>
+            <p>Como mencionamos solo debe haber un componente por archivo, así pondremos cada componente en su respectivo archivo.</p>
+            <p>Y para poder importarlo desde fuera, es necesario exportar cada componente.</p>
+            <p>Para exportar tenemos 2 maneras
+            <ul>
+              <li> <code>export const Componente </code>
+                <p>Se utiliza más cuando en un mismo archivo suele haber más cosas por exportar.</p>
+              </li>
+              <li> <code>export default Componente </code>
+                <p>Se utiliza para exportar por default un componente por archivo.</p>
+              </li>
+            </ul>
+            </p>
+            <p>En realidad podemos ocupar cualquiera de los 2, pero escogeremos <code>export default</code> ya que solo tenemos un único componente por archivo, y lo que exportemos siempre será ese único componente.</p>
+            <p>Una ventaja de utilizar <code>export default</code> es que cuando lo importemos, se nos hará más fácil renombrarlo si es que queremos hacerlo.</p>
+            <p>Si utilizamos el clásico export, a la hora de renombrar tendriamos que utilizar un alias, y muchas veces tendremos componentes que se llamen igual sobre todo si utilizamos librerias, así que sería más difícil renombrarlos.</p>
+            <p>Así que vamos a modularizar nuestros componentes.</p>
+            <p><strong class="ts-3">Title </strong></p><img src="../../assets/img/4-5-modularizacion-y-nomenclatura/3.webp" alt="example">
+            <p><strong class="ts-3">UserRow </strong></p><img src="../../assets/img/4-5-modularizacion-y-nomenclatura/4.webp" alt="example">
+            <p><strong class="ts-3">UsersList</strong></p><img src="../../assets/img/4-5-modularizacion-y-nomenclatura/5.webp" alt="example">
+            <p><strong class="ts-3">Importación en main.jsx</strong></p><img src="../../assets/img/4-5-modularizacion-y-nomenclatura/6.webp" alt="example">
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#1">Subtitulo 1</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
           </ul>
           <ul class="submenu">
-            <li class="submenu__item"><a class="submenu__link" href="#2">Subtitulo 2</a></li>
+            <li class="submenu__item"><a class="submenu__link" href="#2">Un componente por archivo</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Nombre de archivos</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">¿Dónde colocar los archivos?</a></li>
           </ul>
         </nav>
       </section>
