@@ -344,12 +344,29 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>Esta lección será muy breve, vamos a comentar uno de los errores más habituales que se suele tener al empezar con React, el error de <strong>too many rerenders.</strong></p>
+            <p>A que nos referimos con esto, bien, pues hasta ahora hemos estado trabajando con la suposición de que la función de cambio de estado, tiene que ir dentro de un onClick o de un evento, de forma que cuando hacemos click se ejecuta esta función de cambio de estado y solo haciendo click podemos cambiar el estado de nuevo.</p>
+            <p>Pero esta no es la única forma de utilizar este <strong>setState (función de cambio de estado)</strong>, sino que tambien podemos utilizar un condicional <strong>if</strong>. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Error Too many re-renders</h2>
+            <p>Partiremos por el inicio, miraremos que podemos ejecutar la función de cambio de estado desde un condicional if.</p><img src="../../assets/img/5-10-too-many-rerenders/1.webp" alt="example">
+            <p>Si miramos la consola visualizaremos que los componentes que tenian el estado como valor inicial en true producen un segundo renderizado de tal manera que todos los UserRows se visualizarán como Inactivos.</p><img src="../../assets/img/5-10-too-many-rerenders/2.webp" alt="example">
+            <p>Si ahora intentamos dar click para querer cambiar el estado de un componente, pues nunca cambiará ya que hemos definido que cuando se de click se cambie su estado a lo contrario, y como todos estan en false y al dar click pasará a true, se volvera a producir un segundo renderizado de tal manera que el componente siempre estará como inactivo, es por eso que comentabamos que debemos de tener cuidado cuando usamos condicionales para ejecutar la función de cambio de estado.</p><img src="../../assets/img/5-10-too-many-rerenders/3.webp" alt="example">
+            <p>Pero bueno ¿Qué pasa si ejecutamos la función de cambio de estado fuera de una condicional?, pues que obtendremos un bucle infinito.</p><img src="../../assets/img/5-10-too-many-rerenders/4.webp" alt="example">
+            <p>Como estamos provocando un bucle infinito, obtenemos el error de <strong>Too many re-renders.</strong></p><img src="../../assets/img/5-10-too-many-rerenders/5.webp" alt="example">
+            <p>Para evitar este problema, debemos asegurarnos de que el cambio de estado solo ocurra en respuesta a <strong>eventos</strong> o <strong>condiciones controladas</strong>, como un <strong>clic</strong> o <strong>una actualización condicional</strong>. </p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Error Too many re-renders</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>

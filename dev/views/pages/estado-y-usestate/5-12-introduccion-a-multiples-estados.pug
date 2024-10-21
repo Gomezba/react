@@ -5,12 +5,110 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+        p Para terminar esta sección, veremos una breve introducción al manejo de múltiples estados desde un mismo componente y decimos una breve introducción porque esto es un tema que se tiene que ir profundizando a medida que vamos avanzando, ya que cobrará mucho más sentido cuando empezemos a ver el resto de 
+            strong Hooks
+            |   y en especial 
+            strong useEffect
+            |. 
+
+        p Hasta ahora el estado simplemente hace referencia a la propiedad de 
+            strong state
+            |   del usuario, pero podriamos querer que el nombre del usuario tambien variara en función de un estado.
+
+        p En este punto tenemos que plantearnos como queremos reflejar ese estado, si queremos que sea un único estado o queremos almacenarlo en múltiples.
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Gestión de múltiples estados con un solo estado en React
+        p Partiremos con la gestión de manejar múltiples estado con un solo estado de React, y ¿Como se puede lograr esto?, pues creando un objeto.
 
+        p Entonces, lo que haremos es crear un objeto que contenga las propiedades state y name, y utilizar el objeto en donde se requiera. La función de cambio de estado lo que haremos es crear un objeto nuevo para que detecte que hay un cambio de estado.
+
+        img(src="../../assets/img/5-12-introduccion-a-multiples-estados/1.webp" alt="example")
+
+        p Si ahora damos click al primer usuario, miraremos que no solamente cambiamos el estado de activo, sino que tambien cambiamos el nombre del usuario, el nombre solo cambia una sola vez ya que es un valor fijo, pero el activo estará cambiando al estar dando click.
+
+        p Primer renderizado
+        img(src="../../assets/img/5-12-introduccion-a-multiples-estados/2.webp" alt="example")
+        p Damos click para cambiar los múltiples estado.
+        img(src="../../assets/img/5-12-introduccion-a-multiples-estados/3.webp" alt="example")
+
+        p Hasta aquí podemos decir que tenemos algo funcional, pero cuando creamos un objeto para gestionar múltiples estados, estos deben tener una semántica, una similitud entre ellos.
+
+        p En nuestro caso, lo que hemos hecho, semánticamente no es correcto, es decir, gestionar el estado de nombre y activo no tienen semántica entre ellos, no existe una relación entre ellos, la única relación que podrian tener es que solamente se estan seteando al mismo tiempo, pero que haya una relación directa no la hay, es decir, el estado activo(state) nos refleja el estado del usuario, y el estado name nos refleja el nombre del usuario, pero no tienen una relación directa. 
+
+        p Entonces no tiene sentido almacenar el estado activo(state) y el name dentro de un mismo estado.
+
+        p En nuestro caso la manera correcta de hacer las cosas, es manjear estos estados de manera separada.
+
+    article(id="3" class="content")
+        h2 Gestión de múltiples estados de manera separada
+
+        p Ya sabemos que para gestionar múltiples estados en un mismo estado, debe haber una referencia a la misma cosa o relación entre ellos, y en nuestro caso no cumple esa condición, así que manejaremos los estados por separado.
+
+        img(src="../../assets/img/5-12-introduccion-a-multiples-estados/4.webp" alt="example")
+
+        p Una vez que demos click al botón, se estará ejecutando la función de cambio de estado para cada estado y obtendremos el mismo resultado que teniamos cuando juntabamos lo estados en un mismo estado.
+
+        p Primer renderizado
+        img(src="../../assets/img/5-12-introduccion-a-multiples-estados/2.webp" alt="example")
+        p Damos click para cambiar los múltiples estado.
+        img(src="../../assets/img/5-12-introduccion-a-multiples-estados/3.webp" alt="example")
+
+        p.ts-2 ¿Qué es lo que está pasando aquí, al tratar dos estados simultaneamente?
+        br
+        div: pre: code.language-jsx
+            | &lt;button
+            |		onClick={() =&gt; {
+            |			setActiveState(!activeState)
+            |			setNameState('Joelo')
+            |		}}
+            |	&gt;
+            |		{activeState ? 'Desactivar' : 'Activar'}
+            |	&lt;/button&gt;   
+
+        p.ts-2 ¿Estamos produciendo un doble render?, 
+            strong la respuesta es que NO. 
+
+        p Y ¿Por qué no se produce un segundo render?, porque React está bacheando estos updates, está bacheando estos renders, los está agrupando al igual que cuando haciamos múltiples setState(función de cambio de estado) para el mismo estado.
+
+        p Lo podemos ver claramente si ponemos un console.log
+        img(src="../../assets/img/5-12-introduccion-a-multiples-estados/5.webp" alt="example")
+
+        p Si damos click a un usuario podremos ver que solo se produce un render, podremos ver que los estados se estan bacheando, se estan agrupando, es decir, al ejecutar la función de cambio de estado de cada estado, el resultado de cada una se está juntando con el resultado de la otra, de tal manera que solo se produce un render uniendo ambos resultados en lugar de estar produciendo un render por cada función de cambio de estado.
+
+        p Render inicial
+        img(src="../../assets/img/5-12-introduccion-a-multiples-estados/6.webp" alt="example")
+
+        p Ahora si procedemos a dar click a un usuario para ver que solo se produce un render.
+        img(src="../../assets/img/5-12-introduccion-a-multiples-estados/7.webp" alt="example")
+
+        p Lo último que haremos es dejar solo el estado de activo, y le daremos nuevos nombres al estado y la función de cambio de estado con una semántica correcta, ya que actualmente hemos manejado activeState y setActiveState para que sea más fácil de comprender, pero le cambiaremos el nombre a isActive y setIsActive. 
+        img(src="../../assets/img/5-12-introduccion-a-multiples-estados/8.webp" alt="example").has-mb
+
+    article(id="4" class="content")
+        h2 Conclusiones   
+
+        p Lo que debemos entender, es que realmente no hay un impacto grande a la hora de separar estados y es una cuestión más a nivel de semántica y una cuestión de organización, la cuestión es: Todo lo que dependa de un estado tiene que ir englobado en un solo estado y cosas que no tengan ninguna relación con ello tienen que ir fuera en otro estado.
+
+        p Pero evidentemente esto es algo que iremos descubriendo cuando estemos incorporando todos estos hooks.
+
+        p Puntos clave es esta lección.
+
+        ul 
+            li 
+                p Todo lo que dependa de un estado tiene que ir englobado en un solo estado, todo aquellos que tiene una relación directa.
+
+            li 
+                p Cosas que no tengan ninguna relación tienen que ir fuera en otro estado    
+
+            li 
+                p El gestionar múltiples estados de forma separada, no tiene un impacto grande en el rendimiento, es una cuestión de semántica y organización.
+
+            li 
+                p La razón por la que el utilizar estados separados no tiene un gran impacto en el rendimiento de la app, se debe a que React agrupa los estados y solo ejecuta un renderizado.        
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Gestión de múltiples estados con un solo estado en React'],[3,'Gestión de múltiples estados de manera separada'],[4,'Conclusiones']]
+    +submenu(submenuLinks)

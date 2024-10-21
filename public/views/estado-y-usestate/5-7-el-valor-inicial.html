@@ -344,12 +344,169 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>Ahora que ya sabemos que el <strong>valor</strong> del <strong>estado</strong> se gestiona en un <strong>almacenamiento externo</strong> conocido como <strong>store</strong>, vamos a centrarnos en entender el momento en que ese <strong>estado</strong> se crea y como React gestiona su valor inicial.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>useState sin parámetro</h2>
+            <p>El valor inicial del estado se puede enviar a este <strong>useState</strong> a través de su primer y único parámetro y puede ser de varios tipos.</p>
+            <p>Ya sabemos que cuando no se pasa el parámetro ya que es un valor opcional, nos devuelve <strong>undefined</strong>. </p><img src="../../assets/img/5-7-el-valor-inicial/1.webp" alt="example">
+            <p>El no pasar el parámetro para que nos devuelva <strong>undefined</strong> se usa en muchos casos.</p><img class="has-mb" src="../../assets/img/5-7-el-valor-inicial/2.webp" alt="example">
+          </article>
+          <article class="content" id="3">
+            <h2>useState con un un valor fijo</h2>
+            <p>Pasamos un valor fijo como lo puede ser <strong>true</strong> que en este caso nos sirve para inicializar, pero puede ser cualquier otro valor fijo como un texto plano.</p><img class="has-mb" src="../../assets/img/5-7-el-valor-inicial/3.webp" alt="example"><img src="../../assets/img/5-7-el-valor-inicial/4.webp" alt="example">
+            <p>Como podemos ver, todo nos aparece como activo, ya que estamos inicializando todos los <strong>componentes</strong> con su <strong>estado</strong> en <strong>true</strong> es por eso que todos los usuarios parten del estado activo y evidentemente su botón está marcado como "Desactivar".</p>
+            <p>Lo mismo pasará si lo hacemos con <strong>false</strong> solo que empezará con el estado inactivo. </p><img class="has-mb" src="../../assets/img/5-7-el-valor-inicial/5.webp" alt="example"><img src="../../assets/img/5-7-el-valor-inicial/6.webp" alt="example">
+            <p>Hasta aquí todo parece sencillo, podemos pasar un simple valor y este <strong>useState</strong> simplemente lo utilizará para crear el <strong>estado</strong>. </p>
+            <p>Cada vez que damos click al botón, el valor del estado cambia y no se vuelve tomar en cuenta el valor inicial, solo se ocupa una vez y es para declarar su valor inicial. </p><img class="has-mb" src="../../assets/img/5-7-el-valor-inicial/7.webp" alt="example">
+          </article>
+          <article class="content" id="4">
+            <h2>useState con una variable</h2>
+            <p>Como ya hemos visto, el <strong>estado</strong> puede depender de algún tipo de variable como puden ser las <strong>props</strong>.</p><img src="../../assets/img/5-7-el-valor-inicial/8.webp" alt="example">
+            <p>Tenemos la <strong>prop</strong> que en este caso se llama <strong>state</strong> y es la prop que determina si el estado está activo o no. </p><img src="../../assets/img/5-7-el-valor-inicial/9.webp" alt="example">
+            <p>Ahora agregaremos la prop <strong>state</strong> en consola para ir viendo los valores del <strong>estado</strong> y de la <strong>prop</strong>.</p><img class="has-mb" src="../../assets/img/5-7-el-valor-inicial/10.webp" alt="example"><img src="../../assets/img/5-7-el-valor-inicial/11.webp" alt="example">
+            <p>Como podemos ver, al principio, es decir sin haber dado click, nos aparecen los valores iniciales de los estados que le hemos dado a los componentes, y a su vez podemos ver el valor de la prop.</p>
+            <p>Pero si damos click al botón, ya estamos cambiando el estado del componente al que damos click, y en consola podemos ver que el valor del estado ha cambiado, pero el valor de la prop siempre se mantendrá con el valor inicial, siempre será el mismo nunca cambiará. </p><img src="../../assets/img/5-7-el-valor-inicial/12.webp" alt="example">
+            <p>Como vemos volvemos otra vez al mismo caso de un valor fijo, esta prop <strong>state</strong> solamente determina el valor inicial de este estado, solamente sirve para cuando el estado se crea por primera vez en la <strong>store</strong> y a partir de ahí no se toma en cuenta para nada, en ningún caso. </p>
+            <p>Hasta aquí hemos ido con los casos sencillos, pero es que este <strong>useState</strong> puede admitir tambien como parámetro una función y aquí es donde se complica un poco toda esta lógica. </p>
+          </article>
+          <article class="content" id="5">
+            <h2>useState con una función como parámetro</h2>
+            <p>Imaginemos que queremos que este estado sea aleatorio el estado inicial y queremos calcularlo a través de un <strong>Math.random</strong>. </p>
+            <h3>Pasando una función de manera incorrecta</h3>
+            <p>Lo que haremos es crear una función llamada <strong>randomActive</strong> para devolver un booleano y pondremos un <strong>console.log</strong> para ver cuando se ejecuta. </p><img src="../../assets/img/5-7-el-valor-inicial/13.webp" alt="example">
+            <p>A continuación estaremos viendo el primer renderizado que nos da esto.</p><img src="../../assets/img/5-7-el-valor-inicial/14.webp" alt="example">
+            <p>Si recargamos el navegador varias veces iremos viendo que el valor inicial del estado irá cambiando. </p><img class="has-mb" src="../../assets/img/5-7-el-valor-inicial/15.webp" alt="example"><img src="../../assets/img/5-7-el-valor-inicial/16.webp" alt="example">
+            <p>Vemos que esto funciona, el valor inicial se está asignando de manera aleatoria.</p>
+            <p>Pero estamos teniendo un problema, y es que si miramos la consola podremos ver que la función se está ejecutando 3 veces.</p><img src="../../assets/img/5-7-el-valor-inicial/17.webp" alt="example">
+            <p>Esto es normal ya que se debe ejecutar una vez para cada componente, pero hay que hablar de que pasa cuando cambia el estado, por eso hemos puesto el <strong>console.log</strong> dentro de la función. </p>
+            <p>Tenemos que darnos cuenta que pasa cuando hacemos un <strong>setActiveState</strong>, es decir, cuando damos click a un botón del componente.</p><img src="../../assets/img/5-7-el-valor-inicial/18.webp" alt="example">
+            <p>Entonces cada vez que hacemos click, se ejecutará la función <strong>randomActive()</strong>, es decir aunque ya el valor inicial no importe y el valor venga determinado por el estado como tal, este <strong>randomActive</strong> se sigue ejecutando cada vez que cambiamos un <strong>estado</strong>.</p>
+            <p class="note">Obtener el <strong>valor inicial</strong> de un <strong>estado</strong> a partir de una <strong>función</strong> es algo muy común que se puede dar en muchos componentes y lo que <strong>no queremos</strong> es que esta <strong>función</strong> se tenga que ejecutar en cada <strong>render</strong>, una función que evidentemente a partir del primer renderizado, cuando se crea este estado no tiene ningún sentido que se siga ejecutando.</p>
+            <h3>Pasando una función de manera correcta</h3>
+            <p>Para este caso lo que React nos permite pasar a este <strong>useState</strong> es pasar una <strong>función</strong> como tal, en lugar de su ejecución directa, es decir, pasamos la función <strong>randomActive</strong> como <strong>callback.</strong></p>
+            <p><strong class="ts-6">Forma incorrecta ✖️</strong></p>
+            <div class="has-mb">
+              <pre><code class="language-jsx">/* De esta manera lo que haciamos es pasar el resultado
+de una función en lugar de pasar una función*/
+useState(randomActive()) // ✖️</code></pre>
+            </div>
+            <p><strong class="ts-3">Forma correcta </strong>👍</p>
+            <div class="has-mb">
+              <pre><code class="language-jsx">//Pasamos randomActive como callback
+useState(randomActive)    </code></pre>
+            </div><img src="../../assets/img/5-7-el-valor-inicial/19.webp" alt="example">
+            <p>En el primer renderizado se ejecuta esta función <strong>randomActive</strong> 3 veces, una para cada componente.</p><img src="../../assets/img/5-7-el-valor-inicial/20.webp" alt="example">
+            <p>Pero si ahora cambiamos el estado ejecutando el <strong>setActiveState</strong>, es decir, dando click al botón, miraremos que la función <strong>randomActive</strong> ya no se ejecutará</p><img src="../../assets/img/5-7-el-valor-inicial/21.webp" alt="example">
+            <p>Como vemos la función <strong>randomActive</strong> no se vuelve a ejecutar nunca más, es decir que en este caso si que estamos logrando nuestro objetivo, estamos consiguiendo que esta función solamente se ejecute cuando es realmente necesario cuando queremos obtener de verdad el valor inicial.</p>
+            <p>En este punto nos podemos preguntar, ¿Pero este randomActive se ejecuta siempre?, es decir, ¿No hay ninguna forma de evitarlo?, pues la realidad es que no.</p>
+            <p>¿Y que implica esto?, pues que no podemos almacenar funciones en el estado. A partir del siguiente <strong>setActiveState</strong> si podrimos setear el estado con una función, pero realmente aquí ya nos estamos dando cuenta de que <strong>no deberia haber una función</strong> como <strong>estado</strong>. </p>
+            <p>El estado tiene que almacenar el mínimo valor posible para representar la información que almacena, en el caso del <strong>activeState</strong> lo que necesitamos es un valor booleano, un true o un false, no tiene ningún sentido que almacenemos cosas como, el texto, como la clase, o cualquier otro valor que podamos cálcular a partir de ese <strong>estado.</strong></p>
+            <p>Como por ejemplo lo que habiamos hecho anteriormente, cuando calculamos un valor en base a un booleano, esto es correcto.</p>
+            <div>
+              <pre><code class="language-jsx">{activeState ? 'Desactivar' : 'Activar'}</code></pre>
+            </div>
+            <p>No tendría sentido almacenar en el estado el texto como tal si podemos calcularlo a partir de un booleano.</p>
+            <p class="note">En el estado siempre hay que almacenar la mínima información posible.</p>
+            <p>Desde luego que no tiene ningún sentido que aquí intentasemos almacenar alguna función.</p><img src="../../assets/img/5-7-el-valor-inicial/22.webp" alt="example">
+            <p>Lo que tendríamos que hacer es intentar almacenar un valor que nos permita obtener una función u otra dependiendo de el.</p>
+            <p>Si nuestra función necesita un parámetro, necesitamos envolver la función dentro dentro de otra, de la siguiente manera.</p>
+            <div>
+              <pre><code class="language-jsx">// Si nuestra función necesita parámetros la envolvemos dentro de otra función
+useState(() =&gt; randomActive(param))</code></pre>
+            </div>
+            <p>Este patrón es totalmente recomendable en situaciones donde necesitas calcular el valor inicial del estado una sola vez y el cálculo depende de una función que no deseas ejecutar en cada renderizado, es por eso que la envolvemos dentro de una función para que no se ejecute en en cada renderizado sino solo una vez. </p>
+            <p>Esta sintaxis de envolver funciones dentro de otra se ocupa demasiado en el tema de los eventos. </p>
+            <p>Con esto ya concluimos las 3 casuísticas de que podemos tener para este <strong>valor inicial</strong>. </p>
+            <ol>
+              <li>
+                <p> <strong>useState():</strong> Sin parámetro nos devulve <strong>undefined.</strong></p>
+              </li>
+              <li>
+                <p> <strong>useState(valorFijo):</strong> Podemos pasarle un valor que puede ser fijo o puede provenir de una variable, de una prop o de cualquier sitio, realmente no es relevante de donde venga sino del valor que tenga.</p>
+              </li>
+              <li>
+                <p> <strong>useState(función):</strong> Podemos pasar una función, en el caso de que la pasemos, solamente se ejecuta para obtener este valor inicial y no se ejecuta nunca más </p>
+                <p>Si la función necesita un parámetro se necesita envolver dentro de otra función. Esta manera se ocupa mucho en los eventos.</p>
+              </li>
+            </ol>
+          </article>
+          <article class="content" id="6">
+            <h2>Conclusiones </h2>
+            <p>El estado en React está diseñado para representar datos que afectan la interfaz de usuario y pueden cambiar con el tiempo. El estado no debe usarse para almacenar lógica o comportamientos, como funciones. La lógica de tu aplicación, incluyendo las funciones que manipulan el estado o gestionan eventos, debe definirse fuera del estado.</p>
+            <p>Al almacenar funciones en el estado, puedes generar complejidad innecesaria y hacer que tu código sea más difícil de entender y mantener. Además, el estado debe ser lo más sencillo y directo posible, conteniendo solo el mínimo de información necesaria para representar la UI. </p>
+            <h3>Ejemplo de almacenamiento incorrecto de funciones en el estado:</h3>
+            <div>
+              <pre><code class="language-jsx"> import { useState } from "react";
+
+function MyComponent() {
+ // Ejemplo de función almacenada incorrectamente en el estado
+ const [myFunction, setMyFunction] = useState(() =&gt; () =&gt; console.log("Función en el estado"));
+
+ return (
+   &lt;div&gt;
+     &lt;button onClick={myFunction}&gt;Ejecutar función&lt;/button&gt;
+   &lt;/div&gt;
+ );
+}     </code></pre>
+            </div>
+            <p> <strong>Problema:</strong> Aquí, el estado está almacenando una función que imprime en la consola, lo cual no es recomendable porque el estado debería contener datos (valores que describen la UI) y no comportamientos o lógica.</p>
+            <h3>Ejemplo de manera correcta de usar una función para calcular un valor inicial sin almacenar la lógica: </h3>
+            <div>
+              <pre><code class="language-jsx"> import { useState } from "react";
+
+function MyComponent() {
+ // Usamos una función para calcular el valor inicial, pero almacenamos el resultado, no la función
+ const [active, setActive] = useState(() =&gt; randomActive(5));
+
+ return (
+   &lt;div&gt;
+     &lt;p&gt;Estado inicial calculado: {active ? "Activo" : "Inactivo"}&lt;/p&gt;
+     &lt;button onClick={() =&gt; setActive(!active)}&gt;Cambiar estado&lt;/button&gt;
+   &lt;/div&gt;
+ );
+}
+
+function randomActive(param) {
+ return param &gt; 0 ? true : false;
+}</code></pre>
+            </div>
+            <p> <strong>Correcto:</strong> Aquí usamos una función (randomActive(5)) para calcular el valor inicial del estado, pero solo almacenamos el resultado de esa función en el estado, no la función en sí. Esto es completamente válido y recomendable, ya que la función se ejecuta solo una vez al inicializar el estado. </p>
+            <h3>Resumen:</h3>
+            <ul>
+              <li>
+                <p>El <strong>estado</strong> es para almacenar <strong>datos</strong>, no lógica ni comportamientos.</p>
+              </li>
+              <li>
+                <p> <strong>No almacenes funciones en el estado</strong>, ya que eso va en contra de la idea de mantener el estado simple y directo.</p>
+              </li>
+              <li>
+                <p> <strong>Si necesitas calcular el valor inicial de un estado, usa una función que devuelva un valor y almacena ese valor, no la función. </strong></p>
+              </li>
+            </ul>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">useState sin parámetro</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">useState con un un valor fijo</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">useState con una variable</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">useState con una función como parámetro</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#6">Conclusiones</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>

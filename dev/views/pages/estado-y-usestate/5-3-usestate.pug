@@ -5,12 +5,169 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+        p Para poder gestionar un 
+            strong estado
+            |   en 
+            strong React
+            |   y que React sea capáz de entender cuando ese estado cambia, y aplicar las modificaciones necesarias sobre la interfaz, utilizaremos el 
+            strong Hook
+            |   
+            strong.ts-3 useState
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 ¿Qué es un hook en React?
+        p Un 
+            strong hook
+            |   en React es una 
+            strong función especial 
+            |   que permite 
+            strong "enganchar"
+            |   características de React como el 
+            strong estado
+            |   y el 
+            strong ciclo de vida en componentes funcionales(Creados con funciones)
+            | , sin necesidad de escribir clases. Los hooks simplifican la forma de gestionar estas funcionalidades.
 
+
+    article(id="3" class="content")
+        h2 Sintaxis del Hook useState
+        p El 
+            strong hook useState
+            |   se utiliza para manejar el 
+            strong estado
+            |   dentro de un 
+            strong componente funcional (creado con funciones)
+            | . 
+
+        h3 Importación 
+        div: pre: code.language-jsx
+            | import { useState } from 'react'
+
+        h3 Parámetros del Hook useState
+        div: pre: code.language-jsx
+            | useState(?valorInicialEstado)
+
+        p El 
+            strong useState
+            |   recibe un solo parámetro, que generalmente es el valor inicial del estado.    
+
+        ul 
+            li 
+                p 
+                    strong Estado inicial
+                    | : (opcional) El valor inicial del estado, este valor puede ser de cualquier tipo de datos como un 
+                    strong número
+                    | , 
+                    strong cadena
+                    | , una 
+                    strong variable
+                    |   un 
+                    strong objeto
+                    | , o 
+                    strong array
+                    | . Si no se pasa un valor, el estado comenzará como 
+                    strong undefined.
+
+        p Ejemplo: 
+        div: pre: code.language-jsx
+            | useState(0) // El estado comienza en 0.
+
+        h3 Valores devueltos por useState
+        p El 
+            strong useState
+            |   devuelve un 
+            strong array
+            |   con 
+            strong dos elementos
+            | , que puedes extraer mediante desestructuración:
+
+        ol 
+            li 
+                p 
+                    strong El estado actual
+                    | : Este valor contiene el estado actual.
+            li 
+                p 
+                    strong La función para actualizar el estado
+                    | : Esta función se utiliza para modificar el estado, y es fundamental en el funcionamiento de React.
+
+                p.note Al utilizar la 
+                    strong función de actualización del estado
+                    | 
+                    strong.ts-2 useState
+                    |   (por ejemplo, setContador), 
+                    strong no solo se actualiza el estado
+                    | , sino que React 
+                    strong vuelve a renderizar el componente
+                    | . 
+                    br
+                    | Sin embargo, este nuevo renderizado 
+                    strong no afecta a toda la interfaz
+                    |   , sino 
+                    strong solo a las partes del componente donde se ha producido el cambio del estado
+                    | . React es eficiente y realiza una actualización selectiva, enfocada únicamente en las áreas donde el estado cambió. 
+
+                p.note Cada vez que utilizas la 
+                    strong función de actualización del estado
+                    |   (por ejemplo, setContador), 
+                    strong enganchas
+                    |   el componente al 
+                    strong mecanismo de React
+                    | . Esto significa que 
+                    strong React
+                    |   está 
+                    strong "vigilando" ese estado
+                    | , y cuando detecta que ha cambiado, automáticamente actualiza el componente. Gracias a este mecanismo, React puede realizar estos cambios sin necesidad de actualizar manualmente toda la interfaz.               
+
+        p Ejemplo con desestructuración:    
+        div: pre: code.language-jsx
+            |const [estadoActual, setEstadoActual] = useState(valorInicial)
+
+        p Es importante que el 
+            strong segundo valor
+            |   devuelto por el 
+            strong useState
+            |   siempre se nombre con 
+            strong set
+            |   seguido del 
+            strong nombre del estado
+            | , para mayor claridad y consistencia.
+
+        p Ejemplo de una buena práctica:        
+        div: pre: code.language-jsx
+            | const [nombre, setNombre] = useState('Juan') 
+            |// 'nombre' es el estado actual, 'setNombre' es la función para actualizarlo.
+
+        p Puntos clave:
+        ul 
+            li Al usar 
+                strong useState
+                | , 
+                strong enganchas
+                |   el componente al mecanismo de React que controla las actualizaciones del estado.
+            li 
+                strong React solo renderiza las partes necesarias
+                |   de la interfaz cuando el estado cambia, optimizando el rendimiento.
+            li La función de actualización del estado debe nombrarse con 
+                strong set
+                |   seguido del nombre del estado para mantener claridad y consistencia. 
+
+    article(id="4" class="content")
+        h2 Cambiando el estado de nuestra aplicación
+        p Ahora que ya sabemos la teoría para cambiar el estado en React, procederemos hacerlo con nuestra aplicación, cambiando el estado del botón de forma dinámica.
+
+        img(src="../../assets/img/5-3-usestate/1.webp" alt="example").has-mb
+        img(src="../../assets/img/5-3-usestate/2.webp" alt="example")
+        p Si damos click a un usuario, ahora sí el texto del botón cambiará dinámicamente.
+        img(src="../../assets/img/5-3-usestate/3.webp" alt="example")
+
+        p Si miramos la consola, comprobaremos que el renderizado se hace únicamente sobre el componente que hacemos click y no en toda la interfaz. 
+        img(src="../../assets/img/5-3-usestate/4.webp" alt="example")
+
+        p Entender este nuevo renderizado al utilizar la función de cambio de estado, es la clave para entender React, asi que en toda esta sección estaremos viendo todo lo que se produce entre medias.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'¿Qué es un hook en React?'],[3,'Sintaxis del Hook useState'],[4,'Cambiando el estado de nuestra aplicación']]
+    +submenu(submenuLinks)

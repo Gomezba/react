@@ -5,12 +5,366 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
 
+        p En esta lección vamos hablar de la parte más delicada de los 
+            strong estados
+            | , vamos a entrar en detalle sobre lo que hace la función 
+            strong setActiveState
+            |.
+
+        p En primer lugar partiremos de lo que ya sabemos.
+        ol 
+            li 
+                p 
+                    | Ejecutar la función de setear el estado implica cambiar el 
+                    strong valor del estado.
+            li 
+                p 
+                    | Al ejecutar esta función provocamos un 
+                    strong nuevo renderizado
+                    | . 
+
+        p Estas dos reglas son generalizaciones que tienen sus particularidades y vamos ampliarlas un poco más.  
+
+        ol 
+            li 
+                p En primer lugar diremos que llamar a 
+                    strong setActiveState
+                    |   con un valor, implica asignar este nuevo valor al 
+                    strong estado
+                    | .                
+            li 
+                p En segundo lugar, solo cuando el 
+                    strong valor del estado cambia
+                    |   se produce un 
+                    strong nuevo renderizado
+                    | .
+
+        p Estas dos definiciones son muy parecidas a las anteriores, pero tienen en cuenta una nueva premisa, podemos asignar cualquier valor a ese estado y 
+            strong solo si este valor es diferente del anterior se produce un nuevo renderizado.
+
+        p Dicho de otra manera si hacemos un 
+            strong setActiveState
+            |   con el 
+            strong mismo valor
+            |   que teniamos anteriormente no ocurre absolutamente nada, 
+            strong no se produce este nuevo renderizado
+            |. 
+
+        p Tenemos que entender de forma clara, qué significa exactamente que este valor sea igual o no.
+
+        p La regla básica que seguiremos en este caso es similar al utilizar el operador de igualdad estricta 
+            strong (===)
+            |   de JavaScript.   
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Comprobación de cúando se renderiza el componente
 
+        h3 Comportamiendo normal, renderizado del componente al cambiar el estado.
+
+        p Ya hemos dicho que al ejecutar la función de setear el estado, se renderiza de nuevo el componente.
+
+        p Ahora miraremos cúando es que se renderiza el componente, porque hay una  situación donde esta función de seteo, renderiza el componente aunque su valor del estado anterior con el actual sean iguales.
+
+        p Nos apoyaremos en el 
+            strong console.log
+            |   para mirar cúando se renderiza el componente.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/1.webp" alt="example")
+
+        p Si vemos la pantalla miraremos el primer renderizado con sus estados con su valor inicial.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/2.webp" alt="example")
+        p Y si damos click a un botón estaremos cambiando el valor del estado y por eso es que renderiza de nuevo el componente.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/3.webp" alt="example")
+
+        p Esto es el comportamiendo normal que ya conocemos, ya que estamos cambiando el valor del estado, y por ende se ejecuta de nuevo el render del componente porque el estado cambió su valor.
+
+        h3 Comportamiento inesperado del renderizado cuando el estado no cambia
+        p Pero ahora cambiaremos la lógica para mirar la situación que comentabamos  cuando se supone que solamente se renderiza de nuevo el componente siempre y cuando el valor del estado cambie, más sin embargo miraremos una situación donde esto no se cumple, aunque el estado no cambie se renderiza de nuevo el componente y esto no debe ser así.
+
+        p Para mirar esto, crearemos una variable llamada 
+            strong newActiveState
+            |   que guardará un 
+            strong valor fijo
+            |   que es un boolean de tipo false y encerraremos dentro de un 
+            strong console.group('onClick')
+            |   un grupo de console.log, donde especificaremos el valor anterior del estado y el actual, a su vez de mirar si ambos estados son iguales, por último pasaremos la variable 
+            strong newActiveState
+            |   como nuevo valor del estado en la función de cambio de estado 
+            strong setActiveState().
+
+        img(src="../../assets/img/5-8-profundizando-en-setstate/4.webp" alt="example")
+
+        p Al principio todo parece normal, vemos el renderizado inicial.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/5.webp" alt="example")
+
+        p Si ahora damos click al primer componente para cambiar su estado, miramos que todo actua normal se cambia el estado, y lo vemos en los console.log para ver el estado anterior y el estado nuevo(actual) y como el estado anterior y el nuevo son diferentes, se renderiza de nuevo el componente para actualizar el estado en pantalla.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/6.webp" alt="example")
+
+        p Hasta aquí todo actua normalemente.
+
+        p Ahora recordemos que hemos pasado un valor fijo como estado nuevo, es decir: 
+
+        div: pre: code.language-jsx
+            | //Anteriormente cambiabamos el estado así, que es la forma correcta.
+            |  setActiveState(!activeState)
+
+        p Pero ahora hemos puesto como estado un valor fijo que nunca cambiará, siempre será el mismo, en este caso un false. Entonces, cada vez que demos click al botón siempre se le asignará al estado un false.    
+        div: pre: code.language-jsx
+            | //Pasamos un valor fijo
+            | const newActiveState = false
+            | setActiveState(newActiveState)
+
+        p Entonces, el estado que hemos cambiado, ahora se encuentra en 
+            strong false
+            | , y si volvemos a dar click de nuevo al botón, miraremos lo siguiente.    
+        img(src="../../assets/img/5-8-profundizando-en-setstate/7.webp" alt="example")
+
+        p Como vemos a pesar de que el estado anterior y el nuevo son iguales, se supone que no se tendría que ejecutar de nuevo la función de renderizado, más sin embargo lo está haciendo.
+
+        p Si ahora volvemos a dar click, miraremos que ya no se renderizará el 
+            strong UserRow
+            | .
+        img(src="../../assets/img/5-8-profundizando-en-setstate/8.webp" alt="example")
+
+        p Antes de explicar porque pasa esto, entraremos aún más en detalle de lo que pasa en este segundo renderizado, ya que se supone que no debería de ejecutar la función de renderizado, más sin embargo lo hace.
+
+        p Lo que haremos es poner un console.log a los componentes 
+            strong UserStatus
+            |   y 
+            strong UserRole
+            |   que son hijos del componente UserRow, para ver cúando es que se renderizan. 
+        img(src="../../assets/img/5-8-profundizando-en-setstate/9.webp" alt="example").has-mb
+        img(src="../../assets/img/5-8-profundizando-en-setstate/10.webp" alt="example")
+
+        p Tenemos el orden normal del primer renderizado de los 3 componentes con sus componentes hijos dentro, el UserStatus y UserRole.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/11.webp" alt="example")
+        p Borramos la consola de este primer renderizado.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/12.webp" alt="example")
+        p Y ahora volvemos hacer click en el primer componente.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/13.webp" alt="example")
+
+        p Si hacemos click por segunda vez, como ya habiamos explicado anteriormente, hemos pasado un valor fijo como 
+            strong false
+            |   a la función del cambio de estado 
+            strong setActiveState
+            | , es por eso que si apartir de aquí damos la cantidad que queramos de clicks al botón, nunca más aparecerá como activo ya que siempre se está pasando un false como estado nuevo.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/14.webp" alt="example")
+
+        p Veamos lo que nos devuelve este segundo renderizado en consola, que ya sabemos que no se debería producir porque los estados se suponen que son iguales y la función de cambio de estado se supone que solo vuelve a renderizar el componente si el estado cambia, mas sin embargo se está volviendo a renderizar aunque los estados sean iguales.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/15.webp" alt="example")
+
+        h4 ¿Por qué en el segundo renderizado ya no se renderizan los componentes hijos y solo se renderiza el UserRow?
+
+        p Esto pasa, porque si vemos el código, hemos pasado un valor fijo a la función del cambio de estado, hemos pasado un false, por ende cada vez que demos click al botón para querer cambiar el estado, nunca cambiará ya que siempre que se de click se estará asignando un false.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/16.webp" alt="example")
+
+        p Entonces React lo que se pregunta es: ¿Oye, de verdad se está haciendo un setState con un valor igual al que ya tenia?, pues si.
+
+        p Entonces React dice, bueno daré una última pasada a este 
+            strong UserRow
+            |   para terminar de alinearlo y estar seguro de que esto es así. 
+
+        p Esto es una comprobación adicional que solo se hace una vez extra y después ya no se renderiza 
+            strong este UserRow
+            |. 
+
+        p Si damos click por tecera vez, comprobaremos que ahora ya no se renderizará de nuevo el 
+            strong UserRow
+            |.         
+        img(src="../../assets/img/5-8-profundizando-en-setstate/17.webp" alt="example")
+
+        p Esto está sucediendo por que React está interpretando que la manera en que estamos cambiando el estado, es decir, que la manera en que estamos ocupando la función de cambio de estado 
+            strong setActiveState
+            |   no es la esperada.
+
+        p Entonces React hace un renderizado por si acaso, como una medida de seguridad para ver si todo es correcto.
+
+        p Y ¿Por qué no es la forma esperada de utilizar la función de cambio de estado?, pues porque 
+            strong esta función no deberia de ejecutarse si el estado nuevo es el mismo del anterior.
+            |   Lo que debemos hacer, es asegurarnos previamente de que el estado va a cambiar, y si este estado nuevo es diferente al estado anterior ahí si ejecutaremos la función de cambio de estado, y asi evitaremos que React no  se confunda y vuelva hacer un renderizado que no debe hacer.
+
+        h4 ¿Como evitamos que React no renderize innecesariamente cuando un estado es igual al anterior?
+
+        p Como mencionamos anteriormente, debemos asegurarnos previamente de que la función de cambio de estado, solo se ejecute si el estado nuevo es diferente al estado anterior.
+
+        p Pues esto lo logramos con un simple condicional 
+            strong if()
+            |.   
+        img(src="../../assets/img/5-8-profundizando-en-setstate/18.webp" alt="example")
+
+        p Si damos click una vez, pues tendremos el comportamiento normal, se vuelve a renderizar el componente ya que los estados son diferentes.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/19.webp" alt="example")
+
+        p Si ahora damos click por segunda vez, ahora si evitamos que se haga un renderizado inecesario, ya no se estará renderizando el componente UserRow porque hemos validado previamente que solo se ejecute la función de cambio de estado si y solo si el estado nuevo es diferente con el anterior.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/20.webp" alt="example")
+
+        p.note Aunque la 
+            strong función de cambio de estado
+            |   tenga un mecanismo para saber si el 
+            strong estado
+            |   cambia o no cambia, no hay que ejecutar esta función a lo loco aprovechandonos de React porque realmente estamos haciendo un trabajo que podemos evitar con un simple 
+            strong if
+            | .
+            br
+            br 
+            | Y siempre que sea posible, siempre que nos permitan hacer este 
+            strong if
+            |   de forma sencilla pues hay que hacerlo así, porque así hacemos las cosas correctamente.
+
+        p Hasta este punto hemos visto los casos sencillos donde estamos tratando con valores 
+            strong primitivos
+            |.
+
+        p Pero el mayor problema de esta 
+            strong función de cambio de estado
+            |   suele venirnos cuando estamos empezando a trabajar con tipos de datos de 
+            strong referencia
+            | , es decir, con 
+            strong objetos {}
+            |   y con 
+            strong arrays []
+            | .       
+
+    article(id="3" class="content")
+        h2 Función de cambio de estado con valores referencia
+
+        p Cuando empezamos a trabajar con tipos de datos de referencia como los arrays y objetos, es cuando se empieza a complicar esto.
+
+        p En los ejemplos que estaremos viendo, no ocuparemos la validación previa de ejecutar la función de cambio de estado en un if si y solo sí los estados son diferentes, sino que ocuparemos la función sin el if.
+
+        h3 Forma INCORRECTA de cambiar el estado cuando tratamos con referencias
+
+        p Entonces en lugar de pasar un valor primitivo como valor inicial del estado, pasaremos un 
+            strong objeto
+            |   que tendrá simplemente la propiedad state  
+            strong {state}
+            |   ya que estaremos utilizando la sintaxis de JavaScript de 
+            strong Property shorthand (abreviatura de propiedades)
+            |   donde en lugar de escribir 
+            strong { state: state }
+            |   solo escribimos 
+            strong {state}
+            |   y JavaScript entiende que tanto el nombre de la propiedad como el valor son los mismos.
+
+        p Miremos como queda ahora nuestro código.    
+        img(src="../../assets/img/5-8-profundizando-en-setstate/21.webp" alt="example")
+
+        p Si ahora miramos el primer renderizado de los componentes tenemos lo siguiente, donde nos fijaremos en el renderizado del primer UserRow, y miraremos su valor incial, que estará en true.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/22.webp" alt="example")
+
+        p Si ahora procedemos a dar click al primer UserRow, miraremos que el valor del estado anterior ahora es 
+            strong false
+            |   y se supone que era 
+            strong true.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/23.webp" alt="example")
+
+        p Y como los estados son iguales, pues no se ejecuta la función de cambio de estado para volver a renderizar el UserRow y que ahora diga Inactivo.
+
+        p Pero ¿Por qué está pasando esto?, ¿Por qué el estado anterior antes era true y ahora es false? 
+
+        p Esto está pasando porque estamos tratando con las mismas referencias, es decir, en el momento en que nosotros guardamos el objeto 
+            strong activeState
+            |   dentro de una variable llamada 
+            strong newActiveState
+            |   estamos guardando la misma referencia del objeto activeState, por lo tanto la variable newActiveState está apuntado a la misma dirección de memoria de activeState.
+
+        p Miremoslo paso por paso:
+        ul 
+            li 
+                p Desde el momento en que pasamos un objeto como valor incial del estado, estamos pasando una dirección de memoria.
+                div: pre: code.language-jsx 
+                    | [activeState, setActiveState] = useState({state}) 
+                    |
+                    | /*La variable activeState es el mismo objeto que pasamos como 
+                    | valor inicial de useState({state}), es decir apuntan a la misma
+                    | dirección de memoria.*/
+
+            li 
+                p Cuando guardamos el objeto 
+                    strong activeState
+                    |   dentro de la variable 
+                    strong newActiveState
+                    | , de igual manera estamos guardando la misma referencia dentro de newActiveState.
+                div: pre: code.language-jsx 
+                    | const newActiveState = activeState
+                    |
+                    | /*La variable newActiveState, está guardando la misma referencia 
+                    | del objeto activeState, es decir, prácticamente son lo mismo
+                    | apuntan al mismo lugar.*/
+
+            li 
+                p Entonces, en el momento en que cambiamos la propiedad del objeto que se llama  
+                    strong state
+                    |   a un valor false, se cambiará este valor en todos los lugares donde se apunta a la misma dirección de memoria.
+
+                p Es decir, que el objeto que teniamos guardado en el 
+                    strong store
+                    |   tambien se verá afectado, es por eso que el valor anterior se ha modificado, y en lugar de que sea 
+                    strong true
+                    |   se ha modificado a 
+                    strong false.            
+                div: pre: code.language-jsx 
+                    | /*En este punto estamos modificando el objeto, es decir 
+                    | lo estamos mutando, ya que es la misma dirección de memoria 
+                    |del objeto del valor inicial.*/
+                    | newActiveState.state = false
+                    | 
+                    |/*En el momento de querer ejecutar la función de cambio de estado 
+                    | setActiveState, pues no renderizará el componente, ya que 
+                    |como sabemos, solo vuelve a renderizar si detecta que ha habido 
+                    |un cambio de estado.*/
+                    |setActiveState(newActiveState)
+                    | 
+                    |/*React no verifica lo que hay dentro de los objetos, es decir, 
+                    | no verifica si ha cambiado el valor de una propiedad, o se ha 
+                    | eliminado una propiedad. LO QUE VERIFICA REALMENTE, ES SI LAS 
+                    | DIRECCIONES DE MEMORIA SON DIFERENTES, ES DECIR SI SON DIFERENTES 
+                    | OBJETOS*/
+
+        h3 Forma CORRECTA de cambiar el estado cuando tratamos con referencias
+
+        p Ya vimos que el error que teníamos es por un tema de referencias.
+        p Una regla, es que siempre que trabajemos con estados, estos debemos tratarlos como 
+            strong inmutables
+            |   por lo cual nos apoyaremos del 
+            strong spread operator ...
+            | , para crear una copia superficial del objeto. 
+
+        p Y cambiaremos la lógica, en lugar de estar pasando un valor fijo como el false que teniamos antes, procedemos a hacerlo correctamente, cambiamos el valor de la propiedad state a su contario, negando el valor que tengan, si es true pasará al false y así sucesivamente.    
+
+        img(src="../../assets/img/5-8-profundizando-en-setstate/24.webp" alt="example")
+
+        p Entonces después del primer renderizado, daremos click al botón y ahora si se estará cambiando el estado, ya no tendremos la mutación del objeto original sino que ahora son objetos diferentes los que compara. 
+        img(src="../../assets/img/5-8-profundizando-en-setstate/25.webp" alt="example")
+
+        p Lo mismo pasaría con los arrays, tenemos que trabajar con una copia en lugar del original.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/26.webp" alt="example")
+        p Por último, para comprobar que React no verifica el interior de los objetos o del array sino que verifica que las referencias sean diferentes, volveremos a pasar un objeto, y le pasaremos un valor fijo de tipo true.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/27.webp" alt="example")
+        p Si damos clik al botón podremos ver que apesar que el estado anterior, aunque tenga un objeto con la propiedad state en true, y el objeto del estado nuevo tenga exactamente lo mismo que el estado anterior, miraremos que nos dice que no son iguales, ya que React está comparando las referencias y no su interior.
+        img(src="../../assets/img/5-8-profundizando-en-setstate/28.webp" alt="example").has-mb
+
+    article(id="4" class="content")
+        h2 Conclusiones
+
+        p Al utilizar el hook useState, es crucial entender cómo la 
+            strong función de cambio de estado
+            |   afecta el renderizado, especialmente cuando trabajamos con valores primitivos y de referencia. A continuación, se destacan los puntos clave aprendidos en esta lección:
+
+        p Veamos los puntos claves que hemos aprendido en esta lección: 
+
+        ol 
+            li 
+                p: strong Evitar renderizados innecesarios:
+                p Debemos invocar la función de cambio de estado solo cuando el nuevo estado sea diferente al anterior. Esto previene renderizados adicionales innecesarios. Podemos usar una simple comparación (if) para asegurarnos de que el nuevo estado no sea igual al estado actual almacenado en el store.
+
+            li 
+                p: strong Trabajar con datos de referencia de forma inmutable:
+                p Cuando manipulamos tipos de datos como objetos o arrays, es fundamental tratar el estado de forma inmutable. Para esto, utilizamos el operador spread 
+                    strong (...)
+                    |   para crear una copia del estado en lugar de modificar el original. Esto es importante porque React, al manejar tipos de referencia, no compara el contenido interno de los objetos o arrays, sino sus direcciones de memoria. Al crear una copia, garantizamos que React detecte un cambio en la dirección de memoria y renderice correctamente el componente.  
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Comprobación de cúando se renderiza el componente'],[3,'Función de cambio de estado con valores referencia'],[4,'Conclusiones']]
+    +submenu(submenuLinks)

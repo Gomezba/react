@@ -4,12 +4,333 @@ append h1
     h1 El valor inicial
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
-
+        h2 Introducción
+        p Ahora que ya sabemos que el 
+            strong valor
+            |   del 
+            strong estado
+            |   se gestiona en un 
+            strong almacenamiento externo
+            |   conocido como 
+            strong store
+            | , vamos a centrarnos en entender el momento en que ese 
+            strong estado
+            |   se crea y como React gestiona su valor inicial.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 useState sin parámetro
 
+        p El valor inicial del estado se puede enviar a este 
+            strong useState
+            |   a través de su primer y único parámetro y puede ser de varios tipos.
+
+        p Ya sabemos que cuando no se pasa el parámetro ya que es un valor opcional, nos devuelve 
+            strong undefined
+            | . 
+
+        img(src="../../assets/img/5-7-el-valor-inicial/1.webp" alt="example")    
+
+        p El no pasar el parámetro para que nos devuelva 
+            strong undefined
+            |   se usa en muchos casos.
+        img(src="../../assets/img/5-7-el-valor-inicial/2.webp" alt="example").has-mb    
+
+    article(id="3" class="content")
+        h2 useState con un un valor fijo
+        p Pasamos un valor fijo como lo puede ser 
+            strong true
+            |   que en este caso nos sirve para inicializar, pero puede ser cualquier otro valor fijo como un texto plano.
+        img(src="../../assets/img/5-7-el-valor-inicial/3.webp" alt="example").has-mb   
+        img(src="../../assets/img/5-7-el-valor-inicial/4.webp" alt="example")   
+        p Como podemos ver, todo nos aparece como activo, ya que estamos inicializando todos los 
+            strong componentes
+            |   con su 
+            strong estado
+            |   en 
+            strong true
+            |   es por eso que todos los usuarios parten del estado activo y evidentemente su botón está marcado como "Desactivar".
+
+        p Lo mismo pasará si lo hacemos con 
+            strong false
+            |   solo que empezará con el estado inactivo.         
+        img(src="../../assets/img/5-7-el-valor-inicial/5.webp" alt="example").has-mb   
+        img(src="../../assets/img/5-7-el-valor-inicial/6.webp" alt="example")   
+
+        p Hasta aquí todo parece sencillo, podemos pasar un simple valor y este 
+            strong useState
+            |   simplemente lo utilizará para crear el 
+            strong estado
+            |. 
+
+        p Cada vez que damos click al botón, el valor del estado cambia y no se vuelve tomar en cuenta el valor inicial, solo se ocupa una vez y es para declarar su valor inicial.     
+        img(src="../../assets/img/5-7-el-valor-inicial/7.webp" alt="example").has-mb   
+
+    article(id="4" class="content")
+        h2 useState con una variable
+        p Como ya hemos visto, el 
+            strong estado
+            |   puede depender de algún tipo de variable como puden ser las 
+            strong props
+            |.
+
+        img(src="../../assets/img/5-7-el-valor-inicial/8.webp" alt="example")  
+        p Tenemos la 
+            strong prop
+            |   que en este caso se llama 
+            strong state
+            |   y es la prop que determina si el estado está activo o no. 
+        img(src="../../assets/img/5-7-el-valor-inicial/9.webp" alt="example") 
+
+        p Ahora agregaremos la prop 
+            strong state
+            |   en consola para ir viendo los valores del 
+            strong estado
+            |   y de la 
+            strong prop
+            |.
+        img(src="../../assets/img/5-7-el-valor-inicial/10.webp" alt="example").has-mb 
+        img(src="../../assets/img/5-7-el-valor-inicial/11.webp" alt="example") 
+
+        p Como podemos ver, al principio, es decir sin haber dado click, nos aparecen los valores iniciales de los estados que le hemos dado a los componentes, y a su vez podemos ver el valor de la prop.
+
+        p Pero si damos click al botón, ya estamos cambiando el estado del componente al que damos click, y en consola podemos ver que el valor del estado ha cambiado, pero el valor de la prop siempre se mantendrá con el valor inicial, siempre será el mismo nunca cambiará. 
+        img(src="../../assets/img/5-7-el-valor-inicial/12.webp" alt="example") 
+
+        p Como vemos volvemos otra vez al mismo caso de un valor fijo, esta prop 
+            strong state
+            |   solamente determina el valor inicial de este estado, solamente sirve para cuando el estado se crea por primera vez en la 
+            strong store
+            |   y a partir de ahí no se toma en cuenta para nada, en ningún caso. 
+
+        p Hasta aquí hemos ido con los casos sencillos, pero es que este 
+            strong useState
+            |   puede admitir tambien como parámetro una función y aquí es donde se complica un poco toda esta lógica.    
+
+    article(id="5" class="content")
+        h2 useState con una función como parámetro
+
+        p Imaginemos que queremos que este estado sea aleatorio el estado inicial y queremos calcularlo a través de un 
+            strong Math.random
+            |. 
+
+        h3 Pasando una función de manera incorrecta
+        p Lo que haremos es crear una función llamada 
+            strong randomActive
+            |   para devolver un booleano y pondremos un 
+            strong console.log
+            |   para ver cuando se ejecuta.    
+        img(src="../../assets/img/5-7-el-valor-inicial/13.webp" alt="example") 
+
+        p A continuación estaremos viendo el primer renderizado que nos da esto.
+        img(src="../../assets/img/5-7-el-valor-inicial/14.webp" alt="example")
+
+        p Si recargamos el navegador varias veces iremos viendo que el valor inicial del estado irá cambiando. 
+        img(src="../../assets/img/5-7-el-valor-inicial/15.webp" alt="example").has-mb
+        img(src="../../assets/img/5-7-el-valor-inicial/16.webp" alt="example")
+
+        p Vemos que esto funciona, el valor inicial se está asignando de manera aleatoria.
+
+        p Pero estamos teniendo un problema, y es que si miramos la consola podremos ver que la función se está ejecutando 3 veces.
+        img(src="../../assets/img/5-7-el-valor-inicial/17.webp" alt="example")
+
+        p Esto es normal ya que se debe ejecutar una vez para cada componente, pero hay que hablar de que pasa cuando cambia el estado, por eso hemos puesto el 
+            strong console.log
+            |   dentro de la función. 
+
+        p Tenemos que darnos cuenta que pasa cuando hacemos un 
+            strong setActiveState
+            | , es decir, cuando damos click a un botón del componente.
+        img(src="../../assets/img/5-7-el-valor-inicial/18.webp" alt="example")
+
+        p Entonces cada vez que hacemos click, se ejecutará la función 
+            strong randomActive()
+            | , es decir aunque ya el valor inicial no importe y el valor venga determinado por el estado como tal, este 
+            strong randomActive
+            |   se sigue ejecutando cada vez que cambiamos un 
+            strong estado
+            | .
+
+        p.note Obtener el 
+            strong valor inicial
+            |   de un 
+            strong estado
+            |   a partir de una 
+            strong función
+            |   es algo muy común que se puede dar en muchos componentes y lo que 
+            strong no queremos
+            |   es que esta 
+            strong función
+            |   se tenga que ejecutar en cada 
+            strong render
+            | , una función que evidentemente a partir del primer renderizado, cuando se crea este estado no tiene ningún sentido que se siga ejecutando.
+
+        h3 Pasando una función de manera correcta
+        p Para este caso lo que React nos permite pasar a este 
+            strong useState
+            |   es pasar una 
+            strong función
+            |   como tal, en lugar de su ejecución directa, es decir, pasamos la función 
+            strong randomActive
+            |   como 
+            strong callback.
+
+        p: strong.ts-6 Forma incorrecta ✖️
+        div.has-mb: pre: code.language-jsx
+            | /* De esta manera lo que haciamos es pasar el resultado
+            | de una función en lugar de pasar una función*/
+            |useState(randomActive()) // ✖️
+
+        p
+            strong.ts-3 Forma correcta 
+            | 👍
+        div.has-mb: pre: code.language-jsx
+            |//Pasamos randomActive como callback
+            |useState(randomActive)    
+        img(src="../../assets/img/5-7-el-valor-inicial/19.webp" alt="example")
+
+        p En el primer renderizado se ejecuta esta función 
+            strong randomActive
+            |   3 veces, una para cada componente.
+        img(src="../../assets/img/5-7-el-valor-inicial/20.webp" alt="example")
+
+        p Pero si ahora cambiamos el estado ejecutando el 
+            strong setActiveState
+            | , es decir, dando click al botón, miraremos que la función 
+            strong randomActive
+            |   ya no se ejecutará
+        img(src="../../assets/img/5-7-el-valor-inicial/21.webp" alt="example")
+
+        p Como vemos la función 
+            strong randomActive
+            |   no se vuelve a ejecutar nunca más, es decir que en este caso si que estamos logrando nuestro objetivo, estamos consiguiendo que esta función solamente se ejecute cuando es realmente necesario cuando queremos obtener de verdad el valor inicial.
+
+        p En este punto nos podemos preguntar, ¿Pero este randomActive se ejecuta siempre?, es decir, ¿No hay ninguna forma de evitarlo?, pues la realidad es que no.
+
+        p ¿Y que implica esto?, pues que no podemos almacenar funciones en el estado. A partir del siguiente 
+            strong setActiveState
+            |   si podrimos setear el estado con una función, pero realmente aquí ya nos estamos dando cuenta de que 
+            strong no deberia haber una función
+            |   como 
+            strong estado
+            | . 
+
+        p El estado tiene que almacenar el mínimo valor posible para representar la información que almacena, en el caso del 
+            strong activeState
+            |   lo que necesitamos es un valor booleano, un true o un false, no tiene ningún sentido que almacenemos cosas como, el texto, como la clase, o cualquier otro valor que podamos cálcular a partir de ese 
+            strong estado.
+
+        p Como por ejemplo lo que habiamos hecho anteriormente, cuando calculamos un valor en base a un booleano, esto es correcto.
+
+        div: pre: code.language-jsx
+            |{activeState ? 'Desactivar' : 'Activar'}
+
+        p No tendría sentido almacenar en el estado el texto como tal si podemos calcularlo a partir de un booleano.
+
+        p.note En el estado siempre hay que almacenar la mínima información posible.
+
+        p Desde luego que no tiene ningún sentido que aquí intentasemos almacenar alguna función.
+        img(src="../../assets/img/5-7-el-valor-inicial/22.webp" alt="example")
+
+        p Lo que tendríamos que hacer es intentar almacenar un valor que nos permita obtener una función u otra dependiendo de el.
+
+        p Si nuestra función necesita un parámetro, necesitamos envolver la función dentro dentro de otra, de la siguiente manera.
+
+        div: pre: code.language-jsx
+            |// Si nuestra función necesita parámetros la envolvemos dentro de otra función
+            |useState(() =&gt; randomActive(param))
+
+        p Este patrón es totalmente recomendable en situaciones donde necesitas calcular el valor inicial del estado una sola vez y el cálculo depende de una función que no deseas ejecutar en cada renderizado, es por eso que la envolvemos dentro de una función para que no se ejecute en en cada renderizado sino solo una vez.    
+
+        p Esta sintaxis de envolver funciones dentro de otra se ocupa demasiado en el tema de los eventos.    
+
+        p Con esto ya concluimos las 3 casuísticas de que podemos tener para este 
+            strong valor inicial
+            |. 
+
+        ol 
+            li 
+                p 
+                    strong useState():
+                    |   Sin parámetro nos devulve 
+                    strong undefined.
+            li 
+                p 
+                    strong useState(valorFijo):
+                    |   Podemos pasarle un valor que puede ser fijo o puede provenir de una variable, de una prop o de cualquier sitio, realmente no es relevante de donde venga sino del valor que tenga.
+            li 
+                p 
+                    strong useState(función):
+                    |   Podemos pasar una función, en el caso de que la pasemos, solamente se ejecuta para obtener este valor inicial y no se ejecuta nunca más 
+
+                p Si la función necesita un parámetro se necesita envolver dentro de otra función. Esta manera se ocupa mucho en los eventos.
+
+    article(id="6" class="content")
+        h2 Conclusiones 
+
+        p El estado en React está diseñado para representar datos que afectan la interfaz de usuario y pueden cambiar con el tiempo. El estado no debe usarse para almacenar lógica o comportamientos, como funciones. La lógica de tu aplicación, incluyendo las funciones que manipulan el estado o gestionan eventos, debe definirse fuera del estado.
+
+        p Al almacenar funciones en el estado, puedes generar complejidad innecesaria y hacer que tu código sea más difícil de entender y mantener. Además, el estado debe ser lo más sencillo y directo posible, conteniendo solo el mínimo de información necesaria para representar la UI. 
+
+        h3 Ejemplo de almacenamiento incorrecto de funciones en el estado:
+
+        div: pre: code.language-jsx 
+            | import { useState } from "react";
+            |
+            |function MyComponent() {
+            |  // Ejemplo de función almacenada incorrectamente en el estado
+            |  const [myFunction, setMyFunction] = useState(() =&gt; () =&gt; console.log("Función en el estado"));
+            |
+            |  return (
+            |    &lt;div&gt;
+            |      &lt;button onClick={myFunction}&gt;Ejecutar función&lt;/button&gt;
+            |    &lt;/div&gt;
+            |  );
+            |}     
+
+        p 
+            strong Problema:
+            |   Aquí, el estado está almacenando una función que imprime en la consola, lo cual no es recomendable porque el estado debería contener datos (valores que describen la UI) y no comportamientos o lógica.
+
+        h3 Ejemplo de manera correcta de usar una función para calcular un valor inicial sin almacenar la lógica:          
+        div: pre: code.language-jsx 
+            |import { useState } from "react";
+            |
+            |function MyComponent() {
+            |  // Usamos una función para calcular el valor inicial, pero almacenamos el resultado, no la función
+            |  const [active, setActive] = useState(() =&gt; randomActive(5));
+            |
+            |  return (
+            |    &lt;div&gt;
+            |      &lt;p&gt;Estado inicial calculado: {active ? "Activo" : "Inactivo"}&lt;/p&gt;
+            |      &lt;button onClick={() =&gt; setActive(!active)}&gt;Cambiar estado&lt;/button&gt;
+            |    &lt;/div&gt;
+            |  );
+            |}
+            |
+            |function randomActive(param) {
+            |  return param &gt; 0 ? true : false;
+            |}
+
+        p 
+            strong Correcto:
+            |   Aquí usamos una función (randomActive(5)) para calcular el valor inicial del estado, pero solo almacenamos el resultado de esa función en el estado, no la función en sí. Esto es completamente válido y recomendable, ya que la función se ejecuta solo una vez al inicializar el estado. 
+
+        h3 Resumen:
+        ul 
+            li 
+                p El 
+                    strong estado
+                    |   es para almacenar 
+                    strong datos
+                    | , no lógica ni comportamientos.
+            li 
+                p 
+                    strong No almacenes funciones en el estado
+                    | , ya que eso va en contra de la idea de mantener el estado simple y directo.
+            li 
+                p 
+                    strong Si necesitas calcular el valor inicial de un estado, usa una función que devuelva un valor y almacena ese valor, no la función.       
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'useState sin parámetro'],[3,'useState con un un valor fijo'],[4,'useState con una variable'],[5,'useState con una función como parámetro'],[6,'Conclusiones']]
+    +submenu(submenuLinks)

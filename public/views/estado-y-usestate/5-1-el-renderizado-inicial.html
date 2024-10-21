@@ -344,12 +344,73 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>Esta sección es la más importante de todo el curso, donde hablaremos el concepto clave de React, nos referimos al <strong>estado (State).</strong></p>
+            <p>Pero antes de hablar de ese estado y aprovechando que ya tenemos delante una aplicación real, repasaremos lo que tenemos hasta ahora y comenzar a entender de verdad como funciona React.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Ciclo de vida de la aplicación </h2>
+            <p>El ciclo de vida de la aplicación comienza en el momento que un cliente a través de un navegador web hace una petición a nuestro servidor y este responde con el archivo <strong>index.html</strong>.</p>
+            <p>El navegador web recibe este archivo <strong>index.html</strong> y comienza a procesarlo. Pero justo en el instante en el que recibe este archivo, antes de empezar a procesarlo el <strong>Virtual DOM</strong> no existe todavía y el <strong>DOM</strong> real está completamente vacio ya que el documento todavía no se ha procesado.</p>
+            <p>A partir de aquí el navegador comienza por crear el <strong>index.html</strong> empezando por el <strong>&lt;DOCTYPE&gt;,</strong> la etiqueta <strong>&lt;head&gt;</strong> con todo lo que tiene dentro, después se crea el <strong>&lt;body&gt;</strong> con un <strong>&lt;div id="root"&gt;</strong> y por último el <strong>&lt;script type="module" src="/src/main.jsx"&gt;</strong> que se ejecuta una vez tenemos creado todo lo demás, y que ya sabemos que es el punto de entrada de nuestra aplicación.</p><img src="../../assets/img/5-1-el-renderizado-inicial/1.webp" alt="example">
+            <p>En este momento el <strong>main.jsx</strong> comienza por seleccionar el elemento que ya existe previamente que es nuestro <strong>&lt;div id="root"&gt;</strong> y renderiza en el nuestra aplicación de React.</p><img src="../../assets/img/5-1-el-renderizado-inicial/2.webp" alt="example">
+            <p>Y ¿Qué es lo que hace este root.render()?, pues basicamente comienza por crear el <strong>Virtual DOM</strong> y posteriormente una vez creado lo traslada al <strong>Dom</strong> real haciendo que se muestre en nuestro navegador.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>El renderizado inicial </h2>
+            <p>Ahora hablaremos del renderizado inicial, porque es muy importante entender como funciona.</p>
+            <p>El renderizado inicial <strong>siempre parte de un componente</strong> en nuestro caso el componente <strong>&lt;App/&gt;</strong></p><img src="../../assets/img/5-1-el-renderizado-inicial/3.webp" alt="example">
+            <p>Y apartir de el, lo primero que hace es ejecutar esta función para tratar de obtener un objeto, un objeto que se obtiene a través de las etiquetas JSX. </p><img src="../../assets/img/5-1-el-renderizado-inicial/4.webp" alt="example">
+            <p>Pero por el camino es muy posible que se encuentre otros componentes que dentro de React createElement ya sabemos que no se transforman a <strong>Strings</strong> sino a una función. </p>
+            <p>Entonces para poder obtener el objeto correspondiente a este componente, tenemos que ejecutar tambien su función, de forma que esto se convierte en un proceso recursivo.</p>
+            <p>Se ejecuta esta siguiente función y si por en medio de esta función nos encontramos más componentes, tenemos que seguir ejecutando esa función. </p><img src="../../assets/img/5-1-el-renderizado-inicial/5.webp" alt="example">
+            <p>Vamos siguiendo el orden en que se van ejecutando las funciones de los componentes.</p>
+            <p>Hemos llegado hasta el componente <strong>UserRow</strong> donde se ejecuta su función, y de igual manera si se vuelve a encontrar un componente entre medio de la función tambien se tendrá que ejecutar esa otra función del componente.</p><img src="../../assets/img/5-1-el-renderizado-inicial/6.webp" alt="example">
+            <p>Así se sigue la cadena hasta conseguir que no existan más componentes y que todo se haya transformado a un objeto como tal.</p>
+            <p>Este proceso recursivo, va siempre desde arriba hacia abajo y siempre cuando nos encontremos dentro de un componente irá rellenando sus componentes dentro de él hasta conseguir terminar el nodo completo.</p>
+            <p>Este proceso siempre es vertical, siempre partimos desde el nodo raíz hasta llegar a las hojas y una vez tenemos ya el nodo resultante, continuamos con los siguientes.</p>
+          </article>
+          <article class="content" id="4">
+            <h2>Renderizado inicial visualmente </h2>
+            <p>Lo que vamos hacer ahora es ver este proceso del renderizado inicial pero de una forma visual para tenerlo más claro y ver el orden en que se produce.</p>
+            <p>Para ello haremos uso de <strong>console.log</strong>. </p>
+            <p>En cada uno de los componentes iremos poniendo un <strong>console.log</strong> para ir viendo cuándo se ejecuta este renderizado.</p>
+            <p><strong class="ts-3">Componente App </strong></p><img src="../../assets/img/5-1-el-renderizado-inicial/7.webp" alt="example">
+            <p><strong class="ts-3">Componente UsersList </strong></p><img src="../../assets/img/5-1-el-renderizado-inicial/8.webp" alt="example">
+            <p><strong class="ts-3">Componente UserRow </strong></p><img src="../../assets/img/5-1-el-renderizado-inicial/9.webp" alt="example">
+            <p><strong class="ts-3">Componente UserStatus </strong></p><img src="../../assets/img/5-1-el-renderizado-inicial/10.webp" alt="example">
+            <p><strong class="ts-3">Componente UserRole </strong></p><img src="../../assets/img/5-1-el-renderizado-inicial/11.webp" alt="example">
+            <p>Ahora nos vamos hacia el navegador y miraremos como se pintan estos componentes.</p><img src="../../assets/img/5-1-el-renderizado-inicial/12.webp" alt="example">
+            <p>Como vemos, una vez terminado este <strong>render</strong> ya tenemos creado el <strong>Virtual DOM</strong> y se traslada al <strong>DOM</strong> real, a este listado de usuarios que estamos viendo en pantalla.</p><img src="../../assets/img/5-1-el-renderizado-inicial/13.webp" alt="example">
+            <p>Esto ahora puede parecer muy simple, pero veremos que en esta sección incluiremos unos detalles que modificarán el proceso de este renderizado, así que tenerlo claro es muy importante.</p>
+          </article>
+          <article class="content" id="5">
+            <h2>Teoría de los Hooks </h2>
+            <p>Hasta ahora los componentes que hemos creado son puramente estáticos, para algunas <strong>props</strong> concretas devuelven siempre el mismo resultado. </p>
+            <p>Después de este primer renderizado la interfaz es visible, pero el usuario no puede realizar ninguna acción sobre ella, no puede interactuar ya que nuestra app es solo estática.</p>
+            <p>Pero la verdadera potencia de <strong>React</strong> se basa en poder construir interfaces dinámicas y poder aplicar cambios sobre ellas de la forma más rápida y eficiente posible.</p>
+            <p>Y para lograr esto, <strong>React</strong> pone a nuestra disposición lo que llamamos una <strong>API</strong> que en este contexto, no es más que un conjunto de funciones que podemos utilizar dentro de nuestros componentes para aportar todo ese dinámismo y gestionar estos cambios sobre la interfaz.</p>
+            <p>Estas funciones son conocidas como <strong>Hooks</strong> y pueden distinguirse fácilmente porque todas ellas empiezan por la palabra <strong class="ts-1">Use</strong>: <strong class="ts-2">UseState</strong>, <strong class="ts-3">UseEffect</strong>, <strong class="ts-4">UseContext</strong>. Son solo 3 ejemplos de estos <strong>Hooks</strong> que vamos a ir viendo tanto en esta sección como en todas las siguientes.</p>
+            <p>La metodología que vamos a seguir durante el curso es muy sencilla, cada <strong>Hook</strong> está asociada a un concepto de <strong>React</strong>, entonces, lo primero que haremos será aprender ese concepto, después aprenderemos la sintaxis de ese <strong>Hook</strong> y después veremos como se utiliza. </p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Ciclo de vida de la aplicación </a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">El renderizado inicial</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Renderizado inicial visualmente</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Teoría de los Hooks</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>

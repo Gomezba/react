@@ -5,12 +5,87 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+        p El concepto fundamental de React en el que basa todo su funcionamiento, es el 
+            strong estado (state)
+            | .
 
+        p Pero ántes de hablar de React, quiero que entiendas que es un 
+            strong estado
+            |   en la vida real.
+
+        p Pensemos en un simple interruptor conectado a una bombilla, el interruptor tiene una serie de propiedades, como su marca, modelo y color que son fijas y nunca cambian, pero tambien tiene otra propiedad que puede variar con el tiempo, si está encendido o apagado. Esta propiedad es el 
+            strong estado (state)
+            |   del interruptor. 
+
+        p Cuando accionamos este interruptor cambiamos ese estado, pero este cambio no solo afecta al interruptor, tambien afecta a la bombilla que pasará de estar apagada a estar encendida y visceversa.
+
+        p Esto sucede porque hay un 
+            strong mecanismo
+            |   que esta conectando ambos elementos que es capaz de reaccionar a ese cambio y sabe que acciones tiene que realizar cuando se produce.
+
+        p Si pensamos en React, este interruptor y esta bombilla serían 2 elementos de nuestra interfaz y React sería el mecanismo que los une el encargado de saber que ese cambio de estado provoca que la bombilla se encienda o se apague.
+
+        p Vamos a intentar aplicar este ejemplo a un aspecto de nuestra interfaz y el caso más claro que tenemos aquí es el de si el usuario está activo o no, vamos a colocar un botón que nos permita activar o desactivar a este usuario haciendo click en el.    
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Agregando botón a la interfaz
+
+        p Como se mencionó en la introducción agregaremos un botón para intentar cambiar el estado de la interfaz.
+
+        img(src="../../assets/img/5-2-que-es-un-estado/1.webp" alt="example").has-mb      
+        img(src="../../assets/img/5-2-que-es-un-estado/2.webp" alt="example") 
+
+    article(id="3" class="content")
+        h2 Intentando cambiar el estado del botón 
+
+        p Una vez agregado el botón, lo que trataremos de hacer es que al dar click queremos que cambie su texto a lo contrario, es decir, si está en "Desactivar" tendrá que pasar a "Activar" y visceversa.
+
+        p Las posibles soluciones podrian ser las siguientes: 
+
+        h3 Cambiando el valor de las props
+
+        p Una posible solución será cambiar el valor de la prop 
+            strong state
+            |   a lo contrario, si está en "true" pasarla a "false", y como en el texto del botón ya hemos declarado que dependiendo del valor de state se renderizará el texto del botón, pensaremos que hará el cambio, pero no será así. 
+        img(src="../../assets/img/5-2-que-es-un-estado/3.webp" alt="example").has-mb 
+        img(src="../../assets/img/5-2-que-es-un-estado/4.webp" alt="example") 
+
+
+        h3 Poniendo una variable global para guardar el estado
+        p Otra posible solución es ir guardando el valor del estado, en una variable global.
+        img(src="../../assets/img/5-2-que-es-un-estado/5.webp" alt="example") 
+
+        p Como podemos mirar, el texto del botón no se está renderizando al cambio del estado de la variable.
+        img(src="../../assets/img/5-2-que-es-un-estado/6.webp" alt="example").has-mb 
+
+    article(id="4" class="content")
+        h2 Conclusiones
+
+        p Lo que estamos haciendo aunque utilizemos variables globales o usemos props para cada componente, solo estamos cambiando el valor de una variable pero 
+            strong no
+            |   tenemos ningún 
+            strong mecanismo
+            |   que este conectado a esa variable, cuando se cambia esta variable no hay absolutamente nada que le indique a 
+            strong React
+            |   que tiene que volver a pintar la interfaz, que se ha producido ese cambio y que tiene que reaccionar a el.
+
+        p Necesitamos un 
+            strong mecanismo
+            |   que no solo nos permita almacenar este estado como lo estamos haciendo actualmente, sino que tambien nos permita notificar a 
+            strong React
+            |   cuando este estado cambie, decirle, oye hemos cambiado este estado mira a ver si tienes que producir algún cambio en nuestra interfaz, intenta volver a renderizar esta interfaz para ver si algo ha cambiado en el 
+            strong Virtual DOM
+            |   y si algo ha cambiado vuelve a pintarlo en el 
+            strong DOM
+            |   real.
+
+        p Por supuesto esto no podemos conseguirlo por más que busquemos alternativas como variables globales, modificar las props o cualquier otra que se nos pueda ocurrir, si no que tenemos que hacerlo utilizando una función que está precisamente creada para ello, una función que proviene de la Api de React y que es el primero de estos 
+            strong Hooks
+            | 
+            strong.ts-3 useState
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Agregando botón a la interfaz'],[3,'Intentando cambiar el estado del botón'],[4,'Conclusiones']]
+    +submenu(submenuLinks)

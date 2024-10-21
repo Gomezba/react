@@ -5,12 +5,144 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+        p Ya sabemos como crear un 
+            strong estado (state)
+            |   en React y como provocar un cambio de estado utilizando el 
+            strong hook useState
+            |   que React define en su Api.
 
+        p Ahora en esta lección es muy importante entender que es lo que está pasando detrás de todo esto y es que a la explicación que teniamos sobre el renderizado inicial hemos añadido un nuevo ingrediente los 
+            strong estados
+            |. 
+
+        p Lo primero que tenemos que entender es como afecta un estado a este renderizado inicial. Este renderizado que se produce cuando nosotros cargamos la web por primera vez y que ya sabemos que comprende desde el componente 
+            strong "App"
+            |   hasta todos sus hijos, es un 
+            strong proceso recursivo
+            |.
+
+        p Durante este primer renderizado, React utiliza los estados partiendo de su valor inicial, digamos que crea los estados y genera los componentes, genera este renderizado que transforma cada componente en un 
+            strong nodo
+            |   del 
+            strong Virtual DOM
+            |   utilizando el valor del estado inicial, lo que no nosotros hemos pasado como state y de lo que hablaremos más adelante en profundidad.
+
+        div: pre: code.language-jsx
+            |let [activeState, setActiveState] = useState(state)
+
+        p Una vez que tiene el valor incial del estado, genera la primera versión del 
+            strong Virtual DOM
+            |   que es la que luego posteriormente se traslada a nuestra pantalla del navegador, al 
+            strong DOM real
+            |. 
+
+        p Una vez que tenemos esto, cada vez que ejecutamos este 
+            strong setActiveState
+            |   ya sabemos que lo que se logra es que se recargue la función asociada a ese componente.       
+        div: pre: code.language-jsx
+            |let [activeState, setActiveState] = useState(state)
+
+        p Pero antes de esto es importante que entendamos el punto en el que nos encontramos justo antes de hacer click en el botón. 
+
+        p En este punto el 
+            strong Virtual DOM
+            |   ya existe, es una estructura de datos que refleja toda nuestra aplicación y se encuentra completamente alineado con el 
+            strong DOM
+            | . 
+
+        p Lo que estamos provocando cuando ejecutamos el 
+            strong setActiveState
+            |   es un nuevo renderizado, pero esta vez no de toda la aplicación sino solo una parte de ella, este nuevo renderizado se puede didivir en 5 pasos.       
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Paso 1 Encontrar al culpable
+        p Hemos cambiado un estado y lo hemos hecho notificando a React a través de este 
+            strong setActiveState.
+        div: pre: code.language-jsx
+            |let [activeState, setActiveState] = useState(state)
+        p Lo primero que hará React es detectar a que nodo pertence este estado, quien es el que ejecutó este 
+            strong useState
+            |   para crearlo.
+
+        p Evidentemente ese nodo tiene que ser si o si un componente que nosotros hayamos creado ya que dentro de las etiquetas nosotros no podemos incluir ninguna lógica, esa lógica ya viene prediseñada en React, son componentes nativos.
+
+        p Si queremos añadir un estado tenemos que añadirlo en un componente.
+
+    article(id="3" class="content")
+        h2 Paso 2 Vuelve a ejecutar la función que define al componente        
+
+        p En este caso el culpable, es aque sobre el que demos click y una vez que encuentra al culpable, vuelve a ejecutar la función que define a ese componente, solo a ese componente.
+
+        p Igual que sucede con el primer renderizado, este proceso es 
+            strong recursivo
+            |   y siempre hacia abajo, afecta tambien a todos sus nodos hijos, es decir, todos los componentes que dependen de el, en este caso, tenemos a 
+            strong UserStatus
+            |   y a 
+            strong UserRole.
+        img(src="../../assets/img/5-4-fases-del-cambio-de-estado/1.webp" alt="example")    
+
+        p Por eso podemos ver reflejado en la consola, que estamos ejecutando desde 
+            strong UserRow
+            |   hasta todos sus hijos. 
+
+        img(src="../../assets/img/5-4-fases-del-cambio-de-estado/2.webp" alt="example")    
+
+        p Una vez terminado este proceso tenemos un nuevo objeto generado que corresponderá con la versión nueva de este nodo en el 
+            strong Virtual DOM
+            | .
+
+        p Teniendo esta versión nueva llega el paso 3, calcular la diferencia.
+
+    article(id="4" class="content")
+        h2 Paso 3 Calcular la diferencia 
+        p Tenemos una versión antigua en el 
+            strong Virtual DOM
+            |   de este nodo y tenemos la nueva versión que acabamos de generar.
+
+        p React utiliza un algoritmo que se llama 
+            strong Diff
+            |   que lo que hace es cálcular las diferencias entre el nodo anterior y el nodo nuevo y almacenar estas diferencias en un formato que luego pueda procesar.
+
+        p Una vez tenemos hecho esto llega el paso 4 que es sustituir el nodo anterior del 
+            strong Virtual DOM
+            |   por su nueva versión.
+
+    article(id="5" class="content")
+        h2 Paso 4 Sustituir nodo anterior del Virtual DOM a su nueva versión     
+
+        p De esta forma conseguimos que el 
+            strong Virtual DOM
+            |   esté correctamente alineado con nuestra aplicación, pero evidentemente el 
+            strong DOM real
+            |   todavía no tiene ese cambio reflejado, es decir, tenemos una incosistencia entre el 
+            strong Virtual DOM
+            |   y el 
+            strong DOM real
+            | . 
+
+        p ¿Qué es lo que hace React en el quinto y último paso?, pues corregir esa diferencia.
+
+    article(id="6" class="content")
+        h2 Paso 5 Corregir la diferencia
+        p Partiendo del listado de diferencias que tenemos entre la versión nueva y la versión vieja de ese 
+            strong Virtual DOM
+            | , React aplica todos estos cambios sobre el 
+            strong DOM
+            |   de la forma más optima posible y una vez terminado este proceso ya volvemos a estar en la situación inicial, ya tenemos ese 
+            strong Virtual DOM
+            |   reflejando toda nuestra aplicación y tenemos ese 
+            strong DOM real
+            |   completamente alineado con la aplicación.
+
+        p En este punto, React vuelve a ponerse a la espera para la siguiente acción que se produzca y este proceso se vuelve a repetir tantas veces como ejecutemos este 
+            strong setActiveState.
+
+        p Esto es solo una visión global de un algoritmo extremadamente complejo y que va cambiando y optimizandose con cada nueva versión, realizando estas micro optimizaciones y aquí si son importantes, aquí si importan los milisegundos y aquí si es importante realizar las tareas de la forma más optima posible inclusive aunque perdamos legibilidad.  
+
+        p Pero evidentemente a nosotros no nos importa como funcione este algoritmos, no nos importa la implementación, lo que nos interesa es saber que es lo que hace y que reglas sigue para hacerlo.                    
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Paso 1 Encontrar al culpable'],[3,'Paso 2 Vuelve a ejecutar la función que define al componente'],[4,'Paso 3 Calcular la diferencia'],[5,'Paso 4 Sustituir nodo anterior del Virtual DOM a su nueva versión'],[6,'Paso 5 Corregir la diferencia']]
+    +submenu(submenuLinks)

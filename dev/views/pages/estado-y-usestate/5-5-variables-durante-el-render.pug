@@ -5,12 +5,342 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+        p Ahora que ya sabemos lo que es un render, es el momento en que entendamos que pasa duarante cada render.
 
+        p El primer punto que tenemos que entender es que React no deja de ser una libreria de JavaScript, los 
+            strong componentes
+            |   son 
+            strong funciones especiales
+            | , pero siguen siendo funciones igual que las demás. Las reglas que siguen son las mismas que las que cualquiera otra función. 
+
+        p En este capítulo estaremos viendo como funciona todo esto de la variables en funciones o globales en JavaScript normal, para que entendamos mucho mejor al momento de utilizar React.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Variables JavaScript normal
+
+        p Imaginemos que estamos tratando de cálcular el área de círculo, que se cálcula 
+            strong (2 * PI) * radio
+            | .   
+
+        div: pre: code.language-javascript
+            |const area = radio =&gt;{
+            |    const resultado = (2 * 3.14) * radio
+            |    return resultado
+            |}
+            |
+            |console.log(area(1)) 
+            |console.log(area(2))  
+
+        p Hasta aquí todo normal, pero lo más lógico dentro de esto es que queramos almacenar este 
+            strong 3.14
+            |   en una 
+            strong constante
+            |   queremos una variable dentro de JavaScript en formato const. 
+
+        p ¿Dónde creamos esta variable?, la primera opción es crearla dentro de la función.            
+        div: pre: code.language-javascript
+            |const area = radio =&gt;{
+            |    const PI = 3.14 //Creamos la constante PI
+            |    const resultado = (2 * PI) * radio
+            |    return resultado
+            |}
+            |
+            |console.log(area(1)) 
+            |console.log(area(2)) 
+
+        p Esta variable solo existe dentro de la función y desaparece al momento de hacer el return, fuera de esta función esta variable no existe.
+
+        p Otra alternativa que tendríamos para crear la variable, es crear una variable global. 
+
+        div: pre: code.language-javascript
+            |const PI = 3.14 // Creamos la variable de forma global
+            |
+            |const area = radio =&gt;{
+            |    const resultado = (2 * PI) * radio
+            |    return resultado
+            |}
+            |
+            |console.log(area(1)) 
+            |console.log(area(2)) 
+
+        p De esta forma solo crearemos esta variable una vez y la utilizaremos tantas veces como queramos e inclusive tendremos acceso a ella de forma global en cualquier otro contexto.
+
+        p Ahora diremos, bien, todo esto es muy sencillo pero, ¿Que tiene que ver esto con React?
+
+        p Pues estas variables globales que se crean en el ámbito global, es decir que no estan encerradas dentro de ningún ámbito particular, perviven durante todo el ciclo de vida de la aplicación y esto es importante entenderlo, porque en React pasa exactamente lo mismo.
+
+        p El ciclo de vida de una aplicación de React comienza al momento en que se hace una petición y se sigue manteniendo hasta que cerremos la pestaña del navegador o se cierre el navegador, o recargemos la página.
+
+        p Es muy importante entender que variables tienen que ser 
+            strong globales
+            |   y 
+            strong cuales no
+            | . 
+
+        p Vamos a ir viendo esto con unos de nuestros componentes.    
+
+
+    article(id="3" class="content")
+        h2 Variables en componentes
+
+        p Entonces lo que haremos es ir visualizando lo que hemos hecho hasta aquí, checando cada componentes y sus variables en el render.
+
+        h3 Componente App
+
+        div: pre: code.language-jsx 
+            |import UsersList from './components/UsersList'
+            |
+            |/* Nuestra constante USERS está creada de forma global, 
+            |es decir, solo la creamos una vez y la utilizamos
+            |tantas veces como sea necesario*/
+            |
+            |const USERS = [
+            |	{
+            |		name: 'Joel Gómez',
+            |		state: true,
+            |		role: 'teacher'
+            |	},
+            |	{
+            |		name: 'Israel Vázquez',
+            |		state: true,
+            |		role: 'teacher'
+            |	},
+            |	{
+            |		name: 'Gerson Villanueva',
+            |		state: false,
+            |		role: 'student'
+            |	}
+            |]
+            |
+            |const App = () =&gt; (
+            |	&lt;UsersList className='list' users={USERS}&gt;
+            |		&lt;h1&gt;Listado de usuarios&lt;/h1&gt;
+            |	&lt;/UsersList&gt;
+            |)
+            |
+            |export default App
+
+        p Como vemos, la constante 
+            strong USERS
+            |   está declarada de forma global, es decir, que solo se genera una vez y se puede utilizar cuantas veces sea necesario. 
+
+        p Pero, ¿Por qué es necesario entender esto?, porque los componentes se pueden volver a utilizar, y cada que vez que se utilizan, se ejecuta su función y todo lo que exista dentro como una constante, se estará cargando en memoria.
+
+        p Es por eso que hay que saber cuando utilizar variables globales y cúando no, en este caso no tiene sentido crear nuestra constante USERS dentro de la función del componente APP, se estaría gastando memoria inecesaria.
+
+        h3 Componente UsersList
+        div: pre: code.language-jsx 
+            |import UserRow from './UserRow'
+            |import style from './UsersList.module.css'
+            |
+            |const UsersList = ({ users, children }) =&gt; {
+            |	/*Estamos creando una variable userRendered dentro de la función
+            |	ya que necesita una parte que viene de fuera como argumento de la
+            |	función, es por eso que está declarada dentro del ámbito de la 
+            |	función */
+            |
+            |	const userRendered = users.length ? (
+            |		users.map((user) =&gt; &lt;UserRow&gt; key={user.name} {...user}&gt;&lt;/UserRow&gt;)
+            |	) : (
+            |		&lt;p&gt;Sin usuarios&lt;/p&gt;
+            |	)
+            |
+            |	return (
+            |		&lt;div&gt; className={style.wrapper}&gt;
+            |			{children} {userRendered}
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |export default UsersList
+
+        p Declaramos la variable dentro, ya que necesita de algo externo, en este caso de una prop.
+
+        h3 Componente UserRow
+        div: pre: code.language-jsx 
+            |import { useState } from 'react'
+            |import UserRole from './UserRole'
+            |import style from './UserRow.module.css'
+            |import UserStatus from './UserStatus'
+            |
+            |const UserRow = ({ name, state, role }) =&gt; {
+            |	/* Tenemos un estado y necesita de una prop en este caso,
+            |	pero mas adelante explicaremos mas a fondo de los estados*/
+            |	let [activeState, setActiveState] = useState(state)
+            |
+            |	return (
+            |		&lt;div className={style.wrapper}&gt;
+            |			&lt;div className={style.name}&gt;
+            |				&lt;span&gt;{name}&lt;/span&gt;
+            |			&lt;/div&gt;
+            |			&lt;div className={style.status}&gt;
+            |				&lt;UserStatus state={activeState} /&gt;
+            |			&lt;/div&gt;
+            |			&lt;div className={style.role}&gt;
+            |				&lt;UserRole role={role} /&gt;
+            |			&lt;/div&gt;
+            |			&lt;div&gt;
+            |				&lt;button&gt;
+            |					onClick={() =&gt; {
+            |						setActiveState(!activeState)
+            |					}}
+            |				&gt;
+            |					{activeState ? 'Desactivar' : 'Activar'}
+            |				&lt;/button&gt;
+            |			&lt;/div&gt;
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |export default UserRow
+
+        h3 Componente UserStatus
+        div: pre: code.language-jsx 
+            |import style from './UserStatus.module.css'
+            |
+            |const UserStatus = ({ state }) =&gt; {
+            |	/*Tenemos de una variable que depende estrictamente de la
+            |	prop state, por lo cual está perfectamente creada, porque en cada
+            |	render puede cambiar, porque depende de un estado que viene desde
+            |	el componente UserRow y en necesario calcular esta variable en 
+            |	función de la prop state */
+            |	const activeClassName = state ? style.active : style.inactive
+            |
+            |	return (
+            |		&lt;span&gt; className={activeClassName}&gt;{state ? 'Activo' : 'Inactivo'}&lt;/span&gt;
+            |	)
+            |}
+            |
+            |export default UserStatus
+
+        h3 Componente UserRole
+        p Tenemos un mix de ambos casos
+        div: pre: code.language-jsx
+            |import style from './UserRole.module.css'
+            |
+            |const UserRole = ({ role }) =&gt; {
+            |	/*Este objeto ROL_STYLES no cambia en ningún renderizado, siempre se
+            |	mantendrá igual y lo estamos creando para cada uno de estos renders, por
+            |	lo cual estamos haciendo algo muy ineficiente, estamos gastando memoria
+            |	de más*/
+            |	const ROL_STYLES = {
+            |		teacher: ['Profesor', style.teacher],
+            |		student: ['Alumno', style.student],
+            |		other: ['Otro', style.other]
+            |	}
+            |
+            |	/*Tenemos roleName que es una variable desestructurada que gurda el 
+            |	primer elemento del array de una de las propiedades del objeto ROL_STYLES que es
+            |	nombre del rol a renderizar en el componente.
+            |
+            |	Tenemos roleClassName que es una variable desestructurada que guarda el segundo
+            |	elemento del array de una de las propiedades del objeto ROL_STYLES que es el
+            |	estilo a renderizar para cada rol.
+            |	*/
+            |	const [roleName, roleClassName] = ROL_STYLES[role] ?? ROL_STYLES.other
+            |	return &lt;span className={`${style.role} ${roleClassName} `}&gt;{roleName}&lt;/span&gt;
+            |}
+            |
+            |export default UserRole
+
+        p Como vemos estamos creando una variable para cada render, lo cual es inecesario ya que el objeto siempre se mantendrá igual no cambia por nada.
+
+        p Por lo cual, esta variable que guarda el objeto deberia estar siempre fuera de la función del componente.    
+
+        div: pre: code.language-jsx
+            |import style from './UserRole.module.css'
+            |
+            |/*Declaramos la variable CONST siempre fuera, ya que siempre se mantendrá igual
+            |no cambia con nada */
+            |const ROL_STYLES = {
+            |	teacher: ['Profesor', style.teacher],
+            |	student: ['Alumno', style.student],
+            |	other: ['Otro', style.other]
+            |}
+            |
+            |const UserRole = ({ role }) =&gt; {
+            |	const [roleName, roleClassName] = ROL_STYLES[role] ?? ROL_STYLES.other
+            |	return &lt;span className={`${style.role} ${roleClassName} `}&gt;{roleName}&lt;/span&gt;
+            |}
+            |
+            |export default UserRole
+
+        p La variable 
+            strong ROL_STYLES
+            |   deberia estar siempre fuera para evitar que estemos creando tantas variables como renders agamos, es decir, estabamos creando una variable cada vez que el estado cambiaba, cada vez que dabamos click al botón estabamos creando variables inecesarias gastando mas memoria, esto por que la variable nunca cambia, es una 
+            strong CONSTANTE
+            |   y nunca de los nunca cambia por más renders que ejecutemos.
+
+        p.note 
+            | Es importante distinguir lo que es realmente 
+            strong CONSTANTE
+            |   y lo que es 
+            strong variable
+            |   o lo que depende de algo que puede ser bien una 
+            strong prop
+            |   o puede ser directamente un 
+            strong estado (state).
+            br
+            br
+            | Todo lo que sea 
+            strong CONSTANTE
+            |   lo 
+            strong evitaremos dentro del render
+            | .
+            br 
+            br
+            | Todo lo que sea 
+            strong variable
+            |   o 
+            strong dependiente
+            |   lo 
+            strong tendremos que incluir siempre dentro del render
+            | .         
+    article(id="4" class="content")
+        h2 ¿Qué pasa con el estado?
+        p Ya para terminar, hemos dicho que estas variables se crean cuando se ejecuta la función y se destruyen posteriormente, pero ¿Qué pasa con el estado que creamos en userRow? ¿Por qué se mantien dentro del render?
+        div: pre: code.language-jsx
+            |import { useState } from 'react'
+            |import UserRole from './UserRole'
+            |import style from './UserRow.module.css'
+            |import UserStatus from './UserStatus'
+            |
+            |const UserRow = ({ name, state, role }) =&gt; {
+            |	/* ¿Qué es lo que pasa con este estado?, ¿Por qué se mantiene dentro del render?
+            |	si las variables una vez que se ejecuta la función se eliminan, porque los 
+            |	estados se mantienen*/
+            |	let [activeState, setActiveState] = useState(state)
+            |
+            |	return (
+            |		&lt;div className={style.wrapper}&gt;
+            |			&lt;div className={style.name}&gt;
+            |				&lt;span&gt;{name}&lt;/span&gt;
+            |			&lt;/div&gt;
+            |			&lt;div className={style.status}&gt;
+            |				&lt;UserStatus state={activeState} /&gt;
+            |			&lt;/div&gt;
+            |			&lt;div className={style.role}&gt;
+            |				&lt;UserRole role={role} /&gt;
+            |			&lt;/div&gt;
+            |			&lt;div&gt;
+            |				&lt;button
+            |					onClick={() =&gt; {
+            |						setActiveState(!activeState)
+            |					}}
+            |				&gt;
+            |					{activeState ? 'Desactivar' : 'Activar'}
+            |				&lt;/button&gt;
+            |			&lt;/div&gt;
+            |		&lt;/div&gt;
+            |	)
+            |}
+            |
+            |export default UserRow
+
+        p Pues esta es precisamente una de las claves que trataremos en las siguientes lecciones y para lo que hemos estando hablando de esto.    
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Variables JavaScript normal'],[3,'Variables en componentes'],[4,'¿Qué pasa con el estado?']]
+    +submenu(submenuLinks)

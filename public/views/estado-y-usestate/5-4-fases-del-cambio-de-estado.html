@@ -344,12 +344,80 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>Ya sabemos como crear un <strong>estado (state)</strong> en React y como provocar un cambio de estado utilizando el <strong>hook useState</strong> que React define en su Api.</p>
+            <p>Ahora en esta lección es muy importante entender que es lo que está pasando detrás de todo esto y es que a la explicación que teniamos sobre el renderizado inicial hemos añadido un nuevo ingrediente los <strong>estados</strong>. </p>
+            <p>Lo primero que tenemos que entender es como afecta un estado a este renderizado inicial. Este renderizado que se produce cuando nosotros cargamos la web por primera vez y que ya sabemos que comprende desde el componente <strong>"App"</strong> hasta todos sus hijos, es un <strong>proceso recursivo</strong>.</p>
+            <p>Durante este primer renderizado, React utiliza los estados partiendo de su valor inicial, digamos que crea los estados y genera los componentes, genera este renderizado que transforma cada componente en un <strong>nodo</strong> del <strong>Virtual DOM</strong> utilizando el valor del estado inicial, lo que no nosotros hemos pasado como state y de lo que hablaremos más adelante en profundidad.</p>
+            <div>
+              <pre><code class="language-jsx">let [activeState, setActiveState] = useState(state)</code></pre>
+            </div>
+            <p>Una vez que tiene el valor incial del estado, genera la primera versión del <strong>Virtual DOM</strong> que es la que luego posteriormente se traslada a nuestra pantalla del navegador, al <strong>DOM real</strong>. </p>
+            <p>Una vez que tenemos esto, cada vez que ejecutamos este <strong>setActiveState</strong> ya sabemos que lo que se logra es que se recargue la función asociada a ese componente. </p>
+            <div>
+              <pre><code class="language-jsx">let [activeState, setActiveState] = useState(state)</code></pre>
+            </div>
+            <p>Pero antes de esto es importante que entendamos el punto en el que nos encontramos justo antes de hacer click en el botón. </p>
+            <p>En este punto el <strong>Virtual DOM</strong> ya existe, es una estructura de datos que refleja toda nuestra aplicación y se encuentra completamente alineado con el <strong>DOM</strong>. </p>
+            <p>Lo que estamos provocando cuando ejecutamos el <strong>setActiveState</strong> es un nuevo renderizado, pero esta vez no de toda la aplicación sino solo una parte de ella, este nuevo renderizado se puede didivir en 5 pasos. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Paso 1 Encontrar al culpable</h2>
+            <p>Hemos cambiado un estado y lo hemos hecho notificando a React a través de este <strong>setActiveState.</strong></p>
+            <div>
+              <pre><code class="language-jsx">let [activeState, setActiveState] = useState(state)</code></pre>
+            </div>
+            <p>Lo primero que hará React es detectar a que nodo pertence este estado, quien es el que ejecutó este <strong>useState</strong> para crearlo.</p>
+            <p>Evidentemente ese nodo tiene que ser si o si un componente que nosotros hayamos creado ya que dentro de las etiquetas nosotros no podemos incluir ninguna lógica, esa lógica ya viene prediseñada en React, son componentes nativos.</p>
+            <p>Si queremos añadir un estado tenemos que añadirlo en un componente.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Paso 2 Vuelve a ejecutar la función que define al componente </h2>
+            <p>En este caso el culpable, es aque sobre el que demos click y una vez que encuentra al culpable, vuelve a ejecutar la función que define a ese componente, solo a ese componente.</p>
+            <p>Igual que sucede con el primer renderizado, este proceso es <strong>recursivo</strong> y siempre hacia abajo, afecta tambien a todos sus nodos hijos, es decir, todos los componentes que dependen de el, en este caso, tenemos a <strong>UserStatus</strong> y a <strong>UserRole.</strong></p><img src="../../assets/img/5-4-fases-del-cambio-de-estado/1.webp" alt="example">
+            <p>Por eso podemos ver reflejado en la consola, que estamos ejecutando desde <strong>UserRow</strong> hasta todos sus hijos. </p><img src="../../assets/img/5-4-fases-del-cambio-de-estado/2.webp" alt="example">
+            <p>Una vez terminado este proceso tenemos un nuevo objeto generado que corresponderá con la versión nueva de este nodo en el <strong>Virtual DOM</strong>.</p>
+            <p>Teniendo esta versión nueva llega el paso 3, calcular la diferencia.</p>
+          </article>
+          <article class="content" id="4">
+            <h2>Paso 3 Calcular la diferencia </h2>
+            <p>Tenemos una versión antigua en el <strong>Virtual DOM</strong> de este nodo y tenemos la nueva versión que acabamos de generar.</p>
+            <p>React utiliza un algoritmo que se llama <strong>Diff</strong> que lo que hace es cálcular las diferencias entre el nodo anterior y el nodo nuevo y almacenar estas diferencias en un formato que luego pueda procesar.</p>
+            <p>Una vez tenemos hecho esto llega el paso 4 que es sustituir el nodo anterior del <strong>Virtual DOM</strong> por su nueva versión.</p>
+          </article>
+          <article class="content" id="5">
+            <h2>Paso 4 Sustituir nodo anterior del Virtual DOM a su nueva versión </h2>
+            <p>De esta forma conseguimos que el <strong>Virtual DOM</strong> esté correctamente alineado con nuestra aplicación, pero evidentemente el <strong>DOM real</strong> todavía no tiene ese cambio reflejado, es decir, tenemos una incosistencia entre el <strong>Virtual DOM</strong> y el <strong>DOM real</strong>. </p>
+            <p>¿Qué es lo que hace React en el quinto y último paso?, pues corregir esa diferencia.</p>
+          </article>
+          <article class="content" id="6">
+            <h2>Paso 5 Corregir la diferencia</h2>
+            <p>Partiendo del listado de diferencias que tenemos entre la versión nueva y la versión vieja de ese <strong>Virtual DOM</strong>, React aplica todos estos cambios sobre el <strong>DOM</strong> de la forma más optima posible y una vez terminado este proceso ya volvemos a estar en la situación inicial, ya tenemos ese <strong>Virtual DOM</strong> reflejando toda nuestra aplicación y tenemos ese <strong>DOM real</strong> completamente alineado con la aplicación.</p>
+            <p>En este punto, React vuelve a ponerse a la espera para la siguiente acción que se produzca y este proceso se vuelve a repetir tantas veces como ejecutemos este <strong>setActiveState.</strong></p>
+            <p>Esto es solo una visión global de un algoritmo extremadamente complejo y que va cambiando y optimizandose con cada nueva versión, realizando estas micro optimizaciones y aquí si son importantes, aquí si importan los milisegundos y aquí si es importante realizar las tareas de la forma más optima posible inclusive aunque perdamos legibilidad. </p>
+            <p>Pero evidentemente a nosotros no nos importa como funcione este algoritmos, no nos importa la implementación, lo que nos interesa es saber que es lo que hace y que reglas sigue para hacerlo. </p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Paso 1 Encontrar al culpable</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Paso 2 Vuelve a ejecutar la función que define al componente</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Paso 3 Calcular la diferencia</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Paso 4 Sustituir nodo anterior del Virtual DOM a su nueva versión</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#6">Paso 5 Corregir la diferencia</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>

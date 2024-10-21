@@ -344,12 +344,53 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción </h2>
+            <p>Ya sabemos que los estados tienen que ir asociados a un componente. La cuestión que vamos a tratar en esta lección es a cúal.</p>
+            <p>Decidir en que componente tenemos que colocar nuestros estados marcará gran parte del rendimiento de la aplicación, porque como ya sabemos que cuando ese estado cambie será el componente que tenga el estado el que haya ejecutado este <strong>useState(función de cambio de estado)</strong> el que se vuelva a renderizar por completo y con este se renderizarán todos sus hijos y los hijos de sus hijos.</p>
+            <p>Cuanto mas arriba coloquemos ese estado, más componentes se renderizarán, por lo que hay que intentar colocarlo lo más abajo posible dentro de este árbol.</p>
+            <p>Esto lo miraremos con un ejemplo sencillo. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Ejemplo didáctico: Componentizar el botón de desactivar</h2>
+            <p>Lo primero es crear el archivo para el componente, y lo llamaremos <strong>UserEnableButton.jsx</strong> y como no tenemos ningún CSS asociado pues no crearemos el archivo para su CSS modularizado, simplemente copiamos y pegamos el código del buttón en nuestro archivo del componente.</p><img src="../../assets/img/5-11-donde-colocar-el-estado/1.webp" alt="example">
+            <p>Aquí ya vemos necesariamente que tenemos a <strong>setActiveState</strong> y a <strong>activeState</strong> de lo que dependen tanto el set como el valor del propio botón.</p>
+            <p>Lo primero que podriamos pensar es que este <strong>estado</strong> viniese aquí, es decir dentro de este componente y recibir como prop el valor inicial del estado. </p><img src="../../assets/img/5-11-donde-colocar-el-estado/2.webp" alt="example">
+            <p>Nuestro componente <strong>UserRow</strong> quedaría de la siguiente manera.</p><img src="../../assets/img/5-11-donde-colocar-el-estado/3.webp" alt="example">
+            <p>Si miramos la consola a continuación, estamos teniendo un problema porque el componente hijo <strong>UserStatus</strong> del componente <strong>UserRow</strong> necesita tambien de un estado, el <strong>activeState</strong> que no tiene disponible actualmente.</p><img src="../../assets/img/5-11-donde-colocar-el-estado/4.webp" alt="example">
+            <p>Entonces aquí haremos memoria cuando hablamos del <strong>Virtual DOM</strong>. Cuando hablamos de ese virtual DOM, hablamos de que era una estructura en formato <strong>JSON</strong> y que desde un <strong>nodo</strong> solo podiamos ir hacia abajo, es decir, solo hacia sus hijos, nunca podriamos ir ni hacia arriba ni hacia los lados, es decir, nunca tenemos acceso desde este nodo, ni a su padre, ni a sus hermanos. Con lo cual si yo defino el estado dentro de <strong>UserEnableButton</strong> como lo estamos haciendo ahora, solamente este componente y sus hijos pueden tener acceso a el, ¿Pero cúal es el problema ahora?, pues que como vemos en el componente <strong>UserRow</strong> el componente <strong>UserStatus</strong> que es hermano del componente <strong>UserEnableButton</strong> necesita de ese estado tambien.</p><img src="../../assets/img/5-11-donde-colocar-el-estado/5.webp" alt="example">
+            <p>¿Que podemos hacer cuando nos encontremos en esta situación?, pues lo que se hace es subir el estado hacia arriba.</p>
+            <p>Entonces tomamos el estado del componente <strong>UserEnableButton</strong> y lo regresamos hacia su padre <strong>UserRow</strong> donde se encontraba anteriormente. </p><img src="../../assets/img/5-11-donde-colocar-el-estado/6.webp" alt="example">
+            <p>Si guardamos y vemos la consola del navegador, tenemos otro problema y es que ahora el componente <strong>UserEnableButton</strong> necesita del <strong>setActiveState</strong> y <strong>activeState</strong>. </p><img src="../../assets/img/5-11-donde-colocar-el-estado/7.webp" alt="example">
+            <p>Por lo cual el componente <strong>UserEnableButton</strong> necesariamente tiene que recibir a <strong>setActiveState</strong> y <strong>activeState</strong> como <strong>props</strong>. </p><img src="../../assets/img/5-11-donde-colocar-el-estado/8.webp" alt="example">
+            <p>Ahora en el componente padre <strong>UserRow</strong> pasamos como props a <strong>activeState</strong> y a <strong>setActiveState</strong>. </p><img src="../../assets/img/5-11-donde-colocar-el-estado/9.webp" alt="example">
+            <p class="ts-2">Lo que hemos hecho aquí aunque parece muy sencillo es muy importante. Lo que hemos hecho es buscar hacia arriba el primer nodo que tenga acceso a los dos que necesitan el estado, es decir, dentro de nuestro <strong>Virtual DOM</strong> vamos subiendo hacia arriba desde <strong>UserEnableButton</strong> hacia <strong>UserRow</strong> y lo que hacemos es hacernos las siguientes preguntas, ¿UserRow tiene acceso a todos los nodos que necesitan el estado?, ¿Todos los nodos que necesitan el estado son hijos de UserRow, o hijos de sus hijos, es decir, hijos directos o hijos indirectos?. Si la respuesta es que si, entonces este componente <strong>UserRow</strong> pasa a ser automáticamente un candidato para tener el <strong>estado</strong>. </p>
+            <p class="ts-2">Ahora la siguiente pregunta que nos tenemos que hacer es, ¿Es UserRow el nodo que está situado más abajo del Virtual DOM que cumple está condición?, es decir, de todos los nodos que cumplen esta condición como pueden ser en este caso los componentes <strong>UsersList</strong> y <strong>App</strong>, que evidentemente tambien cumplen la condición de que todos los nodos que necesitan el estado son sus hijos. ¿Dentro de todos estos nodos <strong>UserRow</strong> es el que está más abajo en el árbol y cumple está condición?, pues la respuesta es que si, en este caso <strong>UserRow</strong> es el componente indicado. Es lo mínimo que tenemos que conseguir para que todos los nodos tengan acceso al estado.</p>
+            <p>Cuando estamos tratando de aplicaciones muy sencillas parece que es súper simple, parece que es una cuestión que es casi inmediata, pero cuando empezamos a tratar con aplicaciones complejas, subir un nivel el estado, subir este estado de <strong>UserRow</strong> por ejemplo a <strong>UsersList</strong>, hace que el rendimiento de nuestra aplicación empeore muchísimo. Imaginemos que tenemos un listado de 25 o 30 usuarios, si nosotros decidimos colocar el estado en <strong>UsersList</strong> tenemos un problema, cada vez que se renderize, cada vez que cambie cualquiera de estos usuarios se van a volver a renderizar los 30 componentes. Por eso hay que tener muy encuenta lo que estamos haciendo y porque lo estamos haciendo.</p>
+            <p>Esto es algo que vamos a ir tratando y viendo durante el curso, es algo que es muy importante y a medida que vayamos haciendo más y más practicas, nos irá quedando claro y lo iremos automatizando en nuestra mente, iremos viendo claramente donde tenemos que colocar el estado en cada una de las circunstancias.</p>
+            <p>Por último tenemos que deshacer este cambio, es decir, tenemos que eliminar el componente <strong>UserEnableButton</strong>, ¿Por qué?, porque simplemente recibe una props y hace exactamente lo que teniamos antes, es decir, este componente no tiene una lógica propia y aplicando el principio del que hemos hablado en otra sección, no tiene ninún sentido crear un componente que no haga practicamente nada, no tiene ningun tipo de lógica asociada. Solo lo hemos creado para este ejemplo de manera didáctica.</p>
+            <p>Entonces dejaremos todo que estaba anteriormente. </p><img class="has-mb" src="../../assets/img/5-11-donde-colocar-el-estado/10.webp" alt="example">
+          </article>
+          <article class="content" id="3">
+            <h2>Conclusiones </h2>
+            <p>En conclusión, es fundamental decidir correctamente dónde colocar el estado, entendiendo siempre las razones detrás de nuestras decisiones. La ubicación del estado influye directamente en el rendimiento de la aplicación.</p>
+            <ul>
+              <li>
+                <P>Siempre colocar el estado en el nivel más bajo del Virtual DOM, asegurando que todos los componentes descendientes que lo requieran puedan acceder a él de manera eficiente. Esto minimiza el número de renders innecesarios y garantiza una mejor organización y flujo de datos dentro de la aplicación.</P>
+              </li>
+            </ul>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Ejemplo didáctico: Componentizar el botón de desactivar</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Conclusiones</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>

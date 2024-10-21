@@ -5,12 +5,147 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+        p En esta lección vamos hablar sobre las 2 reglas más importantes de React que tienen que ver con los 
+            strong estados
+            |   y los 
+            strong hooks
+            | .
 
+        p El 
+            strong estado
+            |   es el concepto clave de React, el núcleo en el que se basa toda la libreria y todo lo que vamos aprender a partir de aquí, está relacinado de una u otra forma con el.
+
+        p Nuestro principal reto a la hora de trabajar con React es entender que cualquier cambio que queramos aplicar a la interfaz tenemos que aplicarlo primero sobre el 
+            strong Virtual DOM
+            |   y dejar que sea React quien se encargue de manipular el 
+            strong DOM
+            |   por nosotros y no al revés. 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Error - Modificacion del DOM directamente   
 
+        p El mayor error que cometen los novatos es tratar de modificar el 
+            strong DOM
+            |   directamente de forma 
+            strong imperativa
+            |   utilizando la API que pone a nuestra disposición JavaScript, la propia API del DOM.
+
+        p Por ejemplo pueden hacer lo siguiente, anteriormente nosotros habiamos creado un estado con 
+            strong useState
+            |   pero se puede caer en la tentación de hacer lo siguiente, modificar el 
+            strong DOM
+            |   directamente.    
+
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/1.webp" alt="example")  
+
+        p Si ahora vemos la pantalla y damos click, logramos lo mismo que teniamos anteriormente, pero aquí solo se cambia el renderizado del DOM, no se advierte de este cambio al 
+            strong Virtual DOM
+            | .  
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/2.webp" alt="example")  
+
+        p.note.note--error 
+            strong ¿Esto es correcto?, NO, NUNCA DEBEMOS HACER UNA MODIFICACIÓN DE FORMA DIRECTA AL DOM DE MANERA IMPERATIVA.
+            br
+            br
+            | Nunca se advierte al 
+            strong Virtual DOM
+            |   de este cambio, React no esta siendo informado de este cambio y por lo tanto para React no existe este cambio.
+
+        p Para ver que esto es sumamente incorrecto, pasaremos el botón a una variable y antes de ejecutar el evento miraremos por consola el botón.
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/3.webp" alt="example")  
+
+        p Antes de dar click, miraremos en consola el botón.
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/4.webp" alt="example")  
+
+        p Si damos click, al botón y miramos en consola el botón, nos daremos cuenta que a pesar de que este cambiando el renderizado en pantalla, en la propiedad children miraremos que no ha cambiado, se mantiene igual.
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/5.webp" alt="example") 
+
+        p Como podemos ver tenemos una inconsistencia entre el 
+            strong DOM
+            |   y el 
+            strong Virtual DOM
+            |   ya que tenemos renderizado en pantalla el nuevo texto del botón como 
+            strong "Desactivar"
+            |   pero en el 
+            strong Virtual DOM
+            |   siempre se mantendrá como 
+            strong "Activo" 
+            | .
+
+        p Ahorita estamos tratando con un simple texto sencillo, no va haber ningún problema grave como tal, pero React basa todas sus optimizaciones y todos sus cambios en lo que el cree que exista en el 
+            strong Virtual DOM
+            |. 
+
+        p Si por ejemplo en el DOM, eliminamos un elemento de forma directa imperativamente con la Api del DOM, eliminamos el botón y React llega a renderizar este botón y detecta que ha habido un simple cambio en su texto, intentará aplicar ese cambio en el texto, pero como nosotros hemos eliminado ese botón del 
+            strong DOM
+            |   sin informar a React, para React ese botón sigue existiendo, entonces intentará aplicar un cambio en un botón que no existe.
+
+        p No es que vaya a generar un error como tal, pero va generar inconsistencias y nuestra aplicación se puede volver inestable y provocar un montón de comportamientos inesperados.
+
+        p De aquí podemos deducir la primera de estas reglas: Si algo tiene que cambiar en la interfaz tiene que depender de un estado, no se debe modificar nunca el DOM a mano.
+
+    article(id="3" class="content")
+        h2 
+            strong Primer regla:
+            div Si algo tiene que cambiar en la interfaz, tiene que depender de un estado
+
+        p Todos los cambios que queramos producir en la interfaz, como el texto de un botón, tienen que venir procedidos por un 
+            strong estado
+            | .
+
+        p Así que dejaremos por el momento nuestro botón en la variable que hemos creado y volveremos hacer el cambio de estado de forma correcta como lo teniamos antes, para que miremos como de esta manera si se mantiene alineado el DOM con el Virtual DOM.    
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/6.webp" alt="example") 
+        p Miramos el primer renderizado sin dar click aún al botón.
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/7.webp" alt="example") 
+        p Si damos click al botón miramos que el children se mantiene alineado con el DOM real.
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/8.webp" alt="example") 
+
+        p Hay que grabarnos a fuego nunca utilizar, 
+            strong document.getElemenById
+            |   y modificar algo a mano, ni empezar a utilizar los eventos como el 
+            strong event.target
+            | , esto queda terminantemente prohibido.
+
+        p Si un valor o un atributo o una propiedad tienen que cambiar, tenemos un mecanismo para ello y es depender de un 
+            strong estado
+            | , lo cual es mucho más facíl de entender ya que seteamos y después vemos como utilizarlo todo de una manera declarativa. 
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/9.webp" alt="example") 
+
+        p Bien, ya hemos dejado nuestro botón como lo teniamos al inicio.    
+
+    article(id="4" class="content")
+        h2 Segunda regla:
+            div Los hooks - useState 
+
+        p Aquí haremos memoria sobre las 2 últimas lecciones.
+
+        p En la primera de ellas, hablamos sobre el renderizado y dijimos que el primer paso de este renderizado es detectar al culpable, saber que componente lo ha provocado, que componente ejecutó este 
+            strong useState
+            | . 
+
+        p En la segunda hablamos sobre las variables y el ámbito.
+
+        p Aquí probablemente ya no esté surgiendo una pequeña duda, por un lado hemos estado hablando de que los 
+            strong estados
+            |   tienen que pertenecer a un componente para saber quien es el que desencadena el render, es decir, tienen que ejecutarse dentro de la función del render del componente para saber a que componente pertence el estado.    
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/10.webp" alt="example")
+
+        p Pero por el otro lado hemos dicho que las variables no persisten entre ejecuciones de una misma función, es decir, la confusión puede venir de las variables que estamos desestructurando del resultado de haber definido un estado al componente, si se supone que se crean y se destruyen en el mismo momento en que se ejecuta el render ¿Cómo es capáz de mantener su valor a través de las siguientes ejecuciones de la misma función?   
+        img(src="../../assets/img/5-6-reglas-del-estado-y-los-hooks/11.webp" alt="example")
+
+        P Esta regla de los 
+            strong Hooks
+            |   no solamente se aplica para 
+            strong useState
+            | , no solo tenemos que utilizar 
+            strong useState
+            |   dentro de la función, sino cualquier de estos 
+            strong hooks
+            | , es decir, cualquier función de React que empieze por 
+            strong use
+            |   tendremos que ejecutarla siempre dentro del cuerpo de un componente, para saber a que componente pertenece.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Error - Modificacion del DOM directamente  '],[3,'Primer regla:Si algo tiene que cambiar en la interfaz, tiene que depender de un estado'],[4,'Segunda regla: Los hooks - useState']]
+    +submenu(submenuLinks)

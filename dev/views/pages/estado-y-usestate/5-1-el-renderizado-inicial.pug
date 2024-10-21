@@ -5,12 +5,172 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción 
+        p Esta sección es la más importante de todo el curso, donde hablaremos el concepto clave de React, nos referimos al 
+            strong estado (State).
 
+        p Pero antes de hablar de ese estado y aprovechando que ya tenemos delante una aplicación real, repasaremos lo que tenemos hasta ahora y comenzar a entender de verdad como funciona React.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Ciclo de vida de la aplicación 
+        p El ciclo de vida de la aplicación comienza en el momento que un cliente a través de un navegador web hace una petición a nuestro servidor y este responde con el archivo 
+            strong index.html
+            | .
 
+        p El navegador web recibe este archivo 
+            strong index.html
+            |   y comienza a procesarlo. Pero justo en el instante en el que recibe este archivo, antes de empezar a procesarlo el 
+            strong Virtual DOM
+            |   no existe todavía y el 
+            strong DOM
+            |   real está completamente vacio ya que el documento todavía no se ha procesado.
+
+        p A partir de aquí el navegador comienza por crear el 
+            strong index.html
+            |  empezando por el 
+            strong &lt;DOCTYPE&gt;,
+            |   la etiqueta 
+            strong &lt;head&gt;
+            |   con todo lo que tiene dentro, después se crea el 
+            strong &lt;body&gt;
+            |   con un 
+            strong &lt;div id="root"&gt;
+            |   y por último el     
+            strong &lt;script type="module" src="/src/main.jsx"&gt;
+            |   que se ejecuta una vez tenemos creado todo lo demás, y que ya sabemos que es el punto de entrada de nuestra aplicación.
+
+        img(src="../../assets/img/5-1-el-renderizado-inicial/1.webp" alt="example")
+
+        p En este momento el 
+            strong main.jsx
+            |   comienza por seleccionar el elemento que ya existe previamente que es nuestro 
+            strong &lt;div id="root"&gt;
+            |   y renderiza en el nuestra aplicación de React.
+        img(src="../../assets/img/5-1-el-renderizado-inicial/2.webp" alt="example")
+
+        p Y ¿Qué es lo que hace este root.render()?, pues basicamente comienza por crear el 
+            strong Virtual DOM
+            |   y posteriormente una vez creado lo traslada al 
+            strong Dom
+            |   real haciendo que se muestre en nuestro navegador.
+
+    article(id="3" class="content")
+        h2 El renderizado inicial  
+        p Ahora hablaremos del renderizado inicial, porque es muy importante entender como funciona.
+
+        p El renderizado inicial 
+            strong siempre parte de un componente
+            |   en nuestro caso el componente 
+            strong &lt;App/&gt;
+
+        img(src="../../assets/img/5-1-el-renderizado-inicial/3.webp" alt="example")
+
+        p Y apartir de el, lo primero que hace es ejecutar esta función para tratar de obtener un objeto, un objeto que se obtiene a través de las etiquetas JSX. 
+        img(src="../../assets/img/5-1-el-renderizado-inicial/4.webp" alt="example")
+
+        p Pero por el camino es muy posible que se encuentre otros componentes que dentro de React createElement ya sabemos que no se transforman a 
+            strong Strings
+            |   sino a una función. 
+
+        p Entonces para poder obtener el objeto correspondiente a este componente, tenemos que ejecutar tambien su función, de forma que esto se convierte en un proceso recursivo.
+
+        p Se ejecuta esta siguiente función y si por en medio de esta función nos encontramos más componentes, tenemos que seguir ejecutando esa función. 
+
+        img(src="../../assets/img/5-1-el-renderizado-inicial/5.webp" alt="example")
+
+        p Vamos siguiendo el orden en que se van ejecutando las funciones de los componentes.
+
+        p Hemos llegado hasta el componente 
+            strong UserRow
+            |   donde se ejecuta su función, y de igual manera si se vuelve a encontrar un componente entre medio de la función tambien se tendrá que ejecutar esa otra función del componente.
+
+        img(src="../../assets/img/5-1-el-renderizado-inicial/6.webp" alt="example")
+
+        p Así se sigue la cadena hasta conseguir que no existan más componentes y que todo se haya transformado a un objeto como tal.
+
+        p Este proceso recursivo, va siempre desde arriba hacia abajo y siempre cuando nos encontremos dentro de un componente irá rellenando sus componentes dentro de él hasta conseguir terminar el nodo completo.
+
+        p Este proceso siempre es vertical, siempre partimos desde el nodo raíz hasta llegar a las hojas y una vez tenemos ya el nodo resultante, continuamos con los siguientes.
+
+    article(id="4" class="content")
+        h2 Renderizado inicial visualmente  
+
+        p Lo que vamos hacer ahora es ver este proceso del renderizado inicial pero de una forma visual para tenerlo más claro y ver el orden en que se produce.
+
+        p Para ello haremos uso de 
+            strong console.log
+            | . 
+
+        p En cada uno de los componentes iremos poniendo un 
+            strong console.log
+            |   para ir viendo cuándo se ejecuta este renderizado.
+
+        p: strong.ts-3 Componente App 
+        img(src="../../assets/img/5-1-el-renderizado-inicial/7.webp" alt="example")
+        p: strong.ts-3 Componente UsersList 
+        img(src="../../assets/img/5-1-el-renderizado-inicial/8.webp" alt="example")
+        p: strong.ts-3 Componente UserRow 
+        img(src="../../assets/img/5-1-el-renderizado-inicial/9.webp" alt="example")
+        p: strong.ts-3 Componente UserStatus 
+        img(src="../../assets/img/5-1-el-renderizado-inicial/10.webp" alt="example")
+        p: strong.ts-3 Componente UserRole 
+        img(src="../../assets/img/5-1-el-renderizado-inicial/11.webp" alt="example")
+
+        p Ahora nos vamos hacia el navegador y miraremos como se pintan estos componentes.
+        img(src="../../assets/img/5-1-el-renderizado-inicial/12.webp" alt="example")
+
+        p Como vemos, una vez terminado este 
+            strong render
+            |   ya tenemos creado el 
+            strong Virtual DOM
+            |   y se traslada al 
+            strong DOM
+            |   real, a este listado de usuarios que estamos viendo en pantalla.
+        img(src="../../assets/img/5-1-el-renderizado-inicial/13.webp" alt="example")
+
+        p Esto ahora puede parecer muy simple, pero veremos que en esta sección incluiremos unos detalles que modificarán el proceso de este renderizado, así que tenerlo claro es muy importante.
+
+    article(id="5" class="content")
+        h2 Teoría de los Hooks   
+
+        p Hasta ahora los componentes que hemos creado son puramente estáticos, para algunas 
+            strong props
+            |   concretas devuelven siempre el mismo resultado. 
+
+        p Después de este primer renderizado la interfaz es visible, pero el usuario no puede realizar ninguna acción sobre ella, no puede interactuar ya que nuestra app es solo estática.
+
+        p Pero la verdadera potencia de 
+            strong React
+            |   se basa en poder construir interfaces dinámicas y poder aplicar cambios sobre ellas de la forma más rápida y eficiente posible.
+
+        p Y para lograr esto, 
+            strong React
+            |   pone a nuestra disposición lo que llamamos una 
+            strong API
+            |   que en este contexto, no es más que un conjunto de funciones que podemos utilizar dentro de nuestros componentes para aportar todo ese  dinámismo y gestionar estos cambios sobre la interfaz.
+
+        p Estas funciones son conocidas como 
+            strong Hooks
+            |   y pueden distinguirse fácilmente porque todas ellas empiezan por la palabra 
+            strong.ts-1 Use
+            | : 
+            strong.ts-2 UseState
+            | , 
+            strong.ts-3 UseEffect
+            | , 
+            strong.ts-4 UseContext
+            | . Son solo 3 ejemplos de estos 
+            strong Hooks
+            |   que vamos a ir viendo tanto en esta sección como en todas las siguientes.
+
+        p La metodología que vamos a seguir durante el curso es muy sencilla, cada 
+            strong Hook
+            |   está asociada a un concepto de 
+            strong React
+            | , entonces, lo primero que haremos será aprender ese concepto, después aprenderemos la sintaxis de ese 
+            strong Hook
+            |   y después veremos como se utiliza. 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Ciclo de vida de la aplicación '],[3,'El renderizado inicial'],[4,'Renderizado inicial visualmente'],[5,'Teoría de los Hooks']]
+    +submenu(submenuLinks)
