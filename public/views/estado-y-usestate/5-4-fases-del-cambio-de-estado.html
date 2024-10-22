@@ -373,7 +373,7 @@
           </article>
           <article class="content" id="3">
             <h2>Paso 2 Vuelve a ejecutar la función que define al componente </h2>
-            <p>En este caso el culpable, es aque sobre el que demos click y una vez que encuentra al culpable, vuelve a ejecutar la función que define a ese componente, solo a ese componente.</p>
+            <p>En este caso el culpable, es aquel sobre el que demos click y una vez que encuentra al culpable, vuelve a ejecutar la función que define a ese componente, solo a ese componente.</p>
             <p>Igual que sucede con el primer renderizado, este proceso es <strong>recursivo</strong> y siempre hacia abajo, afecta tambien a todos sus nodos hijos, es decir, todos los componentes que dependen de el, en este caso, tenemos a <strong>UserStatus</strong> y a <strong>UserRole.</strong></p><img src="../../assets/img/5-4-fases-del-cambio-de-estado/1.webp" alt="example">
             <p>Por eso podemos ver reflejado en la consola, que estamos ejecutando desde <strong>UserRow</strong> hasta todos sus hijos. </p><img src="../../assets/img/5-4-fases-del-cambio-de-estado/2.webp" alt="example">
             <p>Una vez terminado este proceso tenemos un nuevo objeto generado que corresponderá con la versión nueva de este nodo en el <strong>Virtual DOM</strong>.</p>
@@ -395,7 +395,7 @@
             <p>Partiendo del listado de diferencias que tenemos entre la versión nueva y la versión vieja de ese <strong>Virtual DOM</strong>, React aplica todos estos cambios sobre el <strong>DOM</strong> de la forma más optima posible y una vez terminado este proceso ya volvemos a estar en la situación inicial, ya tenemos ese <strong>Virtual DOM</strong> reflejando toda nuestra aplicación y tenemos ese <strong>DOM real</strong> completamente alineado con la aplicación.</p>
             <p>En este punto, React vuelve a ponerse a la espera para la siguiente acción que se produzca y este proceso se vuelve a repetir tantas veces como ejecutemos este <strong>setActiveState.</strong></p>
             <p>Esto es solo una visión global de un algoritmo extremadamente complejo y que va cambiando y optimizandose con cada nueva versión, realizando estas micro optimizaciones y aquí si son importantes, aquí si importan los milisegundos y aquí si es importante realizar las tareas de la forma más optima posible inclusive aunque perdamos legibilidad. </p>
-            <p>Pero evidentemente a nosotros no nos importa como funcione este algoritmos, no nos importa la implementación, lo que nos interesa es saber que es lo que hace y que reglas sigue para hacerlo. </p>
+            <p>Pero evidentemente a nosotros no nos importa como funcione este algoritmo, no nos importa la implementación, lo que nos interesa es saber que es lo que hace y que reglas sigue para hacerlo. </p>
           </article>
         </section>
         <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />

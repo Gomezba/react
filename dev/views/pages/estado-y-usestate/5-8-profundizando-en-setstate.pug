@@ -63,7 +63,7 @@ append content
 
         h3 Comportamiendo normal, renderizado del componente al cambiar el estado.
 
-        p Ya hemos dicho que al ejecutar la función de setear el estado, se renderiza de nuevo el componente.
+        p Ya hemos dicho que al ejecutar la función de setear el estado, se renderiza de nuevo el componente siempre y cuando el valor del estado nuevo(actual) sea diferente al valor del estado anterior.
 
         p Ahora miraremos cúando es que se renderiza el componente, porque hay una  situación donde esta función de seteo, renderiza el componente aunque su valor del estado anterior con el actual sean iguales.
 
@@ -331,7 +331,7 @@ append content
             strong spread operator ...
             | , para crear una copia superficial del objeto. 
 
-        p Y cambiaremos la lógica, en lugar de estar pasando un valor fijo como el false que teniamos antes, procedemos a hacerlo correctamente, cambiamos el valor de la propiedad state a su contario, negando el valor que tengan, si es true pasará al false y así sucesivamente.    
+        p Y cambiaremos la lógica, en lugar de estar pasando un valor fijo como el false que teniamos antes, procedemos a hacerlo correctamente, cambiamos el valor de la propiedad state a su contrario, negando el valor que tengan, si es true pasará al false y así sucesivamente.    
 
         img(src="../../assets/img/5-8-profundizando-en-setstate/24.webp" alt="example")
 

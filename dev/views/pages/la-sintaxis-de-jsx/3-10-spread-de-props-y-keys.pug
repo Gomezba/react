@@ -97,7 +97,7 @@ append content
     article(id="4" class="content")
         h2 Cuidado con la sobreescritura de props al utilizar spread operator
 
-        p Hay que saber que las props se pueden llegar a repetir solo que por cascada se eligirá la que este despúes.
+        p Hay que saber que las props se pueden llegar a repetir solo que por cascada se eligirá la que esté despúes.
 
         p Imaginemos que queremos cambiar el tipo del input name a checkbox.
 
@@ -114,7 +114,7 @@ append content
 
         img(src="../../assets/img/3-10-spread-de-props-y-keys/1.webp" alt="example")
 
-        p Esto pasa por que se esta sobreescribiendo la prop por la que está después, necesitamos agregar la prop después del spread operator para que ahora si se aplique.
+        p Esto pasa por que se está sobreescribiendo la prop por la que está después, necesitamos agregar la prop después del spread operator para que ahora si se aplique.
 
         div: pre: code.language-jsx 
             | &lt;input {...inputs[0]} type='checkbox' /&gt;
@@ -164,7 +164,7 @@ append content
 
         p Esto funciona y ya no nos muestra un warning, pero esto no es válido, no es lo que debemos hacer.
 
-        p Lo que tenemos que buscar es uno de los parámetros del objeto que nos identifique univocamente cúal es el campo.
+        p Lo que tenemos que buscar es uno de los parámetros del objeto que nos identifique unívocamente cúal es el campo.
 
         div: pre: code.language-jsx 
             |const inputs = [

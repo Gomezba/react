@@ -355,7 +355,7 @@
           <article class="content" id="2">
             <h2>La función de cambio de estado no es síncrona</h2>
             <p>Empezaremos por demostrar que al momento de ejecutar la función de cambio de estado, el renderizado que provoca esta, no se ejecuta inmediatamente sino que espera a que termine estacción por completo.</p>
-            <p>Para ello pondremos un console.log despúes del ejecución de la función de cambio de estado.</p><img src="../../assets/img/5-9-valor-del-estado-durante-el-render/1.webp" alt="example">
+            <p>Para ello pondremos un console.log después de la ejecución de la función de cambio de estado.</p><img src="../../assets/img/5-9-valor-del-estado-durante-el-render/1.webp" alt="example">
             <p>Si miramos la pantalla al dar click al botón tenemos el siguiente resultado.</p><img src="../../assets/img/5-9-valor-del-estado-durante-el-render/2.webp" alt="example">
             <p>Lo que debemos saber, es que, la <strong>función de cambio de estado</strong> no se ejecuta de forma <strong>síncrona</strong>, es decir que si vemos la línea 25 de nuestro código cuando ejecutamos la función de cambio de estado no estamos provocando un renderizado inmediatamente y cuando acaba el renderizado ejecutamos el console.log. </p><img src="../../assets/img/5-9-valor-del-estado-durante-el-render/3.webp" alt="example">
             <p>De tal manera que la función de cambio de estado es <strong>asíncrona</strong> ya que lo que hacemos con esta, es poner la acción que provoca esta función de cambio de estado en la cola, y esta acción se ejecutará cuando termine la acción actual.</p>
@@ -375,7 +375,7 @@
                 <p>Como el hilo de ejecución no se puede bloquear, en el <strong>callstack</strong> se ejecuta el console.log('Después del setState') </p>
               </li>
               <li>
-                <p>Una vez que esta vacia la pila de anidamiento <strong>callstack</strong> ahora si pasa la acción del renderizado que procova la función de cambio de estado. </p>
+                <p>Una vez que esta vacia la pila de anidamiento <strong>callstack</strong> ahora si pasa la acción del renderizado que provoca la función de cambio de estado. </p>
               </li>
             </ul>
           </article>
@@ -397,7 +397,7 @@
             <h2>Cambiando el valor del estado dentro de una misma acción</h2>
             <p>Esto nos puede llevar a que dentro de la misma acción podamos setear un valor al inicio y luego posteriormente queramos cambiarlo y en ocaciones queremos cambiarlo en base al valor real que tiene ese estado.</p>
             <p>Este ejemplo es solo didáctico para demostrar lo que se puede hacer.</p>
-            <p>Lo que debemos saber es que la función de cambio de estado tambien puede recibir una función muy sencilla que recibe el valor anterior anterior del estado.</p>
+            <p>Lo que debemos saber es que la función de cambio de estado tambien puede recibir una función muy sencilla que recibe el valor anterior del estado.</p>
             <div>
               <pre><code class="language-jsx">setActiveState((prevState)=>{})</code></pre>
             </div>
@@ -408,11 +408,12 @@
 setActiveState((prevState)=>{
    /*Esta función puede saber el valor que acabamos de 
    setear anteriormente*/
-                  <return>!prevState</return>})</code></pre>
+return !prevState
+})</code></pre>
             </div>
             <p>Sabiendo esto, nuestro código quedaría de la siguiente manera. </p><img src="../../assets/img/5-9-valor-del-estado-durante-el-render/10.webp" alt="example">
-            <p>Si miramos la consola podremos ver que hemos cambiado el estado dentro dentro de la misma acción, esto gracias a que primero hemos seteado un valor y posteriormente hemos tomado ese valor del estado y devolvemos un valor de estado.</p><img src="../../assets/img/5-9-valor-del-estado-durante-el-render/11.webp" alt="example">
-            <p class="note note--error">Cabe aclarar que normalemente esto no debemos hacerlo, es decir, normalmente no hay varios <strong>setSatate</strong> dentro de una misma acción por la misma razón que vimos en la lección anterior, no debemos ocupar setState a lo loco, no debemos hacer esto si podemos evitarlos con un simple <strong>if</strong>. Lo que realemente debemos hacer es calcular el valor del estado antes y posteriormente pasarselo al único setState.<br><br>Es decir en lugar de tener varios setState en una misma acción, solo se debe tener una sola función de cambio de estado y calcular el valor del estado previamente para despues pasarselo al único setState.</p>
+            <p>Si miramos la consola podremos ver que hemos cambiado el estado dentro de la misma acción, esto gracias a que primero hemos seteado un valor y posteriormente hemos tomado ese valor del estado y devolvemos un valor de estado.</p><img src="../../assets/img/5-9-valor-del-estado-durante-el-render/11.webp" alt="example">
+            <p class="note note--error">Cabe aclarar que normalemente esto no debemos hacerlo, es decir, normalmente no hay varios <strong>setSatate</strong> de un mismo estado dentro de una misma acción por la misma razón que vimos en la lección anterior, no debemos ocupar setState a lo loco, no debemos hacer esto si podemos evitarlos con un simple <strong>if</strong>. Lo que realemente debemos hacer es calcular el valor del estado antes y posteriormente pasarselo al único setState.<br><br>Es decir en lugar de tener varios setState en una misma acción para un estado, solo se debe tener una sola función de cambio de estado y calcular el valor del estado previamente para después pasarselo al único setState.</p>
             <p>Entonces para no estar haciendo renderizados innecesarios teniendo dos funciones setState, tenemos que calcular el valor del estado y pasarselo al único setState, de la siguiente manera.</p><img src="../../assets/img/5-9-valor-del-estado-durante-el-render/12.webp" alt="example">
             <p>Entonces por norma general no tiene ningún sentido hacer varios setState dentro de una misma acción, aunque se pueda no hay que hacerlo, siempre hay que hacer las cosas de la manera correcta.</p>
           </article>

@@ -35,7 +35,7 @@ append content
         h2 La función de cambio de estado no es síncrona
         p Empezaremos por demostrar que al momento de ejecutar la función de cambio de estado, el renderizado que provoca esta, no se ejecuta inmediatamente sino que espera a que termine estacción por completo.
 
-        p Para ello pondremos un console.log despúes del ejecución de la función de cambio de estado.
+        p Para ello pondremos un console.log después de la ejecución de la función de cambio de estado.
         img(src="../../assets/img/5-9-valor-del-estado-durante-el-render/1.webp" alt="example")
 
         p Si miramos la pantalla al dar click al botón tenemos el siguiente resultado.
@@ -84,7 +84,7 @@ append content
             li 
                 p Una vez que esta vacia la pila de anidamiento  
                     strong callstack
-                    |   ahora si pasa la acción del renderizado que procova la función de cambio de estado.        
+                    |   ahora si pasa la acción del renderizado que provoca la función de cambio de estado.        
 
     article(id="3" class="content")
         h2 ¿Qué ocurre con el estado desde que se produce el SetState hasta que la acción termina?, ¿Que valor tiene este activeState en este proceso?
@@ -128,7 +128,7 @@ append content
 
         p Este ejemplo es solo didáctico para demostrar lo que se puede hacer.
 
-        p Lo que debemos saber es que la función de cambio de estado tambien puede recibir una función muy sencilla que recibe el valor anterior anterior del estado.
+        p Lo que debemos saber es que la función de cambio de estado tambien puede recibir una función muy sencilla que recibe el valor anterior del estado.
 
         div: pre: code.language-jsx
             | setActiveState((prevState)=>{})
@@ -142,23 +142,23 @@ append content
             | setActiveState((prevState)=>{
             |    /*Esta función puede saber el valor que acabamos de 
             |    setear anteriormente*/
-            return !prevState
+            |return !prevState
             |})
 
         p Sabiendo esto, nuestro código quedaría de la siguiente manera.    
         img(src="../../assets/img/5-9-valor-del-estado-durante-el-render/10.webp" alt="example")
 
-        p Si miramos la consola podremos ver que hemos cambiado el estado dentro dentro de la misma acción, esto gracias a que primero hemos seteado un valor y posteriormente hemos tomado ese valor del estado y devolvemos un valor de estado.
+        p Si miramos la consola podremos ver que hemos cambiado el estado dentro de la misma acción, esto gracias a que primero hemos seteado un valor y posteriormente hemos tomado ese valor del estado y devolvemos un valor de estado.
         img(src="../../assets/img/5-9-valor-del-estado-durante-el-render/11.webp" alt="example")
 
         p.note.note--error Cabe aclarar que normalemente esto no debemos hacerlo, es decir, normalmente no hay varios 
             strong setSatate
-            |   dentro de una misma acción por la misma razón que vimos en la lección anterior, no debemos ocupar setState a lo loco, no debemos hacer esto si podemos evitarlos con un simple 
+            |   de un mismo estado dentro de una misma acción por la misma razón que vimos en la lección anterior, no debemos ocupar setState a lo loco, no debemos hacer esto si podemos evitarlos con un simple 
             strong if
             | . Lo que realemente debemos hacer es calcular el valor del estado antes y posteriormente pasarselo al único setState.
             br
             br
-            |Es decir en lugar de tener varios setState en una misma acción, solo se debe tener una sola función de cambio de estado y calcular el valor del estado previamente para despues pasarselo al único setState.
+            |Es decir en lugar de tener varios setState en una misma acción para un estado, solo se debe tener una sola función de cambio de estado y calcular el valor del estado previamente para después pasarselo al único setState.
 
         p Entonces para no estar haciendo renderizados innecesarios teniendo dos funciones setState, tenemos que calcular el valor del estado y pasarselo al único setState, de la siguiente manera.
 

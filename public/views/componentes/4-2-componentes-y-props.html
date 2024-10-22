@@ -378,7 +378,7 @@ const app = (
             <h3>Los componentes deben comenzar con mayúscula</h3>
             <p>En <strong>React</strong>, todos los componentes deben tener nombres que empiecen con una letra mayúscula. Esto es una convención importante porque React usa este detalle para diferenciar entre un elemento nativo de HTML (como <strong>&lt;div/&gt;</strong>, <strong>&lt;h1/&gt;</strong>, etc.) y un componente React creado por el usuario como se suele decir. Si tu componente se llama, por ejemplo, <strong>"componente"</strong> con una letra minúscula, React lo trataría como si fuera una etiqueta <strong>HTML</strong> personalizada en lugar de un componente.</p>
             <h3>El uso del return en los componentes</h3>
-            <p>Todo componente debe incluir un return, ya que este es el que se encarga de devolver el JSX que se va a renderizar en la interfaz. Si no se incluye, el componente no mostrará nada. </p>
+            <p>Todo componente debe incluir un return siempre y cuando contenga lógica, ya que este es el que se encarga de devolver el JSX que se va a renderizar en la interfaz. Si el componente contiene lógica y no se incluye return, el componente no mostrará nada. </p>
             <p>Hasta este punto nuestro código quedará de la siguiente manera. </p>
             <ul>
               <li>Nombre de componente de manera declarativa "User" </li>

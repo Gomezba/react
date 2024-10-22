@@ -372,7 +372,7 @@
           <article class="content" id="2">
             <h2>Comprobación de cúando se renderiza el componente</h2>
             <h3>Comportamiendo normal, renderizado del componente al cambiar el estado.</h3>
-            <p>Ya hemos dicho que al ejecutar la función de setear el estado, se renderiza de nuevo el componente.</p>
+            <p>Ya hemos dicho que al ejecutar la función de setear el estado, se renderiza de nuevo el componente siempre y cuando el valor del estado nuevo(actual) sea diferente al valor del estado anterior.</p>
             <p>Ahora miraremos cúando es que se renderiza el componente, porque hay una situación donde esta función de seteo, renderiza el componente aunque su valor del estado anterior con el actual sean iguales.</p>
             <p>Nos apoyaremos en el <strong>console.log</strong> para mirar cúando se renderiza el componente.</p><img src="../../assets/img/5-8-profundizando-en-setstate/1.webp" alt="example">
             <p>Si vemos la pantalla miraremos el primer renderizado con sus estados con su valor inicial.</p><img src="../../assets/img/5-8-profundizando-en-setstate/2.webp" alt="example">
@@ -483,7 +483,7 @@ OBJETOS*/</code></pre>
             <h3>Forma CORRECTA de cambiar el estado cuando tratamos con referencias</h3>
             <p>Ya vimos que el error que teníamos es por un tema de referencias.</p>
             <p>Una regla, es que siempre que trabajemos con estados, estos debemos tratarlos como <strong>inmutables</strong> por lo cual nos apoyaremos del <strong>spread operator ...</strong>, para crear una copia superficial del objeto. </p>
-            <p>Y cambiaremos la lógica, en lugar de estar pasando un valor fijo como el false que teniamos antes, procedemos a hacerlo correctamente, cambiamos el valor de la propiedad state a su contario, negando el valor que tengan, si es true pasará al false y así sucesivamente. </p><img src="../../assets/img/5-8-profundizando-en-setstate/24.webp" alt="example">
+            <p>Y cambiaremos la lógica, en lugar de estar pasando un valor fijo como el false que teniamos antes, procedemos a hacerlo correctamente, cambiamos el valor de la propiedad state a su contrario, negando el valor que tengan, si es true pasará al false y así sucesivamente. </p><img src="../../assets/img/5-8-profundizando-en-setstate/24.webp" alt="example">
             <p>Entonces después del primer renderizado, daremos click al botón y ahora si se estará cambiando el estado, ya no tendremos la mutación del objeto original sino que ahora son objetos diferentes los que compara. </p><img src="../../assets/img/5-8-profundizando-en-setstate/25.webp" alt="example">
             <p>Lo mismo pasaría con los arrays, tenemos que trabajar con una copia en lugar del original.</p><img src="../../assets/img/5-8-profundizando-en-setstate/26.webp" alt="example">
             <p>Por último, para comprobar que React no verifica el interior de los objetos o del array sino que verifica que las referencias sean diferentes, volveremos a pasar un objeto, y le pasaremos un valor fijo de tipo true.</p><img src="../../assets/img/5-8-profundizando-en-setstate/27.webp" alt="example">
