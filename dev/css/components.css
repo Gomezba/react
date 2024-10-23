@@ -385,6 +385,14 @@
   background-color: var(--bg-text-strong-6);
 }
 
+:where(strong:not(strong[class^="ts"])) {
+  background-color: #2f333c;
+  color: #d6d8dc;
+  font-weight: initial;
+  padding-inline: 5px;
+  border-radius: 0.3rem;
+}
+
 .link {
   color: var(--color-link);
   font-size: 1.1rem;
