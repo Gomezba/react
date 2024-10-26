@@ -5,12 +5,127 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+        p Ahora que ya conocemos como podemos añadir estos eventos a cualquiera de los nodos del DOM, bien sea mediante el atributo "onclick" de HTML pasandole un string, o bien sea mediante "addEventListener" con el evento que queramos escuchar y una función manejadora del evento, ya tenemos la opción básica.
 
+        p Pero en cualquier momento podemos tener la necesidad de desvincular estos "handles" estos "EventListener". Tenemos que tener la posibilidad de retirarlos y que no vuelvan a actuar nunca mas y aquí tenemos que ver dos alternativas distinas en función de la que estemos utilizando.
+
+        p La primera opción donde tenemos un atributo "onclick" desde HTML, se va a transformar en una propiedad que se genere en el DOM y ¿Como podemos desvincular esta propiedad onclick? 
+
+        p Es lo que estaremos viendo en esta lección, como poder desvincular estos eventos para que ya no se vuelvan a ocupar, aprenderemos la forma de lograrlo de forma nativa y desde React.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Eliminando evento inline
+        p Hay que recordar que cuando definimos un atributo directamente en el HTML este se convertirá a una propiedad del DOM, de tal manera que cuando agregamos un atributo de tipo evento como "onclick" directamente desde el HTML de igual manera se convertirá en una propiedad del DOM.
+
+        p Hay que saber que cuando agregamos un evento directamente desde el HTML, se le conoce como "evento inline"
+
+        p Entonces aprenderemos a eliminar la función manejadora inline. 
+
+        p Para quitarlo necesitamos acceder al evento "onclick" de la etiqueta y definirlo como "undefined".
+
+        img(src="../../assets/img/6-2-eliminando-event-listeners/1.webp" alt="example")
+
+        p Si intentamos dar click al botón HTML miraremos que no se ejecutará el alert definido dentro del "onclick" del botón del HTML y solo se ejecutará el evento del "Event listener" de JavaScript que es un alert que dice "Prueba listener".
+        img(src="../../assets/img/6-2-eliminando-event-listeners/2.webp" alt="example")
+
+        p Esta es la primera opción que tenemos para eliminar la función manejadora del evento.
+
+        p Cabe aclarar que cuando ocupamos 
+            code element.onclick = undefined
+            |   se elimina la función, hacemos esta aclaración porque para lo que veremos adelante ya no esliminará sino que se desvinculará. 
+
+    article(id="3" class="content")
+        h2 Eliminando evento listener   
+
+        p La segunda opción es desvincular el "evento listener" que asignamos con la Api del DOM desde JavaScript, aquí ya no eliminaremos sino que desvincularemos la función manejadora del evento.
+
+        p Para desvincular este evento utilizamos la función 
+            strong "removeEventListener"
+            |   y como parámetro recibe la función "handle" la función manejadora del evento.
+
+        p Pero hay que recordar las referencias que tienen las funciones, por lo cual debemos almacenar la función en una variable, para que esta variable guarde la referencia de la función y de esta manera la función "removeEventListener" pueda desvincular el handle del evento.     
+
+        img(src="../../assets/img/6-2-eliminando-event-listeners/3.webp" alt="example")
+
+        p Si ahora damos click, miraremos que los eventos han desaparecido.
+        img(src="../../assets/img/6-2-eliminando-event-listeners/4.webp" alt="example")
+
+        p Aclaraciones sobre "removeEventListener".
+
+        p Cuando usas "removeEventListener", eliminas la asociación entre el evento y la función específica que habías pasado con addEventListener. Esto significa que eliminamos el vínculo entre el evento y la función, pero no el evento ni la función en sí.
+
+        p Para entenderlo mejor, aquí tienes los puntos clave:
+
+        ul 
+            li 
+                p Eliminación de la asociación: Cuando usas removeEventListener, desvinculas el evento específico de esa función manejadora. Es decir, el evento en sí (como click) sigue existiendo y puede estar siendo escuchado por otros event listeners, pero esa función específica que estaba asociada con addEventListener ya no se ejecutará para el evento.
+            li 
+                p La función manejadora sigue existiendo: removeEventListener no elimina la función que estás usando como manejador, solo elimina su vinculación con el evento en ese contexto específico. La función sigue en memoria (y puede ser reutilizada en otro contexto o evento si es necesario).
+
+    article(id="4" class="content")
+        h2 Eliminación de eventos en React 
+
+        p Ahora llega el momento de como traducir esto que hemos visto a React.
+
+        p Lo que se hace en React para agregar un evento es asignar una propiedad 
+
+        div: pre: code.language-jsx
+            |const App = () =&gt; {
+            |//Asignamos la prop onClick   
+            |return &lt;button&gt; onClick={alert('Prueba React')}&gt;React&lt;/button&gt;
+            |}
+
+        p Pero en ningún punto hemos hecho un "addEventListener" y en ningún punto podremos hacer tampoco un "removeEventListener", sino que React es el que realmente lo hace y quien se encarga de ejecutarlo.
+
+        p Entonces ahora tenemos que pensar ¿Qué es lo que se parece mas a este onclick?, ¿Qué técnica de las dos que hemos utilizado es la que más se le parece?, pues evidentemente la técnica de HTML.
+
+        p Y ¿Como desactivamos en HTML esta propiedad onclick?, pues como ya vimos, tenemos que setearla a "undefined", y en React ¿como lo haremos?, pues de igual manera seteandola a "undefined".
+
+        p La manera más rápida posible pues es setear el "onClick" a "undefined". 
+
+        div: pre: code.language-jsx
+            |const App = () =&gt; {
+            |//Asignamos la prop onClick   
+            |return &lt;button&gt; onClick={undefined}&gt;React&lt;/button&gt;
+            |}  
+
+        p O incluso podemos no poner nada que es equivalente a poner "undefined"    
+        div: pre: code.language-jsx
+            |const App = () =&gt; {
+            |//Asignamos la prop onClick   
+            |return &lt;button&gt; onClick={}&gt;React&lt;/button&gt;
+            |}  
+
+        p Pero puede ser que el evento lo queramos eliminar trás algún tipo de cambio sobre la interfaz, es decir, que esta prop se variable a lo largo del tiempo, es decir, que nuestra prop "onClick" cambie su valor a lo largo del tiempo.
+
+        p Bueno, a ¿Que nos lleva esto?, pues a tener un "state" un estado, y esta es una respuesta que tenemos que tener clarísima, ya que si algo tiene que variar durante el tiempo de nuestro JavaScript, nuestro JSX tiene que depender siempre de un estado.
+
+        p Y para tener un estado, evidentemente, el estado tiene que pertenecer a un componente, en este caso, en nuestro ejemplo al componente App. 
+
+        p Lo primero que debemos recordar, es que, una prop de tipo evento solo puede recibir una función manejadora como parámetro, pero como ya mencionamos si nosotros definimos un "undefined" es como si no pusieramos nada. 
+
+        p Sabiendo todo esto nuestro código quedará de la siguiente manera.    
+        img(src="../../assets/img/6-2-eliminando-event-listeners/5.webp" alt="example")
+
+        p En la imagén anterior ya se explicó el funcionamiento de nuestro código.
+
+        p Entonces en el primer renderizado, nuestro botón de React tiene un estado asignado en "true", de tal manera que cuando demos click en el, como está en true se ejecutará el handle, y el handle ejecuta el "alert" y ya sabemos que la función de cambio de estado solo se ejecuta si el valor anterior del estado es diferente al valor nuevo del estado que queremos asignar, en nuestro caso el valor nuevo que queremos asignar es "false", por lo tanto como son diferentes, es decir, "true" y "false" son diferentes se cambia el estado a false, de tal manera que cuando se vuelva a dar click en el botón, ya no se ejecutará el handle sino que se seteará el evento como undefined, de esta manera ya no tendremos el evento, es como si no lo pusieramos.
+        img(src="../../assets/img/6-2-eliminando-event-listeners/6.webp" alt="example").has-mb
+        img(src="../../assets/img/6-2-eliminando-event-listeners/7.webp" alt="example")
+
+        p ¿Y qué es lo que está pasando por detrás en React, cuando desaparece este evento? porque evidentemente ya sabemos que cuando añadimos el evento, se agrega un evento sobre el 
+            strong rootNode.addEventListener().
+
+        p Y ¿Qué es lo que estará pasando cuando React detecte un cambio en el onClick y está viendo que pasa de tener una función a tener un valor como undefined?, pues efectivamente, lo que está haciendo por detrás es un 
+            strong removeEventListener
+            |   del evento que teniamos asociado antes.
+
+        p De esta manera React gestiona por nosotros toda esa parte de añadir y eliminar los eventos y que no queden rotos ni queden referencias por ahí colgando en nuestra memoria. Cada evento que desaparece del DOM tiene su correspondiente "removeEventListener" de forma automática. Nosotros nos preocupamos de un estado de forma "declarativa" y React se ocupa de la implementación y de garantizar que todo funciona de la forma mas eficiente posible.
+
+        p Ahora si empezaremos a comprender cuando decimos que trabajar de forma declarativa es mucho mas sencillo a trabajar de forma imperativa.        
 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Eliminando evento inline'],[3,'Eliminando evento listener'],[4,'Eliminación de eventos en React']]
+    +submenu(submenuLinks)
