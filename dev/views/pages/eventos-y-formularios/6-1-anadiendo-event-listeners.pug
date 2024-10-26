@@ -5,12 +5,204 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+        p Ahora que ya conocemos los estados lo que sin duda es el concepto fundamental de React, tenemos buena parte del trabajo hecho ya que todo el resto del curso se basa en diferentes técnicas para manipular esos estados.
 
+        p La mayor parte de los cambios de estado se producen en base a acciones del usuario y se gestionan a través de eventos.
+
+        p En esta sección vamos a profundizar en como React maneja los 
+            strong eventos
+            |   y los 
+            strong formularios
+            |   respecto a como se manejan de forma nativa.
+
+        p Cuando el usuario realiza alguna acción relevante para el navegador, este es capáz de detectarla y emitir un evento asociado a ella, este evento no es más que un objeto con la información asociada a esta acción.
+
+        p Para cada uno de esos eventos podemos definir un 
+            strong manejador
+            |   o 
+            strong handle
+            |   que haga que nuestra aplicación reaccione produciendo un determinado comportamiento. Este 
+            strong handle
+            |   es una 
+            strong función
+            |   que recibe siempre el evento como parámetro y puede utilizarlo o no. Click, change y blur son solo tres de las decenas de eventos que podemos capturar y vamos haber como se haria de forma nativa y como se traduce esto a React. 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Gestión de eventos de forma nativa en HTML Y JavaScript
 
+        p Para esta lección vamos a utilizar el documento 
+            strong index.html
+            |   que tenemos disponible en nuestra aplicación para hacer un primer ensayo y ver como se gestionan estos eventos utilizando únicamente HTML y JavaScript y posteriormente veremos como se traduce todo esto a React.
+
+        p Crearemos un simple 
+            strong button
+            |   fuera de nuestro 
+            strong Virtual DOM (div#root)
+            |    y le colocaremos un 
+            strong id="button"
+            |   y como texto pondremos HTML.
+
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/1.webp" alt="example")  
+
+        p Si miramos la pantalla tenemos un botón que actualmente no hace absolutamente nada, es decir, si hacemos click no producimos ningún comportamiento porque ese evento de 
+            strong click
+            |   no está siendo escuchado, no tiene un 
+            strong listener.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/2.webp" alt="example")  
+
+        p Así que comenzaremos por añadir el evento 
+            strong click.
+
+        h3 Añadiendo evento click de forma nativa en HTML
+
+        p Empezaremos por añadir el evento de la forma más primitiva que tenemos, y es directamente desde la propia etiqueta &lt;button&gt; que tenemos en el HTML.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/3.webp" alt="example") 
+
+        p En este momento lo que hemos hecho es añadir un manejador (handle) al evento de click que hará que este botón cuando demos click en el, despliegue un alert con el texto prueba. 
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/4.webp" alt="example") 
+
+        p Esta sería la primera forma de añadir este manejador (handle), pone nuestro documento a la escucha sobre los clicks que se produzcan en este botón y realizar la función alert('Prueba') ante cada uno de estos eventos.
+
+        p Como hemos dicho, esta es la forma mas primitiva de añadir eventos a una etiqueta, pero tambien lo podemos hacer desde JavaScript.
+
+        h3 Añadiendo evento click desde JavaScript
+
+        p Agragaremos un script para agregar un evento al botón desde JavaScript.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/5.webp" alt="example") 
+
+        p Como podemos ver tenemos dos eventos de click agregados al mismo botón y lo que pasará es que al dar click por primera vez, se ejecutará primero el handle del html y posteriormente el del script. 
+        p Damos click por primera vez.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/6.webp" alt="example") 
+        p Al aceptar el primer alert automáticamente se ejecutará el segundo handle del script.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/7.webp" alt="example") 
+
+        p Ahora llega el momento de ver como podemos traducir esto a React y eso nos lleva indudablemente al main.jsx.
+
+    article(id="3" class="content")
+        h2 Gestión de eventos desde React 
+        p Para enfocarnos únicamente en los eventos, lo que haremos es comentar por el momento el componente App de nuestro main, y crearemos un componente App aquí mismo donde simplemente devolveremos un botón.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/8.webp" alt="example") 
+        p Si vemos la pantalla ahora tenemos dos botones, uno creado desde HTML y otro creado desde React.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/9.webp" alt="example")
+
+        h3 Añadiendo un evento desde React 
+        p ¿Como añadimos un evento a nuestro botón de React?, primero ya sabemos que este botón es un nodo del Virtual DOM y no podemos añadir eventos utilizando la api de JavaScript (addEventListener) porque entonces React no se enteraría como ya lo vimos en la sección pasada.
+
+        p En React los eventos que haya que añadir sobre un nodo del Virtual DOM tienen que hacerse de una forma similar a HTML y decimos similiar porque aunque visualmente parezca lo mismo, por debajo no tiene absolutamente nada que ver.
+
+        p Entonces vamos a nuestro botón y le añadimos una propiedad 
+            strong onClick
+            |   que ya sabemos que esta prop, React automáticamente sabe que es un evento, y los eventos solo reciben una función, un handle como valor.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/10.webp" alt="example")
+
+        p Con esto ya tenemos en nuestro botón de React un evento añadido, y si damos click sobre el, nos ejecutará el alert.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/11.webp" alt="example")
+
+        p Como vemos tenemos una sintaxis que es parecida al HTML pero su valor es totalmente similar al addEventListener, es decir: 
+
+        div: pre: code.language-jsx
+            |/*Por un lado a nivel de atributo tenemos este onclick que se 
+            |transforma en una propiedad*/
+            |&lt;button id="button" onclick="alert('Prueba')"&gt;HTML&lt;/button&gt;   
+            |
+            |/*Por otro lado en lugar de escribir un string como se hace de forma 
+            |nativa en HTML, en JavaScript lo que hacemos es pasarle una función en
+            |formato addEventListener */
+            |button.addEventListener('click', () =&gt; alert('Prueba2'))
+
+        p ¿Por qué esto es así?, por una razón muy sencilla, React lo que hace por detrás con este 
+            strong onClick
+        div: pre: code.language-jsx
+            | &lt;button onClick={() =&gt; alert('Prueba React')}&gt;React&lt;/button&gt;
+        p realmente es transformarlo en un 
+            strong addEventListener
+            | , es decir, cuando nosotros estamos escribiendo una propiedad 
+            strong onClick
+            |   dentro de este botón, lo que está haciendo React por detrás es utilizar la Api del DOM y utilizar addEventListener para añadir este botón en el nodo raíz del Virtual DOM y vamos a verlo desde la propia documentación oficial de React.  
+
+
+        p En la documentación oficial de React, cuando presentaron la versión 17, hay una sección donde explica perfectamente como funcionan los eventos -> 
+            a(href="https://legacy.reactjs.org/blog/2020/10/20/react-v17.html" target="_blank").link  Post react 17       
+
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/12.webp" alt="example")
+
+        p Como podemos ver, en la versión 17 tenemos de ejemplo los eventos de 
+            strong onClick
+            |   y  
+            strong onFocus
+            |   y todos ellos se colocan como 
+            strong addEventListener
+            |   en el 
+            strong rootElement
+            | , en realidad se mira así 
+            strong rootNode.addEventListener()   
+
+        p Anteriormente en la versión 16 estos eventos se colocaban directamente en el documento de esta manera 
+            strong document.addEventListener()  
+
+        p Lo que hace React es discriminar en función de quien dispara ese evento para poder manejarlo correctamente. 
+
+        p Pero no pensemos que cuando estamos haciendo un 
+            strong &lt;button onClick&gt;
+            |   estamos añadiendo un 
+            strong button.addEventListener
+            | , sino que se está transformando en un document.addEventListener en el caso de React 16 y en un rootNode.addEventListener en la versión 17.
+
+        p Realmente esto es una cuestión de implementación y a nosotros no nos importa el que se haga con esto, esto es algo que comentamos como curiosidad para que entendamos que es lo que está pasando por detrás y veas porque tenemos esta restricción a la hora de tener que pasar una función y otra serie de cosas, porque realmente estamos utilizando por debajo la Api del DOM.
+
+        p.ts-2 Actualmente año 2024 en la versión 18 de React, el manejo de eventos sigue un enfoque similar al de React 17. En React 17, se cambió el manejo de eventos de 
+            strong document.addEventListener()
+            |   a 
+            strong rootNode.addEventListener()
+            | , lo que permitió que los eventos se gestionaran más cerca del nodo raíz de la aplicación. Este cambio mejoró el rendimiento y la contención de eventos dentro del propio árbol de React. 
+            br 
+            br 
+            | En React 18, este enfoque se mantiene, pero se añaden nuevas mejoras, como el 
+            strong renderizado concurrente
+            | , que permite a React gestionar las actualizaciones de forma más eficiente. Por ejemplo, con la 
+            strong API startTransition
+            | , React puede distinguir entre actualizaciones urgentes y no urgentes, optimizando así el manejo de eventos y las interacciones del usuario. Aunque el modelo de eventos sigue siendo similar al de React 17, React 18 introduce estas optimizaciones para mejorar la experiencia del usuario durante las actualizaciones y transiciones. &nbsp;
+            a(href="https://react.dev/blog/2022/03/29/react-v18" target="_blank").link React 18
+
+    article(id="4" class="content")
+        h2 Malas prácticas: creando múltiples eventos del mismo tipo en una misma etiqueta
+
+        p Volviendo a nuestro código ahora nos queda saber como podemos añadir múltiples eventos a una misma etiqueta, veamoslo como se hace de manera nativa desde JavaScript.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/13.webp" alt="example")
+
+        p Si vamos al navegador y damos click al botón de HTML, miraremos que al dar click solo una vez se estarán ejecutando en cadena los 5 eventos.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/14.webp" alt="example")
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/15.webp" alt="example")
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/16.webp" alt="example")
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/17.webp" alt="example")
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/18.webp" alt="example")
+
+        p Como vemos tenemos una mala práctica, y realmente lo que tendriamos que hacer en ese caso es agrupar en un solo EventListener y dentro de el colocar tantas funciones como queramos ejecutar.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/19.webp" alt="example")
+
+        p De esta manera tenemos en una sola función todo el comportamiento que queremos obtener de este evento.
+
+        p Si ahora hacemos click de nuevo en el botón HTML, obtendremos el mismo resultado de hace un momento sin estar añadiendo múltiples eventos a la misma etiqueta.
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/20.webp" alt="example")
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/15.webp" alt="example")
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/16.webp" alt="example")
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/17.webp" alt="example")
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/18.webp" alt="example")
+
+        p En React, un evento como onClick solo puede recibir una función a la vez. Es decir, no podemos asignar múltiples "escuchadores" de eventos directamente en el mismo onClick.
+
+        p Para ejecutar varias acciones en un mismo evento, como varios alert o console.log, lo que necesitamos hacer es crear una función que agrupe todas las acciones que queremos ejecutar. Luego, esa función se asigna al onClick.
+
+        p Por ejemplo, si necesitamos mostrar 5 alertas al hacer clic, podemos crear una función que contenga esas alertas y cualquier otra acción que queramos:
+        img(src="../../assets/img/6-1-anadiendo-event-listeners/21.webp" alt="example")
+
+        p Esta será la operativa que tendremos que hacer a partir de ahora, esta será la forma correcta de hacerlo y la única forma posible.
+
+        p.note.note--error Añadir varios EventListener es una mala práctica tanto de forma nativa como en React y en React directamente han optado por eliminarla, porque tener que gestionar múltiples eventos para el mismo nodo (el mismo elemento de HTML), a parte de ser ineficiente, es una tarea muy díficil de gestionar en un Virtual DOM.
+
+        p.note Así que a partir de ahora todos los eventos se agrupan en una única función, todos los manejadores del mismo evento si tenemos varios hay que agruparlos en una simple función. 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Gestión de eventos de forma nativa en HTML Y JavaScript'],[3,'Gestión de eventos desde React'],[4,'Malas prácticas: creando múltiples eventos del mismo tipo en una misma etiqueta']]
+    +submenu(submenuLinks)
