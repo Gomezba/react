@@ -5,12 +5,81 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+
+        p Además de los "event handles" que definamos para un determinado evento, el navegador puede tener asociado a el un comportamiento por defecto, es decir, una tarea a realizar de forma automática cuando este evento sucede.
+
+        p Cuando se produce un evento, lo primero que hace el navegador es comprobar los listeners que nosotros hemos establecido y ejecutarlos unos tras otro en el orden que hayamos pasado.
+
+        p Posteriormente comprobará si existe un comportamiento por defecto y en ese caso lo ejecutará, salvo que nosotros le indiquemos lo contrario.
+
+        p Un ejemplo muy claro es el de los enlaces las etiquetas &lt;a&gt; donde su comportamiento por defecto es dirigir al enlace.
+
+        p En esta lección veremos algo muy sencillo pero importante.
+
+        p Si ya tenemos un nivel considerable de JavaScript sabremos que esto es muy básico pero escencial.
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Quitando el comportamiento por defecto de un evento nativamente 
+        p Primeramente miraremos miraremos el comportamiento por defecto de una etiqueta "a".
 
+        p Tenemos el siguiente ejemplo: donde tenemos un link, que dirige hacia la página oficial de React, tenemos un onclick que ejecuta un alert.
+        img(src="../../assets/img/6-4-preventdefault/1.webp" alt="example")
+
+        p Veamos el comportamiento por defecto, primeramente se ejecutará el alert y posteriormente se ejecutará el comportamiento por defecto del link que es dirigir a la página que hemos establecido.
+
+        p Aquí vemos que se ejecuta el alert.
+        img(src="../../assets/img/6-4-preventdefault/2.webp" alt="example")
+        p Una vez que se ejecutó el alert se ejecuta el comportamiento por defecto y nos redirige a la página oficial de React.
+        img(src="../../assets/img/6-4-preventdefault/3.webp" alt="example")
+
+        h3 Quitando comportamiento por defecto desde HTML
+        p Para evitar que se ejecute el comportamiento por defecto desde el mismo HTML, lo que tenemos que hacer es poner un 
+            strong "return"
+            |   en 
+            strong "false"
+            |   en el evento 
+            strong "onclick"
+            |   y de esta manera evitamos el comportamiento por defecto desde HTML.
+        img(src="../../assets/img/6-4-preventdefault/4.webp" alt="example")
+
+        p Si ahora damos click de nuevo miraremos el alert y posteriormente ya no nos redirigirá al sitio de React ya que hemos evitado el comportamiento por defecto.
+        p Damos click al enlace y se ejecutará el alert.
+        img(src="../../assets/img/6-4-preventdefault/5.webp" alt="example")
+        p Posteriormente ya hemos evitado el comportamiento por defecto del enlace, por lo que no nos redirigirá a ninguna parte.
+        img(src="../../assets/img/6-4-preventdefault/6.webp" alt="example")
+
+        h3 Quitando comportamiento por defecto desde JavaScript vanilla
+
+        p En JavaScript para evitar el comportamiento por defecto que tienen algunas etiquetas, tenemos que acceder al evento y ejecutar la función 
+            strong preventDefault().
+        img(src="../../assets/img/6-4-preventdefault/7.webp" alt="example")
+
+        p Damos click al enlace y se ejecutará el alert.
+        img(src="../../assets/img/6-4-preventdefault/5.webp" alt="example")
+        p Posteriormente ya hemos evitado el comportamiento por defecto del enlace, por lo que no nos redirigirá a ninguna parte.
+        img(src="../../assets/img/6-4-preventdefault/6.webp" alt="example")
+
+        p Ahora miraremos como se hace esto en React.
+
+    article(id="3" class="content")
+        h2 Quitando el comportamiento por defecto de un evento desde React
+
+        p Hay que recordar que un evento en React por detrás se termina transformando a un "Event Listener" a un "addEventListener". 
+
+        p De tal manera que para quitar el comportamiento por defecto tenemos que acceder al evento y ejecutar la función 
+            strong preventDefault()
+            |   que ya vimos que esta función pertenece al 
+            strong syntheticEvent.
+        img(src="../../assets/img/6-4-preventdefault/8.webp" alt="example")
+
+        p Si damos click al enlace miraremos que solo se ejecuta el alert, y después ya no hace nada, ya que hemos quitado el comportamiento por defecto de la etiqueta.
+        img(src="../../assets/img/6-4-preventdefault/9.webp" alt="example")
+        img(src="../../assets/img/6-4-preventdefault/10.webp" alt="example")
+
+        p Es una lección muy breve pero bastante importante.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Quitando el comportamiento por defecto de un evento nativamente'],[3,'Quitando el comportamiento por defecto de un evento desde React']]
+    +submenu(submenuLinks)
