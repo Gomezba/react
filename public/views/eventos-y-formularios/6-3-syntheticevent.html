@@ -344,12 +344,63 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>Como ya hemos comentado, un evento termina transformandose a un objeto con un montón de información relacionada a ese evento y es muy habitual que dentro de los "event handles" tengamos la necesidad de acceder a ese evento, a esos datos para realizar un comportamiento u otro, basar nuestro "event hundle" en algunos de estos datos. </p>
+            <p>Para ello todos los "event hundles" reciben como primer y único parámetro este evento como tal.</p>
+            <div>
+              <pre><code class="language-jsx">&lt;button onClick={(e)=&gt;{}}/&gt;</code></pre>
+            </div>
+            <p>En este capítulo estaremos viendo la información que extraemos del evento pasandole como parámetro el evento, así como tambien las diferencias que hay entre los navegadores. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Diferencias de los eventos de forma nativa entre navegadores</h2>
+            <p>Lo que haremos es mostrar por consola la información del evento, en nuestro caso es un evento de tipo click.</p><img src="../../assets/img/6-3-syntheticevent/1.webp" alt="example">
+            <p>Ahora mostraremos la información en los navegadores de "Chrome" y "Firefox" y los mostraremos de manera paralela para ver ambos resultados.</p><img src="../../assets/img/6-3-syntheticevent/2.webp" alt="example">
+            <p>Como podemos ver, las primeras diferencias, es que en Chrome el evento se llama "PointerEvent" y en Firefox "click".</p>
+            <p>Otra cosa que es que si miramos las propiedades de Chrome podremos ver algunas propiedades como "altitudeAngle" o la propiedad "azimuthAngle" que no se encuentran en las propiedades de Firefox entre otas más.</p><img src="../../assets/img/6-3-syntheticevent/3.webp" alt="example">
+            <p>Todos los eventos tienen una parte común, tienen propiedades comunes a todos los eventos y que son un estandar y están marcadas por una seríe de reglas y deben ser implementadas por todos los navegadores.</p>
+            <p>Cada uno de los navegadores puede decidir entre proporcionar más o menos funcionalidades, pero todos como mínimo tienen que tener este estandar.</p>
+            <p>En este caso vemos que los eventos en Chrome tiene muchas más propiedades que Firefox, porque Firefox se basa mucho más en el estandar y todo lo que queda fuera prácticamente lo reduce a nada.</p>
+            <p>Cual sería el problema de esto, si por ejemplo utilizaramos un handle que se basa en la propiedad "altitudeAngle" de Chrome, el problema seria que nuestra aplicación funcionaría en Chrome pero en Firefox no.</p>
+          </article>
+          <article class="content" id="3">
+            <h2>Diferencias de eventos en React entre navegadores</h2>
+            <p>Ahora miraremos las diferencias de estos eventos en React entre los navegadores de Chrome y Firefox.</p>
+            <p>Bien, entonces procedemos a extraer la información del evento por consola desde React. </p><img src="../../assets/img/6-3-syntheticevent/4.webp" alt="example">
+            <p>Si miramos la pantalla al dar click en el botón de React, podremos ver que la única diferencia que hay es que en Chrome el evento se llama <strong>SyntheticBaseEvent</strong> y en Firefox <strong>Object.</strong></p>
+            <p>Las demás propiedades son exactamente las mismas, da igual el navegador, en todos los navegadores son las mismas propiedades, solo que no vienen en el mismo orden, en cada navegador se ordenan distinto, pero a fin de cuentas contienen las mismás propiedades pero organizadas en otro orden. </p><img src="../../assets/img/6-3-syntheticevent/5.webp" alt="example">
+            <p>Como vemos React maneja las mismas propiedades siempre en todos los navegadores, pero ¿Qué son estas propiedades?, pues son propiedades del estandar las que tienen que estar presentes en todos los navegadores y las propiedades que debemos usar si queremos que nuestra aplicación sea compatible con todos los navegadores.</p>
+            <p>Lo que ha hecho React es envolver el evento del navegador en un <strong>SyntheticEvent</strong> que no es más que un wrapper contenedor, un envoltorio que nos proporciona acceso directo a las propiedades que si son estandar en cada uno de los eventos.</p>
+            <p>De esta forma podemos asegurarnos de que todo lo que usemos que parta de este <strong>SyntheticEvent</strong> es completamente compatible y no tenemos ningún problema.</p>
+            <p>Pero aquí puede surgir una duda, ¿Y si yo quiero utilizar una funcionalidad propia de Chrome o de Firefox?, para eso necesitaremos el objeto original, que veiamos antes, y ¿Como puedo hacerlo?, a continuación lo miraremos. </p>
+          </article>
+          <article class="content" id="4">
+            <h2>Utilizando una funcionalidad propia de un navegador en React</h2>
+            <p>Hasta este punto ya sabemos que React contiene un wrapper, un envoltorio llamado <strong>SyntheticEvent</strong> que envuelve todas aquellas propiedades que son un estandar en todos los navegadores.</p>
+            <p>Ahora veremos si en dado caso llegáramos a querer ocupar una funcionalidad propia de algún navegador como Chrome o Firefox.</p>
+            <p>Para lograr eso, dentro de las propiedades que nos proporciona el envoltorio de <strong>SyntheticEvent</strong> tenemos una propiedad llamada <strong>nativeEvent</strong> que es basicamente el objeto original, es decir, tenemos el objeto que habiamos visto anteriormente, donde tenemos todo aquel resto de propiedades que pueden ser únicas de un navegador. </p><img src="../../assets/img/6-3-syntheticevent/6.webp" alt="example">
+            <p class="note note--warning">Desde esta propiedad <strong>nativeEvent</strong> ya tenemos acceso a todo el resto de propiedades que desde luego no es recomendable utilizar salvo que lo hagamos por alguna razón específica y sabiendo muy bien porque.</p>
+            <p>Con esto ya no tenemos ninguna limitación, es decir, a pesar de que tengamos todos los eventos rodeados por un <strong>SyntheticEvent</strong> por una estandarización, seguimos teniendo acceso al evento como tal generado por el navegador y así podemos combinar la parte estandar que será lo que utilizemos en el 99.9% de los casos y seguimos sin perder el acceso al evento original por si estamos desarrollando algo específico para Chrome o específico para Firefox, y lo mismo sucedería con otros navegadores como Safari, etc.</p>
+            <p>Así que a partir de ahora ya sabemos que cuando trabajemos con un evento no trabajaremos con el evento del navegador sino con un <strong>SyntheticEvent</strong>. </p>
+            <p>Y ¿Cómo podemos consultar que propiedades son un estandar dentro de cada uno de los eventos?, pues para eso React tiene una sección en su documentación oficial donde detalla todas y cada una de las propiedades que el considera estandar y que por lo tanto estarán en la raíz de este <strong>SyntheticEvent</strong> para cada uno de los tipos de eventos.</p>
+            <p>Aqui tenemos la documentación oficial de React pero en su versión 17, nos viene bien para conocer lo que es y su uso, ya que en la versión 18 ya no se incluye pero es bueno saber para que sirve.</p>
+            <p> <a class="link" href="https://legacy.reactjs.org/docs/events.html" target="_blank">SyntheticEvent </a></p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Diferencias de los eventos de forma nativa entre navegadores</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Diferencias de eventos en React entre navegadores</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Utilizando una funcionalidad propia de un navegador en React</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>
