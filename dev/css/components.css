@@ -385,7 +385,8 @@
   background-color: var(--bg-text-strong-6);
 }
 
-:where(p):not(p[class^="ts"]) strong:not(strong[class^="ts"]) {
+:where(p):not(p[class^="ts"], p[class^="note"])
+  strong:not(strong[class^="ts"]) {
   background-color: #2f333c;
   color: #d6d8dc;
   font-weight: initial;
