@@ -344,12 +344,138 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>Otro de los conceptos fundamentales que debemos de entender es que los eventos se "propagan". Esta es la razón por la que el evento originado en este botón se puede capturar tambien en el "div", es decir, en su nodo padre.</p>
+            <p>En esta lección aprenderemos lo que es la propagación de eventos (Event bubbling), como evitar la propagación de eventos y algo no tan común a modo de curiosidad el stopPropagation.</p>
+            <p>Todo esto es más un recordatorio de JavaScript.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Teoria propagación de eventos - Event bubbling</h2>
+            <p>En el capítulo anterior mencionamos que cuando hacemos click, es decir, cuando ejecutamos un evento sobre un elemento hijo, dicho evento indirectamente hace un click hacia su padre, esto se le conoce como propagación de eventos o <strong>Event bubbling</strong>. </p>
+            <p class="note">La propagación <strong>solo afecta a los manejadores del mismo tipo de evento</strong>. En el caso de un click, solo se propagarán y ejecutarán los manejadores click en los elementos padres, y lo mismo sucede para cualquier otro tipo de evento (teclas, ratón, etc.).<br><br>Algunos eventos se propagan (pueden burbujear hacia los elementos padres), mientras que otros son eventos que se disparan solo en el elemento objetivo y no se propagan.</p>
+            <h3>Eventos que se propagan (bubbling):</h3>
+            <p>La mayoría de los eventos comunes en JavaScript sí se propagan, lo que significa que se pueden detectar tanto en el elemento donde ocurrieron como en sus elementos padres, en ambas fases: captura y burbuja. Ejemplos de estos eventos incluyen:</p>
+            <ul>
+              <li>
+                <p>click</p>
+              </li>
+              <li>
+                <p>focusin (un evento relacionado con focus, pero que sí burbujea)</p>
+              </li>
+              <li>
+                <p>dblclick</p>
+              </li>
+              <li>
+                <p>keydown / keyup</p>
+              </li>
+              <li>
+                <p>mousedown / mouseup</p>
+              </li>
+              <li>
+                <p>mousemove</p>
+              </li>
+              <li>
+                <p>submit (en formularios)</p>
+              </li>
+              <li>
+                <p>input</p>
+              </li>
+              <li>
+                <p>change </p>
+              </li>
+            </ul>
+            <h3>Eventos que no se propagan:</h3>
+            <p>Algunos eventos, sin embargo, no <strong>burbujean por diseño</strong>, lo que significa que solo se ejecutan en el elemento objetivo y <strong>no suben a los elementos padres</strong>. Estos eventos suelen ser específicos de ciertas interacciones o cambios en el estado de un elemento. Ejemplos incluyen:</p>
+            <ul>
+              <li>
+                <p> <strong>focus / blur</strong>: Los eventos relacionados con el foco (<strong>focus</strong> y <strong>blur</strong>) no burbujean. Sin embargo, hay un evento alternativo llamado <strong>focusin</strong> y <strong>focusout</strong> que sí se propagan.</p>
+              </li>
+              <li>
+                <p> <strong>mouseenter / mouseleave</strong>: Estos eventos, similares a <strong>mouseover</strong> y <strong>mouseout</strong>, no se propagan. Solo se disparan cuando el cursor entra o sale directamente del elemento.</p>
+              </li>
+              <li>
+                <p> <strong>load / unload</strong> : Estos eventos, que se disparan cuando una página o recurso ha terminado de cargarse, no se propagan.</p>
+              </li>
+              <li>
+                <p> <strong>scroll</strong>: El evento <strong>scroll</strong>, que ocurre cuando se desplaza el contenido de un elemento, tampoco se propaga. </p>
+              </li>
+            </ul>
+            <h3>¿Por qué algunos eventos no se propagan?</h3>
+            <p>La razón por la cual algunos eventos no se propagan tiene que ver con la naturaleza de la acción que representan. Por ejemplo:</p>
+            <ul>
+              <li>
+                <p>Eventos como <strong>focus</strong> y <strong>blur</strong> están diseñados para aplicarse específicamente a un solo elemento que obtiene o pierde el foco.</p>
+              </li>
+              <li>
+                <p>Eventos como <strong>mouseenter</strong> y <strong>mouseleave</strong> se enfocan en las interacciones directas del mouse con un elemento específico, por lo que no tiene sentido que se propaguen a los padres.</p>
+              </li>
+            </ul>
+            <h3>Resumen:</h3>
+            <ul>
+              <li>
+                <p> <strong>Eventos que se propagan</strong>: La mayoría de los eventos de interacción (clic, teclado, movimiento del mouse, etc.).</p>
+              </li>
+              <li>
+                <p> <strong>Eventos que no se propagan</strong>: Eventos como focus, blur, mouseenter, mouseleave, load, y scroll. </p>
+              </li>
+            </ul>
+          </article>
+          <article class="content" id="3">
+            <h2>Ejemplo propagación eventos </h2>
+            <p>La propagación de eventos es algo que sucede de forma automática, es un comportamiento por defecto de JavaScript, cuando sucede cualquier evento en un elemento del DOM, primero se busca si ese elemento tiene asociado algún handle del evento, en nuestro caso es el evento "onClick". Una vez que termina de ejecutar ese handle si es que lo hay, pasa a su elemento padre, en nuestro caso al "div" y si este tiene asociado un handle del evento, de igual manera se sigue propagando hacia arriba.</p>
+            <p>Para que nos quede mas claro, miremoslo con un ejemplo: </p>
+            <p>Pondremos dos eventos "onClick" uno para el div y otro para el botón.</p><img src="../../assets/img/6-6-event-bubbling-capturing-y-stoppropagation/1.webp" alt="example">
+            <p>Si damos click al botón miraremos que se ejecuta el handle del button, y como ya vimos que cuando hacemos click a un elemento que tiene un manejador de eventos (handle), hace click de manera indirecta sobre el padre, lo que se conoce como <strong>Event bubbling</strong>, de tal manera que si este padre tiene un handle, tambien se ejecutará, de tal manera que podremos ver el resultado de ese handle.</p>
+            <p>Miremoslo en pantalla: </p><img class="has-mb" src="../../assets/img/6-6-event-bubbling-capturing-y-stoppropagation/2.webp" alt="example">
+          </article>
+          <article class="content" id="4">
+            <h2>stopPropagation </h2>
+            <p>En el proceso de <strong>event bubbling</strong>, lo que sucede es lo siguiente:</p>
+            <ol>
+              <li>
+                <p>Se dispara un evento en un elemento hijo (por ejemplo, un botón).</p>
+              </li>
+              <li>
+                <p>El navegador verifica si ese elemento tiene un "handle" (una función manejadora) asociado al evento, como <strong>onClick</strong>.</p>
+              </li>
+              <li>
+                <p>Si existe un manejador, se ejecuta.</p>
+              </li>
+              <li>
+                <p>Luego, el evento se propaga hacia arriba a través de los elementos padres, y lo mismo ocurre: si alguno de los padres tiene un "handle" para el evento, también se ejecutará, y así sucesivamente hasta llegar al documento raíz, a menos que se detenga explícitamente la propagación con <strong class="ts-2">event.stopPropagation()</strong>.</p>
+              </li>
+            </ol>
+            <p>Como vemos, la propagación de eventos puede ir subiendo hasta llegar al documento raíz, entonces de manera explícita podemos detener esta propagación para que se quede solamente donde hemos interactuado, donde hemos hecho click. </p><img src="../../assets/img/6-6-event-bubbling-capturing-y-stoppropagation/3.webp" alt="example">
+            <p>Si hacemos click, miraremos que el evento ya no se propaga, sino que solo se ejecutará el handle del botón, que es donde inicialmente dimos click.</p><img class="has-mb" src="../../assets/img/6-6-event-bubbling-capturing-y-stoppropagation/4.webp" alt="example">
+          </article>
+          <article class="content" id="5">
+            <h2>Fase de Captura</h2>
+            <p>Cuando nosotros hablamos de esta propagación de eventos, normalmente nos estamos refiriendo al <strong>Event bubbling</strong>, pero esta no es la única forma que tiene JavaScript de propagar estos eventos sino que antes de la fase de <strong>bubbling</strong> se produce otra fase que debemos conocer y es conocida como la <strong>fase de captura</strong> y esto es algo que pocas personas conocen porque realmente no es habitual usarlo, ya que lo más habitual es tratar los eventos en su fase de <strong>bubbling</strong>. </p>
+            <p>En que consiste esta captura y como se puede llevar acabo en React, ya que tenemos una forma especial de hacerlo.</p>
+            <p>Cuando queremos capturar un evento con addEventListener, lo que se hace es pasar un parámetro adicional que indique la captura. </p>
+            <p>Pero en React, esto se hace de una manera distinta. Cuando queremos capturar un evento en su fase de captura que se produce antes de la fase de "bubbling" tenemos que pasarle como propiedad el mismo evento que queremos capturar pero seguido de la palabra "Capture", si es un onClick, sería "onClickCapture".</p><img src="../../assets/img/6-6-event-bubbling-capturing-y-stoppropagation/5.webp" alt="example">
+            <p>Si damos click en el botón, miraremos que el "onClickCapture" se ejecuta antes que el "bubbling" y a demás se ejecuta de arriba hacía abajo.</p><img src="../../assets/img/6-6-event-bubbling-capturing-y-stoppropagation/6.webp" alt="example">
+            <p class="note note--warning">Y ¿Por qué esta fase de captura es muy poco conocida?, pues porque su utilidad es bastante reducida, es decir, <strong>en la vida real hablar de una fase de captura de eventos normalmente está asociado a una mala práctica, normalmente siempre que queramos trabajar con un evento lo haremos desde su fase de "bubbling."</strong></p>
+            <p> Esto simplemente lo vemos como curiosidad, pero en realidad el 99.99999% de los casos nunca lo ocuparemos, pero siempre hay que conocer estos temas por si alguna vez los llegaramos a ocupar. </p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Teoria propagación de eventos - Event bubbling</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Ejemplo propagación eventos</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">stopPropagation</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Fase de Captura</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>
