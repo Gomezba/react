@@ -344,12 +344,64 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>Hasta ahora ya hemos hablado sobre todos los conceptos que teniamos que conocer sobre como se gestionan de forma nativa los eventos a través de HTML y JavaScript.</p>
+            <p>En esta lección explicaremos una de las propiedades mas habituales en el manejo de eventos el <strong>target</strong> y <strong>currentTarget. </strong></p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Propiedad Target </h2>
+            <p>La propiedad target en un evento hace referencia al nodo (el elemento del DOM) que inicialmente disparó el evento. Es decir, target indica el origen del evento: el elemento en el que el usuario hizo clic o interactuó directamente.</p>
+            <ul>
+              <li>
+                <p>Ejemplo: Si haces clic en un botón dentro de un div, el target será el botón, porque es el elemento específico donde ocurrió el clic.</p>
+              </li>
+              <li>
+                <p>"target" no cambia durante la propagación del evento, ya sea en la fase de captura o burbuja.</p>
+              </li>
+            </ul>
+            <p>Sabiendo esto, pondremos un evento onClick a un botón y accederemos a la propiedad target.</p><img src="../../assets/img/6-5-target-vs-currenttarget/1.webp" alt="example">
+            <p>Si damos click al botón miraremos en consola que el target es el mismo botón ya que como vimos, el target será siempre será el nodo que desencadenó el evento. </p><img class="has-mb" src="../../assets/img/6-5-target-vs-currenttarget/2.webp" alt="example">
+          </article>
+          <article class="content" id="3">
+            <h2>Diferencia de target con currentTarget </h2>
+            <p>La propiedad <strong>currentTarget</strong> hace referencia al nodo que actualmente está manejando el evento durante su propagación. Este nodo es el elemento al cual se le asignó el listener del evento, que puede ser diferente del target si el evento está burbujeando o capturando.</p>
+            <ul>
+              <li>
+                <p>Ejemplo: Si haces clic en un botón dentro de un div y el evento se asignó al div, el currentTarget será el div, ya que es el nodo que maneja el evento en ese momento, aunque el target siga siendo el botón.</p>
+              </li>
+              <li>
+                <p>currentTarget cambia según cuál elemento está manejando el evento durante la propagación.</p>
+              </li>
+            </ul>
+            <p>Entonces lo que haremos es encerrar en un "div" el botón y miraremos que devuelve el "target" y "currentTarget". </p><img class="has-mb" src="../../assets/img/6-5-target-vs-currenttarget/3.webp" alt="example">
+            <p>Si damos click al botón miraremos que tanto "target" como "currentTarget" están apuntando al botón.</p><img class="has-mb" src="../../assets/img/6-5-target-vs-currenttarget/4.webp" alt="example">
+            <p>Aquí no podemos ver la diferencia, si vemos el código anterior, el evento lo tenemos definido en el "button", pero ahora pasaremos la gestión del evento en el div, y ahora si podremos ver la diferencia.</p><img class="has-mb" src="../../assets/img/6-5-target-vs-currenttarget/5.webp" alt="example">
+            <p>Si ahora damos click, miraremos que el "target" será siendo el mismo botón y el "currentTarget" ahora será el "div". </p><img class="has-mb" src="../../assets/img/6-5-target-vs-currenttarget/6.webp" alt="example">
+            <p>Algo que debemos saber cuando tenemos un evento en el padre, es que, cuando hacemos click en un elemento hijo, indirectamente estaremos haciendo click tambien en el padre, es por eso que podemos ver el valor del "currentTarget".</p>
+            <p>Diferencia clave:</p>
+            <ul>
+              <li>
+                <p> <strong>target</strong> siempre apunta al elemento que inicialmente generó el evento (el nodo origen).</p>
+              </li>
+              <li>
+                <p> <strong>currentTarget</strong> apunta al elemento actualmente manejando el evento (el nodo que tiene el event handle), en este caso el nodo que declaró el onClick.</p>
+              </li>
+            </ul>
+            <p> Esto es bastante importante a la hora de gestionar eventos, poder diferenciar entre quien es el "target" verdadero y quien es el "currentTarget". </p>
+            <p>Esto es muy interesante entender esto a la hora de hablar sobre el "Event bubbling". </p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Propiedad Target</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Diferencia de target con currentTarget</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>

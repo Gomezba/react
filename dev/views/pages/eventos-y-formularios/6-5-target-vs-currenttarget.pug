@@ -5,12 +5,75 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
 
+        p Hasta ahora ya hemos hablado sobre todos los conceptos que teniamos que conocer sobre como se gestionan de forma nativa los eventos a través de HTML y JavaScript.
+
+        p En esta lección explicaremos una de las propiedades mas habituales en el manejo de eventos el 
+            strong target
+            |   y 
+            strong currentTarget.     
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Propiedad Target 
+        p La propiedad target en un evento hace referencia al nodo (el elemento del DOM) que inicialmente disparó el evento. Es decir, target indica el origen del evento: el elemento en el que el usuario hizo clic o interactuó directamente.
 
+        ul 
+            li 
+                p Ejemplo: Si haces clic en un botón dentro de un div, el target será el botón, porque es el elemento específico donde ocurrió el clic.
+            li 
+                p "target" no cambia durante la propagación del evento, ya sea en la fase de captura o burbuja.
+
+        p Sabiendo esto, pondremos un evento onClick a un botón y accederemos a la propiedad target.
+
+        img(src="../../assets/img/6-5-target-vs-currenttarget/1.webp" alt="example")   
+
+        p Si damos click al botón miraremos en consola que el target es el mismo botón ya que como vimos, el target será siempre será el nodo que desencadenó el evento.   
+        img(src="../../assets/img/6-5-target-vs-currenttarget/2.webp" alt="example").has-mb   
+
+    article(id="3" class="content")
+        h2 Diferencia de target con currentTarget 
+
+        p La propiedad 
+            strong currentTarget
+            |   hace referencia al nodo que actualmente está manejando el evento durante su propagación. Este nodo es el elemento al cual se le asignó el listener del evento, que puede ser diferente del target si el evento está burbujeando o capturando.
+
+        ul 
+            li 
+                p Ejemplo: Si haces clic en un botón dentro de un div y el evento se asignó al div, el currentTarget será el div, ya que es el nodo que maneja el evento en ese momento, aunque el target siga siendo el botón.
+            li 
+                p currentTarget cambia según cuál elemento está manejando el evento durante la propagación.
+
+        p Entonces lo que haremos es encerrar en un "div" el botón y miraremos que devuelve el "target" y "currentTarget". 
+
+        img(src="../../assets/img/6-5-target-vs-currenttarget/3.webp" alt="example").has-mb   
+
+        p Si damos click al botón miraremos que tanto "target" como "currentTarget" están apuntando al botón.
+        img(src="../../assets/img/6-5-target-vs-currenttarget/4.webp" alt="example").has-mb   
+
+        p Aquí no podemos ver la diferencia, si vemos el código anterior, el evento lo tenemos definido en el "button", pero ahora pasaremos la gestión del evento en el div, y ahora si podremos ver la diferencia.
+        img(src="../../assets/img/6-5-target-vs-currenttarget/5.webp" alt="example").has-mb   
+
+        p Si ahora damos click, miraremos que el "target" será siendo el mismo botón y el "currentTarget" ahora será el "div". 
+        img(src="../../assets/img/6-5-target-vs-currenttarget/6.webp" alt="example").has-mb   
+
+        p Algo que debemos saber cuando tenemos un evento en el padre, es que, cuando hacemos click en un elemento hijo, indirectamente estaremos haciendo click tambien en el padre, es por eso que podemos ver el valor del "currentTarget".
+
+        p Diferencia clave:
+        ul 
+            li 
+                p 
+                    strong target
+                    |   siempre apunta al elemento que inicialmente generó el evento (el nodo origen).
+            li 
+                p 
+                    strong currentTarget
+                    |   apunta al elemento actualmente manejando el evento (el nodo que tiene el event handle), en este caso el nodo que declaró el onClick.
+
+        p  Esto es bastante importante a la hora de gestionar eventos, poder diferenciar entre quien es el "target" verdadero y quien es el "currentTarget". 
+
+        p Esto es muy interesante entender esto a la hora de hablar sobre el "Event bubbling".    
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Propiedad Target'],[3,'Diferencia de target con currentTarget']]
+    +submenu(submenuLinks)
