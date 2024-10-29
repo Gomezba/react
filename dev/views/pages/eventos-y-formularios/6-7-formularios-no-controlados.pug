@@ -5,12 +5,95 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+        p Los elementos de formulario funcionan de forma ligeramente distinta al resto de elementos del DOM, porque el usuario puede interactuar directamente con ellos a través del navegador, no solo necesitan mantener unos atributos iniciales como le sucede a etiquetas como el "div" o el "h1", sino que tambien tienen una serie de valores que pueden ir cambiando con el tiempo y el ejemplo más claro de ello es un "input text" en el que tendremos una propiedad "value" que el usuario puede modificar escribiendo directamente en el "input".
 
+        p En React la gestión de formularios se puede realizar de dos formas, 
+            strong controlada
+            |   y 
+            strong no controlada
+            | , ambas son válidas y cada una de ellas tiene sus caso de uso, por lo que es importante conocer ambas versiones para poder elegir cual debemos de utilizar en cada caso. 
+
+        p La primera de las formas que vamos a ver es: 
+            strong no controlada
+            |   y en escencia eso significa que trataremos los formularios como simples elementos del DOM y extraeremos sus valores utilizando la Api de JavaScript.
+
+        p Cuando habla de "no controlada" nos referimos a que el valor del "input" no está directamente manejado por React sino que es el propio DOM de JavaScript quien lo maneja y en React únicamente lo consultaremos desde algún tipo de evento.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Ejemplo de formulario no controlado 
+        p Para este ejemplo vamos a poner un simple buscador en el que tendremos un "input text" y un "button" que nos servirá para buscar. Cuando hagamos click en este botón produciremos un evento de "submit" en el formulario al que nos tendremos que suscribir y para ello tendremos que utilizar la propiedad "onSubmit" del formulario.
 
+        p El evento 
+            strong onSubmit
+            |   es un evento, un handle, que nos sirve para extraer los valores del formulario una vez que se envía y este evento lo tenemos que declarar directamente en la etiqueta "form".
 
+        img(src="../../assets/img/6-7-formularios-no-controlados/1.webp" alt="example")     
+
+        p Si escribimos en el input, y hacemos click, en consola alcanzaremos a visualizar el valor el valor del input, ya que el evento "onSubmit" tiene un comportamiento por defecto que es redireccionar al valor del input.
+
+        p Escribimos "gomezba" en el input y damos click.
+        img(src="../../assets/img/6-7-formularios-no-controlados/2.webp" alt="example") 
+        p Nos redireccionará a una página con el nombre del valor del input, por lo tanto no podremos ver el valor en consola.
+        img(src="../../assets/img/6-7-formularios-no-controlados/3.webp" alt="example") 
+
+        p Entonces lo que haremos es evitar el comportamiento por defecto.
+        img(src="../../assets/img/6-7-formularios-no-controlados/4.webp" alt="example") 
+
+        p Ahora procedemos a escribir y a dar click y miraremos por consola el valor del input.
+        img(src="../../assets/img/6-7-formularios-no-controlados/5.webp" alt="example") 
+
+        p.note Cuando queramos acceder el valor de los input del formulario, solo podremos acceder a ellos desde alguno de los eventos, es decir que desde fuera de los eventos no podremos acceder de ninguna forma a los valores de los "inputs".
+
+        img(src="../../assets/img/6-7-formularios-no-controlados/6.webp" alt="example").has-mb
+
+    article(id="3" class="content")
+        h2 Ejemplo de formulario no controlado con un estado 
+
+        p Lo que agregaremos en nuestro ejemplo es otra casuística, donde queremos en un párrafo el valor de lo que estamos buscando, por lo cual tendremos que asignar una variable para que cambie de acuerdo a lo que se está buscando, por lo tanto ya sabemos que cuando algo tiene que cambiar en nuestra interfaz lo haremos con un estado.
+        img(src="../../assets/img/6-7-formularios-no-controlados/7.webp" alt="example")
+
+        p Si buscamos y damos click podremos ver reflejado en el párrafo el valor que estamos buscando.
+        img(src="../../assets/img/6-7-formularios-no-controlados/8.webp" alt="example")
+
+        p Si pensamos un poco, ya estaremos viendo algunas de las limitaciones de utilizar 
+            strong "formularios no controlados"
+            |   y es que solamente tenemos acceso a los valores del input, dentro de algún evento.
+
+    article(id="4" class="content")
+        h2 Ejemplo de formulario no controlado con un estado dinámico 
+        p Imaginemos ahora que queremos realizar este mismo ejemplo pero queremos eliminar el botón de buscar y realizar que clásico formulario dinámico que según vamos escribiendo, se va modificando el valor del resultado.
+
+        p Lo que haremos es eliminar el botón y ocupar el evento de 
+            strong onChange
+            |   dentro del input para poder actualizar ese valor y que no sea necesario dar click en un botón para buscar.     
+
+        img(src="../../assets/img/6-7-formularios-no-controlados/9.webp" alt="example")
+
+        p Al momento en que estemos escribiendo iremos viendo como se actualiza en el instante el valor del párrafo de acuerdo al valor del input.
+        img(src="../../assets/img/6-7-formularios-no-controlados/10.webp" alt="example")
+
+        p Como vemos a medida que vamos escribiendo el "onChange" estará actuando.
+
+        h3 Relación entre el estado y el onChange
+
+        p Algo importante que debemos conocer, es que, si prestamos atención el "onChange" se ejecuta cuando ocurre un cambio en el input, por lo cual el estado solo cambiará cuando se produzca un cambio en el input. 
+
+        p Entonces otra casuística es cuando definimos 
+            strong valores por defecto en un input
+            |   de tal manera que el "onChange" en el primer renderizado no se ejecutará ya que no se está produciendo un cambio en el input, es decir, no se está escribiendo algo, o se está copiando y pegando algo, lo que provoca que no podamos ver el valor que tiene por defecto el input en los resultados.  
+        img(src="../../assets/img/6-7-formularios-no-controlados/11.webp" alt="example").has-mb
+        img(src="../../assets/img/6-7-formularios-no-controlados/12.webp" alt="example").has-mb
+
+        p En pocas palabras lo que pasa es que hay una desincronización entre el  "estado" y el valor del input.
+
+        p Esto pasa porque el estado depende de su valor inicial, y en este caso empieza con vacío ('&nbsp;&nbsp;') y el valor por defecto que definimos se asígna automáticamente en el renderizado inicial, por lo cual React nunca se dará cuenta del valor del input que tiene por defecto, ya que estamos manejando un evento "onChange" y solo cambiará el estado si hay un cambio en el input.
+
+        p Bueno, esta es la forma de trabajar con 
+            strong formularios no controlados
+            |   y en el siguiente capítulo veremos como utilizando la propiedad 
+            strong value
+            |   podemos convertir este "input" en un componente controlado.
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Ejemplo de formulario no controlado'],[3,'Ejemplo de formulario no controlado con un estado'],[4,'Ejemplo de formulario no controlado con un estado dinámico']]
+    +submenu(submenuLinks)
