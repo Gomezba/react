@@ -5,12 +5,137 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+        p En esta lección vamos a ver la segunda de estas alternativas para gestionar formularios en React, la forma controlada.
 
+        p Lo que buscamos con esta forma es que React tome el control directo del valor del input a través de un estado, es decir, que exista una relación bilateral entre este estado y el valor del input, de forma que tanto si cambia el valor del input como si cambia el valor del estado, ambos se vean modificados. 
+
+        p Para lograr esto utilizamos la propiedad 
+            strong value
+            |   que explicamos en la sección de "JSX" y que dijimos que hablariamos en un futuro y el momento ha llegado. 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Propiedad value
 
+        p La propiedad "value" de un input ya sabemos que en React no es igual que en HTML, sino que cuando establecemos el "value" fijo este se queda como "Readonly", es decir, no podemos cambiarlo de ninguna manera.
+        img(src="../../assets/img/6-8-formularios-controlados/1.webp" alt="example") 
+
+        p Pero hay que recordar que tenemos un evento "onChange" en el cual estamos ejecutando la función de cambio de estado y este evento "onChange" solo se ejecuta cuando se produce un cambio en el input, cuando presionamos una tecla del teclado o intentamos borrar algo.
+
+        p Entonces si intentamos borrar el valor del input, miraremos que no se elimina nada del input, pero como estamos presionando la tecla de borrado hace que el evento se dispare y se ejecute la función de cambio de estado, por lo que veremos un pequeño cambio en el resultado del párrafo.
+        p Renderizado inicial con el valor por defecto en value.
+        img(src="../../assets/img/6-8-formularios-controlados/2.webp" alt="example") 
+
+        p Intentamos borrar el valor y miraremos que no se elimina el valor del input pero si elimina una letra del resultado del párrafo.
+        img(src="../../assets/img/6-8-formularios-controlados/3.webp" alt="example") 
+
+        p Como vemos aunque el valor sea fijo el "onChange" si que se ejecuta.
+
+    article(id="3" class="content")
+        h2 Input controlado  
+
+        p Entonces ¿Para que sirve la propiedad value?, pues muy sencillo, para que este "value" en lugar de ser un valor fijo dependa de un 
+            strong estado
+            | . 
+        img(src="../../assets/img/6-8-formularios-controlados/4.webp" alt="example") 
+
+        p Entonces si intentamos cambiar ahora el valor del input, veremos que ya podremos cambiarlo y el valor nuevo se verá reflejado en el resultado.
+        img(src="../../assets/img/6-8-formularios-controlados/5.webp" alt="example") 
+
+        p Bien, lo que tenemos ahora es que ya tenemos un "input controlado", ya que en la propiedad "value" hemos puesto el estado y de esta manera el input pasa a ser controlado y ya no se queda como "Readonly". 
+
+        p Y como ahora ya hay una conexión bilateral entre el value y el input, cosa que no pasa en un formulario no controlado, podemos atacar al estado y de esta manera cambiar el value del input. 
+        img(src="../../assets/img/6-8-formularios-controlados/6.webp" alt="example") 
+        p Escribimos hasta la palabra "rese" sin poner la t 
+        img(src="../../assets/img/6-8-formularios-controlados/7.webp" alt="example") 
+        p En el momento en que pongamos la "t" se reseteara el estado y esto afectara al value ya que hay una conexión bilateral.
+        img(src="../../assets/img/6-8-formularios-controlados/8.webp" alt="example") 
+
+        p Entonces al escribir "reset" lo que hacemos es hacer un "setSearch" a vacío ('&nbsp;') lo que modifica el estado a vacío y esto se refleja directamente en el "input" y ahora el valor inicial que tiene este input corresponde con el valor inicial del estado, es decir, ya no tiene sentido utilizar la propiedad "defaultValue". 
+
+        h3 defaultValue en un input controlado no tiene ningún sentido
+
+        p Miraremos que cuando trabajamos con un input controlado, es decir, con la propiedad value con un estado, el defaultValue ya no tiene sentido y nos devuelve un warning. 
+        img(src="../../assets/img/6-8-formularios-controlados/9.webp" alt="example") 
+        img(src="../../assets/img/6-8-formularios-controlados/10.webp" alt="example") 
+
+        p El warning nos dice que nos aclaremos sobre ocupar "value" o "defaultValue" pero que las dos no tienen sentido, y ¿Por qué?, porque el valor del input se lo damos desde el estado y luego le intentamos decir que el valor del input no sea el del estado sino que tenga un "defaultValue", y nos dice en que quedamos, cual quieres utilizar de las dos.
+
+        p Entonces si fijamos un valor, no tiene sentido que demos un valor por defecto porque el valor por defecto ya es el valor inicial del estado, por lo cual al utilizar formularios controlados la propiedad "defaultValue" carece de todo sentido. 
+
+        h3 Siempre hay que utilizar el evento onChange en un input controlado
+
+        p Si nosotros no asignamos un evento 
+            strong onChange
+            | , nos devolverá un warning.
+        img(src="../../assets/img/6-8-formularios-controlados/11.webp" alt="example") 
+        img(src="../../assets/img/6-8-formularios-controlados/12.webp" alt="example") 
+
+        p El warning dice lo siguiente: 
+        p.ts-2 Advertencia: Ha proporcionado un valor 
+            strong `value`
+            |   a un campo de formulario sin un manejador 
+            strong `onChange`
+            |. Esto generará un campo de 
+            strong sólo lectura
+            |. Si el campo debe ser mutable use `defaultValue`. Si no, use `onChange` o `readOnly`.
+
+        p Entonces como vemos, cuando tenemos un input controlado, siempre debemos utilizar un manjeador 
+            strong onChange
+            |   ya que sino el campo quedará como 
+            strong readOnly
+            |   solo de lectura.    
+
+        p El warning se debe a que nosotros estamos fijando un valor al "value" pero con un estado y como no tenemos un manejador "onChange" que es donde ejecutamos la función de cambio de estado, pues, el input nunca cambiará, ya que tiene un valor fijado que es el valor inicial del estado y por ende el input se volverá solo de lectura ya que no hay forma de cambiar el valor del estado.
+
+        p Normalmente la función de cambio de estado ("setState") cuando tratemos con inputs controlados, casi en la mayoría de los casos tendremos el valor 
+            strong e.target.value
+            | .
+
+        div: pre: code.language-jsx
+            |&lt;input
+            |	type='text'
+            |	name='search'
+            |	value={search}
+            |	onChange={(e) => setSearch(e.target.value)}
+            |/&gt; 
+
+        h3 Almacenamiento de más de un input en un mismo estado 
+        p Como ya sabemos, la función de cambio de estado ("setState") cuando tratemos con inputs controlados, casi en la mayoría de los casos tendremos el valor 
+            strong e.target.value
+            | .
+
+        p Pero obviamente puede haber excepciones como que almacenemos más de un "input" en un mismo estado que sería perfectamente posible.
+
+        img(src="../../assets/img/6-8-formularios-controlados/13.webp" alt="example") 
+
+        p Esto es bastante habitual porque solemos tener un estado para todos los campos del formulario y no tener un estado específico para cada uno. Pero bueno este dependerá de la casuística.
+
+    article(id="4" class="content")
+        h2 Conclusiones de formularios no controlados y controlados
+
+        p Hasta aquí tenemos las dos formas de gestionar los formularios, por un lado tenemos la 
+            strong no controlada
+            |   que evidentemente no es mala, simplemente tiene su caso de uso. 
+
+        p: strong.ts-3 Caso de uso de un formulario no controlado
+        ul 
+            li 
+                p Utilizar formularios en los que solamente nos interese leer ese valor cuando se produzca algun evento concreto.
+
+                p Ejemplo típico de cuando queremos enviar un formulario, hacer una simple llamada a nuestra Api y pintar la respuesta. Esto perfectamente se puede hacer con un formulario no controlado.
+
+        p: strong.ts-3 Caso de uso de un formulario controlado
+        ul 
+            li 
+                p Cuando tratamos con formularios dinámicos en los que cada vez que pulsamos una tecla tenemos que hacer una pequeña comprobación, tenemos que comprobar si hay error, digamos un formulario ya con un comportamiento mucho más dinámico, mucho más reactivo. 
+
+        p Como último apunte, cuando trabajemos en la vida real, cuando trabajemos con librerias de formularios, como  
+            strong formit
+            |   y a 
+            strong react hooks forms
+            | , que son las dos alternativas más típicas que tenemos dentro de el ecosistema de React, pero realmente hacer los formularios como lo estamos viendo en esta lección es una manera completamente válida y aunque utilizemos cualquier libreria sino sabemos lo que está pasando por detrás, estaremos completamente ciegos.                   
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Propiedad value'],[3,'Input controlado'],[4,'Conclusiones de formularios no controlados y controlados']]
+    +submenu(submenuLinks)
