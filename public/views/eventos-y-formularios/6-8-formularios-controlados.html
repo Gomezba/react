@@ -394,7 +394,7 @@
           <article class="content" id="4">
             <h2>Conclusiones de formularios no controlados y controlados</h2>
             <p>Hasta aquí tenemos las dos formas de gestionar los formularios, por un lado tenemos la <strong>no controlada</strong> que evidentemente no es mala, simplemente tiene su caso de uso. </p>
-            <p><strong class="ts-3">Resumen de un formulario controlado y su casos de uso</strong></p>
+            <p><strong class="ts-3">Resumen de un formulario controlado y sus casos de uso</strong></p>
             <p>En un formulario controlado, React gestiona el valor de cada campo de entrada (input, textarea, select, etc.) a través de su estado. Esto significa que el valor del input es actualizado cada vez que cambia el estado de React. Es el enfoque recomendado cuando quieres tener un control total sobre los datos ingresados en el formulario.</p>
             <ul>
               <li>
@@ -406,11 +406,16 @@
                 </ul>
               </li>
             </ul>
-            <p><strong class="ts-3">Resumen de un formulario no controlado y su casos de uso</strong></p>
+            <p><strong class="ts-3">Resumen de un formulario no controlado y sus casos de uso</strong></p>
             <p>En un formulario no controlado, el valor del input no es gestionado por React. En lugar de controlar el valor del input a través del estado, se accede al valor directamente desde el DOM utilizando referencias (ref) solo cuando se necesita. Este enfoque es útil cuando quieres menos procesamiento en tiempo real o en formularios donde la lógica de React no requiere controlar cada cambio.</p>
             <ul>
               <li>
-                <p>Utilizamos un formulario no controlado cuando solamente nos interese leer ese valor cuando se produzca algun evento concreto. No hay sincronización constante con el estado. No necesitas manejar onChange ni el estado para cada input. Puede ser útil en formularios donde los datos solo se necesitan al enviar o cuando enviamos un formulario y recibimos una respuesta.</p>
+                <p>Utilizamos un formulario no controlado cuando solamente nos interese leer ese valor cuando se produzca algun evento concreto. </p>
+                <ul>
+                  <li>No hay sincronización constante con el estado. </li>
+                  <li>No necesitas manejar onChange ni el estado para cada input. </li>
+                  <li>Puede ser útil en formularios donde los datos solo se necesitan al enviar o cuando enviamos un formulario y recibimos una respuesta.</li>
+                </ul>
                 <p>Ejemplo típico de cuando queremos enviar un formulario, hacer una simple llamada a nuestra Api y pintar la respuesta. Esto perfectamente se puede hacer con un formulario no controlado.</p>
               </li>
             </ul>
