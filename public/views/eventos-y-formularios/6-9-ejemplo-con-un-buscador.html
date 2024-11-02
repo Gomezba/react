@@ -344,12 +344,47 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>Aplicaremos lo que hemos aprendido de los formularios <strong>no controlados</strong> y <strong>controlados</strong> a un aspecto real de nuestra interfaz, a este listado de usuarios y lo haremos creado un buscador que nos permita filtrar estos usuarios por su nombre, es decir, filtrar usuarios que empiezen por el texto que nosotros indiquemos. </p>
+            <p>En el ejemplo nos basaremos en los dos enfoques, empezando por un "enfoque no controlado" donde tendremos una caja de texto y un botón y al hacer click en ese botón se filtrarán los usuarios. Después continuaremos con el enfoque "controlado" donde podremos ir escribiendo en el buscador y a medida que escribamos los usuarios se irán filtrando en tiempo real. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>¿Qué componente es el responsable de filtrar los usuarios?</h2>
+            <p>Lo primero, es saber que componente es el responsable de filtrar los usuarios, a que componente le asignaremos esa responsabilidad. </p>
+            <p>Así que partiremos desde arriba del todo, y trataremos de identificar que componente será el responsable.</p>
+            <p>Entonces empezamos por el componente App, y ¿Cuál es la responsabilidad de del componente App (componente principal)?, pues basicamente es orquestar toda nuestra aplicación, es decir, elegir que componentes se muestran y como se muestran. Entonces realmente filtrar los usuarios en este componente no tiene sentido ya que es una responsabilidad totalmente ajena a lo que este componente hace actualmente.</p>
+            <figure><img src="../../assets/img/6-9-ejemplo-con-un-buscador/1.webp" alt="example">
+              <figcaption>El componente App no es apto para filtrar nuestros usuarios, ya que tiene una responsabilidad ajena a lo que queremos hacer.</figcaption>
+            </figure>
+            <p>Seguimos bajando y llegamos a el componente UsersList, este componente se encarga de renderizar estos usuarios, de transformar un simple array de usuarios a un listado, esta responsabilidad podiamos resumirla en pintar esos usuarios y si a esta responsabilidad le añadimos el de filtrar los usuarios antes de pintarlo, podriamos decir que el componente sigue haciendo lo mismo pero de una forma un poco más específica, no modificariamos la responsabilidad de este componente sino que la especificariamos un poco más, por lo cual es nuestro componente indicado. </p>
+            <figure><img src="../../assets/img/6-9-ejemplo-con-un-buscador/2.webp" alt="example">
+              <figcaption>El componente UsersList es el indicado para filtrar los usuarios ya que no estariamos modificando la responsabilidad que tiene este, que es pintar los usuarios, sino que estariamos especificando aun más esa responsabilidad.</figcaption>
+            </figure>
+          </article>
+          <article class="content" id="3">
+            <h2>Buscador con un enfoque no controlado </h2><img src="../../assets/img/6-9-ejemplo-con-un-buscador/3.webp" alt="example"><img class="has-mb" src="../../assets/img/6-9-ejemplo-con-un-buscador/4.webp" alt="example"><img src="../../assets/img/6-9-ejemplo-con-un-buscador/5.webp" alt="example">
+          </article>
+          <article class="content" id="4">
+            <h2>Buscador con un enfoque controlado </h2><img src="../../assets/img/6-9-ejemplo-con-un-buscador/6.webp" alt="example"><img class="has-mb" src="../../assets/img/6-9-ejemplo-con-un-buscador/7.webp" alt="example"><img src="../../assets/img/6-9-ejemplo-con-un-buscador/8.webp" alt="example">
+            <hr>
+            <p>Como ya explicamos en la lección anterior, estas son dos casuísticas válidas y dependerá de que es lo que queramos conseguir, si una busqueda en directo o una busqueda cuando hagamos click en un botón, tendremos que utilizar una u otra, no hay ninguna opción mejor que la otra ya que todo depende del contexto y de la situación.</p>
+            <p>Evidentemente si tenemos un listado de usuarios sencillo, utilizar un componente controlado no es ningún problema porque a medida que escribamos solo estamos buscando entre 3 usarios, pero si tuvieramos 1500 usuarios, si cada vez que el usuario va escribiendo tuviesemos que filtrar, aquí si tendriamos un problema de rendimiento, para esto hay soluciones como agregar un time para que no busque inmediatamente sino que tarde un pequeño tiempo y que le de al usuario un margen para escribir la siguiente tecla. </p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">¿Qué componente es el responsable de filtrar los usuarios?</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Buscador con un enfoque no controlado </a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Buscador con un enfoque controlado </a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>
