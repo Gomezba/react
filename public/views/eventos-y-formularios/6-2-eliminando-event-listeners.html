@@ -346,14 +346,14 @@
           <article class="content" id="1">
             <h2>Introducción</h2>
             <p>Ahora que ya conocemos como podemos añadir estos eventos a cualquiera de los nodos del DOM, bien sea mediante el atributo "onclick" de HTML pasandole un string, o bien sea mediante "addEventListener" con el evento que queramos escuchar y una función manejadora del evento, ya tenemos la opción básica.</p>
-            <p>Pero en cualquier momento podemos tener la necesidad de desvincular estos "handles" estos "EventListener". Tenemos que tener la posibilidad de retirarlos y que no vuelvan a actuar nunca mas y aquí tenemos que ver dos alternativas distinas en función de la que estemos utilizando.</p>
+            <p>Pero en cualquier momento podemos tener la necesidad de desvincular estos "handles" estos "EventListener". Tenemos que tener la posibilidad de retirarlos y que no vuelvan a actuar nunca mas y aquí tenemos que ver dos alternativas distintas en función de la que estemos utilizando.</p>
             <p>La primera opción donde tenemos un atributo "onclick" desde HTML, se va a transformar en una propiedad que se genere en el DOM y ¿Como podemos desvincular esta propiedad onclick? </p>
             <p>Es lo que estaremos viendo en esta lección, como poder desvincular estos eventos para que ya no se vuelvan a ocupar, aprenderemos la forma de lograrlo de forma nativa y desde React.</p>
           </article>
           <article class="content" id="2">
             <h2>Eliminando evento inline</h2>
             <p>Hay que recordar que cuando definimos un atributo directamente en el HTML este se convertirá a una propiedad del DOM, de tal manera que cuando agregamos un atributo de tipo evento como "onclick" directamente desde el HTML de igual manera se convertirá en una propiedad del DOM.</p>
-            <p>Hay que saber que cuando agregamos un evento directamente desde el HTML, se le conoce como "evento inline"</p>
+            <p>Hay que saber que cuando agregamos un evento directamente desde el HTML, se le conoce como "evento inline".</p>
             <p>Entonces aprenderemos a eliminar la función manejadora inline. </p>
             <p>Para quitarlo necesitamos acceder al evento "onclick" de la etiqueta y definirlo como "undefined".</p><img src="../../assets/img/6-2-eliminando-event-listeners/1.webp" alt="example">
             <p>Si intentamos dar click al botón HTML miraremos que no se ejecutará el alert definido dentro del "onclick" del botón del HTML y solo se ejecutará el evento del "Event listener" de JavaScript que es un alert que dice "Prueba listener".</p><img src="../../assets/img/6-2-eliminando-event-listeners/2.webp" alt="example">
@@ -381,16 +381,16 @@
           <article class="content" id="4">
             <h2>Eliminación de eventos en React </h2>
             <p>Ahora llega el momento de como traducir esto que hemos visto a React.</p>
-            <p>Lo que se hace en React para agregar un evento es asignar una propiedad </p>
+            <p>Lo que se hace en React para agregar un evento es asignar una propiedad.</p>
             <div>
               <pre><code class="language-jsx">const App = () =&gt; {
 //Asignamos la prop onClick   
 return &lt;button&gt; onClick={alert('Prueba React')}&gt;React&lt;/button&gt;
 }</code></pre>
             </div>
-            <p>Pero en ningún punto hemos hecho un "addEventListener" y en ningún punto podremos hacer tampoco un "removeEventListener", sino que React es el que realmente lo hace y quien se encarga de ejecutarlo.</p>
+            <p>Pero en ningún punto hemos hecho un <strong>"addEventListener"</strong> y en ningún punto podremos hacer tampoco un <strong>"removeEventListener"</strong>, sino que React es el que realmente lo hace y quien se encarga de ejecutarlo.</p>
             <p>Entonces ahora tenemos que pensar ¿Qué es lo que se parece mas a este onclick?, ¿Qué técnica de las dos que hemos utilizado es la que más se le parece?, pues evidentemente la técnica de HTML.</p>
-            <p>Y ¿Como desactivamos en HTML esta propiedad onclick?, pues como ya vimos, tenemos que setearla a "undefined", y en React ¿como lo haremos?, pues de igual manera seteandola a "undefined".</p>
+            <p>Y ¿Como desactivamos en HTML esta propiedad onclick?, pues como ya vimos, tenemos que setearla a <strong>"undefined"</strong>, y en React ¿como lo haremos?, pues de igual manera seteandola a "undefined".</p>
             <p>La manera más rápida posible pues es setear el "onClick" a "undefined". </p>
             <div>
               <pre><code class="language-jsx">const App = () =&gt; {

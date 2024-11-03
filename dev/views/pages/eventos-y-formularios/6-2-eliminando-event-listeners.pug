@@ -8,7 +8,7 @@ append content
         h2 Introducción
         p Ahora que ya conocemos como podemos añadir estos eventos a cualquiera de los nodos del DOM, bien sea mediante el atributo "onclick" de HTML pasandole un string, o bien sea mediante "addEventListener" con el evento que queramos escuchar y una función manejadora del evento, ya tenemos la opción básica.
 
-        p Pero en cualquier momento podemos tener la necesidad de desvincular estos "handles" estos "EventListener". Tenemos que tener la posibilidad de retirarlos y que no vuelvan a actuar nunca mas y aquí tenemos que ver dos alternativas distinas en función de la que estemos utilizando.
+        p Pero en cualquier momento podemos tener la necesidad de desvincular estos "handles" estos "EventListener". Tenemos que tener la posibilidad de retirarlos y que no vuelvan a actuar nunca mas y aquí tenemos que ver dos alternativas distintas en función de la que estemos utilizando.
 
         p La primera opción donde tenemos un atributo "onclick" desde HTML, se va a transformar en una propiedad que se genere en el DOM y ¿Como podemos desvincular esta propiedad onclick? 
 
@@ -18,7 +18,7 @@ append content
         h2 Eliminando evento inline
         p Hay que recordar que cuando definimos un atributo directamente en el HTML este se convertirá a una propiedad del DOM, de tal manera que cuando agregamos un atributo de tipo evento como "onclick" directamente desde el HTML de igual manera se convertirá en una propiedad del DOM.
 
-        p Hay que saber que cuando agregamos un evento directamente desde el HTML, se le conoce como "evento inline"
+        p Hay que saber que cuando agregamos un evento directamente desde el HTML, se le conoce como "evento inline".
 
         p Entonces aprenderemos a eliminar la función manejadora inline. 
 
@@ -68,7 +68,7 @@ append content
 
         p Ahora llega el momento de como traducir esto que hemos visto a React.
 
-        p Lo que se hace en React para agregar un evento es asignar una propiedad 
+        p Lo que se hace en React para agregar un evento es asignar una propiedad.
 
         div: pre: code.language-jsx
             |const App = () =&gt; {
@@ -76,11 +76,17 @@ append content
             |return &lt;button&gt; onClick={alert('Prueba React')}&gt;React&lt;/button&gt;
             |}
 
-        p Pero en ningún punto hemos hecho un "addEventListener" y en ningún punto podremos hacer tampoco un "removeEventListener", sino que React es el que realmente lo hace y quien se encarga de ejecutarlo.
+        p Pero en ningún punto hemos hecho un 
+            strong "addEventListener"
+            |   y en ningún punto podremos hacer tampoco un 
+            strong "removeEventListener"
+            |, sino que React es el que realmente lo hace y quien se encarga de ejecutarlo.
 
         p Entonces ahora tenemos que pensar ¿Qué es lo que se parece mas a este onclick?, ¿Qué técnica de las dos que hemos utilizado es la que más se le parece?, pues evidentemente la técnica de HTML.
 
-        p Y ¿Como desactivamos en HTML esta propiedad onclick?, pues como ya vimos, tenemos que setearla a "undefined", y en React ¿como lo haremos?, pues de igual manera seteandola a "undefined".
+        p Y ¿Como desactivamos en HTML esta propiedad onclick?, pues como ya vimos, tenemos que setearla a 
+            strong "undefined"
+            |, y en React ¿como lo haremos?, pues de igual manera seteandola a "undefined".
 
         p La manera más rápida posible pues es setear el "onClick" a "undefined". 
 
