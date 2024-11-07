@@ -5,12 +5,73 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
 
+        p En la sección anterior, vimos como tratar eventos y formularios en React y lo ejemplificamos creando un pequeño buscador que nos permitia filtrar el listado de usuarios para mostrar únicamente aquellos usuarios cuyo nombre empieze por el termino de busqueda. 
+
+        p Hasta aquí, lo que hemos hecho es algo sencillo y ya estamos empezando a ver algunos de los problemas que nos podemos encontrar en React sobre todo en cuestiones de organización y de lógica y es que este UsersList está empezando a crecer bastante y se está volviendo un poquito ilegible. 
+        img(src="../../assets/img/7-1-modularizando-la-logica/1.webp" alt="example")
+
+        p En esta sección vamos ampliar estos filtros creando dos nuevos filtros. El primero será un sencillo checkbox que nos permita mostrar únicamente los usuarios que están activos y el segundo será un select que nos permitirá ordenar los resultados de nuestros usuarios. 
+
+        p En este punto tendriamos dos opciones: La primera de ellas sería continuar en esta dinámica y escribir todo este código en encima del que ya tenemos siguiendo el mismo estilo. Con esto lo único que conseguimos es que este pequeño problema que tenemos ahora se vuelva mucho más grande añadiendo más y más lógica y al final tendremos que aplicar un refactor completo de este componente pasando de algo super ilegible a algo mas estandar.
+
+        p La segunda y que seguramente para muchos es la válida, sería, refactorizar primero este pequeño problema que tenemos aquí, dejarlo de forma legible y apartir de ahí seguir construyendo de calidad.
+
+        p Esta segunda opción sería la más válida, ya que, si empezamos a añadir mas problemas a los que ya tenemos, el problema cada vez se vuelve más grande y múltiplicamos su complejidad, es decir, si tenemos un problema y añadimos dos más, realmente cuando intentemos solucionar tres problemas a la vez nos encontraremos con que es bastante mas complejo que atacar a cada uno de los problemas de uno en uno. 
+
+        p Entonces, empezaremos por analizar el componente, ver si todo lo que hemos escrito está realmente bien y como podemos modularizarlo. 
+
+        p Durante todo este proceso iremos viendo algunos de los problemas mas comunes en lo que se refiere a la lógica de nuestros componentes y veremos las posibles causas y las posibles soluciones de estos problemas y como hacerlo aplicando buenas practicas. 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Eliminando props innecesarias en componente UsersList
 
+        p El primer detalle que comentaremos son las propiedades que recibe este componente. Por un lado tenemos users que es el listado de usuarios y esto es algo evidente que tenemos que pasarle ya que sino no tenemos nada con que trabajar, pero la prop children ya nos estará resonando bastante. 
+
+        img(src="../../assets/img/7-1-modularizando-la-logica/2.webp" alt="example")
+
+        p Si nos vamos al App.jsx vemos un children que siempre es constante, es decir, que siempre es el listado de usuarios y realmente no aporta nada tenerlo como propiedad.
+        img(src="../../assets/img/7-1-modularizando-la-logica/3.webp" alt="example")
+
+        p De tal manera que este children puede formar parte directamente del propio componente y así no pasarlo como prop, y de esta forma conseguimos el mismo resultado pero eliminando esta prop. 
+
+        p Entonces es lo primero que vamos hacer, cortaremos ese h1 y dejaremos la ejecución del componente autocerrable.
+        img(src="../../assets/img/7-1-modularizando-la-logica/4.webp" alt="example")
+
+        p En nuestro componente UsersList, eliminamos la propiedad children y simplemente sustituimos donde renderizabamos ese children por nuestro h1. 
+        img(src="../../assets/img/7-1-modularizando-la-logica/5.webp" alt="example").has-mb
+        img(src="../../assets/img/7-1-modularizando-la-logica/6.webp" alt="example")
+
+        p Seguimos obteniendo el mismo resultado, pero nos hemos quitado una prop que no tenia sentido. Por supuesto que si este children fuera variable podriamos dejarlo sin ningún problema, pero no es el caso.
+        img(src="../../assets/img/7-1-modularizando-la-logica/7.webp" alt="example").has-mb
+
+    article(id="3" class="content")
+        h2 Modularizando la lógica del componente UsersList  
+        p Lo que haremos ahora es atacar a esta lógica. 
+        img(src="../../assets/img/7-1-modularizando-la-logica/8.webp" alt="example")
+
+        p Vamos a intentar explicar que es lo que estamos haciendo para ver como podriamos solucionarlo. 
+
+        ul 
+            li 
+                p Por un lado tenemos un estado que gestiona el texto de busqueda, por otro lado lo estamos normalizando, lo estamos pasando a minúsculas.
+                img(src="../../assets/img/7-1-modularizando-la-logica/9.webp" alt="example")
+            li     
+                p Por otro lado estamos filtrando el array de usuarios y lo estamos haciendo para que solamente aquellos usuarios que empiecen por el texto sean pintados. 
+                img(src="../../assets/img/7-1-modularizando-la-logica/10.webp" alt="example")
+            li 
+                p Después tomamos el array de usuarios ya filtrado y lo estamos mapeando a UserRow, es decir, los estamos mapeando a instancias del componente que representa la fila o si no hay ningún usuario estamos devolviendo un párrafo con "Sin usuarios".
+                img(src="../../assets/img/7-1-modularizando-la-logica/11.webp" alt="example")
+
+        p Bien, empezaremos por modularizar esta lógica metiendo todo esto dentro de una función con un nombre representativo como 
+            strong filterAndRenderUsers
+            |   y el lugar donde pondremos esta función será debajo del componente.         
+        img(src="../../assets/img/7-1-modularizando-la-logica/12.webp" alt="example")
+
+        p.ts-2 ¿Por qué ponemos la función debajo del componente y no encima?
+        p Pues por mantener una estructura, ya que lo primero que esperamos cuando vamos a buscar un componente, cuando accedemos al archivo donde tenemos el componente, es ver el código de ese componente y a partir de allí como eso es el punto de entrada de este archivo, a partir de ahí vamos analizando que es lo que va haciendo y que es lo que no hace ese componente y podemos ir siguiendo esa traza. 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Eliminando props innecesarias en componente UsersList'],[3,'Modularizando la lógica del componente UsersList']]
+    +submenu(submenuLinks)
