@@ -5,12 +5,74 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+        p Ya tenemos un código funcional, lo que veremos ahora es como podemos mejorarlo.
+
+        p Así que en esta lección analizaremos nuestra función de 
+            strong filterAndRenderUsers.
+        img(src="../../assets/img/7-2-responsabilidad-unica/1.webp" alt="example").has-mb
 
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Regla de responsabilidad única
 
+        p Hay una regla muy basica que debemos saber, y es la responsabilidad única de las funciones. Si notamos, nuestra función se llama 
+            strong filterAndRenderUsers
+            |.
+        img(src="../../assets/img/7-2-responsabilidad-unica/2.webp" alt="example")
+
+        p Cuando el nombre de la función define dos responsabilidades, es decir, cuando ocupamos un "and" para describir otra responsabilidad, normalmente estamos haciendo las cosas mal. 
+
+        p ¿Por qué estamos haciendo las cosas mal?, pues porque esta función está teniendo dos responsabilidades, dos responsabilidades que no tienen estrictamente que ver entre sí, es decir, por un lado filtramos los usuarios y por el otro estamos renderizando los usuarios. Son dos tareas completamente distintas, entonces, no tiene sentido utilizar una única función para dos tareas, debemos seguir los principios 
+            strong solid (Single responsability)
+            |, una sola responsabilidad por cada función. 
+
+        p Entonces, vamos a refactorizar esto. 
+
+    article(id="3" class="content")
+        h2 Funciones con responsabilidades únicas
+
+        p Entonces, crearemos una función con su propia responsabilidad.
+
+        p La primer función se llamará 
+            strong filterUsersByName
+            |   que se encargará de normalizar y filtrar los usuarios por nombre.       
+        img(src="../../assets/img/7-2-responsabilidad-unica/3.webp" alt="example")
+
+        p La segunda función se llamará 
+            strong renderUsers
+            |   que se encargará de renderizar los usuarios.
+        img(src="../../assets/img/7-2-responsabilidad-unica/4.webp" alt="example")
+
+        p En nuestro componente utilizamos las funciones.
+        img(src="../../assets/img/7-2-responsabilidad-unica/5.webp" alt="example")
+
+        p De esta manera ya tenemos una función que filtra los usuarios por nombre y una función que los renderiza y lo bueno es que hemos dividido un problema grande en dos problemas pequeños, y ¿Qué podemos hacer a continuación?, pues tratar de optimizar estos pequeños problemas para garantizar una mejor legibilidad del código.
+
+    article(id="4" class="content")
+        h2 Optimizando legibilidad de las funciones
+
+        p En nuestas funciones, el operador ternario hace que nuestro código no sea tan intuitivo, es decir, que sea facíl de leer, de tal manera que nuestro código siempre debe ser intuitivo para cualquier persona que después mire nuestro código.
+
+        p Entonces, empezaremos por optimizar nuestras funciones, para que sean mas intuitivas.
+
+        p La función 
+            strong filterUsersByName
+            |   la optimizaremos y tambien corregiremos el nombre de la variable a un nombre más explícito, quedaría de la siguiente manera.
+        img(src="../../assets/img/7-2-responsabilidad-unica/6.webp" alt="example")
+
+        p La función 
+            strong renderUsers
+            |   quedaría de la siguiente manera. 
+        img(src="../../assets/img/7-2-responsabilidad-unica/7.webp" alt="example")
+
+        p.note En ocasiones cuando ocupamos un operador ternario, el código se hace dificil de leer y tenemos que entender que la legibilidad reina sobre todo lo demás, realmente aunque un operador ternario pueda ser más eficiente o escribirlo en menos líneas de código, aquí no estamos para ello, lo que estamos es para hacer que el código sea lo más legible posible.
+
+        img(src="../../assets/img/7-2-responsabilidad-unica/8.webp" alt="example")
+        p ¿Verdad que este código parece bastante más legible que lo que teniamos con el operador ternario?, y si, quizás hemos escrito un poco más de código, pero ¿No es mucho mejor verlo así y no es mucho más claro para cualquiera que venga a leerlo detrás de nosotros o para nosotros mismos el día de mañana?
+
+        p Hemos conseguido un componente mucho más sencillo y ahora mismo mucho mas manipulable. 
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Regla de responsabilidad única'],[3,'Funciones con responsabilidades únicas'],[4,'Optimizando legibilidad de las funciones']]
+    +submenu(submenuLinks)
