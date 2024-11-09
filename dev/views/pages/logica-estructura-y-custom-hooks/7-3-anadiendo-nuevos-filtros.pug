@@ -5,12 +5,39 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
+        p En esta lección vamos acompletar nuestro formulario de filtro añadiendo los dos que ya comentamos. Por un lado un checkbox que nos permita mostrar solamente los usuarios que están activos y por otro tendremos un select que nos permitirá elegir el orden en el que queremos mostrar estos usuarios teniendo dos opciones, el orden por defecto tal cual nos viene o el orden por nombre ordenados alfabéticamente.
 
+        p En esta lección simplemente empezaremos creando nuestra maqueta con unos estilos muy sencillos.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Maqueta de filtrado
 
+        p Empezaremos por crear un contenedor que envuelva todo nuestro filtrado, y la etiqueta más semántica es un "form". 
+
+        img(src="../../assets/img/7-3-anadiendo-nuevos-filtros/1.webp" alt="example")
+
+        p Ahora solo nos queda añadir los otros dos filtros. 
+        p El primero será un checkbox con su texto. 
+        img(src="../../assets/img/7-3-anadiendo-nuevos-filtros/2.webp" alt="example")
+
+        p Ahora agregaremos el select. 
+        img(src="../../assets/img/7-3-anadiendo-nuevos-filtros/3.webp" alt="example")
+
+        p En este momento nos viene uno de esos dilemas, cada option debe tener un value, pero la cuestion es elegir que value debemos elegir para el select porque al ser una opción binaria como tal, podiamos poner true o false en nuestro caso, y estaria bien, pero realmente debemos pensar a futuro y puede que el select se amplie el día de mañana, entonces tenemos que buscar una opción que nos permita esta ampliación sin tener que cambiarlo todo por completo y una opción muy sencilla es utilizar números, y si posteriormente se añaden mas opciones, simplemente ampliamos los números.
+        img(src="../../assets/img/7-3-anadiendo-nuevos-filtros/4.webp" alt="example").has-mb
+
+    article(id="3" class="content")
+        h2 Agregando estilos
+        p Primeramente agregaremos las clases.
+        img(src="../../assets/img/7-3-anadiendo-nuevos-filtros/5.webp" alt="example")
+
+        p Nuestros estilos quedarían de la siguiente manera.
+        img(src="../../assets/img/7-3-anadiendo-nuevos-filtros/6.webp" alt="example").has-mb
+        img(src="../../assets/img/7-3-anadiendo-nuevos-filtros/7.webp" alt="example")
+
+        p Con esto ya tenemos un formulario visualmente aceptable y podemos trabajar con el, ahora solo falta agregar la lógica de filtrado.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Maqueta de filtrado'],[3,'Agregando estilos']]
+    +submenu(submenuLinks)
