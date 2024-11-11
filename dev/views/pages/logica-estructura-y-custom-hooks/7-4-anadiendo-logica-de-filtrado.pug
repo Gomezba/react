@@ -5,12 +5,85 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
-
+        h2 Introducción
+        p En esta lección vamos a empezar proporcionando funcionalidad al checkbox de solo usuarios activos y al select de filtro.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Lógica checkbox
 
+        p Tendremos un estado que estará controlado por medio de la propiedad 
+            strong checked
+            |   y su estado cambiará con el evento 
+            strong onChange
+            |   donde ejecutaremos el 
+            strong setState(función de cambio de estado).
+            |   Crearemos una función llamada 
+            strong filterActiveUsers
+            |   que recibirá los usuarios y el estado de los activos.
+
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/1.webp" alt="example")    
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/2.webp" alt="example")    
+
+        p Miremos los usuarios sin ningún filtro.
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/3.webp" alt="example")    
+
+        p Ahora aplicamos el filtro de solo activos.
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/4.webp" alt="example")
+
+        p Y lo más interesante es que podemos combinar ambos filtrados, el filtrado de usarios por nombre y solo los usuarios activos.
+        p Aplicaremos primero el filtrado por nombre.    
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/5.webp" alt="example")
+        p Ahora aplicamos el filtro de solo activos.    
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/6.webp" alt="example")
+
+        p Como podemos ver, podemos combinar ambos filtros.
+
+        p El hecho de que podamos combinar los filtros, se debe a que las funciones que tenemos para filtrar realizan una única tarea, tienen una sola responsabilidad y son independientes.
+
+        p Y cuando hablamos de combinar nos referimos en el orden de ejecución, podemos ejecutar una primero y después la otra, gracias a que son funciones con una sola responsabilidad e independientes.
+
+        p Lo que haremos ahora, es cambiar el orden de ejecución de estas dos funciones. Actualmente tenemos este orden, primero ejecutamos la función de filtrado por nombre y posteriormente la de solo usuarios activos.
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/7.webp" alt="example")
+
+        p El orden que queremos ahora, es, ejecutar primero la función de solo usuarios activos y depués la de filtrado por nombre.
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/8.webp" alt="example")
+
+        p Como podemos ver nuestros filtros siguen funcionando.
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/5.webp" alt="example")
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/6.webp" alt="example")
+
+        p Entonces ya podemos darnos cuenta del potencial que tenemos de aislar lógica y de utilizar funciones que tengan una única responsabilidad. Con esto convertimos nuestro componente en algo mucho más manejable.
+
+        p.note Cabe aclarar que la manera en que hemos dejado la ejecución de las funciones de filtro por activos y por nombre. Es mucho más eficiente, ya que primero estamos haciendo un filtro de "solo usuarios activos" que es un proceso mucho más sencillo que estar haciendo primero un "toLowerCase" y un "startsWith" que forman parte de la función de filtrado por nombre.
+            br
+            | A nivel de rendimiento es mucho más sencillo comprobar si una propiedad es "true" o "false", que si un nombre empieza por una cosa u otra.
+            br 
+            |   Entonces reducimos con el filtro de solo activos, es decir, verificamos si exiten usuarios activos y una vez filtrado, pues el filtro por nombre solo se tiene que aplicar por el resultado que nos viene de solo activos y no sobre todos los usuarios.
+            br 
+            |   En el caso de que el filtro de "onlyActive" no se aplique, es decir, en caso que el checkbox no este seleccionado, nos daría igual, pero cuando lo aplicamos, el segundo trabajo de la función del filtrado por nombre, es mucho menos costoso.
+            br
+            |   Obviamente aquí estamos hablando de una aplicación de juguete y en nuestro caso no importa, si primero ejecutamos una función u otra, ya que tenemos pocos usuarios y tendremos solo mili segundos de diferencia, pero en una aplicación real esto puede ser muy decisivo.
+
+    article(id="3" class="content")
+        h2 Lógica select
+
+        p Para la lógica del select, crearemos un estado que será controlado por un "select" con el evento de onChange, y a su vez crearemos una función que se llamará 
+            strong sortUsers
+            |   que contendrá la lógica de ordenación.
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/9.webp" alt="example")
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/10.webp" alt="example")
+
+        p Ahora miremos el orden normal de los usuarios, sin ningún filtro.
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/3.webp" alt="example")
+
+        p Ahora aplicamos el filtro por nombre.
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/11.webp" alt="example")
+
+        p Ahora el problema que enfrentaremos es que si queremos regresar a el orden por defecto miraremos que no podremos.
+        img(src="../../assets/img/7-4-anadiendo-logica-de-filtrado/12.webp" alt="example")
+
+        p El problema se debe al tipo de datos que estamos usando, ya que apuntamos a referencias.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Lógica checkbox'],[3,'Lógica select']]
+    +submenu(submenuLinks)
