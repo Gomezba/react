@@ -5,12 +5,280 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
 
+        p En esta lección repasaremos las bases que ya deberiamos conocer, lo que viene siendo los tipos de datos pimitivos, referencias, stack y memoria, que nos ayudará a comprender muchos problemas que se nos puedan presentar a lo largo de un trabajo, como es el caso de nuestra práctica donde no podiamos regresar el orden por defecto de los usuarios.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Tipos de datos primitivos
 
+        p Supongamos que tenemos el caso de una simple variable 
+            strong a
+            |   cuyo valor es 
+            strong 'Gomezba'
+            |   y al tratarse de un "String" podemos acceder a cualquiera de sus posiciones como si fuese un array de caracteres 
+            strong a[0]
+            |   lo que nos devolverá la primera letra de los caracteres una 
+            strong L
+            | , y siguiendo esta técnica podriamos intentar sobreescribir 
+            strong a[0] = 'T'
+            | , pero al tratarse de un tipo de dato primitivo "String" por más que intentemos modificar el valor de un caracter por otro, no lo lograremos, sino que seguiremos teniendo el mismo valor 
+            strong 'Gomezba'
+            |   porque no se puede sustituir parcialemente un "String", la única opción para cambiar el valor de la variable es reasignando la variable por completo, es asignar esta variable a un nuevo valor 
+            strong a= 'R'
+            |.
+
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/1.webp" alt="example")
+
+
+        p Bien, como hemos dicho esto se debe a que el tipo de dato es primitivo.
+        p: strong.ts-3 Tipos de datos primitivos:    
+
+        ol 
+            li 
+                p: strong string:
+                p Representa una secuencia de caracteres.
+                p Ejemplo: "Hola", 'Mundo'
+            li 
+                p: strong number
+                p Representa números enteros o decimales.
+                p Ejemplo: 42, 3.14, -7
+            li 
+                p: strong bigint
+                p Permite trabajar con números enteros muy grandes que exceden el límite de number.
+                p Ejemplo: 1234567890123456789012345678901234567890n
+            li 
+                p: strong boolean
+                p Representa un valor lógico: true o false.
+                p Ejemplo: true, false
+            li 
+                p: strong undefined
+                p Indica que una variable ha sido declarada pero aún no tiene un valor asignado.
+                p Ejemplo: let x // x es undefined
+            li 
+                p: strong null
+                p Representa la ausencia intencionada de un valor (es un valor que indica "nada").
+                p Ejemplo: let y = null
+            li 
+                p: strong symbol
+                p Representa un valor único e inmutable, principalmente utilizado como identificador para propiedades de objetos.
+                p Ejemplo: let sym = Symbol('identificador')
+
+        p La principal caracteristica de los tipos de datos primitivos es que  
+            strong su valor es inmutable
+            |   no podemos modificar su valor en ningún momento, solamente podemos sustituirlo por otro valor nuevo, o dicho de otra forma, no podemos cambiar parte de este "String" sino que tenemos que sustituirlo por completo.
+
+        p Para entender como funciona esto, tenemos que entender como funciona el 
+            strong Stack
+            |   de JavaScript, la famosa pila.    
+
+    article(id="3" class="content")
+        h2 Stack
+
+        p Cuando creamos una variable, almacenamos su valor en una 
+            strong pila
+            | , en un 
+            strong Stack
+            |   y vamos a ver como se comportaría en cada uno de los casos siguiendo un pequeño trozo de código.
+
+        p Por un lado declaramos una variable 
+            code a = 5
+            |   y lo que conseguiremos es crear en ese 
+            strong Stack
+            |   un registro para este 
+            code a
+            |   cuyo valor es 5. 
+
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/2.webp" alt="example")
+
+        p Si ahora declaramos una variable 
+            code b = a
+            |   lo que estamos haciendo es igualarla al valor que tiene 
+            code a
+            |   dentro de esta pila, en este caso, un 5. Y por lo tanto tenemos un nuevo registro de 
+            code b = 5
+
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/3.webp" alt="example")
+
+        p Si ahora intentasemos reasignar el valor de 
+            code a = 7
+            |   lo que conseguiriamos seria cambiar el valor de su registro dentro de la 
+            strong pila (Stack)
+            |   y pasaría de tener un 5 a tener un 7.
+
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/4.webp" alt="example")
+
+        p Y lo mismo sucederia con 
+            code b = 9
+            |   que pasaria de valer 5 a 9.
+
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/5.webp" alt="example")
+
+        p Como vemos en la pila, 
+            code a
+            |   y 
+            code b
+            |   no guardan ninguna relación entre sí, son dos entradas con valores distintos, aunque 
+            code b
+            |   haya partido desde 
+            code a
+            |   no hay ninguna relación entre ellos. 
+
+        p Esto por supuesto es una simplificación de algo bastante complejo que tiene muchos más matices, pero nos va servir para entender lo que pasa.
+
+    article(id="4" class="content")
+        h2 Referencias   
+        p Vamos a ir ahora en el caso de las referencias.
+        p Supongamos que creamos la misma variable 
+            code a
+            |   pero en este caso en lugar de asignarle un tipo primitivo, le asignaremos un objeto 
+            code let a = {x:2}
+
+        p Desde esta variable 
+            code a
+            |   podemos acceder a las propiedades de este objeto y obtener su valor, en este caso con 
+            code a.x
+            |   tendriamos el valor de 
+            code 2
+            | . A demás podemos utilizar el mismo sistema para reasignar el valor de cualquiera de sus propiedades, en este caso con 
+            code a.x = 3
+            |   y de esta manera si que podemos modificar parte de esta variable 
+            code a
+            |   sin modificarla por completo, podemos modificarla y obtener este nuevo 
+            code {x:3}
+            | . En última instancia tambien podemos reasignar el valor de 
+            code a
+            |   por completo, es decir, cambiarlo por otro objeto completamente distinto como 
+            code {y:5}
+            |   y esto funciona.   
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/6.webp" alt="example")
+
+        p La principal diferencia ya la estamos viendo aquí y es que los tipos de datos de referencia, entre los cuales se incluyen el: 
+            strong objeto
+            |   el 
+            strong array
+            |   y la 
+            strong función
+            |   tienen un valor 
+            strong mutable
+            | , podemos modificar parcialmente su valor sin tener que vernos obligados a sustituirlo por completo.
+
+        p Y ¿Por qué podemos modificar su valor y en el caso de los primitivos no?, pues bien, hay que entender como funciona en este caso la 
+            strong pila (Stack)
+            |. 
+
+    article(id="5" class="content")
+        h2  Stack con tipos de datos referencia 
+
+        p Una 
+            strong pila
+            |   es un 
+            strong almacenamiento que admite registros muy pequeños
+            |   y un 
+            strong objeto
+            | , una 
+            strong función
+            |   o un 
+            strong array
+            |   pueden llegar a ser objetos muy pesados que no caben dentro de este 
+            stron Stack
+            |   .
+
+        P Así que tendremos por un lado la pila y por otro lo que se conoce como 
+            strong memoria (Memory)
+            |   que es un almacenamiento mucho más grande que nos permite guardar el verdadero valor de esos objetos. En los registros de esta memoria podremos almacenar valores muchísimos más grandes que el 
+            strong Stack
+            |.                 
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/7.webp" alt="example")
+
+        h3 Y bien ¿Cúal es la relación entre este Stack y esta memoria?, pues vamos a verlo con un tipo referencia.
+
+        p Para empezar creamos una variable con un array 
+            code let a = [1,2,3]
+            |  , ¿Qué es lo que pasará dentro de este Stack? ¿Se creará este "a" con el valor de "1,2,3"?, pues no, porque este array, no entra dentro del Stack. 
+
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/8.webp" alt="example")
+
+        p Lo que se crea dentro del Stack es una entrada para 
+            code a
+            |   cuyo valor es una 
+            strong referencia
+            |.
+
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/9.webp" alt="example")
+
+        p Y ¿A donde apunta esta referencia?, pues apunta al lugar de la memoria donde está almacenado el valor de verdad de este array, es decir, dentro de esta memoria tenemos esta referencia de memoria que almacena este array. Aquí es donde tenemos el valor real del array.
+
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/10.webp" alt="example")
+
+        p Y ¿Qué pasa si ahora queremos una nueva variable "b" y la igualamos a "a"?, pues igual que sucede con los primitivos lo que estamos igualando es el valor dentro de la pila, y el valor de la pila es esta 
+            strong referencia 1
+            |   que tenemos aquí, por lo cual en la pila, 
+            code b
+            |   tiene la misma referencia que 
+            code a
+            |   y por lo tanto apunta al mismo objeto dentro de la memoria, en este caso tenemos una relación directa entre 
+            code a
+            |   y 
+            code b
+            |   que están apuntando a la misma dirección de la memoria.
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/11.webp" alt="example")
+
+        p Cualquier modificación que realizemos sobre 
+            code a
+            |   o sobre 
+            code b
+            |   afectarán a la misma referencia de memoria, es este caso al mismo objeto. 
+
+        p Si ahora hacemos un 
+            code b.push(4)
+            | , es decir, añadimos un nuevo elemento al array, este 
+            code b
+            |   modificará su 
+            strong referencia 1
+            |   que apunta a esta memoria, por lo tanto, afectará a este registro 
+            code 1,2,3
+            |   que pasará a tener 
+            code 1,2,3,4
+            |   y sin querer, como la referencia es la misma, estamos modificando también a 
+            code a
+            |.
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/12.webp" alt="example")
+        p Pero entonces, ¿Como podemos copiar un objeto o un array sin que sea la misma referencia?, pues para ello existen muchas técnicas, pero una de las más habituales es utilizar el 
+            strong spread operator [...a]
+            | .       
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/13.webp" alt="example")
+
+        p Cuando utilizamos este 
+            strong spread operator "..."
+            | , lo que copiamos no es la referencia del Stack, 
+            strong sino el valor que tenemos almacenado en la memoria
+            | , lo que conseguimos es desvincular esta referencia de aquí y crear una referencia nueva que apunta a un nuevo valor en la memoria 
+            strong referencia 2.  
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/14.webp" alt="example")
+
+        p En este caso copiamos el valor de la 
+            strong referencia 1
+            | , es decir, con este 
+            strong spread operator
+            |   copiamos el contenido que está dentro de la memoria y no copiamos la referencia, de forma que ahora cualquier modificación que hagamos sobre 
+            code b
+            |   estará completamente desligada de 
+            code a
+            |   porque ya son referencias distintas, en este caso ya tenemos un 
+            code b.pop()
+            |   para eliminar el último de los elementos, donde estaremos atacando a la 
+            strong referencia 2
+            |   de memoria que pasará a tener el valor 
+            strong 1,2,3
+            |   sin afectar para nada a la 
+            strong referencia 1.
+        img(src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/15.webp" alt="example")
+
+        p Como ya hemos dicho, esto es una simplificación de lo que está pasando por detrás y hay muchos matices que nos estamos dejando por el camino, pero nos sirve para que entendamos la diferencia entre hacer una cosa u otra.
+
+        p Ahora veremos como afecta esto a nuestro problema en la siguiente lección.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Tipos de datos primitivos'],[3,'Stack'],[4,'Referencias'],[5,'Stack con tipos de datos referencia']]
+    +submenu(submenuLinks)

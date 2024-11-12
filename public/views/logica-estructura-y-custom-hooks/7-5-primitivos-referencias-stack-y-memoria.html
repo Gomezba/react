@@ -344,12 +344,107 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>En esta lección repasaremos las bases que ya deberiamos conocer, lo que viene siendo los tipos de datos pimitivos, referencias, stack y memoria, que nos ayudará a comprender muchos problemas que se nos puedan presentar a lo largo de un trabajo, como es el caso de nuestra práctica donde no podiamos regresar el orden por defecto de los usuarios.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Tipos de datos primitivos</h2>
+            <p>Supongamos que tenemos el caso de una simple variable <strong>a</strong> cuyo valor es <strong>'Gomezba'</strong> y al tratarse de un "String" podemos acceder a cualquiera de sus posiciones como si fuese un array de caracteres <strong>a[0]</strong> lo que nos devolverá la primera letra de los caracteres una <strong>L</strong>, y siguiendo esta técnica podriamos intentar sobreescribir <strong>a[0] = 'T'</strong>, pero al tratarse de un tipo de dato primitivo "String" por más que intentemos modificar el valor de un caracter por otro, no lo lograremos, sino que seguiremos teniendo el mismo valor <strong>'Gomezba'</strong> porque no se puede sustituir parcialemente un "String", la única opción para cambiar el valor de la variable es reasignando la variable por completo, es asignar esta variable a un nuevo valor <strong>a= 'R'</strong>.</p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/1.webp" alt="example">
+            <p>Bien, como hemos dicho esto se debe a que el tipo de dato es primitivo.</p>
+            <p><strong class="ts-3">Tipos de datos primitivos: </strong></p>
+            <ol>
+              <li>
+                <p><strong>string:</strong></p>
+                <p>Representa una secuencia de caracteres.</p>
+                <p>Ejemplo: "Hola", 'Mundo'</p>
+              </li>
+              <li>
+                <p><strong>number</strong></p>
+                <p>Representa números enteros o decimales.</p>
+                <p>Ejemplo: 42, 3.14, -7</p>
+              </li>
+              <li>
+                <p><strong>bigint</strong></p>
+                <p>Permite trabajar con números enteros muy grandes que exceden el límite de number.</p>
+                <p>Ejemplo: 1234567890123456789012345678901234567890n</p>
+              </li>
+              <li>
+                <p><strong>boolean</strong></p>
+                <p>Representa un valor lógico: true o false.</p>
+                <p>Ejemplo: true, false</p>
+              </li>
+              <li>
+                <p><strong>undefined</strong></p>
+                <p>Indica que una variable ha sido declarada pero aún no tiene un valor asignado.</p>
+                <p>Ejemplo: let x // x es undefined</p>
+              </li>
+              <li>
+                <p><strong>null</strong></p>
+                <p>Representa la ausencia intencionada de un valor (es un valor que indica "nada").</p>
+                <p>Ejemplo: let y = null</p>
+              </li>
+              <li>
+                <p><strong>symbol</strong></p>
+                <p>Representa un valor único e inmutable, principalmente utilizado como identificador para propiedades de objetos.</p>
+                <p>Ejemplo: let sym = Symbol('identificador')</p>
+              </li>
+            </ol>
+            <p>La principal caracteristica de los tipos de datos primitivos es que <strong>su valor es inmutable</strong> no podemos modificar su valor en ningún momento, solamente podemos sustituirlo por otro valor nuevo, o dicho de otra forma, no podemos cambiar parte de este "String" sino que tenemos que sustituirlo por completo.</p>
+            <p>Para entender como funciona esto, tenemos que entender como funciona el <strong>Stack</strong> de JavaScript, la famosa pila. </p>
+          </article>
+          <article class="content" id="3">
+            <h2>Stack</h2>
+            <p>Cuando creamos una variable, almacenamos su valor en una <strong>pila</strong>, en un <strong>Stack</strong> y vamos a ver como se comportaría en cada uno de los casos siguiendo un pequeño trozo de código.</p>
+            <p>Por un lado declaramos una variable <code>a = 5</code> y lo que conseguiremos es crear en ese <strong>Stack</strong> un registro para este <code>a</code> cuyo valor es 5. </p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/2.webp" alt="example">
+            <p>Si ahora declaramos una variable <code>b = a</code> lo que estamos haciendo es igualarla al valor que tiene <code>a</code> dentro de esta pila, en este caso, un 5. Y por lo tanto tenemos un nuevo registro de <code>b = 5</code></p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/3.webp" alt="example">
+            <p>Si ahora intentasemos reasignar el valor de <code>a = 7</code> lo que conseguiriamos seria cambiar el valor de su registro dentro de la <strong>pila (Stack)</strong> y pasaría de tener un 5 a tener un 7.</p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/4.webp" alt="example">
+            <p>Y lo mismo sucederia con <code>b = 9</code> que pasaria de valer 5 a 9.</p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/5.webp" alt="example">
+            <p>Como vemos en la pila, <code>a</code> y <code>b</code> no guardan ninguna relación entre sí, son dos entradas con valores distintos, aunque <code>b</code> haya partido desde <code>a</code> no hay ninguna relación entre ellos. </p>
+            <p>Esto por supuesto es una simplificación de algo bastante complejo que tiene muchos más matices, pero nos va servir para entender lo que pasa.</p>
+          </article>
+          <article class="content" id="4">
+            <h2>Referencias </h2>
+            <p>Vamos a ir ahora en el caso de las referencias.</p>
+            <p>Supongamos que creamos la misma variable <code>a</code> pero en este caso en lugar de asignarle un tipo primitivo, le asignaremos un objeto <code>let a = {x:2}</code></p>
+            <p>Desde esta variable <code>a</code> podemos acceder a las propiedades de este objeto y obtener su valor, en este caso con <code>a.x</code> tendriamos el valor de <code>2</code>. A demás podemos utilizar el mismo sistema para reasignar el valor de cualquiera de sus propiedades, en este caso con <code>a.x = 3</code> y de esta manera si que podemos modificar parte de esta variable <code>a</code> sin modificarla por completo, podemos modificarla y obtener este nuevo <code>{x:3}</code>. En última instancia tambien podemos reasignar el valor de <code>a</code> por completo, es decir, cambiarlo por otro objeto completamente distinto como <code>{y:5}</code> y esto funciona. </p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/6.webp" alt="example">
+            <p>La principal diferencia ya la estamos viendo aquí y es que los tipos de datos de referencia, entre los cuales se incluyen el: <strong>objeto</strong> el <strong>array</strong> y la <strong>función</strong> tienen un valor <strong>mutable</strong>, podemos modificar parcialmente su valor sin tener que vernos obligados a sustituirlo por completo.</p>
+            <p>Y ¿Por qué podemos modificar su valor y en el caso de los primitivos no?, pues bien, hay que entender como funciona en este caso la <strong>pila (Stack)</strong>. </p>
+          </article>
+          <article class="content" id="5">
+            <h2> Stack con tipos de datos referencia </h2>
+            <p>Una <strong>pila</strong> es un <strong>almacenamiento que admite registros muy pequeños</strong> y un <strong>objeto</strong>, una <strong>función</strong> o un <strong>array</strong> pueden llegar a ser objetos muy pesados que no caben dentro de este <stron>Stack</stron> . </p>
+            <P>Así que tendremos por un lado la pila y por otro lo que se conoce como <strong>memoria (Memory)</strong> que es un almacenamiento mucho más grande que nos permite guardar el verdadero valor de esos objetos. En los registros de esta memoria podremos almacenar valores muchísimos más grandes que el <strong>Stack</strong>. </P><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/7.webp" alt="example">
+            <h3>Y bien ¿Cúal es la relación entre este Stack y esta memoria?, pues vamos a verlo con un tipo referencia.</h3>
+            <p>Para empezar creamos una variable con un array <code>let a = [1,2,3]</code> , ¿Qué es lo que pasará dentro de este Stack? ¿Se creará este "a" con el valor de "1,2,3"?, pues no, porque este array, no entra dentro del Stack. </p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/8.webp" alt="example">
+            <p>Lo que se crea dentro del Stack es una entrada para <code>a</code> cuyo valor es una <strong>referencia</strong>.</p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/9.webp" alt="example">
+            <p>Y ¿A donde apunta esta referencia?, pues apunta al lugar de la memoria donde está almacenado el valor de verdad de este array, es decir, dentro de esta memoria tenemos esta referencia de memoria que almacena este array. Aquí es donde tenemos el valor real del array.</p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/10.webp" alt="example">
+            <p>Y ¿Qué pasa si ahora queremos una nueva variable "b" y la igualamos a "a"?, pues igual que sucede con los primitivos lo que estamos igualando es el valor dentro de la pila, y el valor de la pila es esta <strong>referencia 1</strong> que tenemos aquí, por lo cual en la pila, <code>b</code> tiene la misma referencia que <code>a</code> y por lo tanto apunta al mismo objeto dentro de la memoria, en este caso tenemos una relación directa entre <code>a</code> y <code>b</code> que están apuntando a la misma dirección de la memoria.</p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/11.webp" alt="example">
+            <p>Cualquier modificación que realizemos sobre <code>a</code> o sobre <code>b</code> afectarán a la misma referencia de memoria, es este caso al mismo objeto. </p>
+            <p>Si ahora hacemos un <code>b.push(4)</code>, es decir, añadimos un nuevo elemento al array, este <code>b</code> modificará su <strong>referencia 1</strong> que apunta a esta memoria, por lo tanto, afectará a este registro <code>1,2,3</code> que pasará a tener <code>1,2,3,4</code> y sin querer, como la referencia es la misma, estamos modificando también a <code>a</code>.</p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/12.webp" alt="example">
+            <p>Pero entonces, ¿Como podemos copiar un objeto o un array sin que sea la misma referencia?, pues para ello existen muchas técnicas, pero una de las más habituales es utilizar el <strong>spread operator [...a]</strong>. </p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/13.webp" alt="example">
+            <p>Cuando utilizamos este <strong>spread operator "..."</strong>, lo que copiamos no es la referencia del Stack, <strong>sino el valor que tenemos almacenado en la memoria</strong>, lo que conseguimos es desvincular esta referencia de aquí y crear una referencia nueva que apunta a un nuevo valor en la memoria <strong>referencia 2. </strong></p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/14.webp" alt="example">
+            <p>En este caso copiamos el valor de la <strong>referencia 1</strong>, es decir, con este <strong>spread operator</strong> copiamos el contenido que está dentro de la memoria y no copiamos la referencia, de forma que ahora cualquier modificación que hagamos sobre <code>b</code> estará completamente desligada de <code>a</code> porque ya son referencias distintas, en este caso ya tenemos un <code>b.pop()</code> para eliminar el último de los elementos, donde estaremos atacando a la <strong>referencia 2</strong> de memoria que pasará a tener el valor <strong>1,2,3</strong> sin afectar para nada a la <strong>referencia 1.</strong></p><img src="../../assets/img/7-5-primitivos-referencias-stack-y-memoria/15.webp" alt="example">
+            <p>Como ya hemos dicho, esto es una simplificación de lo que está pasando por detrás y hay muchos matices que nos estamos dejando por el camino, pero nos sirve para que entendamos la diferencia entre hacer una cosa u otra.</p>
+            <p>Ahora veremos como afecta esto a nuestro problema en la siguiente lección.</p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Tipos de datos primitivos</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Stack</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Referencias</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Stack con tipos de datos referencia</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>
