@@ -344,12 +344,274 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>En esta lección determinaremos el verdadero alcance de nuestro problema, explicando las diferentes casuísticas de el, tomando en cuenta en relación a la lección anterior, sobre las referencias, para ver lo importante que son las funciones puras.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Casuísticas del problema</h2>
+            <p>Lo que sabemos hasta ahora, es que tenemos el problema de volver a ordenar los usuarios por defecto.</p>
+            <p>Sin filtros.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/1.webp" alt="example">
+            <p>Filtro de orden por nombre.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/2.webp" alt="example">
+            <p>Al querer ordenar al orden por defecto no sucede nada.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/3.webp" alt="example">
+            <p>Pero tenemos otras casuísticas donde el filtro por defecto si funcióna.</p>
+            <p>Si filtramos por <strong>solo activos</strong> y ordenamos por nombre, hasta aquí funcionaria normal, se estaría aplicando ambos filtros.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/4.webp" alt="example">
+            <p>Y si ahora queremos regresar a ordenar los usuarios a su valor por defecto, miraremos que el orden por defecto si se estaría aplicando.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/5.webp" alt="example">
+            <p>Si lo intentamos con el filtro de usuarios por nombre, miraremos que también el orden de los usuarios por defecto funciona.</p><img class="has-mb" src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/6.webp" alt="example"><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/7.webp" alt="example">
+            <p>Como podemos ver, el filtro de orden, no es que no funcione nunca, sino que no funciona si lo aplicamos de forma aislada, es decir, si solo aplicamos el filtro de orden, esto deja de funcionar. </p>
+          </article>
+          <article class="content" id="3">
+            <h2>¿Por qué el filtro de orden no funciona si lo aplicamos solo, es decir, de forma aislada? </h2>
+            <p>Como hemos visto, si solo aplicamos el filtro de orden, al querer regresar al orden por defecto, esto no funciona, y esto tiene que ver con las referencias, que hemos comentado en la lección anterior. </p>
+            <p>Miraremos primeramente si nuestro <strong>usersFiltered</strong> es igual a <strong>users</strong> y para que esto sea igual, quiere decir que tenemos el mismo valor en el <strong>Stack</strong>, es decir, que estamos apuntando a la misma referencia en <strong>usersFiltered</strong> que en <strong>users</strong>, por tanto modificar <strong>usersFiltered</strong> es lo mismo que modificar este <strong>users</strong>. </p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/8.webp" alt="example">
+            <p>Miraremos las cauísticas de las referencias. </p>
+            <h3>Casuística sin aplicar ningún filtro</h3>
+            <p>Sin aplicar ningún filtro, vemos que las referencias son las mismas, nos devuelve un true.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/9.webp" alt="example">
+            <p>Y ¿Por qué usersFiltered y users apuntan a la misma referencia?</p>
+            <p>Miremos lo que devuelven cada una de las funciones de nuestros filtros. </p>
+            <p><strong class="ts-3">filterActiveUsers</strong></p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/10.webp" alt="example">
+            <p><strong class="ts-3">filterUsersByName</strong></p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/11.webp" alt="example">
+            <p><strong class="ts-3">sortUsers</strong></p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/12.webp" alt="example">
+            <p>De tal manera que al no tener, ningún filtro, estamos devolviendo siempre la misma referencia, es por eso que nos devuelve <strong>true</strong> ya que usersFiltered y users apuntan a la misma referencia.</p>
+            <h3>Casuística solo activos</h3>
+            <p>Al activar el checkbox de solo activos, miraremos que las referencias son diferentes, ya que nos devuelve un false.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/13.webp" alt="example">
+            <p>El hecho de que ahora <strong>usersFiltered</strong> y <strong>users</strong> sean diferentes, se debe a que la función de <strong>filterActiveUsers</strong> que es la que se encarga filtrar solo los usuarios activos, cuando el checkbox esta activado, pues la función nos devulve un nuevo array, ya que estamos ocupando el método <code>filter</code> que nos devuelve un nuevo array, es decir, devuelve una nueva referencia.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/14.webp" alt="example">
+            <h3>Casuística filtro por nombre </h3>
+            <p>Si filtramos por nombre, obtenemos lo mismo que cuando activamos el checkbox de solo activos, obtenemos un false, ya que de igual manera la función de <strong>filterUsersByName</strong> ocupa el método <code>filter</code> que devuelve un nuevo array, una nueva referencia.</p><img class="has-mb" src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/15.webp" alt="example"><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/16.webp" alt="example">
+            <h3>Casuística filtro de ordenar por nombre y volver al orden por defecto</h3>
+            <p>Si ahora ordenamos los usuarios por nombre, podemos ver que las referencias de <strong>usersFiltered</strong> y <strong>users</strong> son las mismas.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/17.webp" alt="example">
+            <p>Una vez que ordenamos por nombre de manera ascendente y queremos regresar al orden por defecto, es decir queremos revertir el orden, al dar click en el orden por default miraremos que las referencias de <strong>usersFiltered</strong> y <strong>users</strong> son las mismas.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/18.webp" alt="example">
+            <p>Esto se debe a que estamos ocupando el método <strong>sort</strong> , que es un método <strong>mutable</strong> , es decir, modifica el array original.</p>
+            <div>
+              <pre><code class="language-jsx">const sortUsers = (users, sortBy) => {
+	switch (sortBy) {
+		case 1: {
+			return users.sort((a, b) => {
+				if (a.name > b.name) return 1
+				if (a.name < b.name) return -1
+				return 0
+			})
+		}
+
+		default: {
+			return users
+		}
+	}
+}    </code></pre>
+            </div>
+            <p>Entonces cuando nosotros empezamos por ordenar los usuarios por nombre sin antes haber hecho un filtro de solo usuarios activos o filtrar por nombre, es decir que estamos ejecutando de manera aislada la función de ordenamiento. Entonces quiere decir desde el inicio estamos mutando el valor del array original, o sea que el array original ahora pasa a estar ordenado de manera ascendente y cuando queremos regresar al orden por defecto, pues como el array original está mutado nos devuelve ese mismo array. </p>
+            <p>Entonces React si detecta que el estado ha cambiado porque al dar click en <strong>por defecto</strong> el valor del estado <strong>sortBy === 1</strong> pasa a tener <strong>sortBy === 0</strong> y vuelve a ejecutar la función del componente y se vuelven a crear las variables y a ejecutar las funciones, de tal manera que ejecuta la función de <strong>sortUsers</strong> y que muta el array original, </p>
+            <h3>Verdadera razón del problema </h3>
+            <p>Hasta este punto sabemos que el motivo o razón del problema se debe a que estamos mutando una referencia, es decir, estamos mutando el array que recibimos como prop en el componente y que este viene desde el componente padre App. </p>
+            <p>Pero para entender mucho mejor, en la sección de estado ya habiamos comentado un poco sobre el ciclo de vida de los componentes, pero aquí miraremos un poco más a fondo ese ciclo pero en cuestion de la memoria. </p>
+            <p><strong class="ts-5">Props se mantienen vivas:</strong></p>
+            <ul>
+              <li>
+                <p>Las props no cambian ni se destruyen entre renders, a menos que el componente padre las actualice.</p>
+              </li>
+              <li>Si mutas una prop dentro del componente hijo, estás afectando la misma referencia.</li>
+            </ul>
+            <p><strong class="ts-5">Variables locales:</strong></p>
+            <ul>
+              <li>
+                <p>Se destruyen y recrean en cada render.</p>
+              </li>
+              <li>
+                <p>React no guarda en memoria las variables locales ni el resultado de las funciones entre renders.</p>
+              </li>
+            </ul>
+            <p><strong class="ts-5">Hooks:</strong></p>
+            <ul>
+              <li>
+                <p>Persisten entre renders.</p>
+              </li>
+            </ul>
+            <p><strong class="ts-5">Arrays mutados:</strong></p>
+            <ul>
+              <li>
+                <p>Si mutas un array pasado por props, esas mutaciones persisten en memoria.</p>
+              </li>
+            </ul>
+            <p><strong class="ts-5">Métodos no mutadores:</strong></p>
+            <ul>
+              <li>
+                <p>Si usas métodos como <strong>filter</strong>, <strong>map</strong>, o <strong>slice</strong>, React obtiene una nueva referencia, y el array original queda intacto.</p>
+              </li>
+            </ul>
+            <p class="ts-2">Entonces, sabiendo esto, ya sabemos que las <strong>props se mantienen vivas entre renders</strong>, en nuestro caso, nuestra prop, es un array de usuarios. <br><br>De tal manera que cuando ocupabamos un <strong>método inmutable</strong>, como <strong>filter</strong> creamos un nuevo array y no afectamos la referencia de nuestro array de usuarios que viene como prop, y es por eso que cuando aplicabamos primero un filtro de <strong>solo activos</strong> o <strong>filtro por nombre</strong> al momento de ordenar por nombre y volver al orden por defecto funcionaba. <br><br>Más sin embargo cuando aplicabamos primero el orden de los usuarios por nombre, pues como estamos utilizando un <strong>método mutable "sort"</strong> pues afectamos la referencia original de la prop, de tal manera que al volver a querer ordenar los usuarios por defecto, no veremos el resultado ya que estaremos devolviendo la misma referencia que ya esta mutada. </p>
+          </article>
+          <article class="content" id="4">
+            <h2>Solucionando problema de mutación </h2>
+            <p>Para solucionar este problema, siempre hay que trabajar sobre una copia del array original, o actualmente ocupar los nuevos métodos inmutables de JavaScript como lo es <strong class="ts-3">toSorted</strong> que hace exactamente lo mismo que <strong>sort</strong> pero sin mutar el array original. Siempre hay que evitar la mutación del array original. </p>
+            <h3>Solución con una copia</h3><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/19.webp" alt="example">
+            <p>Si ahora aplicamos primeramente el orden de usuarios por nombre.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/20.webp" alt="example">
+            <p>Y ahora seleccionamos ordenar por defecto miraremos que ya funciona.</p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/21.webp" alt="example">
+            <p>Ahora si que nuestro código funciona en todas las casuísticas, pero explicaremos como funciona esto para que quede aún más claro.</p>
+            <ol>
+              <li>
+                <p>Cuando ordenamos los usuarios por nombre, es decir, nuestro estado está en <strong>sortBy === 1</strong> lo que devuelve un nuevo array, ya que ahora estamos trabando bajo una copia.</p>
+              </li>
+              <li>
+                <p>Una vez renderizado el componente, todas sus variables locales se destruyen.</p>
+              </li>
+              <li>
+                <p>Al ejecutar ahora el orden por defecto, es decir que nuestro estado está en <strong>sortBy === 0</strong> pues devuelve el array original que no está mutado y renderiza los usuarios en su orden original. </p>
+              </li>
+            </ol>
+            <h3>Solución con el método toSorted</h3>
+            <p>Otra manera, es ocupar el nuevo método inmutable <strong>toSorted</strong> y obtendremos exatamente el mismo resultado que cuando hacemos una copia con el spread operator. </p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/22.webp" alt="example">
+            <p>Bien, con esto ya hemos logrado solucionar nuestro problema, pero nuestro código está lejor de ser perfecto.</p>
+            <p>Para que nuestro código sea de verdadera calidad tenemos que hablar de la pureza de las funciones y sobre como tenemos que utilizar siempre que sea posible funciones puras. </p>
+          </article>
+          <article class="content" id="5">
+            <h2>Funciones puras </h2>
+            <p>Para este punto ya deberiamos tener un conocimiento previo de lo que son las funciones puras y aquí simplemente daremos un pequeño recordatorio de lo que más nos importa en las funciones puras. </p>
+            <h3>¿Qué es lo que define a una función pura? </h3>
+            <p>Básicamente son 2 características</p>
+            <ol>
+              <li>
+                <p>Su valor de retorno solamente depende de los parámetros de la función y no de ningún elemento externo a ella. </p>
+                <ul>
+                  <li>
+                    <p>Ejemplo función pura: </p>
+                    <div>
+                      <pre><code class="language-jsx">const suma = (a,b) => a + b</code></pre>
+                    </div>
+                    <p>Por más que ejecutemos esta función, su valor solamente depende de sus argumentos, en este caso de "a" y de "b" y por tanto ejecutar esta función con los mismos argumentos siempre devuelve el mismo resultado.</p>
+                    <div>
+                      <pre><code class="language-jsx">suma(1,2) // R = 3
+suma(1,2) // R = 3
+suma(1,2) // R = 3
+/* Por más que ejecutemos está función con los mismos argumentos,
+siempre devuelve el mismo resultado porque este resultado 
+no depende nunca de nada externo a la función.*/</code></pre>
+                    </div>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <p>Ejemplo función impura:</p>
+                    <p>Un claro ejemplo sería la función <strong>Date.now()</strong> que es una función que devuelve el "timeStamp" del momento actual. </p>
+                    <div>
+                      <pre><code class="language-jsx">Date.now() // 1647859178991
+Date.now() // 1647859181239
+Date.now() // 1647859182259
+/* Si ejecutamos este Date.now en sucesivas ocaciones, 
+este timeStamp variará porque no depende de los 
+parámetros de la función como tal, sino que depende 
+de un elemento externo que en este caso es el reloj 
+de nuestro ordenador */</code></pre>
+                    </div>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <p>¿Qué ventajas nos aporta crear funciones puras en este sentido? </p>
+                    <ul>
+                      <li>
+                        <p>Son mucho más predecibles porque simplemente tenemos que pensar en los argumentos de entrada y no en nada externo y por eso son mucho más testeables y mucho menos problemáticas a la hora de trabajar con ellas en un futuro.</p>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                <p>En este caso nuestras funciones de filtro son funciones puras, por lo menos en lo que se refiere a esta característica ya que solamente dependen de los parámetros de entrada.</p>
+                <div>
+                  <pre><code class="language-jsx">/*Esta función filterActiveUsers solamente depende de users
+y de active y no encontramos nada aquí que haga referencia a 
+algo externo a la función */
+const filterActiveUsers = (users, active) => {
+	if (!active) return users
+
+	return users.filter((user) => user.state)
+}   </code></pre>
+                </div>
+                <p>Pero este <strong>filterActiveUsers</strong>no es una función pura como tal, porque no cumple la segunda de las condiciones, no debe tener efecto colaterales.</p>
+              </li>
+              <li>
+                <p>La segunda característica es que una función pura no debe tener efectos colaterales o efectos secundarios, y esto de los efectos colaterales es algo más ambiguo que explicar. </p>
+                <p>Empezemos con un ejemplo sencillo.</p>
+                <p>Imaginemos que tenemos un contador en 0 y tenemos la función suma que incrementa el contador y retorna la suma. </p>
+                <div>
+                  <pre><code class="language-jsx">let counter = 0
+
+const suma = (a,b) => {
+  counter ++
+  return a + b 
+}</code></pre>
+                </div>
+                <p>Cuando ejecutemos la función suma lo que sucederá es que estaremos retornando siempre 3, pero en este caso el valor de counter se incrementa en cada una de esas ejecuciones. </p>
+                <div>
+                  <pre><code class="language-jsx">suma(1,2) // R = 3 -> counter = 1
+suma(1,2) // R = 3 -> counter = 2
+suma(1,2) // R = 3 -> counter = 3
+/* La función suma siempre regresa un 3, pero counter 
+se incrementa en 1 en cada ejecución, dicho de otra forma, 
+ejecutar la función suma tiene un efecto colateral sobre el 
+valor de este counter*/</code></pre>
+                </div>
+                <p>Entonces sabiendo que una función pura no debe tener efectos secundarios o colaterales, nuestra función <strong>filterActiveUsers</strong> no cumple con esta característica. </p>
+                <div>
+                  <pre><code class="language-jsx">const filterActiveUsers = (users, active) => {
+	/* En este caso la función devuelve la misma referencia
+	que viene de fuera, por lo cual estamos teniendo un
+	efecto secundario, ya que estamos devolviendo una 
+  referencia externa a la propia función*/
+	if (!active) return users
+
+	/*En este caso si que devuelve una copia y
+	no está teniendo efectos secundarios ya que devuelve
+	algo completamente nuevo*/
+	return users.filter((user) => user.state)
+}</code></pre>
+                </div>
+                <p>Entonces esta función dependiendo de como la ejecutemos y de los parámetros con los que la ejecutemos devolverá una referencia externa o una nueva referencia. En el caso de que el estado no exista pues devolvemos esa referencia externa y por lo tanto estamos limitando esta pureza, esta función no es pura del todo, aunque casi lo es. </p>
+              </li>
+            </ol>
+            <h3>Convirtiendo nuestras funciones a funciones puras </h3>
+            <p>Entonces, <strong>¿Qué es lo que deberiamos conseguir en este caso?</strong>, pues que siempre, siempre, siempre <strong class="ts-2">devolvamos una referencia nueva</strong>, una referencia distinta a la que viene como parámetro, o dicho de otra forma, sabiendo que el método <strong>filter</strong> devuelve una nueva referencia, también tendriamos que conseguir que este users se devolviera con una nueva referencia y lo conseguimos sencillamente con el spread operator.</p>
+            <h4>Función pura filterActiveUsers </h4><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/23.webp" alt="example">
+            <h4>Función pura filterUsersByName </h4><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/24.webp" alt="example">
+            <h4>Función pura sortUsers</h4>
+            <p>Ya habiamos convertido una parte de esta función en pura cuando trabajamos con el método <strong>toSorted</strong> o con una<strong>copia.</strong></p>
+            <p>Así que podemos convertir esta función completamente pura de 2 formas, una con el "toSorted" y otra haciendo una copia de los usets para ambos casos cuando el sortBy este en 0 y en 1.</p>
+            <p>Primera forma </p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/25.webp" alt="example">
+            <p>Segunda forma</p><img class="has-mb" src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/26.webp" alt="example">
+          </article>
+          <article class="content" id="6">
+            <h2>Conclusiones</h2>
+            <p>Con todo esto, ahora en todos los casos la comparación que habiamos puesto donde <strong>usersFiltered</strong> y <strong>users</strong> eran iguales, es decir si eran las mismas referencias, siempre nos devolverá <strong>false</strong> ya que nuestras funciones siempre nos devolverán una copia y por más que mezclemos los filtros siempre serán diferentes. </p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/27.webp" alt="example">
+            <p>Ahora el hecho de tener nuestras funciones puras nos da la libertad de ordenar los filtros en nuestro código en el orden que queramos ya que no importa, ya que son funciones puras y están completamente aisladas. </p>
+            <div>
+              <pre><code class="language-jsx">/*Podemos ordenar el código de los filtros como queramos
+no importa ya que son funciones puras*/
+
+let usersFiltered = filterActiveUsers(users, onlyActive)
+usersFiltered = sortUsers(usersFiltered, sortBy)
+usersFiltered = filterUsersByName(usersFiltered, search)   </code></pre>
+            </div>
+            <p>Pero lo lógico sería primero filtrar los usuarios por activo, porque es la operación más sencilla a comparación de las otras dos, después filtramos por nombre y posteriormente ordenamos ya que ordenar es la operación más pesada que tenemos aquí. </p><img src="../../assets/img/7-6-la-importancia-de-las-funciones-puras/28.webp" alt="example">
+            <p>Ahora si tenemos un código de calidad para poder avanzar. </p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Casuísticas del problema</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">¿Por qué el filtro de orden no funciona si lo aplicamos solo, es decir, de forma aislada?</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Solucionando problema de mutación </a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#5">Funciones puras</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#6">Conclusiones</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>
