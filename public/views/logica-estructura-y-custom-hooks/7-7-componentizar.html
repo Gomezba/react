@@ -344,12 +344,73 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>Ahora que ya hemos refactorizado la lógica de nuestro componente, llega el momento de componentizar, es decir, detectar pequeños componentes que forman parte de este componente <strong>UsersList</strong> que se pueden individualizar para separar mucho mas las responsabilidades de cada uno.</p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Creación componente UsersListFilters</h2>
+            <p>El primer caso es claramente, el formulario de filtros que podriamos aislar en un componente llamado <strong>UsersListFilters</strong> para poder compactar aún mas todo este código JSX y que no sea tan grande, ya que pensando en una tabla, probablemente en un futuro tengamos mucho más elementos y tener un código JSX enorme no nos va ayudar, ni a la legibilidad ni por supuesto a la mantenibilidad de este componente. </p>
+            <p>Así que aislaremos este formulario y de este forma tendremos un componente sencillo que sirve para la parte de presentación de estos filtros.</p>
+            <p>El componente viene determinado de quien es su padre, y su padre es <strong>UsersList</strong> entonces este componente hijo se llamará <strong>UsersListFilters</strong> ya que su nombre tiene que guardar algún tipo de relación con su padre. </p><img src="../../assets/img/7-7-componentizar/1.webp" alt="example">
+            <p>Estilos modularizados </p><img src="../../assets/img/7-7-componentizar/2.webp" alt="example">
+            <p>En el componente <strong>UsersList</strong> importamos el componente de <strong>UsersListFilters</strong> y lo ejecutamos pasandole las props, que es el estado y su respectiva función de actualización de estado.</p>
+            <figure> <img src="../../assets/img/7-7-componentizar/3.webp" alt="example">
+              <figcaption>Los estados tienen que seguir manteniendose dentro de este <strong>UsersList</strong> porque al final vamos a estar utilizandolos para filtrar los usuarios activos, los usuarios por nombre y posteriormente ordenarlos. Así que no podemos trasladarlos directamente al componente <strong>UsersListFilters</strong> ya que no solo afecta a <strong>UsersListFilters</strong> sino que tambien necesitamos los estados <strong>en el renderizado de las listas</strong>, hay que recordar que los estados deben ir lo más cerca y accesible a todo lo que los necesite.</figcaption>
+            </figure>
+            <p>Nuestra lista de usuarios funciona correctamente. </p><img src="../../assets/img/7-7-componentizar/4.webp" alt="example">
+          </article>
+          <article class="content" id="3">
+            <h2>Creación componente UsersListRows </h2>
+            <p>Podiamos decir que ya hemos termiando y que hemos componentizado todo lo que podiamos componentizar, pero vamos a hecharle un vistazo a la función <strong>renderUsers.</strong></p><img src="../../assets/img/7-7-componentizar/5.webp" alt="example">
+            <p>Como podemos ver, <strong>rendersUsers</strong> es una función que por un lado devuelve JSX y por otro lado devuelve JSX, ya hemos comentado que cuando una función devuelve JSX, esta debería ser un componente.</p>
+            <p>Entonces pasaremos a convertir esta función en un componente con el nombre <strong>UsersListRows</strong> y su nombre tiene una semantica que indica que son las filas de las tabla de usuarios y por supuesto tendrá que recibir una prop que es users. </p><img src="../../assets/img/7-7-componentizar/6.webp" alt="example">
+            <p>Ahora ejecutamos el componente.</p><img src="../../assets/img/7-7-componentizar/7.webp" alt="example">
+            <h3>Modularizando componente UsersListRows</h3>
+            <p>Hasta este punto tenemos un problema y es que estamos teniendo dos componentes en un mismo archivo <strong>UsersList</strong> y <strong>UsersListRows</strong>, y esto ya sabemos que no está permitido.</p>
+            <p>Entonces craremos nuestro archivo propio para este componente llamado <strong>UsersListRows</strong> e importamos lo necesario para que funciones, que en este caso es importar el componente <strong>UserRow.</strong></p><img src="../../assets/img/7-7-componentizar/8.webp" alt="example">
+            <p>Ahora simplemente importamos este componente en <strong>UsersList.</strong></p><img class="has-mb" src="../../assets/img/7-7-componentizar/9.webp" alt="example">
+          </article>
+          <article class="content" id="4">
+            <h2>Conclusiones </h2>
+            <p>Ahora si ya tenemos nuestro componente perfectamente funcional y modularizada su lógica mucho más. </p>
+            <p>Ahora simplemente tenemos una parte que se encarga de los filtros de los usuarios y de la gestión de estos usuarios. </p>
+            <div>
+              <pre><code class="language-jsx">const [search, setSearch] = useState('')
+const [onlyActive, setOnlyActive] = useState(false)
+const [sortBy, setSortBy] = useState(0)
+
+let usersFiltered = filterActiveUsers(users, onlyActive)
+usersFiltered = filterUsersByName(usersFiltered, search)
+usersFiltered = sortUsers(usersFiltered, sortBy)</code></pre>
+            </div>
+            <p>Y tenemos las funciones correspondientes a cada uno de estos filtros, es decir, tenemos la lógica asociada. </p>
+            <div>
+              <pre><code class="language-jsx">const filterUsersByName = (users, search) => {...}
+
+const filterActiveUsers = (users, active) => {...}
+
+const sortUsers = (users, sortBy) => {...}</code></pre>
+            </div>
+            <p>Como vemos al final vamos dividiendo en pequeñas responsabilidades cuando vemos que un componente tiene una responsabilidad demasiado grande y que lo hace mas complicado de manejar y esto es una cuestión puramente personal.</p>
+            <p>Por ejemplo hay gente que el patrón de haber divido el componente <strong>UsersListRows</strong> que antes era una función que devolvia JSX, no lo ven todo aceptable el haber convertido esa función a un componente y prefieren utilizar la sintaxis que teniamos anteriormente, y esto es valido si claro que si, pero considearamos que es mucho más eficiente y mucho mas legible, tener separada la lógica de pintar y por otro lado tener el componente fuera. </p>
+            <p>Entonces nuestro <strong>UsersList</strong> simplemente se encarga de orquestar todo. </p>
+            <p>Así que vamos analizar y ver que podemos hacer con estos estado, pero en el siguiente capítulo. </p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Creación componente UsersListFilters</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Creación componente UsersListRows </a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Conclusiones</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>
