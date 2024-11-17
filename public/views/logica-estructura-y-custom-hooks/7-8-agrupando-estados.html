@@ -344,12 +344,58 @@
       <section class="main-info">
         <section class="info">
           <article class="content" id="1">
-            <h2>Subtitulo 1</h2>
+            <h2>Introducción</h2>
+            <p>En esta lección vamos a profundizar un poco mas en uno de esos temas que dejamos latentes en la sección de los estados, y es el manejo de múltiples estados.</p>
+            <p>¿Cuando merece la pena tratar los estados como unidades atómicas?, pues en este caso que tenemos los estados de <strong>search</strong>, <strong>onlyActive</strong> y <strong>sortBy</strong> en el que cada uno de estos estados representa un filtro de este formulario y cuando merece la pena agrupar todos estos estados y tratarlos como un único estado pero más complejo. </p>
+            <p>De una vez nos adelantamos y la respuesta a la pregunta, es que es completamente subjetiva, es algo debatible y que quedará a criterio de cada desarrollador cuando y como unir estos estados. </p>
+            <p>Pero si que es verdad que hay una serie de criterios comunes que tenemos que aplicar a la hora de saber si podemos o no podemos unirlos. </p>
           </article>
           <article class="content" id="2">
-            <h2>Subtitulo 2</h2>
+            <h2>Criterios para saber si agrupar o no los estados</h2>
+            <p>El primero de ellos es el más evidente y el que mas afecta directamente a nuestra aplicación y es el renderizado. </p>
+            <h3>Criterio de renderizado</h3>
+            <p>Debemos tener en cuenta que consecuencias tendrá el agrupar dichos estados o no, ¿provocaremos más renderizados?, ¿provocaremos exactamente los mismos?, hay que medir un poco las consecuencias a nivel de rendimiento que esto tiene. </p>
+            <p>Si por agrupar varios estados provocaremos renderizados sobre componentes que a priori no deberian haber sido renderizados entonces puede ser que tengamos un problema de rendimiento.</p>
+            <p>En nuestro caso modifiquemos el estado que modifiquemos, no produciremos ningún renderizado de más, de hecho en nuestro componente cada vez que provoquemos el cambio en un estado realizaremos la misma lógica para todos, es decir, volveremos a filtrar estos usuarios activos, volveremos a filtrar estos usuarios por nombre y volveremos a ordenarlos. Con lo cual desde ese angulo no tendremos ningún problema. </p><img src="../../assets/img/7-8-agrupando-estados/1.webp" alt="example">
+            <h3>Criterio si los estados tienen una relación semantica </h3>
+            <p>El segundo de estos criterios es ver si los estados tienen alguna relación semantica, ¿A que nos referimos con esto?, pues ver si los estados guardan alguna relación entre si, o son conceptos totalmente separados.</p>
+            <p>En este caso <strong>search</strong>, <strong>onlyActive</strong> y <strong>sortBy</strong> son filtros de un mismo formulario, es decir, guardan una relación entre si y son simplemente criterios que se unen para terminar filtrando estos usuarios, por lo tanto podriamos decir que si existe una relación semantica entre ellos. </p>
+            <p>No tendria sentido desde ningún punto agrupar estados que representen los filtros del formulario con un estado que represente la autenticación de un usuario en la web. Son conceptos totalmente distintos. </p>
+            <p>En este caso tambien cumplimos esa primisa.</p>
+            <h3>Criterio de legibilidad</h3>
+            <p>Por ultimo tenemos que tener en cuenta la legibilidad, tenemos que tener en cuenta el manejo de estos estados y si agruparlos se vuelve una tarea muy compleja y muy difícil de leer. Y parece evidente que aquí tampoco será el caso.</p>
+            <p>Así que de este prisma, cumplimos los tres requisitos para poder agrupar todos estos estados y de hecho es lo que vamos hacer. </p>
+          </article>
+          <article class="content" id="3">
+            <h2>Agrupando nuestros estados</h2>
+            <p>Agruparemos nuestros estados en uno solo, y este nuevo estado representará la totalidad de los filtros que tenemos en este formulario, así que el nombre más representativo seria <strong>filters</strong>. </p>
+            <p>Empezamos por crear este estado <strong>filters.</strong></p><img src="../../assets/img/7-8-agrupando-estados/2.webp" alt="example">
+            <p>Pero ahora tenemos un problema con las funciones de <strong>setState (funcion de actualización de estado)</strong> y es que ya no podemos setearlas con un valor fijo, tenemos que crear una <strong>función custom</strong> que nos permita venir a este formulario de filtros y seguir manteniendo la misma estructura. </p>
+            <p>Por recordar, en nuestro componente de <strong>UsersListFilters</strong> recibiamos el valor de un input y lo seteabamos con un <strong>setSearch</strong>, tenemos tambien un <strong>setOnlyActive</strong> con el valor del checkbox y por último un <strong>setSortBy</strong> con el valor convertido a número que viene del select. </p><img src="../../assets/img/7-8-agrupando-estados/3.webp" alt="example">
+            <p>Entonces sin tener que modificar este <strong>UsersListFilters</strong> tenemos que conseguir unas funciones equivalentes.</p>
+            <p>Miremos como hemos hecho estas funciones. </p><img src="../../assets/img/7-8-agrupando-estados/4.webp" alt="example">
+            <p>Si probamos nuestra aplicación todo funcionará correctamente.</p><img class="has-mb" src="../../assets/img/7-8-agrupando-estados/5.webp" alt="example">
+          </article>
+          <article class="content" id="4">
+            <h2>Conclusiones</h2>
+            <p>Como vemos, hemos logrado tener un único estado que maneja todo, pero hemos perdido un poco de fuerza a la hora de tener claramente este <strong>setState</strong> marcados, es decir, no tiene mucha legibilidad de como hacemos el cambio de estado, es un poco más complejo de lo que ya teniamos. </p><img src="../../assets/img/7-8-agrupando-estados/6.webp" alt="example">
+            <p>El siguiente paso será ver como solucionar a nivel de legibilidad todas estas funciones que dependen de <strong>setFilters</strong> y eso nos llevará indudablemente a crear un <strong class="ts-3">custom hook</strong>.</p>
           </article>
         </section>
+        <nav class="container-submenu" id="submenu"><img class="arrow" id="arrow" src="../../assets/icons/arrow-back.svg" alt="arrow back" />
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#1">Introducción</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#2">Criterios para saber si agrupar o no los estados</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#3">Agrupando nuestros estados</a></li>
+          </ul>
+          <ul class="submenu">
+            <li class="submenu__item"><a class="submenu__link" href="#4">Conclusiones</a></li>
+          </ul>
+        </nav>
       </section>
     </main>
     <script src="../../js/prism-whitespace.js"></script>
