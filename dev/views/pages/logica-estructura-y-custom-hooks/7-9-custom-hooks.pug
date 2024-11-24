@@ -5,12 +5,131 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
-
+        h2 Introducción
+        p El concepto de 
+            strong custom hook
+            |   es algo que se repite constantemente dentro del ecosistema de React que puede parecer por su nombre un concepto bastante complejo, pero realmente es algo super simple y que surge de manera orgánica como una forma de estructurar la lógica de nuestros componentes.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 Creando una función como si el custom hook no existiera
+        p Vamos a partir como si el concepto de 
+            strong custom hook
+            |   no existiera y vamos simplemente a tratar de organizar esta lógica y veremos como poco a poco terminamos formando estos custom hooks casi sin darnos cuenta.
 
+        p ¿Cuál es el primer problema que detectas aquí como consecuencia de haber agrupado estos estados?, diriamos que a simple vista tenemos un poco la función de cambio de estado un poco confusa y no se ve demasiado claro que es lo que hace. Tambien sería el hecho de estar accediendo al objeto filters cada vez que queremos ocuparlo.
+        img(src="../../assets/img/7-9-custom-hooks/1.webp" alt="example")
+
+        p Para no tener todo ese pedazo de código y se pueda entender mejor lo que haremos es extraer estas funciónes fuera y pasarlas como callback y ocupar la desestructuración para las propiedades del objeto filters.
+        img(src="../../assets/img/7-9-custom-hooks/2.webp" alt="example")
+
+        p Hasta aquí hemos conseguido algo bastante mas legible, pero claro, ahora hemos generado otro problema y es toda la lógica que hemos puesto.
+
+        p ¿Cuál sería el siguiente paso para refactorizar esto?, pues basicamente aislar todo esto en una función que nos devolviese los estados que hemos desestructurado así como todas las funciones que hemos creado (setSearch, setOnlyActive, setSortBy).
+
+        p Así que crearemos esta función la cual llamaremos getState, le daremos un nombre genérico pero depués veremos cual debería de ser su verdadero nombre.
+        img(src="../../assets/img/7-9-custom-hooks/3.webp" alt="example")
+
+        p Ahora desestructuramos ejecutando la función dentro de nuestra función del componente.
+        img(src="../../assets/img/7-9-custom-hooks/4.webp" alt="example")
+
+        p Si checamos la aplicación miraremos que todo funciona correctamente.
+        img(src="../../assets/img/7-9-custom-hooks/5.webp" alt="example").has-mb
+
+    article(id="3" class="content")
+        h2 Creando verdaderamente nuestro custom hook 
+
+        p Como hemos explicado anteriormente a veces terminamos formando estos custom hooks casi sin darnos cuenta y lo veremos a continuación.    
+
+        p Con lo que tenemos hasta ahora, si nos fijamos en filter y setFilters solo se utilizan como parámetros de la función getState y no volvemos a utilizar su valor nunca. 
+        img(src="../../assets/img/7-9-custom-hooks/6.webp" alt="example")
+
+        p Entonces para que recibirlos como parámetros si realmente no lo utilizamos fuera de la función. Lo que haremos es quitar estos parámetros y pasaremos la declaración de nuestro estado dentro de la función getState.
+        img(src="../../assets/img/7-9-custom-hooks/7.webp" alt="example")
+
+        p Si checamos nuestra aplicación miraremos que funciona.
+        img(src="../../assets/img/7-9-custom-hooks/5.webp" alt="example")
+
+        h3 ¿Qué es lo que hemos hecho hasta aquí?, ¿Qué es este getState?
+
+        p Esta función que hemos creado 
+            strong getState
+            |   es lo que se le conoce como un 
+            strong.ts-3 custom hook,
+            |   esto y nada más que esto es un custom hook. Es una forma de esconder un estado y de poder extraer de él todo lo que queramos de una forma más simple. De esta manera yo utilizo esta función getState y tengo mi estado desde fuera, sencillo, simple y fácil de utilizar, y dentro hago toda la lógica relativa a este estado y luego posteriormente retornamos lo que sea necesario, como por ejemplo, no estamos retornado el setFilters porque fuera no lo necesitamos, simplemente retornamos todo aquello que necesitamos fuera.
+
+        h3 Regla que debemos que seguir en un custom hook
+        p En estos custom hooks tenemos que hablar de algunas de estas reglas que tenemos que seguir, es decir, este 
+            strong getState
+            |   obviamente ya hemos dicho que no es el nombre apropiado y ¿Por qué no es el nombre apropiado?, pues porque básicamente cuando yo llamo a getState necesito tener una respuesta visual que dentro de esta función existe un hook de React. ¿Por qué es importante esto?, pues es que este getState no se puede utilizar desde cualquier sitio y si le dejamos ese nombre genérico quiere decir que es reutilizable en cualquier parte y esto no es así, ya que hemos dicho que un hook solo se puede utilizar dentro de un componente de React.
+
+        p Si intentamos ejecutar esta función getState desde fuera del componente miraremos que obtendremos un error.     
+        img(src="../../assets/img/7-9-custom-hooks/8.webp" alt="example")
+        img(src="../../assets/img/7-9-custom-hooks/9.webp" alt="example")
+
+        p Como podemos ver, nos dice que estamos utilizando un hook fuera de un componente.
+
+        p ¿Como podemos indicar que esta función contiene un hook de React?, pues utilizando una sintaxis apropiada, una sintaxis que empieze por use. 
+
+        p Si miramos, el editor mismo nos dice que cuando tenemos un custom hook este deberia empezar por 
+            strong use. 
+
+        img(src="../../assets/img/7-9-custom-hooks/10.webp" alt="example")
+
+        p Entonces nuestra función deberia empezar por 
+            strong use
+            |   y eligiremos un nombre apropiado, el cual sería para nuestro caso 
+            strong useFilters
+            | . 
+
+        img(src="../../assets/img/7-9-custom-hooks/11.webp" alt="example")
+
+        p ¿Por qué llamarlo use?, pues basicamente para indicar que ahí dentro hay un hook de react, simplemente por eso y por eso todos los hooks de React: 
+            strong useState,
+            |   
+            strong useEffect,
+            |   
+            strong useContext
+            | , etc, todos empiezan por use para que así sepamos de antemano que tenemos que utilizarlos dentro de un componente y por eso los custom hook se llaman así también.
+
+        p Esta diriamos que es la única regla relevante dentro del custom hook, la única restricción real que tenemos a la hora de utilizarlos, que debemos darle un nombre apropiado.
+
+        h3 ¿Que ventajas tienen estos custom hooks?
+        p Realmente lo que estamos consiguiendo en este custom hook 
+            strong useFilters
+            |   es 
+            strong encapsular
+            |   un estado complejo y exponerlo fuera de una forma mucho más sencilla, de esta forma no exponemos el 
+            strong setFilters (función de actualización de estado)
+            |   fuera porque no queremos que se utilize este setFilters directamente, solo queremos que nuestro estado se pueda modificar de tres formas distintas que son: modificando el search (setSearch), modificando el onlyActive (setOnlyActive) y modificando el setSortBy de uno en uno, no queremos que nadie venga y utilize un setFilters y modifique a la vez el search y el sortBy, no lo voy a usar para nada y por lo tanto no deberia exponer fuera una función que no se utiliza.
+
+        p Si yo mañana quiero crear una función que me permita hacer un reset de estos filtros, podriamos crear una simplem función que fuera resetFilters para regresar el valor inicial de los estados y de esta forma cualquiera que se importase este custom hook, cualquiera que lo utilizase podria tener a mano esta función resetFilters para utilizarla en cualquier momento.  
+        img(src="../../assets/img/7-9-custom-hooks/12.webp" alt="example")
+
+        p Ahora mismo no nesitamos esto de resetear los estados a su valor inicial, pero así podemos ver la utilidad que tienen estos custom hooks, lo que hacemos es limitar las posibilidades de lo que se puede y lo que no se puede hacer con este estado y además lo que tambien hacemos es exponer el estado de una forma más sencilla 
+        img(src="../../assets/img/7-9-custom-hooks/13.webp" alt="example")
+
+        p Como vemos una vez aplicado esto custom hook, tenemos un componente que hace unas cuantas cosas pero que realmente queda reducido a una pequeña parte, una cosa simple y sencilla y desde luego muy fácil de entender, muy fácil de seguir.
+
+        p Como última recomendación por darle algo más de compactación a este código, podemos decir que este 
+            strong setSearch
+            | , 
+            strong setOnlyActive
+            |   y este 
+            strong setSortBy
+            |   solamente se utilizan aquí.
+
+        img(src="../../assets/img/7-9-custom-hooks/14.webp" alt="example")
+
+        p Lo que podemos hacer es aprovechar el rest operator y llamarle 
+            strong ...setFiltersFunctions
+            |   y decir que este setFiltersFunctions lo recibimos como prop.
+        img(src="../../assets/img/7-9-custom-hooks/15.webp" alt="example")
+
+        p Ahora ya si que si hemos ido compactando nuestro código hasta que queda algo super legible, muy sencillo, muy bien estructurado.
+
+        p Comprobamos que funciona todo y podemos continuar con la siguiente lección,
+        img(src="../../assets/img/7-9-custom-hooks/16.webp" alt="example")
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'Creando una función como si el custom hook no existiera'],[3,'Creando verdaderamente nuestro custom hook']]
+    +submenu(submenuLinks)
