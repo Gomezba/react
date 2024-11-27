@@ -5,12 +5,170 @@ append h1
 
 append content 
     article(id="1" class="content")
-        h2 Subtitulo 1
+        h2 Introducción
 
+        p Hasta ahora podemos decir que hemos cumplido con el objetivo de esta sección, tenemos un componente 
+            strong UsersList
+            |   completamente funcional y no solo eso sino que lo hemos escrito de forma correcta y hemos conseguido un componente sencillo de entender y por tanto mucho mas mantenible y legible, además hemos sido capaces de aislar toda lógica de los distintos pequeños componentes que forman parte de el. 
+
+        p Pero lo cierto es que nos hemos dejado un pequeño detalle y es que este listado de usuarios no está completo del todo, no funciona del todo bien.
+
+        p Si nos centramos en el filtro de solo usuarios activos y activaremos el checkBox y cuando pulsamos el botón de desactivar en alguno de los usuarios, el estado de usuario pasa a inactivo, pero el filtro que hemos aplicado de solo activos no se aplica sobre este nuevo cambio del usuario.     
+
+        img(src="../../assets/img/7-10-mas-custom-hooks/1.webp" alt="example")
+
+        p En esta lección estaremos explicando porque sucede esto que acabamos de mencionar y como solucionarlo, llegando a crear un nuevo custom hook que encierra toda nuestra solución.
 
     article(id="2" class="content")
-        h2 Subtitulo 2
+        h2 ¿Por qué el filtro de sólo activos no se aplica cuando un usuario cambia su estado a inactivo?
 
+        p La respuesta es que, si recordamos de otras lecciones el estado del usuario está definido a nivel del componente 
+            strong UserRow
+            | . 
+
+        p Miremos el orden que tenemos desde nuestro componente actual 
+            strong UsersList
+            |   hasta llegar a 
+            strong UserRow. 
+
+        figure 
+            img(src="../../assets/img/7-10-mas-custom-hooks/2.webp" alt="example")        
+            figcaption De 
+                strong UsersList
+                |   nos pasamos a 
+                strong UsersListRows. 
+
+        figure 
+            img(src="../../assets/img/7-10-mas-custom-hooks/3.webp" alt="example")        
+            figcaption De 
+                strong UsersListRows
+                |   nos pasamos a 
+                strong UserRow. 
+
+        figure 
+            img(src="../../assets/img/7-10-mas-custom-hooks/4.webp" alt="example")        
+            figcaption Hemos llegado a  
+                strong UserRow.
+
+        p En este componente 
+            strong UserRow
+            |   vemos que el estado está definido en este componente a nivel de cada una de las filas de la tabla, es decir, aquí tenemos el estado que cambia de activo a inactivo y visceversa en cada usuario.
+
+        p El hecho es que este estado nunca va poder salir de aquí, es decir, el componente UsersList nunca va a poder tener acceso a lo que nosotros hagamos dentro de un estado que este ubicado por debajo de él en el Virtual Dom, ya que una característica fundamental del Virtual Dom es que sus nodos solamente tienen acceso de un nodo hacia abajo y nunca hacia arriba, es decir, que el estado que tenemos declarado en 
+            strong UserRow
+            |   no se puede utilizar un nodo arriba, en este caso, el 
+            strong UsersList. 
+
+        p El problema está ocurriendo porque lo que estamos filtrando en el componente UsersList es un listado de usuarios que viene desde arriba, que viene como una prop desde directamente del componente App.     
+        img(src="../../assets/img/7-10-mas-custom-hooks/5.webp" alt="example")        
+
+        p Miremos el componente App.
+        img(src="../../assets/img/7-10-mas-custom-hooks/6.webp" alt="example") 
+
+        p Si queremos que todos los cambios que apliquemos sobre un nodo se vean reflejado en este array, es evidente que este array no puede ser fijo, tiene que ser algo dinámico un array que vaya variando con el tiempo.
+
+        p Pero ya sabemos las consecuencias que tiene modificar una prop y sabemos que no podemos hacerlo, esto debido al problema de mutación del array original. Sabemos tambien lo que tenemos que hacer cuando queremos modificar algo dentro de nuestro JSX, es decir, si algo tiene que cambiar es un estado.
+
+        p Entonces lo que tenemos que conseguir es un estado que represente este listado de usuarios para poder modificarlo con el tiempo y provocar cambios en esta interfaz. 
+
+    article(id="3" class="content")
+        h2 Conectando el filtro de usuarios activos con los cambios de estado en tiempo real
+
+        p Lo primero que debemos de preguntarnos es ¿cuál es el sitio correcto para definir nuestro estado?. Actualmente tenemos nuestro estado de usuario en el componente 
+            strong UserRow
+            |   pero de acuerdo a lo que hemos comentado, este no es el lugar correcto para declarar nuestro estado ya que tenemos que conseguir que el estado represente el listado de usuarios y en este componente no tenemos acceso a ese listado.
+
+        p Entonces, eliminaremos el estado de este componente y, en lugar de usarlo, utilizaremos únicamente la prop state en los lugares donde se ocupaba. Además, en el evento donde previamente aplicábamos la función de actualización del estado, dejaremos el manejador vacío por ahora.
+
+        p Antes 
+        img(src="../../assets/img/7-10-mas-custom-hooks/7.webp" alt="example") 
+        p Después
+        img(src="../../assets/img/7-10-mas-custom-hooks/8.webp" alt="example") 
+
+        p Lo siguiente es declarar nuestro estado en el componente 
+            strong UsersList
+            | , ya hemos dicho antes que nuestro estado será el listado de usuarios, es decir, nuestro estado será el 
+            strong objeto users
+            |   que recibimos como prop, y el nombre correcto para nuestro estado sería users, pero la prop ya se llama de esa manera, entonces, lo que haremos es cambiar el nombre de la prop, en lugar de llamarse "users" lo llamaremos 
+            strong initialUsers.
+        img(src="../../assets/img/7-10-mas-custom-hooks/9.webp" alt="example") 
+
+        p Ahora en el componente 
+            strong App
+            |   el nombre de la prop que pasamos al componente 
+            strong UsersList
+            |   será "initialUsers". A demás de agregar un id al objeto "USERS" ya que lo necesitaremos para saber sobre que usuario se está cambiando el estado.
+        p Antes    
+        img(src="../../assets/img/7-10-mas-custom-hooks/10.webp" alt="example") 
+        p Después     
+        img(src="../../assets/img/7-10-mas-custom-hooks/11.webp" alt="example") 
+
+        p El siguiente paso es crear la lógica para cambiar el estado, es decir, implementar la funcionalidad de cambiar de activo a inactivo y visceversa.
+
+        p Entonces, para eso crearemos una función que se llamará 
+            strong toggleUserActive
+            |. Esta función recibirá como parámetro el 
+            strong userID
+            |   para así comparar sobre cual de los usuarios ha ocurrido el cambio de estado. En el cuerpo de está función trabajaremos sobre una copia de los usuarios para buscar el indice del usuario que cumpla con la condición, está condición será si el id de alguno de los usuarios del listado de usuarios es igual al "userId", de esta manera sabremos sobre que indice del objeto tendremos que hacer el cambio de estado.
+
+        p Con comentarios.    
+        img(src="../../assets/img/7-10-mas-custom-hooks/12.webp" alt="example") 
+        p Sin comentarios.    
+        img(src="../../assets/img/7-10-mas-custom-hooks/13.webp" alt="example") 
+
+        p Ahora solo queda ejecutar está función dentro del componente 
+            strong UserRow
+            | , así que tenemos que ir pasando esta función como prop entre los componentes 
+            strong UsersListRows
+            |   y 
+            strong UserRow.
+        img(src="../../assets/img/7-10-mas-custom-hooks/14.webp" alt="example").has-mb
+        img(src="../../assets/img/7-10-mas-custom-hooks/15.webp" alt="example").has-mb 
+        img(src="../../assets/img/7-10-mas-custom-hooks/16.webp" alt="example") 
+
+        p Si ahora marcamos un usuario como inactivo y aplicamos el filtro de sólo activos, ahora si se aplicará el filtro quitando todos los usuarios inactivos.
+
+        p Renderizado con estados iniciales.
+        img(src="../../assets/img/7-10-mas-custom-hooks/17.webp" alt="example") 
+
+        p Marcamos algunos usuarios como inactivos.
+        img(src="../../assets/img/7-10-mas-custom-hooks/18.webp" alt="example") 
+
+        p Aplicamos el filtro de sólo activos y miraremos que ya funciona.
+        img(src="../../assets/img/7-10-mas-custom-hooks/19.webp" alt="example").has-mb
+
+    article(id="4" class="content")
+        h2 Encerrando toda nuestrá lógica dentro de un custom hook
+        p Ahora solo nos queda encerrar la lógica que hemos hecho dentro de un custom hook.
+
+        p Para lograr esto, ocuparemos un 
+            strong clousure
+            | . Recordemos que un "clousure" es una función que puede recordar el ambito léxico en el cual fue declarada.
+
+        p Sabiendo esto nuestro custom hook se llamará 
+            strong useUserActive
+            |   el cual recibirá como parámetro los "initialUsers" y, dentro de esta función pegaremos todá la lógica que hemos hecho, y retornaremos la función de "toggleUserActive" y los users que vienen del estado.    
+        img(src="../../assets/img/7-10-mas-custom-hooks/20.webp" alt="example")
+        p Creamos nuestro custom hook.
+        img(src="../../assets/img/7-10-mas-custom-hooks/21.webp" alt="example")
+        p En el componente simplemente desestructuramos nuestro custom hook.
+        img(src="../../assets/img/7-10-mas-custom-hooks/22.webp" alt="example").has-mb
+
+        p Si probamos nuestra aplicación funcionará como es debido pero hemos encapsulado la lógica de nuestro estado para que sea menos pesado de leer.
+
+        p Renderizado con estados iniciales.
+        img(src="../../assets/img/7-10-mas-custom-hooks/17.webp" alt="example") 
+
+        p Marcamos algunos usuarios como inactivos.
+        img(src="../../assets/img/7-10-mas-custom-hooks/18.webp" alt="example") 
+
+        p Aplicamos el filtro de sólo activos y miraremos que ya funciona.
+        img(src="../../assets/img/7-10-mas-custom-hooks/19.webp" alt="example")
+
+        p Como podemos ver funciona correctamente.
+
+        p Con esto ya hemos concluido con esta sección y solo queda continuar.
 
 append submenu 
-    -submenuLinks = [[1,'Subtitulo 1'],[2,'Subtitulo 2']]
+    -submenuLinks = [[1,'Introducción'],[2,'¿Por qué el filtro de sólo activos no se aplica cuando un usuario cambia su estado a inactivo?'],[3,'Conectando el filtro de usuarios activos con los cambios de estado en tiempo real'],[4,'Encerrando toda nuestrá lógica dentro de un custom hook']]
+    +submenu(submenuLinks)
